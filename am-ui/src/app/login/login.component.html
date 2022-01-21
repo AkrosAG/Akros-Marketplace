@@ -1,0 +1,48 @@
+<mat-card class="login-page">
+  <mat-card-title>Login - Start mit ng serve --ssl true </mat-card-title>
+  <mat-card-content>
+  <form [formGroup]="form" class="login-form">
+
+      <!-- <mat-form-field>
+
+        <input matInput type="email"
+               placeholder="Email"
+               formControlName="email">
+
+      </mat-form-field>
+
+      <mat-form-field>
+
+        <input matInput type="password"
+               placeholder="Password"
+               formControlName="password">
+
+      </mat-form-field>
+
+      <button mat-raised-button color="primary"
+              (click)="login()"
+              [disabled]="!form.valid">Login</button> -->
+              <mat-toolbar>
+                <div class="row"  >  
+                  <ng-container *ngIf="auth.isLoggedOut$ | async">
+                        <div class="col-6">  
+                            <div>
+                              <button   (click)="oAuthLogin(oAuthProviderEnum.FACEBOOK)" class="btn btn-primary btn-block ">Login with Facebook</button>
+                            </div>
+                        </div>  
+
+                        <div class="col-6">  
+                            <div>
+                              <button   (click)="oAuthLogin(oAuthProviderEnum.AKROSAD)" class="btn btn-primary btn-block ">Login with AKROS AD</button>
+                           </div>
+                        </div>  
+                  </ng-container>
+               </div> 
+        
+              </mat-toolbar>
+                 
+ 
+
+    </form>
+  </mat-card-content>
+</mat-card>

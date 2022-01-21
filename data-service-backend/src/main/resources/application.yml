@@ -1,0 +1,30 @@
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: DEBUG
+      springframework:
+        jdbc:
+          core:
+            JdbcTemplate: DEBUG
+            StatementCreatorUtils: DEBUG
+    root: INFO
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+        ddl-auto: none
+
+server:
+  ssl:
+    key-store: classpath:akrosMK.p12
+    key-store-password: 123456
+    key-store-type: PKCS12
+  port: 8443
+
+http:
+  port: 8080

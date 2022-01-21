@@ -1,0 +1,49 @@
+version: "3"
+services:
+  data-service-backend:
+    container_name: data-service-backend
+    build:
+      context: ../../data-service-backend
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      - POSTGRES_DB_HOST=postgres_db
+    networks:
+      - spring-postgres
+    depends_on:
+      - postgres
+
+  administration-business-ui:
+    container_name: administration-business-ui
+    build:
+      context: ../../administration-business-ui
+    ports:
+      - "9090:8080"
+    environment:
+      - POSTGRES_DB_HOST=postgres_db
+    networks:
+      - spring-postgres
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14.1
+    container_name: marketplace_db
+    hostname: postgres_db
+    deploy:
+      mode: global    
+    environment:
+      - POSTGRES_USER=am
+      - POSTGRES_PASSWORD=am
+      - POSTGRES_DB=am
+    volumes:
+      - "../pg_data:/var/lib/postgresql/data"
+      - "../db_init:/docker-entrypoint-initdb.d/"
+    ports:
+      - "5432:5432"
+    networks:
+      - spring-postgres
+
+networks:
+  spring-postgres:
