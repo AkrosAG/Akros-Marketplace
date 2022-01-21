@@ -13,6 +13,13 @@ Hruschka & Dr. Gernot Starke.
 
 Introduction and Goals {#section-introduction-and-goals}
 ======================
+We would like to give the marketplace together a general understanding and definition.
+The targets are to be able to handle changes in the team quickly and to use strategic technologies and methodologies.
+
+Why is an architecture important? 
+Experiences?
+How to start and on which way?
+
 
 Requirements Overview {#_requirements_overview}
 ---------------------
