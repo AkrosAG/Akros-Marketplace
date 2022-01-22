@@ -21,6 +21,7 @@ import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
@@ -30,38 +31,34 @@ import com.vaadin.flow.router.RouteAlias;
 import ch.akros.marketplace.administration.dataservice.entity.Category;
 import ch.akros.marketplace.administration.layout.MainLayout;
 import ch.akros.marketplace.administration.service.CategoryService;
-import ch.akros.marketplace.administration.service.FieldTypeDefinitionService;
-import ch.akros.marketplace.administration.service.FieldTypeService;
 
 @PageTitle("Akros Administrator:Categories")
 @Route(value = "categories/:categoryId?/:action?(edit)", layout = MainLayout.class)
 @RouteAlias(value = "", layout = MainLayout.class)
 public class CategoryView extends Div implements BeforeEnterObserver {
   // path templates
-  private final static String        EDIT_CATEGORY_ROUTE_TEMPLATE = "categories/%d/edit";
+  private final static String EDIT_CATEGORY_ROUTE_TEMPLATE = "categories/%d/edit";
 
   // id for focus control
-  private final static String        TEXT_CONTROL_DESCRIPTION     = "TEXT_CONTROL_DESCRIPTION";
+  private final static String TEXT_CONTROL_DESCRIPTION     = "TEXT_CONTROL_DESCRIPTION";
 
   // path parameter
-  private final static String        PATH_CATEGORY_ID             = "categoryId";
+  private final static String PATH_CATEGORY_ID             = "categoryId";
 
   // services
-  private CategoryService            categoryService;
-  private FieldTypeService           fieldTypeService;
-  private FieldTypeDefinitionService fieldTypeDefinitionService;
+  private CategoryService     categoryService;
 
-  private Grid<Category>             grid                         = new Grid<>(Category.class, false);
+  private Grid<Category>      grid                         = new Grid<>(Category.class, false);
 
   // UI components
-  private NumberField                txtCategoryId;
-  private TextArea                   txtDescription;
-  private TextField                  txtShortDescription;
+  private NumberField         txtCategoryId;
+  private TextArea            txtDescription;
+  private TextField           txtShortDescription;
 
-  private Button                     btnAddCategory;
-  private Button                     btnEditFieldTypes;
-  private Button                     btnDelete;
-  private Button                     btnSave;
+  private Button              btnAddCategory;
+  private Button              btnEditFieldTypes;
+  private Button              btnDelete;
+  private Button              btnSave;
 
   public CategoryView(@Autowired CategoryService categoryService) {
     this.categoryService = categoryService;
@@ -222,11 +219,13 @@ public class CategoryView extends Div implements BeforeEnterObserver {
     txtDescription.setClassName("full-width");
     txtDescription.setRequired(true);
     txtDescription.setHeightFull();
+    txtDescription.setValueChangeMode(ValueChangeMode.LAZY);
     txtDescription.addValueChangeListener(listener);
 
     txtShortDescription = new TextField("shortDescription (Column: SHORT_DESCRIPTON)");
     txtShortDescription.setClassName("full-width");
     txtShortDescription.setRequired(true);
+    txtShortDescription.setValueChangeMode(ValueChangeMode.LAZY);
     txtShortDescription.addValueChangeListener(listener);
 
     formLayout.add(txtCategoryId, txtDescription, txtShortDescription);
@@ -237,7 +236,7 @@ public class CategoryView extends Div implements BeforeEnterObserver {
 
   private ValueChangeListener<ValueChangeEvent<?>> getUpdateSaveButtonValueChangeListener() {
     return e -> {
-      if (!txtDescription.isEmpty() && txtShortDescription.isEmpty()) {
+      if (!txtDescription.isEmpty() && !txtShortDescription.isEmpty()) {
         btnSave.setEnabled(true);
       }
       else {

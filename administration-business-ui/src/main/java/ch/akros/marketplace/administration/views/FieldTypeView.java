@@ -30,6 +30,7 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.TemplateRenderer;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
@@ -321,12 +322,14 @@ public class FieldTypeView extends Div implements BeforeEnterObserver {
     txtDescription.setClassName("full-width");
     txtDescription.setRequired(true);
     txtDescription.setHeightFull();
+    txtDescription.setValueChangeMode(ValueChangeMode.LAZY);
     txtDescription.addValueChangeListener(listener);
     txtDescription.setId(TEXT_CONTROL_DESCRIPTION);
 
     txtShortDescription = new TextField("shortDescription (Column: SHORT_DESCRIPTON)");
     txtShortDescription.setClassName("full-width");
     txtShortDescription.setRequired(true);
+    txtShortDescription.setValueChangeMode(ValueChangeMode.LAZY);
     txtShortDescription.addValueChangeListener(listener);
 
     comboFieldTypeDefinitions = new ComboBox<FieldTypeDefinition>("fieldTypeDefinitionId (Column: FIELD_TYPE_DEFINITION_ID)",
@@ -340,11 +343,13 @@ public class FieldTypeView extends Div implements BeforeEnterObserver {
     txtMinValue = new NumberField("minValue (Column: MIN_VALUE)");
     txtMinValue.setClassName("full-width");
     txtMinValue.setRequiredIndicatorVisible(true);
+    txtMinValue.setValueChangeMode(ValueChangeMode.LAZY);
     txtMinValue.addValueChangeListener(listener);
 
     txtMaxValue = new NumberField("maxValue (Column: MAX_VALUE)");
     txtMaxValue.setClassName("full-width");
     txtMaxValue.setRequiredIndicatorVisible(true);
+    txtMaxValue.setValueChangeMode(ValueChangeMode.LAZY);
     txtMaxValue.addValueChangeListener(listener);
 
     chkOffer = new Checkbox("offer (Column: OFFER)");
@@ -359,6 +364,7 @@ public class FieldTypeView extends Div implements BeforeEnterObserver {
     txtSortNumber = new NumberField("sortNumber (Column: SORT_NUMBER)");
     txtSortNumber.setClassName("full-width");
     txtSortNumber.setRequiredIndicatorVisible(true);
+    txtSortNumber.setValueChangeMode(ValueChangeMode.LAZY);
     txtSortNumber.addValueChangeListener(listener);
 
     formLayout.add(txtFieldTypeId,

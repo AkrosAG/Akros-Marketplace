@@ -25,6 +25,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
@@ -75,7 +76,6 @@ public class FieldTypeChooserView extends Div implements BeforeEnterObserver {
 
   private Button                 btnAddFieldTypeChoose;
   private Button                 btnBackToFieldTypes;
-  private Button                 btnFieldTypes;
   private Button                 btnDelete;
   private Button                 btnSave;
 
@@ -257,11 +257,13 @@ public class FieldTypeChooserView extends Div implements BeforeEnterObserver {
     txtDescription.setClassName("full-width");
     txtDescription.setRequired(true);
     txtDescription.addValueChangeListener(listener);
+    txtDescription.setValueChangeMode(ValueChangeMode.LAZY);
     txtDescription.setId(TEXT_CONTROL_DESCRIPTION);
 
     txtSortNumber = new NumberField("sortNumber (Column: SORT_NUMBER)");
     txtSortNumber.setClassName("full-width");
     txtSortNumber.setRequiredIndicatorVisible(true);
+    txtSortNumber.setValueChangeMode(ValueChangeMode.LAZY);
     txtSortNumber.addValueChangeListener(listener);
 
     formLayout.add(txtFieldTypeChooseId, txtDescription, txtSortNumber);
