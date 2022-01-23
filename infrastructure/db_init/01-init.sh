@@ -30,8 +30,8 @@ create table field_type
   category_id               integer not null,
   description               varchar(1000) not null,
   short_description         varchar(100) not null,
-  min_value                 integer not null,
-  max_value                 integer not null,
+  min_value                 integer,
+  max_value                 integer,
   sort_number               integer not null,
   required                  boolean default false not null,
   searchable                boolean default false not null,
@@ -150,12 +150,12 @@ insert into category (description, short_description) values ('Mitfahrgelegenhei
 -- Field Type
 insert into field_type (field_type_definition_id, category_id, description, short_description, min_value, max_value, sort_number, required, searchable, search, offer) values (2, 1, 'Titel', 'Titel', 1, 100, 1, true, false, true, true);
 insert into field_type (field_type_definition_id, category_id, description, short_description, min_value, max_value, sort_number, required, searchable, search, offer) values (3, 1, 'Beschreibung der Unterkunft', 'Beschreibung', 1, 1000, 2, true, false, true, true);
-insert into field_type (field_type_definition_id, category_id, description, short_description, min_value, max_value, sort_number, required, searchable, search, offer) values (11, 1, 'Frei ab Datum', 'Ab Datum', 0, 0, 3, true, true, true, true);
-insert into field_type (field_type_definition_id, category_id, description, short_description, min_value, max_value, sort_number, required, searchable, search, offer) values (11, 1, 'Frei bis Datum', 'Bis Datum', 0, 0, 4, false, false, true, true);
+insert into field_type (field_type_definition_id, category_id, description, short_description, min_value, max_value, sort_number, required, searchable, search, offer) values (11, 1, 'Frei ab Datum', 'Ab Datum', null, null, 3, true, true, true, true);
+insert into field_type (field_type_definition_id, category_id, description, short_description, min_value, max_value, sort_number, required, searchable, search, offer) values (11, 1, 'Frei bis Datum', 'Bis Datum', null, null, 4, false, false, true, true);
 insert into field_type (field_type_definition_id, category_id, description, short_description, min_value, max_value, sort_number, required, searchable, search, offer) values (1, 1, 'Anzahl Zimmer', 'Zimmer', 1, 10, 5, true, true, false, true);
 insert into field_type (field_type_definition_id, category_id, description, short_description, min_value, max_value, sort_number, required, searchable, search, offer) values (12, 1, 'Preis der Unterkunft', 'Preis', 1, 1000, 6, true, true, false, true);
 insert into field_type (field_type_definition_id, category_id, description, short_description, min_value, max_value, sort_number, required, searchable, search, offer) values (1, 1, 'Grösse der Unterkunft in qm', 'Grösse[qm]', 1, 1000, 7, true, true, false, true);
-insert into field_type (field_type_definition_id, category_id, description, short_description, min_value, max_value, sort_number, required, searchable, search, offer) values (5, 1, 'Art der Unterkunft', 'Art', 0, 0, 8, true, true, true, true);
+insert into field_type (field_type_definition_id, category_id, description, short_description, min_value, max_value, sort_number, required, searchable, search, offer) values (5, 1, 'Art der Unterkunft', 'Art', null, null, 8, true, true, true, true);
 
 -- Field Type Choose
 insert into field_type_choose (field_type_id, description, sort_number) values (8, 'Zimmer', 1);

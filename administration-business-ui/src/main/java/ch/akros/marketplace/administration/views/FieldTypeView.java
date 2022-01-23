@@ -37,6 +37,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 
+import ch.akros.marketplace.administration.constants.EFieldTypeDefinition;
 import ch.akros.marketplace.administration.dataservice.entity.Category;
 import ch.akros.marketplace.administration.dataservice.entity.FieldType;
 import ch.akros.marketplace.administration.dataservice.entity.FieldTypeDefinition;
@@ -130,13 +131,33 @@ public class FieldTypeView extends Div implements BeforeEnterObserver {
     if (fieldTypeId != null) {
       FieldType fieldType = fieldTypeService.findById(fieldTypeId);
 
-      if (fieldType != null) {
+      FieldTypeDefinition fieldTypeDefinition = fieldTypeDefinitionService.findById(fieldType.getFieldTypeDefinition()
+                                                                                             .getFieldTypeDefinitionId());
+
+      if (fieldType != null && fieldTypeDefinition != null) {
         txtFieldTypeId.setValue(fieldType.getFieldTypeId().doubleValue());
         txtDescription.setValue(fieldType.getDescription());
         txtShortDescription.setValue(fieldType.getShortDescription());
-        txtMinValue.setValue(fieldType.getMinValue().doubleValue());
-        txtMaxValue.setValue(fieldType.getMaxValue().doubleValue());
-        txtSortNumber.setValue(fieldType.getSortNumber().doubleValue());
+
+        if (needsMinMaxRange(fieldTypeDefinition)) {
+          txtMinValue.setEnabled(true);
+          txtMaxValue.setEnabled(true);
+          txtMinValue.setRequiredIndicatorVisible(true);
+          txtMaxValue.setRequiredIndicatorVisible(true);
+
+          txtMinValue.setValue(fieldType.getMinValue() != null ? fieldType.getMinValue().doubleValue() : null);
+          txtMaxValue.setValue(fieldType.getMaxValue() != null ? fieldType.getMaxValue().doubleValue() : null);
+        }
+        else {
+          txtMinValue.setEnabled(false);
+          txtMaxValue.setEnabled(false);
+          txtMinValue.setRequiredIndicatorVisible(false);
+          txtMaxValue.setRequiredIndicatorVisible(false);
+          txtMinValue.setValue(null);
+          txtMaxValue.setValue(null);
+        }
+
+        txtSortNumber.setValue(fieldType.getSortNumber() != null ? fieldType.getSortNumber().doubleValue() : null);
         chkOffer.setValue(fieldType.isOffer());
         chkSearch.setValue(fieldType.isSearch());
         chkRequired.setValue(fieldType.isRequired());
@@ -386,15 +407,34 @@ public class FieldTypeView extends Div implements BeforeEnterObserver {
 
   private ValueChangeListener<ValueChangeEvent<?>> getUpdateSaveButtonValueChangeListener() {
     return e -> {
-      if (!txtDescription.isEmpty() && !txtShortDescription.isEmpty() && !txtMinValue.isEmpty()
-          && !txtMaxValue.isEmpty() && !txtSortNumber.isEmpty() && !comboFieldTypeDefinitions.isEmpty())
-      {
-        btnSave.setEnabled(true);
+      boolean enableSave = !txtDescription.isEmpty() //
+                           && !txtShortDescription.isEmpty() //
+                           && !txtSortNumber.isEmpty() //
+                           && !comboFieldTypeDefinitions.isEmpty();
+
+      if (needsMinMaxRange(comboFieldTypeDefinitions.getValue())) {
+        enableSave |= !txtMinValue.isEmpty() && !txtMaxValue.isEmpty();
       }
-      else {
-        btnSave.setEnabled(false);
-      }
+
+      btnSave.setEnabled(enableSave);
     };
+  }
+
+  private boolean needsMinMaxRange(FieldTypeDefinition fieldTypeDefinition) {
+    if (fieldTypeDefinition == null) {
+      return false;
+    }
+
+    switch (EFieldTypeDefinition.values()[fieldTypeDefinition.getFieldTypeDefinitionId()]) {
+      case NUMBER:
+      case PRICE:
+      case TEXT_MULTI_LINE:
+      case TEXT_SINGLE_LINE:
+        return true;
+
+      default:
+        return false;
+    }
   }
 
   private Component createEditorButtons() {
