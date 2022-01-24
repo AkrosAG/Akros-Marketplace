@@ -5,7 +5,6 @@ RUN mvn dependency:go-offline
 
 COPY src /workdir/server/src
 COPY frontend /workdir/server/frontend
-COPY node_modules /workdir/server/node_modules
 RUN mvn install -DskipTests -Pproduction
 RUN mkdir  -p target/dependency
 WORKDIR /workdir/server/target/dependency
