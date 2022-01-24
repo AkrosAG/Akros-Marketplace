@@ -4,7 +4,6 @@ package ch.akros.marketplace.dataservice.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.akros.marketplace.api.SearchTopicApi;
@@ -20,16 +19,16 @@ public class SearchTopicController implements SearchTopicApi {
   private TopicService topicService;
 
   @Override
-  public ResponseEntity<TopicSearchListResponseDTO> searchTopicPost(TopicSearchRequestDTO topicSearchRequestDTO) {
+  public ResponseEntity<TopicSearchListResponseDTO> searchTopicGet(TopicSearchRequestDTO topicSearchRequestDTO) {
     try {
       log.debug("SaveTopicController.saveTopicPost() called");
 
       TopicSearchListResponseDTO topicSearchListResponseDTO = topicService.searchTopic(topicSearchRequestDTO);
-      return ResponseEntity.status(HttpStatus.OK).body(null);
+      return ResponseEntity.status(HttpStatus.OK).body(topicSearchListResponseDTO);
     }
     catch (Exception ex) {
       log.error(ex.getMessage(), ex);
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }
 }

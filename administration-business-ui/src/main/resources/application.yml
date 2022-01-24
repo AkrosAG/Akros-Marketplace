@@ -31,3 +31,4 @@ vaadin:
   whitelisted-packages: com.vaadin,org.vaadin,ch.akros.marketplace.administration
   pnpm: 
     enable: false
+

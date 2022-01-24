@@ -17,8 +17,8 @@ public class AkrosMarketplaceDataServiceApplication {
   private static final String POSTGRES_DB_HOST_ENV = "POSTGRES_DB_HOST";
 
   //HTTP port
-  @Value("${http.port}")
-  private int                 httpPort;
+//  @Value("${http.port}")
+//  private int                 httpPort;
 
   public static void main(String[] args) {
     SpringApplication application = new SpringApplication(AkrosMarketplaceDataServiceApplication.class);
@@ -26,18 +26,18 @@ public class AkrosMarketplaceDataServiceApplication {
     application.run(args);
   }
 
-  @Bean
-  public ServletWebServerFactory servletContainer() {
-    TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
-    tomcat.addAdditionalTomcatConnectors(createStandardConnector());
-    return tomcat;
-  }
-
-  private Connector createStandardConnector() {
-    Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-    connector.setPort(httpPort);
-    return connector;
-  }
+//  @Bean
+//  public ServletWebServerFactory servletContainer() {
+//    TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
+//    tomcat.addAdditionalTomcatConnectors(createStandardConnector());
+//    return tomcat;
+//  }
+//
+//  private Connector createStandardConnector() {
+//    Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+//    connector.setPort(httpPort);
+//    return connector;
+//  }
 
   @Bean
   public DataSource getPostgresDataSource() {

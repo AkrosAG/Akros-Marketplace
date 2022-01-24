@@ -4,7 +4,6 @@ package ch.akros.marketplace.dataservice.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.akros.marketplace.api.DeleteTopicApi;
@@ -18,16 +17,16 @@ public class DeleteTopicController implements DeleteTopicApi {
   private TopicService topicService;
 
   @Override
-  public ResponseEntity<Void> deleteTopicTopicIdGet(Long topicId) {
+  public ResponseEntity<Void> deleteTopicTopicIdDelete(Long topicId) {
     try {
       log.debug("DeleteTopicController.deleteTopicTopicIdGet() called");
 
       topicService.deleteTopic(topicId);
-      return ResponseEntity.status(HttpStatus.OK).body(null);
+      return ResponseEntity.status(HttpStatus.OK).build();
     }
     catch (Exception ex) {
       log.error(ex.getMessage(), ex);
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }
 }

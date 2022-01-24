@@ -26,5 +26,5 @@ server:
     key-store-type: PKCS12
   port: 8443
 
-http:
-  port: 8080
+#http:
+#  port: 8080

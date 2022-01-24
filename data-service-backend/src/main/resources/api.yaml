@@ -115,7 +115,7 @@ paths:
                 $ref: '#/components/schemas/TopicLoadResponseDTO'
 
   /deleteTopic/{topicId}:
-    get:
+    delete:
       summary: Delete a topic 
       description: Delete a topic
       parameters:
@@ -131,7 +131,7 @@ paths:
           description: OK
 
   /searchTopic:
-    post:
+    get:
       summary: Save a topic 
       description: Save a topic
       requestBody:
