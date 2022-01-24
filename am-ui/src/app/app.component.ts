@@ -1,25 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import { AuthStore } from './_services/auth.services';
-
-
+import {Component} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'mp-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements  OnInit {
+export class AppComponent {
+  title = 'Akros Marketplace';
+  public appLoaded: boolean = true;
 
-    constructor(public auth: AuthStore) {
-
-    }
-
-    ngOnInit() {
- 
-    }
-
-  logout() {
-    this.auth.logout();
+  constructor(private readonly translate: TranslateService) {
+    translate.setDefaultLang('de');
   }
-
 }

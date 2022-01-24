@@ -1,0 +1,29 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  height: 88vh;
+}
+
+.home-main {
+  background-color: #e5e5e5;
+  flex: 62;
+
+  .home-boxes-container {
+    height: 100%;
+    display: flex;
+
+    .home-box {
+      flex: 1;
+      padding: 4% 0%;
+
+      &.hidden {
+        visibility: hidden;
+      }
+    }
+  }
+}
+
+.home-bottom {
+  flex: 32;
+  border-bottom: 1px solid gray;
+}

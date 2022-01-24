@@ -1,0 +1,16 @@
+<div class="card">
+  <div *ngIf="showForm">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div
+        *ngFor="let formField of selectedCategorySearchFields"
+        class="form-row"
+      >
+        <mp-form-field [formField]="formField" [form]="form"></mp-form-field>
+      </div>
+
+      <div class="form-row" *ngIf="showForm">
+        <button type="submit" [disabled]="!form.valid">Search</button>
+      </div>
+    </form>
+  </div>
+</div>
