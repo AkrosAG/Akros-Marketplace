@@ -19,11 +19,9 @@ describe('NavbarComponent', () => {
     fixture.detectChanges();
   });
 
-  describe('method1', () => {
-    it('should ...', () => {
+  describe('NavbarComponent', () => {
+    it('should be created', () => {
       expect(component).toBeTruthy();
     });
-
-    it.todo('should ...');
   });
 });

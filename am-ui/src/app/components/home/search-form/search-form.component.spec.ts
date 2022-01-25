@@ -25,11 +25,9 @@ describe('SearchFormComponent', () => {
     formFieldControlService = TestBed.inject(FormFieldControlService);
   });
 
-  describe('method1', () => {
-    it('should ...', () => {
+  describe('SearchFormComponent', () => {
+    it('should be created', () => {
       expect(component).toBeTruthy();
     });
-
-    it.todo('should ...');
   });
 });

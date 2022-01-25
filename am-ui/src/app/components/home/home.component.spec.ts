@@ -47,12 +47,10 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
   });
 
-  describe('method1', () => {
-    it('should ...', () => {
+  describe('HomeComponent', () => {
+    it('should be created', () => {
       expect(component).toBeTruthy();
     });
-
-    it.todo('should ...');
   });
 });
 
