@@ -13,7 +13,7 @@
 - **stop**: docker-compose down
 
 ### Administration-Business-UI Configuration
-- **URL** : https://localhost:9443
+- **URL** : http://localhost:8080
 
 ### Reinitialize Rest-Service
 
@@ -24,3 +24,5 @@ To force rebuild procede the following steps
 - **show images**: docker images
 - **remove image**: docker image rm data-service-backend:latest
 
+### Script to Refresh and Restart all Containers
+- **clean_startup.sh**: Removes old Postgres data files. Removes docker images. Rebuild new containers.

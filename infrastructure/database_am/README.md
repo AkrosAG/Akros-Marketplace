@@ -1,7 +1,7 @@
-## Database only
+## Database Akros Marketplace
 
 - This command runs a preconfigured PostgreSQL database.
-- This is primary used for backend developers using a database to test their Rest-Service.
+- This is primary used for backend developers using a database to test their Rest-Service to the marketplace functionality used by the Service **data-service-backend**.
 
 ### Database Configuration
 - **user** : am
@@ -12,9 +12,9 @@
 
 ### PostgreSQL Data Files / Reinitialize Database
 
-The data files are stored in sub directory **../pg_data**. This directory is once created on first run and installs the required tables, views and initializes the data. 
+The data files are stored in sub directory **../pg_data_am**. This directory is once created on first run and installs the required tables, views and initializes the data. 
 
-To rebuild the database, shut the database down and delete the **../pg_data** directory. On next start the database will be reinitialized again.
+To rebuild the database, shut the database down and delete the **../pg_data_am** directory. On next start the database will be reinitialized again.
 
 The folder **../db_init** is used for initialization of the database.
 
@@ -33,6 +33,10 @@ The initialization will fail, if encoding of file **../db_init/01-init.sh** is n
 ### Start/Stop
 - **start**: docker-compose up
 - **stop**: docker-compose down
+
+
+### Clean Restart
+- **clean_startup.sh**: Use this shell script to reset the database to clean startup settings.
 
 
 ### Data Model

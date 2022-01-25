@@ -2,7 +2,7 @@ version: "3"
 services:
   postgres:
     image: postgres:14.1
-    hostname: postgres_db
+    hostname: postgres_am
     deploy:
       mode: global    
     environment:
@@ -10,7 +10,7 @@ services:
       - POSTGRES_PASSWORD=am
       - POSTGRES_DB=am
     volumes:
-      - "../pg_data:/var/lib/postgresql/data"
-      - "../db_init:/docker-entrypoint-initdb.d/"
+      - "../pg_data_am:/var/lib/postgresql/data"
+      - "../db_init_am:/docker-entrypoint-initdb.d/"
     ports:
       - "5432:5432"

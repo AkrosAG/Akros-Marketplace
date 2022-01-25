@@ -7,11 +7,11 @@ services:
     ports:
       - "8443:8443"
     environment:
-      - POSTGRES_DB_HOST=postgres_db
+      - POSTGRES_DB_HOST=marketplace_am_db
     networks:
       - spring-postgres
     depends_on:
-      - postgres
+      - postgres_am_db
 
   administration-business-ui:
     container_name: administration-business-ui
@@ -20,16 +20,16 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - POSTGRES_DB_HOST=postgres_db
+      - POSTGRES_DB_HOST=marketplace_am_db
     networks:
       - spring-postgres
     depends_on:
-      - postgres
+      - postgres_am_db
 
-  postgres:
+  postgres_am_db:
     image: postgres:14.1
-    container_name: marketplace_db
-    hostname: postgres_db
+    container_name: marketplace_am_db
+    hostname: postgres_am_db
     deploy:
       mode: global    
     environment:
@@ -37,10 +37,28 @@ services:
       - POSTGRES_PASSWORD=am
       - POSTGRES_DB=am
     volumes:
-      - "../pg_data:/var/lib/postgresql/data"
-      - "../db_init:/docker-entrypoint-initdb.d/"
+      - "../pg_data_am:/var/lib/postgresql/data"
+      - "../db_init_am:/docker-entrypoint-initdb.d/"
     ports:
       - "5432:5432"
+    networks:
+      - spring-postgres
+
+  postgres_user_db:
+    image: postgres:14.1
+    container_name: marketplace_user_db
+    hostname: marketplace_user_db
+    deploy:
+      mode: global    
+    environment:
+      - POSTGRES_USER=userdb
+      - POSTGRES_PASSWORD=userdb
+      - POSTGRES_DB=userdb
+    volumes:
+      - "../pg_data_userdb:/var/lib/postgresql/data"
+      - "../db_init_userdb:/docker-entrypoint-initdb.d/"
+    ports:
+      - "5433:5432"
     networks:
       - spring-postgres
 
