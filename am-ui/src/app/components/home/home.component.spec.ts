@@ -1,8 +1,7 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {HomeComponent} from './home.component';
 import {provideMockStore, MockStore} from '@ngrx/store/testing';
-import {CategoriesListComponent} from './categories-list/categories-list.component';
 import {SearchFormComponent} from './search-form/search-form.component';
 import {
   TranslateFakeLoader,
@@ -50,6 +49,13 @@ describe('HomeComponent', () => {
   describe('HomeComponent', () => {
     it('should be created', () => {
       expect(component).toBeTruthy();
+    });
+
+    it('should dispatch loadCategories action upon category selection', () => {
+      const store = TestBed.inject(MockStore);
+      store.dispatch = jest.fn();
+      component.onCategorySelected(1);
+      expect(store.dispatch).toHaveBeenCalled();
     });
   });
 });
