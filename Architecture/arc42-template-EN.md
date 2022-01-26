@@ -25,7 +25,8 @@ Requirements Overview {#_requirements_overview}
 ---------------------
 
 
-This document describes the Akros Marketplace, short AMP, which is an application for companies internal advertising.
+This document describes the Akros Marketplace, short AMP, which is an application for companies internal advertising. Akros Marketplace is used for search and advertise an appartement, a room a roommate. The application can be expanded to include additional categories to search and advertise e.g. ridesharing.
+
 
 Quality Goals {#_quality_goals}
 -------------
