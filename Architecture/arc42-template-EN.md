@@ -48,6 +48,10 @@ System Scope and Context
 Business Context
 ----------------
 
+The following diagram shows the most important AMP functions as a business flow. Colored boxes stand for the features in scope (going to be specifying and develop next), white ones show the futureoriented functions.
+
+![image](https://user-images.githubusercontent.com/96523998/151204101-001d9718-ea7e-49ae-9e40-d419c6b131c4.png)
+
 **\<optionally: Explanation of external domain interfaces\>**
 
 Technical Context
