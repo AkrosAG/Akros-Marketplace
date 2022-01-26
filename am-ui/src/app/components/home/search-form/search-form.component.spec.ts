@@ -7,7 +7,6 @@ import {SearchFormComponent} from './search-form.component';
 describe('SearchFormComponent', () => {
   let component: SearchFormComponent;
   let fixture: ComponentFixture<SearchFormComponent>;
-  let formFieldControlService: FormFieldControlService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -22,8 +21,6 @@ describe('SearchFormComponent', () => {
     fixture = TestBed.createComponent(SearchFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
-    formFieldControlService = TestBed.inject(FormFieldControlService);
   });
 
   describe('SearchFormComponent', () => {
