@@ -1,7 +1,8 @@
 export const environment = {
   production: true,
   ownUrl: 'http://localhost:4200',
-  apiUrl: 'http://localhost:8443',
+  apiUrl: 'https://localhost:8443',
+  authUrl: 'http://localhost:8080',
   signOn: {
     authority:
       'https://login.microsoftonline.com/45a8141c-94c3-4fde-9cf3-0cfcc10ad529',
