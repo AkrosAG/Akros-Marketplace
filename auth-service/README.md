@@ -20,7 +20,7 @@ This module serves the authentication of the users.
 
 - Java 11 or higher
 - Maven 3.3 or higher
-- Docker (required to run preconfigured database)
+- Docker  4.3.2 or higher (required to run preconfigured database)
 
 
 ## Build and Test
