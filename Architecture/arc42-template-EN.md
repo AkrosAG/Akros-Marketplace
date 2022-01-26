@@ -24,6 +24,9 @@ How to start and on which way?
 Requirements Overview {#_requirements_overview}
 ---------------------
 
+
+This document describes the Akros Marketplace, short AMP, which is an application for companies internal advertising.
+
 Quality Goals {#_quality_goals}
 -------------
 
