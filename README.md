@@ -2,9 +2,9 @@
 
 ## README
 
-Akros Marketplace, short AMP, is an application for companies internal advertising and is used for search and advertise an appartement, a room a roommate. The application is  expandable and can include additional categories e.g. to search and advertise ride- or clothes-sharing, rent a car, et cetera. The project is hosted on Github public. Open source license has to be defined (suggestion: Apache License).
+Akros Marketplace, short AMP, is an application for companies internal advertising and is used for search and advertise an appartement, a room a roommate. The application is  expandable and can include additional categories e.g. to search and advertise ride- or clothes-sharing, rent a car, et cetera. 
 
-Public means that the code is an AKROS business card. Quality and state of the art development is essential.
+The project is hosted on Github public. Open source license has to be defined (suggestion: Apache License). Public means that the code is an AKROS business card. Quality and state of the art development is essential.
 
 The application should serve to train and practice the Akros employee for current and future development processes, technologies and "best practices".
 
