@@ -23,6 +23,7 @@ export class SearchFormComponent implements OnInit {
     this.showForm = Object.keys(this.form.value).length === 0 ? false : true;
   }
 
+  /* istanbul ignore next */
   onSubmit() {
     this.payLoad = JSON.stringify(this.form.getRawValue());
     console.log(this.payLoad);
