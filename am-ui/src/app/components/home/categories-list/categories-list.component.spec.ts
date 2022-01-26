@@ -3,17 +3,10 @@ import {
   TranslateFakeLoader,
   TranslateLoader,
   TranslateModule,
-  TranslateService,
 } from '@ngx-translate/core';
-import {Observable, of} from 'rxjs';
 import {Category} from 'src/app/data/models/Category';
 import {CategoriesListComponent} from './categories-list.component';
 
-class TranslateServiceStub {
-  public get(key: any): any {
-    return of(key);
-  }
-}
 describe('CategoriesListComponent', () => {
   let component: CategoriesListComponent;
   let fixture: ComponentFixture<CategoriesListComponent>;

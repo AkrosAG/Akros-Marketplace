@@ -13,7 +13,6 @@ import {Category} from 'src/app/data/models/Category';
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  let store: MockStore;
 
   const initialState = {
     categories: [],
