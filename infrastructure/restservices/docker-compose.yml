@@ -1,9 +1,9 @@
 version: "3"
 services:
-  data-service-backend:
-    container_name: data-service-backend
+  marketplace-service:
+    container_name: marketplace-service
     build:
-      context: ../../data-service-backend
+      context: ../../marketplace-service
     ports:
       - "8443:8443"
     environment:
@@ -13,10 +13,10 @@ services:
     depends_on:
       - postgres_am_db
 
-  administration-business-ui:
-    container_name: administration-business-ui
+  admin-ui:
+    container_name: admin-ui
     build:
-      context: ../../administration-business-ui
+      context: ../../admin-ui
     ports:
       - "8080:8080"
     environment:
@@ -28,7 +28,7 @@ services:
 
   postgres_am_db:
     image: postgres:14.1
-    container_name: marketplace_am_db
+    container_name: postgres_am_db
     hostname: postgres_am_db
     deploy:
       mode: global    
@@ -46,8 +46,8 @@ services:
 
   postgres_user_db:
     image: postgres:14.1
-    container_name: marketplace_user_db
-    hostname: marketplace_user_db
+    container_name: postgres_user_db
+    hostname: postgres_user_db
     deploy:
       mode: global    
     environment:

@@ -4,7 +4,7 @@
 
 For Java-Backend-Developers start only the PostGreSQL database to develop the Rest Services.
 
-- **database_am**: Akros Marketplace Database for data-service-backend.
+- **database_am**: Akros Marketplace Database for marketplace-service.
 - **database_userdb**: Authentification and Authorization Database for auth-backend.
 
 
