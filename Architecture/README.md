@@ -88,7 +88,7 @@ Contained Building Blocks
 
 :   *\<Description of contained building block (black boxes)\>*
 
-client-ui : allows the user to interact with the marketplace App. He can search , add adds ans also make a login.
+client-ui : allows the user to interact with the marketplace App. He can search , add ads ans also make a login.
 
 admin-ui: This modules configures all dynamic parameter of the marketplace.
 
