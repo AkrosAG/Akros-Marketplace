@@ -1,18 +1,8 @@
-**About arc42**
-
-arc42, the Template for documentation of software and system
-architecture.
-
-By Dr. Gernot Starke, Dr. Peter Hruschka and contributors.
-
-Template Revision: 7.0 EN (based on asciidoc), January 2017
-
-© We acknowledge that this document uses material from the arc 42
-architecture template, <http://www.arc42.de>. Created by Dr. Peter
-Hruschka & Dr. Gernot Starke.
-
-Introduction and Goals {#section-introduction-and-goals}
+Introduction and Goals
 ======================
+The goal is to create a marketplace for employees of Akros AG. The marketplace should employees allow to create offers, create 
+search requests and search for topics/ads in the marketplace.
+
 We would like to give the marketplace together a general understanding and definition.
 The targets are to be able to handle changes in the team quickly and to use strategic technologies and methodologies.
 
@@ -21,57 +11,62 @@ Experiences?
 How to start and on which way?
 
 
-Requirements Overview {#_requirements_overview}
+Requirements Overview
 ---------------------
 
 This document describes the Akros Marketplace, short AMP, which is an application for companies internal advertising and is used for search and advertise an appartement, a room a roommate. The application should be expandable to include additional categories to search and advertise e.g. ride- or clothes-sharing, rent a car, et cetera.
 
 
-Quality Goals {#_quality_goals}
+Quality Goals
 -------------
+
+To be filled after MVP released.
+
 
 Stakeholders {#_stakeholders}
 ------------
 
-+-------------+---------------------------+---------------------------+
-| Role/Name   | Contact                   | Expectations              |
-+=============+===========================+===========================+
-| *           | *\<Contact-1\>*           | *\<Expectation-1\>*       |
-| \<Role-1\>* |                           |                           |
-+-------------+---------------------------+---------------------------+
-| *           | *\<Contact-2\>*           | *\<Expectation-2\>*       |
-| \<Role-2\>* |                           |                           |
-+-------------+---------------------------+---------------------------+
+- Jan Richter: Developer
+- Berthold Talla: Developer
+- Cristian Ayerbe: Developer
+- Stefan Le-Mingh: Developer
+- Martin Dobrev: Developer
+- Hermann Kamdoum: Developer
+- Irina Finger: Business Analyst
+- Timmy Aeberli: Business Analyst
+- Iliyan Kostev: Designer
+- Andrè Hirter: Maintainer
+- Heinz Lätsch: Maintainer
 
-Architecture Constraints {#section-architecture-constraints}
+Architecture Constraints
 ========================
 
-System Scope and Context {#section-system-scope-and-context}
+
+System Scope and Context
 ========================
 
-Business Context {#_business_context}
+Business Context
 ----------------
 
-**\<Diagram or Table\>**
+The following diagram shows the most important AMP functions as a business flow. Colored boxes stand for the features in scope (going to be specifying and develop next), white ones show the futureoriented functions.
+
+![image](https://user-images.githubusercontent.com/96523998/151204101-001d9718-ea7e-49ae-9e40-d419c6b131c4.png)
 
 **\<optionally: Explanation of external domain interfaces\>**
 
-Technical Context {#_technical_context}
+Technical Context
 -----------------
 
-**\<Diagram or Table\>**
+![Architacture Diagram](am-architechture.PNG)
 
-**\<optionally: Explanation of technical interfaces\>**
 
-**\<Mapping Input/Output to Channels\>**
-
-Solution Strategy {#section-solution-strategy}
+Solution Strategy
 =================
 
-Building Block View {#section-building-block-view}
+Building Block View
 ===================
 
-Whitebox Overall System {#_whitebox_overall_system}
+Whitebox Overall System
 -----------------------
 
 ***\<Overview Diagram\>***
@@ -237,8 +232,10 @@ Quality Tree {#_quality_tree}
 Quality Scenarios {#_quality_scenarios}
 -----------------
 
-Risks and Technical Debts {#section-technical-risks}
+Risks and Technical Debts
 =========================
+
+To be filled after MVP released.
 
 Glossary {#section-glossary}
 ========
