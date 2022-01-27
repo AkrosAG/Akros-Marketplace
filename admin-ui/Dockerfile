@@ -12,11 +12,11 @@ RUN jar -xf ../*.jar
 
 FROM openjdk:11-jre-slim
 
-EXPOSE 8080 8081
+EXPOSE 9090
 
 VOLUME /tmp
 ARG DEPENDENCY=/workdir/server/target/dependency
 COPY --from=builder ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=builder ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=builder ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","ch.akros.marketplace.administration.AkrosMarketplaceAdministrationApplication"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","ch.akros.marketplace.administration.AdminUIApplication"]

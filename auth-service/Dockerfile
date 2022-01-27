@@ -4,19 +4,18 @@ COPY pom.xml /workdir/server/pom.xml
 RUN mvn dependency:go-offline
 
 COPY src /workdir/server/src
-COPY frontend /workdir/server/frontend
-RUN mvn install -DskipTests -Pproduction
+RUN mvn install -DskipTests
 RUN mkdir  -p target/dependency
 WORKDIR /workdir/server/target/dependency
 RUN jar -xf ../*.jar
 
 FROM openjdk:11-jre-slim
 
-EXPOSE 8080 8081
+EXPOSE 8080 8443
 
 VOLUME /tmp
 ARG DEPENDENCY=/workdir/server/target/dependency
 COPY --from=builder ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=builder ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=builder ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","ch.akros.marketplace.administration.AkrosMarketplaceAdministrationApplication"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","ch.akros.am.authservice.AuthServiceApplication"]

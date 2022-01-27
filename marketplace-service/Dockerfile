@@ -18,4 +18,4 @@ ARG DEPENDENCY=/workdir/server/target/dependency
 COPY --from=builder ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=builder ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=builder ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","ch.akros.marketplace.dataservice.AkrosMarketplaceDataServiceApplication"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","ch.akros.marketplace.service.MarketplaceServiceApplication"]

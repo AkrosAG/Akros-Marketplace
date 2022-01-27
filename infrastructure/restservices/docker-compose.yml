@@ -1,30 +1,48 @@
-version: "3"
+version: "3.9"
+
 services:
   marketplace-service:
     container_name: marketplace-service
     build:
       context: ../../marketplace-service
     ports:
-      - "8443:8443"
+      - 8443:8443
     environment:
-      - POSTGRES_DB_HOST=marketplace_am_db
+      - POSTGRES_AM_DB_URL=jdbc:postgresql://postgres_am_db:5432/am
     networks:
-      - spring-postgres
+      marketplacenet:
     depends_on:
-      - postgres_am_db
+      postgres_am_db:
+        condition: service_healthy
+
+  auth-service:
+    container_name: auth-service
+    build:
+      context: ../../auth-service
+    ports:
+      - 18080:8080
+      - 18443:8443
+    environment:
+      - POSTGRES_USER_DB_URL=jdbc:postgresql://postgres_am_db:5432/am
+    networks:
+      marketplacenet:
+    depends_on:
+      postgres_user_db:
+        condition: service_healthy
 
   admin-ui:
     container_name: admin-ui
     build:
       context: ../../admin-ui
     ports:
-      - "8080:8080"
+      - 9090:9090
     environment:
-      - POSTGRES_DB_HOST=marketplace_am_db
+      - POSTGRES_AM_DB_URL=jdbc:postgresql://postgres_am_db:5432/am
     networks:
-      - spring-postgres
+      marketplacenet:
     depends_on:
-      - postgres_am_db
+      postgres_am_db:
+        condition: service_healthy
 
   postgres_am_db:
     image: postgres:14.1
@@ -40,9 +58,16 @@ services:
       - "../pg_data_am:/var/lib/postgresql/data"
       - "../db_init_am:/docker-entrypoint-initdb.d/"
     ports:
-      - "5432:5432"
+      - 5432:5432
     networks:
-      - spring-postgres
+      marketplacenet:
+        aliases:
+          - postgres_am_db
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "am", "-U", "am" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   postgres_user_db:
     image: postgres:14.1
@@ -58,9 +83,16 @@ services:
       - "../pg_data_userdb:/var/lib/postgresql/data"
       - "../db_init_userdb:/docker-entrypoint-initdb.d/"
     ports:
-      - "5433:5432"
+      - 5433:5432
     networks:
-      - spring-postgres
+      marketplacenet:
+        aliases:
+          - postgres_user_db
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "userdb", "-U", "userdb" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
-  spring-postgres:
+  marketplacenet:
