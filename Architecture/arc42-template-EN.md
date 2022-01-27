@@ -32,7 +32,7 @@ Stakeholders {#_stakeholders}
 - Stefan Le-Mingh: Developer
 - Martin Dobrev: Developer
 - Hermann Kamdoum: Developer
-- Irina Finger: Business Analyst
+- Irina Finger: Product Owner
 - Timmy Aeberli: Business Analyst
 - Iliyan Kostev: Designer
 - Andrè Hirter: Maintainer
@@ -48,9 +48,9 @@ System Scope and Context
 Business Context
 ----------------
 
-The following diagram shows the most important AMP functions as a business flow. Colored boxes stand for the features in scope (going to be specifying and develop next), white ones show the futureoriented functions.
+The following diagram shows the most important AMP functions as a business flow. Colored boxes stand for the features in scope (going to be specify and develop next), white ones show the futureoriented functions.
 
-![image](https://user-images.githubusercontent.com/96523998/151204101-001d9718-ea7e-49ae-9e40-d419c6b131c4.png)
+![image](https://user-images.githubusercontent.com/96523998/151316435-c7438d89-6e3d-46df-b0cb-114685d2700b.png)
 
 **\<optionally: Explanation of external domain interfaces\>**
 
