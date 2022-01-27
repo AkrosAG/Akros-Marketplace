@@ -62,7 +62,7 @@ The following diagram shows the most important AMP functions as a business flow.
 Technical Context
 -----------------
 
-![Architacture Diagram](am-architechture.PNG)
+
 
 
 Solution Strategy
@@ -81,6 +81,8 @@ Motivation
 :   *\<text explanation\>*
 
 Contained Building Blocks
+
+![Architacture Diagram](am-architechture.PNG)
 
 :   *\<Description of contained building block (black boxes)\>*
 
