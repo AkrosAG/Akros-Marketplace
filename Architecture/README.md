@@ -84,7 +84,7 @@ Motivation
 
 Contained Building Blocks
 
-![Architacture Diagram](am-architechture.PNG)
+![Architacture Diagram](am-architecture.PNG)
 
 :   *\<Description of contained building block (black boxes)\>*
 
