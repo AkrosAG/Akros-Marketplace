@@ -57,7 +57,7 @@ Business Context
 
 The following diagram shows the most important AMP functions as a business flow. Colored boxes stand for the features in scope (going to be specify and develop next), white ones show the futureoriented functions.
 
-![image](https://user-images.githubusercontent.com/96523998/151316435-c7438d89-6e3d-46df-b0cb-114685d2700b.png)
+![image](https://user-images.githubusercontent.com/96523998/151372519-99054f96-63d0-4bc6-843e-d1bc816ff4cb.png)
 
 **\<optionally: Explanation of external domain interfaces\>**
 
@@ -170,7 +170,7 @@ Runtime View {#section-runtime-view}
 \<Runtime Scenario 1\> {#__runtime_scenario_1}
 ----------------------
 
--   *\<insert runtime diagram or textual description of the scenario\>*
+-   Create an accommodation ad
 
 -   *\<insert description of the notable aspects of the interactions
     between the building block instances depicted in this diagram.\>*
@@ -178,11 +178,19 @@ Runtime View {#section-runtime-view}
 \<Runtime Scenario 2\> {#__runtime_scenario_2}
 ----------------------
 
+- Delete an accommodation ad
+
 ... {#_}
 ---
 
+\<Runtime Scenario 3\> {#__runtime_scenario_3}
+----------------------
+
+- Search for accommodation
+
 \<Runtime Scenario n\> {#__runtime_scenario_n}
 ----------------------
+
 
 Deployment View {#section-deployment-view}
 ===============
