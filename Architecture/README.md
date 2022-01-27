@@ -64,8 +64,9 @@ Stakeholders {#_stakeholders}
 - Irina Finger: Product Owner
 - Timmy Aeberli: Business Analyst
 - Iliyan Kostev: Designer
-- Andrè Hirter: Maintainer
+- André Hirter: Maintainer
 - Heinz Lätsch: Maintainer
+- Thomas Kneubühl: Sponsor
 
 Architecture Constraints
 ========================
