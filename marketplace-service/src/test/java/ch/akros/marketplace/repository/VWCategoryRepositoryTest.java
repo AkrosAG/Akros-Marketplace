@@ -11,12 +11,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.akros.marketplace.dataservice.AkrosMarketplaceDataServiceApplication;
-import ch.akros.marketplace.dataservice.entity.VWCategory;
-import ch.akros.marketplace.dataservice.repository.VWCategoryRepository;
+import ch.akros.marketplace.service.MarketplaceServiceApplication;
+import ch.akros.marketplace.service.entity.VWCategory;
+import ch.akros.marketplace.service.repository.VWCategoryRepository;
 
 @SpringBootTest
-@ContextConfiguration(classes = AkrosMarketplaceDataServiceApplication.class)
+@ContextConfiguration(classes = MarketplaceServiceApplication.class)
 @Transactional
 public class VWCategoryRepositoryTest {
   @Autowired

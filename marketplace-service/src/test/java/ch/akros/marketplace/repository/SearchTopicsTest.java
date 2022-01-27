@@ -20,19 +20,19 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.akros.marketplace.api.model.TopicSearchFieldTypeValuesRequestDTO;
 import ch.akros.marketplace.api.model.TopicSearchListResponseDTO;
 import ch.akros.marketplace.api.model.TopicSearchRequestDTO;
-import ch.akros.marketplace.dataservice.AkrosMarketplaceDataServiceApplication;
-import ch.akros.marketplace.dataservice.constants.EFieldTypeDefinition;
-import ch.akros.marketplace.dataservice.entity.FieldType;
-import ch.akros.marketplace.dataservice.entity.Topic;
-import ch.akros.marketplace.dataservice.entity.TopicValue;
-import ch.akros.marketplace.dataservice.entity.VWCategory;
-import ch.akros.marketplace.dataservice.repository.FieldTypeRepository;
-import ch.akros.marketplace.dataservice.repository.TopicRepository;
-import ch.akros.marketplace.dataservice.repository.VWCategoryRepository;
-import ch.akros.marketplace.dataservice.service.TopicService;
+import ch.akros.marketplace.service.MarketplaceServiceApplication;
+import ch.akros.marketplace.service.constants.EFieldTypeDefinition;
+import ch.akros.marketplace.service.entity.FieldType;
+import ch.akros.marketplace.service.entity.Topic;
+import ch.akros.marketplace.service.entity.TopicValue;
+import ch.akros.marketplace.service.entity.VWCategory;
+import ch.akros.marketplace.service.repository.FieldTypeRepository;
+import ch.akros.marketplace.service.repository.TopicRepository;
+import ch.akros.marketplace.service.repository.VWCategoryRepository;
+import ch.akros.marketplace.service.service.TopicService;
 
 @SpringBootTest
-@ContextConfiguration(classes = AkrosMarketplaceDataServiceApplication.class)
+@ContextConfiguration(classes = MarketplaceServiceApplication.class)
 @Transactional
 public class SearchTopicsTest {
   @Autowired

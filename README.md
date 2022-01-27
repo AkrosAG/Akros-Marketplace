@@ -11,7 +11,7 @@ The application should serve
 - to assess the candidates in the hiring process.
 
 ## Folder Organisation
-1. **datamodel**: Description of the data model for the market place.
+1. **datamodel**: Description of the data model for the market place of the database **postgres_am_db**.
 2. **infrastructure**: How to run this project in different container model configurations.
 	- **database_only**: Initializes and starts the database locally for Rest Service Backend developers.
 	- **restservices**: Initializes and starts the database locally and run the Rest Service Backend for frontend developers.

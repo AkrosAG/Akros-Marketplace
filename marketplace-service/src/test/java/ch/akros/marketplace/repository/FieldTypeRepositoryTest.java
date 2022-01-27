@@ -7,13 +7,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.akros.marketplace.dataservice.AkrosMarketplaceDataServiceApplication;
-import ch.akros.marketplace.dataservice.entity.Category;
-import ch.akros.marketplace.dataservice.repository.CategoryRepository;
+import ch.akros.marketplace.service.MarketplaceServiceApplication;
+import ch.akros.marketplace.service.entity.Category;
+import ch.akros.marketplace.service.repository.CategoryRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
-@ContextConfiguration(classes = AkrosMarketplaceDataServiceApplication.class)
+@ContextConfiguration(classes = MarketplaceServiceApplication.class)
 @Slf4j
 @Transactional
 public class FieldTypeRepositoryTest {

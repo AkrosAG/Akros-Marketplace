@@ -13,20 +13,20 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.akros.marketplace.dataservice.AkrosMarketplaceDataServiceApplication;
-import ch.akros.marketplace.dataservice.constants.EFieldTypeDefinition;
-import ch.akros.marketplace.dataservice.entity.Advertiser;
-import ch.akros.marketplace.dataservice.entity.Category;
-import ch.akros.marketplace.dataservice.entity.FieldType;
-import ch.akros.marketplace.dataservice.entity.Topic;
-import ch.akros.marketplace.dataservice.entity.TopicValue;
-import ch.akros.marketplace.dataservice.repository.AdvertiserRepository;
-import ch.akros.marketplace.dataservice.repository.CategoryRepository;
-import ch.akros.marketplace.dataservice.repository.FieldTypeRepository;
-import ch.akros.marketplace.dataservice.repository.TopicRepository;
+import ch.akros.marketplace.service.MarketplaceServiceApplication;
+import ch.akros.marketplace.service.constants.EFieldTypeDefinition;
+import ch.akros.marketplace.service.entity.Advertiser;
+import ch.akros.marketplace.service.entity.Category;
+import ch.akros.marketplace.service.entity.FieldType;
+import ch.akros.marketplace.service.entity.Topic;
+import ch.akros.marketplace.service.entity.TopicValue;
+import ch.akros.marketplace.service.repository.AdvertiserRepository;
+import ch.akros.marketplace.service.repository.CategoryRepository;
+import ch.akros.marketplace.service.repository.FieldTypeRepository;
+import ch.akros.marketplace.service.repository.TopicRepository;
 
 @SpringBootTest
-@ContextConfiguration(classes = AkrosMarketplaceDataServiceApplication.class)
+@ContextConfiguration(classes = MarketplaceServiceApplication.class)
 @Transactional
 public class AddTopicsTest {
 	private final static int ADD_COUNT_OFFERS = 100;
