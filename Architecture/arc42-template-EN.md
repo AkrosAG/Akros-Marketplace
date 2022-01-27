@@ -32,7 +32,7 @@ Stakeholders {#_stakeholders}
 - Stefan Le-Mingh: Developer
 - Martin Dobrev: Developer
 - Hermann Kamdoum: Developer
-- Irina Finger: Business Analyst
+- Irina Finger: Product Owner
 - Timmy Aeberli: Business Analyst
 - Iliyan Kostev: Designer
 - Andrè Hirter: Maintainer
