@@ -18,10 +18,10 @@ This document describes the Akros Marketplace, short AMP, which is an applicatio
 
 The application should serve
 
-to train and practice the Akros employee for current and future development processes, technologies and "best practices",
-to assess the candidates in the hiring process.
+ - to train and practice the Akros employee for current and future development processes, technologies and "best practices"
+ - to assess the candidates in the hiring process.
 
-![image](https://user-images.githubusercontent.com/96523998/151337700-dd5b36d5-4c2e-4c10-8285-05a3cb6a38a1.png)
+![image](https://user-images.githubusercontent.com/96523998/151341560-63c6fb3c-dc8e-4613-8931-23542cec4a77.png)
 
 
 Quality Goals
