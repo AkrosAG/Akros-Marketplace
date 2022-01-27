@@ -92,13 +92,13 @@ client-ui : allows the user to interact with the marketplace App. He can search 
 
 admin-ui: This modules configures all dynamic parameter of the marketplace.
 
-marketplace-service : This module serves the Rest-Services for the UI. 
+marketplace-service : serves the Rest-Services for the UI. 
 
-auth-service: This module serves the authentication of the users.
+auth-service: serves the authentication of the users.
 
-postgres_user_db: This Postgres database is used to store user and Accountdata.
+postgres_user_db: is used to store user and Accountdata.
 
-postgres_am_db: This Database is used to store marketpllace ads and configdata. 
+postgres_am_db: is used to store marketpllace ads and configdata. 
 
 Important Interfaces
 
