@@ -1,4 +1,3 @@
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {NavbarComponent} from './navbar.component';
 
@@ -19,11 +18,9 @@ describe('NavbarComponent', () => {
     fixture.detectChanges();
   });
 
-  describe('method1', () => {
-    it('should ...', () => {
+  describe('NavbarComponent', () => {
+    it('should be created', () => {
       expect(component).toBeTruthy();
     });
-
-    it.todo('should ...');
   });
 });

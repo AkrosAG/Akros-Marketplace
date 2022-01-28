@@ -1,0 +1,16 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:14.1
+    hostname: postgres_userdb
+    deploy:
+      mode: global    
+    environment:
+      - POSTGRES_USER=userdb
+      - POSTGRES_PASSWORD=userdb
+      - POSTGRES_DB=userdb
+    volumes:
+      - "../pg_data_userdb:/var/lib/postgresql/data"
+      - "../db_init_userdb:/docker-entrypoint-initdb.d/"
+    ports:
+      - "5433:5432"

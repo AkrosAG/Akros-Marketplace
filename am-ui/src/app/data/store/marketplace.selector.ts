@@ -10,6 +10,7 @@ export const getCategories = createSelector(
   state => state.categories
 );
 
+/* istanbul ignore next */
 export const getCategorySearchFields = createSelector(
   getMarketplaceState,
   state => state.selectedCategorySearchFields

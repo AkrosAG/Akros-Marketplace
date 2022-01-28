@@ -9,16 +9,13 @@ import {Router} from '@angular/router';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  constructor(
-    // private fb: FormBuilder,
-    // private router: Router,
-    public auth: AuthStore
-  ) {}
+  constructor(private router: Router, public auth: AuthStore) {}
 
   public navigateHome(): void {
     console.log('GO HOME');
   }
 
+  /* istanbul ignore next */
   public userMenu(): void {
     console.log('SHOW USER MENU - Currently just do Login');
     this.login(OAuthProviderEnum.AKROSAD);
