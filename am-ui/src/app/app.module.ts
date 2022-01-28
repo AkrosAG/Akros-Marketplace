@@ -39,6 +39,7 @@ import {CategoriesService} from './data/services/categories.service';
 import {RestHelperService} from './utils/restHelperService';
 import {FormFieldControlService} from './components/shared/form/form-field-control.service';
 import {FormFieldsBuilderService} from './utils/formFieldsBuilderService';
+import {UserService} from './data/services/login/user.service';
 
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
@@ -114,7 +115,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     RestHelperService,
     FormFieldControlService,
     FormFieldsBuilderService,
-
+    UserService,
     AuthGuard,
     {
       provide: LOCALE_ID,

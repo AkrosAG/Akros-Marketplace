@@ -1,3 +1,4 @@
+import {environment} from 'src/environments/environment';
 import {FieldTypeResponse} from './../models/FieldTypeResponse';
 import {RestHelperService} from './../../utils/restHelperService';
 import {Category} from '../models/Category';
@@ -26,7 +27,7 @@ export class CategoriesService {
 
   public getCategories(): Observable<Category[]> {
     return this.httpClient
-      .get<Category[]>('api/listCategories', {
+      .get<Category[]>('/api/listCategories/', {
         headers: this.defaultHeaders,
         // withCredentials: this.withCredentials,
       })
