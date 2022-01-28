@@ -1,4 +1,3 @@
-import {environment} from 'src/environments/environment';
 import {FieldTypeResponse} from './../models/FieldTypeResponse';
 import {RestHelperService} from './../../utils/restHelperService';
 import {Category} from '../models/Category';

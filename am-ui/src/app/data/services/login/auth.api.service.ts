@@ -1,4 +1,6 @@
-import {environment} from 'src/environments/environment';
+/* istanbul ignore file */
+
+import {environment} from './../../../../environments/environment';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 

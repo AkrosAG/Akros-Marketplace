@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "jest --coverage",
+    "clear_jest": "jest --clearCache",
     "lint": "npm run lint:angular && npm run lint:typescript && npm run lint:style",
     "lint:angular": "ng lint",
     "lint:typescript": "gts lint",

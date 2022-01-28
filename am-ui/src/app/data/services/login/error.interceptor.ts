@@ -1,4 +1,4 @@
-import {AuthStore} from 'src/app/data/services/login/auth.services';
+import {AuthStore} from 'src/app/data/services/login/auth.service';
 import {Injectable} from '@angular/core';
 import {
   HttpRequest,

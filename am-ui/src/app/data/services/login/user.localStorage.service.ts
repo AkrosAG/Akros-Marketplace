@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 
@@ -12,8 +14,8 @@ export class UserLocalStorageService {
 
   async storeData(data: any) {
     localStorage.setItem(AUTH_DATA, JSON.stringify(data));
-    const newData = await this.getData();
-    return this.router.navigate(['home'], newData);
+    // const newData = await this.getData();
+    // return this.router.navigate(['home'], newData);
   }
 
   getData() {
