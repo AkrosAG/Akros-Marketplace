@@ -116,7 +116,7 @@ Motivation
 
 Contained Building Blocks
 
-![Architacture Diagram](images/am-architecture.PNG)
+![Architecture Diagram](images/am-architecture.PNG)
 
 :   *\<Description of contained building block (black boxes)\>*
 
@@ -268,7 +268,7 @@ Deployment View {#section-deployment-view}
 
 Infrastructure Level 1 {#_infrastructure_level_1}
 ----------------------
-
+![Infrastructure Diagram](images/distribution_layer.PNG)
 ***\<Overview Diagram\>***
 
 Motivation
@@ -287,6 +287,8 @@ Infrastructure Level 2 {#_infrastructure_level_2}
 ----------------------
 
 ### *\<Infrastructure Element 1\>* {#__emphasis_infrastructure_element_1_emphasis}
+
+
 
 *\<diagram + explanation\>*
 
