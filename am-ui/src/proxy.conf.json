@@ -1,9 +1,13 @@
 {
-  "/api": {
-    "target": "http://localhost:8080",
+  "/api/": {
+    "target": "https://localhost:8443",
     "secure": true,
     "pathRewrite": {
       "^/api": ""
     }
+  },
+  "/api/auth": {
+    "target": "https://localhost:8080",
+    "secure": true
   }
 }

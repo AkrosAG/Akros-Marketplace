@@ -1,4 +1,6 @@
+import {OAuthProviderEnum} from './../../../data/services/login/OAuthProviderEnum';
 import {Component} from '@angular/core';
+import {AuthStore} from './../../../data/services/login/auth.service';
 
 @Component({
   selector: 'mp-navbar',
@@ -6,13 +8,25 @@ import {Component} from '@angular/core';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  /* istanbul ignore next */
+  constructor(public auth: AuthStore) {}
+
   public navigateHome(): void {
     console.log('GO HOME');
   }
 
   /* istanbul ignore next */
   public userMenu(): void {
-    console.log('SHOW USER MENU');
+    console.log('SHOW USER MENU - Currently just do Login');
+    this.login(OAuthProviderEnum.AKROSAD);
+  }
+
+  /* istanbul ignore next */
+  public login(socialProvider: OAuthProviderEnum): void {
+    this.auth.login_sso(socialProvider);
+  }
+
+  /* istanbul ignore next */
+  public logout(): void {
+    this.auth.logout();
   }
 }

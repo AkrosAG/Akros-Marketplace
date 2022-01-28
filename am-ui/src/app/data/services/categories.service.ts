@@ -26,7 +26,7 @@ export class CategoriesService {
 
   public getCategories(): Observable<Category[]> {
     return this.httpClient
-      .get<Category[]>('api/listCategories', {
+      .get<Category[]>('/api/listCategories/', {
         headers: this.defaultHeaders,
         // withCredentials: this.withCredentials,
       })
