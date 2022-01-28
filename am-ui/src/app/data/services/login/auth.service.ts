@@ -8,7 +8,6 @@ import {LocalAccountType} from './LocalAccountType';
 import {Injectable} from '@angular/core';
 // import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser } from "angularx-social-login";
 import {MsalService as AuthService} from '@azure/msal-angular';
-// eslint-disable-next-line node/no-extraneous-import
 import {AuthenticationResult} from '@azure/msal-common';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map, shareReplay, tap} from 'rxjs/operators';
