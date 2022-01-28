@@ -1,4 +1,4 @@
-import {Role} from './../../models/role';
+import {Role} from './../../models/Role';
 import {OAuthProviderEnum} from './OAuthProviderEnum';
 import {UserLocalStorageService} from './user.localStorage.service';
 import {AuthAPIService} from './auth.api.service';
