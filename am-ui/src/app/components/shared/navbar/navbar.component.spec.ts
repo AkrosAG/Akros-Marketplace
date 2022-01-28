@@ -1,5 +1,8 @@
+import {AuthStore} from './../../../data/services/login/auth.service';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {NavbarComponent} from './navbar.component';
+
+jest.mock('./../../../data/services/login/auth.service');
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -8,7 +11,7 @@ describe('NavbarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [NavbarComponent],
-      imports: [],
+      providers: [AuthStore],
     }).compileComponents();
   });
 
