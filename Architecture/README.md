@@ -93,6 +93,15 @@ Technical Context
 Solution Strategy
 =================
 
+## Frontend
+
+- Set the basic layout (Grid, structure etc.) with CSS-Grid and Flexbox to not be bound to a CSS-Frameworks opinionated guideline
+- Implement Components using Webcomponent API that get imported and uses in the main application. This has the following advantages:
+  - Components are mostly isolated from each and can have their own tech-stack without influencing any other component
+  - As any technology can be used, it can serve as a great way to learn new technologies
+- Configure a CI/CD-Pipeline to automate the building and packaging of the webcomponents for the deployment of the main application
+- Use JestJS as the unit-test framework and set a threshold for minimum code-coverage to achieve a high test coverage and lower execution time
+
 Building Block View
 ===================
 
