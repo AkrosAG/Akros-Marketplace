@@ -1,0 +1,7 @@
+<ng-container *ngIf="appLoaded; else loader">
+  <mp-search></mp-search>
+</ng-container>
+
+<ng-template #loader>
+  <div>loading...</div>
+</ng-template>
