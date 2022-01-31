@@ -1,0 +1,34 @@
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: DEBUG
+      springframework:
+        jdbc:
+          core:
+            JdbcTemplate: DEBUG
+            StatementCreatorUtils: DEBUG
+      atmosphere: WARN
+    root: INFO
+
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+
+# Ensure application is run in Vaadin 14/npm mode
+vaadin:
+  compatibilityMode: false
+
+# Ensure application is run in Vaadin 14/npm mode
+# To improve the performance during development.
+# For more information https://vaadin.com/docs/flow/spring/tutorial-spring-configuration.html#special-configuration-parameters
+  whitelisted-packages: com.vaadin,org.vaadin,ch.akros.marketplace.administration
+  pnpm: 
+    enable: false
+

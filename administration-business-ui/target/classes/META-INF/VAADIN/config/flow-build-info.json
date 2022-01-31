@@ -1,0 +1,9 @@
+{
+  "compatibilityMode": false,
+  "productionMode": false,
+  "npmFolder": "/Users/martindobrev/Workspaces/Akros/Akros-Marketplace/administration-business-ui",
+  "generatedFolder": "/Users/martindobrev/Workspaces/Akros/Akros-Marketplace/administration-business-ui/target/frontend",
+  "frontendFolder": "/Users/martindobrev/Workspaces/Akros/Akros-Marketplace/administration-business-ui/frontend",
+  "pnpm.enable": false,
+  "require.home.node": false
+}

@@ -6,12 +6,12 @@ services:
     build:
       context: ../../am-ui
     ports:
-      - 80:80
+      - 4200:443
     networks:
       marketplacenet:
     depends_on:
-      marketplace-service:
-      auth-service:
+      - marketplace-service
+      - auth-service
 
   marketplace-service:
     container_name: marketplace-service
