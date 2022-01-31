@@ -268,7 +268,7 @@ Deployment View {#section-deployment-view}
 
 Infrastructure Level 1 {#_infrastructure_level_1}
 ----------------------
-![Infrastructure Diagram](images/distribution_layer.PNG)
+![Infrastructure Diagram](images/distribution_layerAM.PNG)
 ***\<Overview Diagram\>***
 
 Motivation
