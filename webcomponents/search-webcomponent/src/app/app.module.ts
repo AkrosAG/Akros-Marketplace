@@ -3,9 +3,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
-import {CategoriesListComponent} from './search/categories-list/categories-list.component';
-import {SearchFormComponent} from './search/search-form/search-form.component';
-import {SearchComponent} from './search/search.component';
+import {CategoriesListComponent} from './categories-list/categories-list.component';
+import {SearchFormComponent} from './search-form/search-form.component';
 import {DynamicFormFieldComponent} from './shared/form/dynamic-form-field.component';
 import {SwitchCasesDirective} from './shared/form/switch-cases.directive';
 import {StoreModule} from '@ngrx/store';
@@ -27,7 +26,6 @@ import {createCustomElement} from '@angular/elements';
 @NgModule({
   declarations: [
     AppComponent,
-    SearchComponent,
     SearchFormComponent,
     CategoriesListComponent,
     DynamicFormFieldComponent,
@@ -62,7 +60,7 @@ import {createCustomElement} from '@angular/elements';
     FormFieldControlService,
     FormFieldsBuilderService,
   ],
-  entryComponents: [AppComponent, SearchComponent],
+  entryComponents: [AppComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {

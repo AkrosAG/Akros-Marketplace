@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Category } from 'src/app/data/models/Category';
+import 'tw-elements';
 
 @Component({
   selector: 'mp-categories-list',

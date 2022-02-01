@@ -1,7 +1,62 @@
-<ng-container *ngIf="appLoaded; else loader">
-  <mp-search></mp-search>
-</ng-container>
-
-<ng-template #loader>
-  <div>loading...</div>
-</ng-template>
+<div class="accordion accordion-flush" id="accordionParent">
+  <div
+    class="accordion-item border-t-0 border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="flush-headingOne">
+      <button
+        class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#flush-collapseOne"
+        aria-expanded="false"
+        aria-controls="flush-collapseOne"
+      >
+        {{ 'home.categories-description' | translate }}
+      </button>
+    </h2>
+    <div
+      id="flush-collapseOne"
+      class="accordion-collapse border-0 show"
+      [ngClass]="{collapse: $any(categorySelected$ | async)}"
+      aria-labelledby="flush-headingOne"
+      data-bs-parent="#accordionParent"
+    >
+      <div class="accordion-body py-4 px-5">
+        <div class="flex w-full">
+          <mp-categories-list
+            [categoriesList]="$any(categories$ | async)"
+            (categoryWasSelected)="onCategorySelected($event)"
+          ></mp-categories-list>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="$any(categorySelected$ | async)"
+    class="accordion-item border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+  >
+    <h2 class="accordion-header mb-0" id="flush-headingTwo">
+      <button
+        class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#flush-collapseTwo"
+        aria-expanded="true"
+        aria-controls="flush-collapseTwo"
+      >
+      {{ 'home.search-form' | translate }}
+      </button>
+    </h2>
+    <div
+      id="flush-collapseTwo"
+      class="accordion-collapse border-0"
+      aria-labelledby="flush-headingTwo"
+      data-bs-parent="#accordionParent"
+    >
+      <mp-search-form
+        [selectedCategorySearchFields]="
+          $any(selectedCategorySearchFields$ | async)
+        "
+      ></mp-search-form>
+    </div>
+  </div>
+</div>
