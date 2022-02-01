@@ -63,6 +63,7 @@ import {createCustomElement} from '@angular/elements';
     FormFieldsBuilderService,
   ],
   entryComponents: [AppComponent, SearchComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor(private injector: Injector) {
@@ -71,7 +72,7 @@ export class AppModule {
     });
     customElements.define('search-component', customElement);
   }
-  ngDoBootStrap() {}
+  ngDoBootstrap() {}
 }
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
