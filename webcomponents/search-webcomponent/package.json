@@ -7,7 +7,8 @@
     "build": "ng build --output-hashing=none",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "package": "bash -c 'jscat ./dist/search-webcomponent/{runtime,polyfills,main}.js > search-webcomponent.js && ls -lah search-webcomponent.js'"
+    "package": "bash -c 'jscat ./dist/search-webcomponent/{runtime,polyfills,main}.js > ../../am-ui/src/assets/scripts/search-webcomponent.js && ls -lah ../../am-ui/src/assets/scripts/search-webcomponent.js'",
+    "export": "npm run build && npm run package"
   },
   "private": true,
   "dependencies": {
