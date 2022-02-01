@@ -6,12 +6,12 @@ services:
     build:
       context: ../../am-ui
     ports:
-      - 80:80
+      - 4200:443
     networks:
       marketplacenet:
     depends_on:
-      marketplace-service:
-      auth-service:
+      - marketplace-service
+      - auth-service
 
   marketplace-service:
     container_name: marketplace-service
@@ -32,8 +32,7 @@ services:
     build:
       context: ../../auth-service
     ports:
-      - 18080:8080
-      - 18443:8443
+      - 8080:8080
     environment:
       - POSTGRES_USER_DB_URL=jdbc:postgresql://postgres_am_db:5432/am
     networks:

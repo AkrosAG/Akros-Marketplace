@@ -15,7 +15,6 @@ RUN npm install
 # Generate the build of the application
 RUN npm run build
 
-
 # Stage 2: Serve app with nginx server
 
 # Use official nginx image as the base image
@@ -23,6 +22,8 @@ FROM nginx:latest
 
 # Copy the build output to replace the default nginx contents.
 COPY --from=build /usr/local/app/dist/marketplace-ui /usr/share/nginx/html
-
+COPY src/cert.pem /usr/share/nginx/cert.pem
+COPY src/cert.key /usr/share/nginx/cert.key
+COPY nginx.conf /etc/nginx/nginx.conf
 # Expose port 80
 EXPOSE 80
