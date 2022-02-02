@@ -257,33 +257,19 @@ _\<(optional) Open Issues/Problems/Risks\>_
 
 ## Level 2
 
-### White Box _UI Building Block_
+### White Box _\<building block 1\>_
 
-![UI Diagram](images/ui-architecture.PNG)
+_\<white box template\>_
 
-The UI building block represents the user interface of the Akros Marketplace application. Wrapped with a main Angular container which is composed of the navigation bar and the rest of components, where each consists of sub-components or webcomponents.
+### White Box _\<building block 2\>_
 
-### White Box _Home Component_
+_\<white box template\>_
 
-Home component consists mainly of a web component which will be responsible for retrieving the list of categories that the user can select, and once chosen to build a form dynamically based on the fields obtained for that category. As well as containing an information section about what market place is and a button to access the create advertisement component.
+...
 
+### White Box _\<building block m\>_
 
-
-### White Box _Search Results Component_
-
-Search results component will receive as input the category chosen and the list of the search results obtained after having performed the search from the dynamically build form in search webcomponent inside Home component.
-
-The structure for the search objects will depend on the category to be able to have different layouts for different categories.
-
-### White Box _Detail View Component_
-
-Detail view is a complete representation of one single search results, giving the option to show fields and content that do not fit or are not suitable to show in the search results list, such as showing bigger and all images, maps, detailed description and so on.
-### White Box _Create Component_
-
-Create component consists of a set of interactive steps with the idea of the user filling in forms to create an advertisement. In order to perform the operative in the component it will be requiered that the user is logged in.
-### White Box _Profile Component_
-
-Profile component consists of personal information about the user logged in and the possibility to view and manage his advertisements.
+_\<white box template\>_
 
 ## Level 3
 
@@ -300,6 +286,9 @@ _\<white box template\>_
 _\<white box template\>_
 
 # Runtime View
+
+![Context View of AM](https://user-images.githubusercontent.com/41478805/152165162-87954f1b-29e4-4670-8d77-fac106446ff7.png)
+
 
 ## \<Runtime Scenario 1\>
 
@@ -329,25 +318,7 @@ USC 3: Search for accommodation
 4. The user selects an ad.
 5. The system shows detail view of the ad. The user have the possibility to go back to the search results.
 
-````
-```
-import static com.qmetry.qaf.automation.step.client.RuntimeScenarioFactory.scenario;
-@Test(description="")
-        public void testWithGivenWhenThen() {
-                scenario().
-                given("a precondition",()->{
-                        //write appropriate code...
-                }).
-                when("some action performed",()->{
-                        //write appropriate code...
-                }).
-                then("it should have expected outcome",()->{
-                        //write appropriate code...
-                }).
-                execute();
-        }
-```
-````
+
 
 Alternative flow 1: search for appartement
 
@@ -402,10 +373,30 @@ _\<diagram + explanation\>_
 
 _\<explanation\>_
 
-## _\<Concept 2\>_
+## _\<Testing Concept\>_
 
-_\<explanation\>_
+_\<Continuous integration (CI) is a software practice that requires frequently committing code to a shared repository. Committing code more often detects errors sooner and reduces the amount of code a developer needs to debug when finding the source of an error. Frequent code updates also make it easier to merge changes from different members of a software development team. This is great for developers, who can spend more time writing code and less time debugging errors or resolving merge conflicts.\>_
 
+We would like to implement [continuous integration using GitHub Actions](https://docs.github.com/en/actions/automating-builds-and-tests/about-continuous-integration)
+````
+```
+import static com.qmetry.qaf.automation.step.client.RuntimeScenarioFactory.scenario;
+@Test(description="")
+        public void testWithGivenWhenThen() {
+                scenario().
+                given("a precondition",()->{
+                        //write appropriate code...
+                }).
+                when("some action performed",()->{
+                        //write appropriate code...
+                }).
+                then("it should have expected outcome",()->{
+                        //write appropriate code...
+                }).
+                execute();
+        }
+```
+````
 ...
 
 ## _\<Concept n\>_
@@ -413,12 +404,6 @@ _\<explanation\>_
 _\<explanation\>_
 
 # Design Decisions
-## Web components:
-The purpose of using web components is to isolate parts of the application so each component could use their own tech-stack. Mainly due to learning reasons on how to build and communicate with web components.
-## Reactive UI:
-In order to avoid future possible expensive refactoring, the application will cosist from the beginning a mobile user friendly layout.
-## Dynamic forms:
-Since the application will not be limited to search for one specific theme, but instead there will be multiple categories each with different fields, instead of building different forms for each category it was decided to retrieve the list of fileds once a category is chosen and based on those values generate a form dynamically with the fields that can be searched.
 
 # Quality Requirements
 
