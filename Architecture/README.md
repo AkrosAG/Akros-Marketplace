@@ -166,20 +166,13 @@ Contained Building Blocks
 
 : _\<Description of contained building block (black boxes)\>_
 
-1. client-ui : allows the user to interact with the marketplace App. He can search , add ads and also do a login.
-2. admin-ui: This modules configures all dynamic parameters of the marketplace.
-3. marketplace-service : serves the Rest-Services for the UI.
-4. auth-service: serves the authentication of the users.
-5. postgres_user_db: is used to store user and Accountdata.
-6. postgres_am_db: is used to store marketplace ads and configdata.
-
 Important Interfaces
 
 : _\<Description of important interfaces\>_
 
-### \<Name black box 1\>
+### \<client-ui\>
 
-_\<Purpose/Responsibility\>_
+_\<allows the user to interact with the marketplace App. He can search , add ads and also do a login.\>_
 
 _\<Interface(s)\>_
 
@@ -191,19 +184,69 @@ _\<(Optional) Fulfilled Requirements\>_
 
 _\<(optional) Open Issues/Problems/Risks\>_
 
-### \<Name black box 2\>
+### \<admin-ui\>
 
-_\<black box template\>_
+_\<This modules configures all dynamic parameters of the marketplace.\>_
 
-### \<Name black box n\>
+_\<Interface(s)\>_
 
-_\<black box template\>_
+_\<(Optional) Quality/Performance Characteristics\>_
 
-### \<Name interface 1\>
+_\<(Optional) Directory/File Location\>_
 
-...
+_\<(Optional) Fulfilled Requirements\>_
 
-### \<Name interface m\>
+_\<(optional) Open Issues/Problems/Risks\>_
+
+### \<marketplace-service\>
+
+_\<serves the Rest-Services for the UI.\>_
+
+_\<(Optional) Quality/Performance Characteristics\>_
+
+_\<(Optional) Directory/File Location\>_
+
+_\<(Optional) Fulfilled Requirements\>_
+
+_\<(optional) Open Issues/Problems/Risks\>_
+
+### \<auth-service\>
+
+_\<serves the authentication of the users.\>_
+
+_\<(Optional) Quality/Performance Characteristics\>_
+
+_\<(Optional) Directory/File Location\>_
+
+_\<(Optional) Fulfilled Requirements\>_
+
+_\<(optional) Open Issues/Problems/Risks\>_
+
+### \<postgres_user_db\>
+
+_\<is used to store user and Accountdata.\>_
+
+_\<(Optional) Quality/Performance Characteristics\>_
+
+_\<(Optional) Directory/File Location\>_
+
+_\<(Optional) Fulfilled Requirements\>_
+
+_\<(optional) Open Issues/Problems/Risks\>_
+
+### \<postgres_am_db\>
+
+_\<is used to store marketplace ads and configdata\>_
+
+_\<(Optional) Quality/Performance Characteristics\>_
+
+_\<(Optional) Directory/File Location\>_
+
+_\<(Optional) Fulfilled Requirements\>_
+
+_\<(optional) Open Issues/Problems/Risks\>_
+
+
 
 ## Level 2
 
