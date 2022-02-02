@@ -25,30 +25,17 @@ import {
   PublicClientApplication,
 } from '@azure/msal-browser';
 
-import {CategoriesListComponent} from './components/home/categories-list/categories-list.component';
-import {SearchFormComponent} from './components/home/search-form/search-form.component';
 import {HomeComponent} from './components/home/home.component';
 import {NavbarComponent} from './components/shared/navbar/navbar.component';
-import {DynamicFormFieldComponent} from './components/shared/form/dynamic-form-field.component';
 
 import {ErrorInterceptor} from './data/services/login/error.interceptor';
 import {JwtInterceptor} from './data/services/login/jwt.interceptor';
 import {AuthGuard} from './data/services/login/auth.guard';
 
-import {CategoriesService} from './data/services/categories.service';
 import {RestHelperService} from './utils/restHelperService';
-import {FormFieldControlService} from './components/shared/form/form-field-control.service';
-import {FormFieldsBuilderService} from './utils/formFieldsBuilderService';
 import {UserService} from './data/services/login/user.service';
 
-import {StoreModule} from '@ngrx/store';
-import {EffectsModule} from '@ngrx/effects';
-import {MarketPlaceEffects} from './data/store/marketplace.effects';
-import {marketplaceStoreName} from './data/store/marketplace.selector';
-import {marketplaceReducer} from './data/store/marketplace.reducer';
 import {environment} from 'src/environments/environment';
-
-import {SwitchCasesDirective} from './components/shared/form/switch-cases.directive';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -77,15 +64,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    NavbarComponent,
-    SearchFormComponent,
-    CategoriesListComponent,
-    DynamicFormFieldComponent,
-    SwitchCasesDirective,
-  ],
+  declarations: [AppComponent, HomeComponent, NavbarComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -98,10 +77,6 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
         : NgxLoggerLevel.ERROR,
       serverLogLevel: NgxLoggerLevel.OFF,
     }),
-    StoreModule.forRoot({}),
-    StoreModule.forFeature(marketplaceStoreName, marketplaceReducer),
-    EffectsModule.forRoot([]),
-    EffectsModule.forFeature([MarketPlaceEffects]),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -111,10 +86,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     }),
   ],
   providers: [
-    CategoriesService,
     RestHelperService,
-    FormFieldControlService,
-    FormFieldsBuilderService,
     UserService,
     AuthGuard,
     {

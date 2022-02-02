@@ -2,7 +2,7 @@ import {Injector, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 
-import {AppComponent} from './app.component';
+import {MpSearchComponent} from './mp-search.component';
 import {CategoriesListComponent} from './categories-list/categories-list.component';
 import {SearchFormComponent} from './search-form/search-form.component';
 import {DynamicFormFieldComponent} from './shared/form/dynamic-form-field.component';
@@ -25,7 +25,7 @@ import {createCustomElement} from '@angular/elements';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    MpSearchComponent,
     SearchFormComponent,
     CategoriesListComponent,
     DynamicFormFieldComponent,
@@ -60,12 +60,12 @@ import {createCustomElement} from '@angular/elements';
     FormFieldControlService,
     FormFieldsBuilderService,
   ],
-  entryComponents: [AppComponent],
-  bootstrap: [AppComponent],
+  entryComponents: [MpSearchComponent],
+  bootstrap: [MpSearchComponent],
 })
 export class AppModule {
   constructor(private injector: Injector) {
-    const customElement = createCustomElement(AppComponent, {
+    const customElement = createCustomElement(MpSearchComponent, {
       injector: this.injector,
     });
     customElements.define('search-component', customElement);

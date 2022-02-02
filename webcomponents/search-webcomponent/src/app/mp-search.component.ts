@@ -1,21 +1,22 @@
-import { Store } from '@ngrx/store';
-import { MarketplaceState } from './data/store/marketplace.state';
-import { FormFieldBase } from 'src/app/shared/form/form-field-base';
-import { Observable } from 'rxjs';
-import { Category } from 'src/app/data/models/Category';
-import { FormGroup } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import {Store} from '@ngrx/store';
+import {MarketplaceState} from './data/store/marketplace.state';
+import {FormFieldBase} from 'src/app/shared/form/form-field-base';
+import {Observable} from 'rxjs';
+import {Category} from 'src/app/data/models/Category';
+import {FormGroup} from '@angular/forms';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 
 import * as storeSelector from './data/store/marketplace.selector';
 import * as storeActions from './data/store/marketplace.actions';
 
 @Component({
-  selector: 'mp-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'mp-search',
+  templateUrl: './mp-search.component.html',
+  styleUrls: ['./mp-search.component.scss'],
+  encapsulation: ViewEncapsulation.ShadowDom,
 })
-export class AppComponent implements OnInit {
+export class MpSearchComponent implements OnInit {
   public categories$: Observable<Category[]>;
   public selectedCategorySearchFields$: Observable<FormFieldBase<string>[]>;
   public categorySelected$ = new Observable<Boolean>();
@@ -43,9 +44,10 @@ export class AppComponent implements OnInit {
       storeSelector.getIfCategorySelected
     );
     this.store.dispatch(storeActions.loadCategories());
-    this.store.dispatch(storeActions.getCategorySearchFields({'categoryId': this.currentCategoryId}));
+    this.store.dispatch(
+      storeActions.getCategorySearchFields({categoryId: this.currentCategoryId})
+    );
   }
-
 
   public categorySelect(categoryId: number) {
     this.categorySelected[this.currentSelected] = false;
@@ -66,5 +68,4 @@ export class AppComponent implements OnInit {
   //     this.store.dispatch(storeActions.getCategorySearchFields({categoryId}));
   //   }
   // }
-
 }

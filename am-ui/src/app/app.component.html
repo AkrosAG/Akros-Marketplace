@@ -1,6 +1,6 @@
 <ng-container *ngIf="appLoaded; else loader">
   <mp-navbar></mp-navbar>
-  <search-component></search-component>
+  <router-outlet></router-outlet>
 </ng-container>
 
 <ng-template #loader>
