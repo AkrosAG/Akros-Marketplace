@@ -164,7 +164,14 @@ Contained Building Blocks
 
 ![Architecture Diagram](images/am-architecture.PNG)
 
-: _\<Description of contained building block (black boxes)\>_
+
+1. client-ui : allows the user to interact with the marketplace App. He can search , add ads and also do a login.
+2. admin-ui: This modules configures all dynamic parameters of the marketplace.
+3. marketplace-service : serves the Rest-Services for the UI. 
+4. auth-service: serves the authentication of the users.
+5. postgres_user_db: is used to store user and Accountdata.
+6. postgres_am_db: is used to store marketplace ads and configdata. 
+
 
 Important Interfaces
 
