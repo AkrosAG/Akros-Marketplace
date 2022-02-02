@@ -13,6 +13,9 @@ export class CategoriesListComponent implements OnInit {
   public categorySelected: boolean[] = [];
   public currentSelected: number = -1;
 
+  // TODO DEL
+
+
   ngOnInit(): void {
     this.categoriesList.forEach(() => {
       this.categorySelected.push(false);

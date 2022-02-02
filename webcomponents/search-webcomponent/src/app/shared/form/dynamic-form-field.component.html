@@ -1,5 +1,5 @@
 <div [formGroup]="form">
-  <label [attr.for]="formField.key">{{ formField.label }}</label>
+
 
   <div [ngSwitch]="formField.type">
     <!-- TODO specific validators based on type  -->
@@ -7,18 +7,24 @@
       *mpSwitchCases="[1, 12]"
       [formControlName]="formField.key"
       [id]="formField.key"
-      type="number"
+      type="text"
+      class="bg-grey-lightest border-2 focus:border-orange p-2 rounded-lg shadow-inner w-full"
+      placeholder="{{ formField.label }}"
     />
     <input
       *mpSwitchCases="[2, 4, 8, 9]"
       [formControlName]="formField.key"
       [id]="formField.key"
       type="text"
+      class="bg-grey-lightest border-2 focus:border-orange p-2 rounded-lg shadow-inner w-full"
+      placeholder="{{ formField.label }}"
     />
     <textarea
       *ngSwitchCase="3"
       [formControlName]="formField.key"
       [id]="formField.key"
+      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+      placeholder="--"
     ></textarea>
 
     <select
@@ -26,8 +32,12 @@
       *mpSwitchCases="[5, 6]"
       [multiple]="formField.type === 6"
       [formControlName]="formField.key"
+      class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
     >
-      <option *ngFor="let opt of formField.options" [value]="opt.fieldTypeChooseId">
+      <option
+        *ngFor="let opt of formField.options"
+        [value]="opt.fieldTypeChooseId"
+      >
         {{ opt.description }}
       </option>
     </select>
@@ -39,7 +49,9 @@
       type="checkbox"
     />
 
-    <input class="bg-grey-lightest border-2 focus:border-orange p-2 rounded-lg shadow-inner w-full" placeholder="Search"
+    <input
+      class="bg-grey-lightest border-2 focus:border-orange p-2 rounded-lg shadow-inner w-full"
+      placeholder="{{ formField.label }}"
       *ngSwitchCase="11"
       [formControlName]="formField.key"
       [id]="formField.key"

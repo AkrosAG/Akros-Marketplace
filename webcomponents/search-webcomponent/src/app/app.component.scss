@@ -1,5 +1,19 @@
-
 .accordion-flush {
   max-width: 420px;
   margin: 0 auto;
+}
+
+button {
+  &:hover {
+    background-color: rgba(2, 59, 124, 0.15);
+  }
+
+  &.selected {
+    background-color: #5757ec;
+    color: white;
+  }
+}
+
+.flex-1 {
+  flex: 1;
 }

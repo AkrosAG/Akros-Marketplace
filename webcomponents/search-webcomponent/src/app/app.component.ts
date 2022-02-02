@@ -20,10 +20,12 @@ export class AppComponent implements OnInit {
   public selectedCategorySearchFields$: Observable<FormFieldBase<string>[]>;
   public categorySelected$ = new Observable<Boolean>();
   public form: FormGroup;
+  public categorySelected: boolean[] = [];
+  public currentSelected: number = 1;
 
   title = 'search-webcomponent';
   public appLoaded: boolean = true;
-  private currentCategoryId = 0;
+  private currentCategoryId = 1;
 
   constructor(
     private readonly translate: TranslateService,
@@ -41,14 +43,28 @@ export class AppComponent implements OnInit {
       storeSelector.getIfCategorySelected
     );
     this.store.dispatch(storeActions.loadCategories());
+    this.store.dispatch(storeActions.getCategorySearchFields({'categoryId': this.currentCategoryId}));
   }
 
-  onCategorySelected(categoryId: number) {
+
+  public categorySelect(categoryId: number) {
+    this.categorySelected[this.currentSelected] = false;
+    this.currentSelected = categoryId;
+    this.categorySelected[categoryId] = true;
     if (this.currentCategoryId !== categoryId) {
       this.currentCategoryId = categoryId;
       this.store.dispatch(storeActions.resetCategorySelected());
       this.store.dispatch(storeActions.getCategorySearchFields({categoryId}));
     }
   }
+
+  // onCategorySelected(categoryId: number) {
+  //   console.log(categoryId);
+  //   if (this.currentCategoryId !== categoryId) {
+  //     this.currentCategoryId = categoryId;
+  //     this.store.dispatch(storeActions.resetCategorySelected());
+  //     this.store.dispatch(storeActions.getCategorySearchFields({categoryId}));
+  //   }
+  // }
 
 }
