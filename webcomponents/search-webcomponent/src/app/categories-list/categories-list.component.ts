@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Category } from 'src/app/data/models/Category';
+import 'tw-elements';
 
 @Component({
   selector: 'mp-categories-list',
@@ -11,6 +12,9 @@ export class CategoriesListComponent implements OnInit {
   @Output() public categoryWasSelected = new EventEmitter();
   public categorySelected: boolean[] = [];
   public currentSelected: number = -1;
+
+  // TODO DEL
+
 
   ngOnInit(): void {
     this.categoriesList.forEach(() => {

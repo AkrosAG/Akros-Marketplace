@@ -1,5 +1,5 @@
-import { FormFieldControlService } from './../../shared/form/form-field-control.service';
-import { FormFieldBase } from './../../shared/form/form-field-base';
+import { FormFieldControlService } from './../shared/form/form-field-control.service';
+import { FormFieldBase } from './../shared/form/form-field-base';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
