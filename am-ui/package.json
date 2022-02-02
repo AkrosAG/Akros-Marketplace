@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "prebuild": "node build_scripts/install-webcomponents.js && node build_scripts/build-webcomponents.js && node build_scripts/package-webcomponents.js && node build_scripts/add-to-script-array.js",
     "build": "ng build",
     "test": "jest --coverage",
     "clear_jest": "jest --clearCache",

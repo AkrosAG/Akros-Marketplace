@@ -3,3 +3,7 @@ dist/
 ./setup-test.ts
 
 coverage/
+
+build_scripts/
+
+src/assets/
