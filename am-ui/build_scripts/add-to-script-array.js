@@ -9,7 +9,10 @@ const scriptsPath = resolve(__dirname, '../src/assets/scripts');
 const scripts = [];
 
 fs.readdirSync(scriptsPath).forEach(file => {
-  const relativePath = path.relative('./', join(scriptsPath, file));
+  const relativePath = path
+    .relative('./', join(scriptsPath, file))
+    .replace(/\\/g, '/');
+  console.log(relativePath);
   scripts.push(relativePath);
 });
 
