@@ -1,4 +1,4 @@
-import {Injector, NgModule} from '@angular/core';
+import {ApplicationRef, Injector, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 
@@ -61,7 +61,6 @@ import {createCustomElement} from '@angular/elements';
     FormFieldsBuilderService,
   ],
   entryComponents: [MpSearchComponent],
-  bootstrap: [MpSearchComponent],
 })
 export class AppModule {
   constructor(private injector: Injector) {
@@ -70,7 +69,12 @@ export class AppModule {
     });
     customElements.define('search-component', customElement);
   }
-  ngDoBootstrap() {}
+
+  ngDoBootstrap(appRef: ApplicationRef): void {
+    if (document.querySelector('mp-search')) {
+      appRef.bootstrap(MpSearchComponent);
+    }
+  }
 }
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
