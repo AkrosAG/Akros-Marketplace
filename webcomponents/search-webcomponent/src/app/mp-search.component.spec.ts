@@ -1,22 +1,33 @@
 import {TestBed} from '@angular/core/testing';
-import { TranslateModule, TranslateLoader, TranslateFakeLoader, TranslateService } from '@ngx-translate/core';
+import {
+  TranslateModule,
+  TranslateLoader,
+  TranslateFakeLoader,
+  TranslateService,
+} from '@ngx-translate/core';
 import {MpSearchComponent} from './mp-search.component';
+import {provideMockStore, MockStore} from '@ngrx/store/testing';
 
 describe('MpSearchComponent', () => {
+  const initialState = {
+    categories: [],
+    selectedCategorySearchFields: [],
+    categorySelected: false,
+  };
+
   beforeEach(async () => {
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        imports: [
-          TranslateModule.forRoot({
-            loader: {
-              provide: TranslateLoader,
-              useClass: TranslateFakeLoader,
-            },
-          }),
-        ],
-        declarations: [MpSearchComponent],
-        providers: [TranslateService],
-      }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateFakeLoader,
+          },
+        }),
+      ],
+      declarations: [MpSearchComponent],
+      providers: [TranslateService, provideMockStore({initialState})],
+    }).compileComponents();
   });
 
   it('should create the app', () => {
@@ -31,12 +42,12 @@ describe('MpSearchComponent', () => {
     expect(app.title).toEqual('search-webcomponent');
   });
 
-  it('should render title', () => {
+  it('should dispatch loadCategories action upon category selection', () => {
     const fixture = TestBed.createComponent(MpSearchComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain(
-      'search-webcomponent app is running!'
-    );
+    const app = fixture.componentInstance;
+    const store = TestBed.inject(MockStore);
+    store.dispatch = jest.fn();
+    app.categorySelect(2);
+    expect(store.dispatch).toHaveBeenCalled();
   });
 });
