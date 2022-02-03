@@ -7,7 +7,8 @@ FROM node:latest as build
 WORKDIR /usr/local/app
 
 # Add the source code to app
-COPY ./ /usr/local/app/
+COPY ./am-ui /usr/local/app/
+COPY ./webcomponents/ /usr/local/webcomponents/
 
 # Install all the dependencies
 RUN npm install
@@ -22,8 +23,8 @@ FROM nginx:latest
 
 # Copy the build output to replace the default nginx contents.
 COPY --from=build /usr/local/app/dist/marketplace-ui /usr/share/nginx/html
-COPY src/cert.pem /usr/share/nginx/cert.pem
-COPY src/cert.key /usr/share/nginx/cert.key
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY ./am-ui/src/cert.pem /usr/share/nginx/cert.pem
+COPY ./am-ui/src/cert.key /usr/share/nginx/cert.key
+COPY ./am-ui/nginx.conf /etc/nginx/nginx.conf
 # Expose port 80
 EXPOSE 80
