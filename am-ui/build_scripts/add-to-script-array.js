@@ -4,19 +4,32 @@ const resolve = require('path').resolve;
 const join = require('path').join;
 const path = require('path');
 
-const scriptsPath = resolve(__dirname, '../src/assets/scripts');
+const webcomponentsPath = resolve(
+  __dirname,
+  '../src/assets/scripts/webcomponents'
+);
 
-const scripts = [];
+const EXTENSION = '.js';
 
-fs.readdirSync(scriptsPath).forEach(file => {
-  const relativePath = path
-    .relative('./', join(scriptsPath, file))
-    .replace(/\\/g, '/');
-  console.log(relativePath);
-  scripts.push(relativePath);
-});
+const webcomponents = [];
+
+fs.readdirSync(webcomponentsPath)
+  .filter(file => {
+    path.extname(file).toLowerCase() === EXTENSION;
+  })
+  .forEach(file => {
+    const relativePath = path
+      .relative('./', join(webcomponentsPath, file))
+      .replace(/\\/g, '/');
+    webcomponents.push(relativePath);
+  });
+
+const joinedScripts =
+  angularConfig.projects[
+    'marketplace-ui'
+  ].architect.build.options.scripts.concat(webcomponents);
 
 angularConfig.projects['marketplace-ui'].architect.build.options.scripts =
-  scripts;
+  joinedScripts;
 
 fs.writeFileSync('./angular.json', JSON.stringify(angularConfig));
