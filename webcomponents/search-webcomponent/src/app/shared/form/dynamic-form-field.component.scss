@@ -1,8 +1,9 @@
-input[type="date"]:before {
+input[type="date"]::before {
   color: #9c9c9c;
   content: attr(placeholder) !important;
   margin-right: 0.5em;
 }
-input[type="date"]:focus:before {
-  content: '' !important;
+
+input[type="date"]:focus::before {
+  content: "" !important;
 }

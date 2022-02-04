@@ -1,17 +1,17 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 // TODO DEL
 
 ul {
-
   li {
     cursor: pointer;
     transition: 0.5s;
     padding: 16px 12px;
+
     &:hover {
-      background-color: rgba(0, 78, 167, 0.15);
+      background-color: rgb(0 78 167 / 15%);
     }
 
     &.selected {

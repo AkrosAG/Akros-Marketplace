@@ -1,6 +1,6 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 .accordion-flush {
   max-width: 420px;
@@ -9,7 +9,7 @@
 
 button {
   &:hover {
-    background-color: rgba(2, 59, 124, 0.15);
+    background-color: rgb(2 59 124 / 15%);
   }
 
   &.selected {

@@ -1,4 +1,4 @@
-import {ApplicationRef, Injector, NgModule} from '@angular/core';
+import {ApplicationRef, DoBootstrap, Injector, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 
@@ -62,7 +62,7 @@ import {createCustomElement} from '@angular/elements';
   ],
   entryComponents: [MpSearchComponent],
 })
-export class AppModule {
+export class AppModule implements DoBootstrap {
   constructor(private injector: Injector) {
     const customElement = createCustomElement(MpSearchComponent, {
       injector: this.injector,

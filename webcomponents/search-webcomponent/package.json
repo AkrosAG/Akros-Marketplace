@@ -9,7 +9,14 @@
     "test": "jest --coverage",
     "package": "bash -c 'jscat ./dist/search-webcomponent/{runtime,polyfills,main}.js > ../../am-ui/src/assets/scripts/webcomponents/search-webcomponent.js && ls -lah ../../am-ui/src/assets/scripts/webcomponents/search-webcomponent.js'",
     "export": "npm run build && npm run package",
-    "lint": "ng lint"
+    "lint": "npm run lint:angular && npm run lint:typescript && npm run lint:style",
+    "lint:angular": "ng lint",
+    "lint:typescript": "gts lint",
+    "lint:style": "npx stylelint \"**/*.scss\"",
+    "fix": "npm run fix:angular && npm run fix:typescript && npm run fix:style",
+    "fix:angular": "ng lint --fix",
+    "fix:typescript": "gts fix",
+    "fix:style": "npx stylelint \"**/*.scss\" --fix"
   },
   "private": true,
   "dependencies": {
