@@ -1,19 +1,3 @@
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-  <a href="https://github.com/AkrosAG/Akros-Marketplace">
-    <img src="images/am_logo.svg" alt="Logo" width="80" height="80">
-  </a>
-  <h3 align="center">Akros Marketplace</h3>
-  <p align="center">
-    An open-source marketplace for your needs.
-    <br />
-    <a href="https://github.com/AkrosAG/Akros-Marketplace/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/AkrosAG/Akros-Marketplace/issues">Request Feature</a>
-  </p>
-</p>
-
 <!-- TABLE OF CONTENTS -->
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=2 orderedList=true} -->
@@ -43,12 +27,12 @@
    4. [Precondition:](#precondition)
    5. [Basic flow: default search](#basic-flow-default-search)
    6. [\<Runtime Scenario n\>](#runtime-scenario-n)
-7. [Deployment View](#section-deployment-view)
+7. [Deployment View](#deployment-view)
    1. [Infrastructure Level 1](#infrastructure-level-1)
    2. [Infrastructure Level 2](#infrastructure-level-2)
 8. [Cross-cutting Concepts](#cross-cutting-concepts)
    1. [_\<Concept 1\>_](#_concept-1_)
-   2. [_\<Concept 2\>_](#_concept-2_)
+   2. [_\<Testing Concept\>_](#_testing-concept_)
    3. [_\<Concept n\>_](#_concept-n_)
 9. [Design Decisions](#design-decisions)
 10. [Quality Requirements](#quality-requirements)
@@ -164,8 +148,6 @@ Contained Building Blocks
 
 ![Architecture Diagram](images/am-architecture.PNG)
 
-: _\<Description of contained building block (black boxes)\>_
-
 1. client-ui : allows the user to interact with the marketplace App. He can search , add ads and also do a login.
 2. admin-ui: This modules configures all dynamic parameters of the marketplace.
 3. marketplace-service : serves the Rest-Services for the UI.
@@ -177,9 +159,9 @@ Important Interfaces
 
 : _\<Description of important interfaces\>_
 
-### \<Name black box 1\>
+### \<client-ui\>
 
-_\<Purpose/Responsibility\>_
+_\<allows the user to interact with the marketplace App. He can search , add ads and also do a login.\>_
 
 _\<Interface(s)\>_
 
@@ -191,19 +173,67 @@ _\<(Optional) Fulfilled Requirements\>_
 
 _\<(optional) Open Issues/Problems/Risks\>_
 
-### \<Name black box 2\>
+### \<admin-ui\>
 
-_\<black box template\>_
+_\<This modules configures all dynamic parameters of the marketplace.\>_
 
-### \<Name black box n\>
+_\<Interface(s)\>_
 
-_\<black box template\>_
+_\<(Optional) Quality/Performance Characteristics\>_
 
-### \<Name interface 1\>
+_\<(Optional) Directory/File Location\>_
 
-...
+_\<(Optional) Fulfilled Requirements\>_
 
-### \<Name interface m\>
+_\<(optional) Open Issues/Problems/Risks\>_
+
+### \<marketplace-service\>
+
+_\<serves the Rest-Services for the UI.\>_
+
+_\<(Optional) Quality/Performance Characteristics\>_
+
+_\<(Optional) Directory/File Location\>_
+
+_\<(Optional) Fulfilled Requirements\>_
+
+_\<(optional) Open Issues/Problems/Risks\>_
+
+### \<auth-service\>
+
+_\<serves the authentication of the users.\>_
+
+_\<(Optional) Quality/Performance Characteristics\>_
+
+_\<(Optional) Directory/File Location\>_
+
+_\<(Optional) Fulfilled Requirements\>_
+
+_\<(optional) Open Issues/Problems/Risks\>_
+
+### \<postgres_user_db\>
+
+_\<is used to store user and Accountdata.\>_
+
+_\<(Optional) Quality/Performance Characteristics\>_
+
+_\<(Optional) Directory/File Location\>_
+
+_\<(Optional) Fulfilled Requirements\>_
+
+_\<(optional) Open Issues/Problems/Risks\>_
+
+### \<postgres_am_db\>
+
+_\<is used to store marketplace ads and configdata\>_
+
+_\<(Optional) Quality/Performance Characteristics\>_
+
+_\<(Optional) Directory/File Location\>_
+
+_\<(Optional) Fulfilled Requirements\>_
+
+_\<(optional) Open Issues/Problems/Risks\>_
 
 ## Level 2
 
@@ -237,6 +267,8 @@ _\<white box template\>_
 
 # Runtime View
 
+![Context View of AM](https://user-images.githubusercontent.com/41478805/152165162-87954f1b-29e4-4670-8d77-fac106446ff7.png)
+
 ## \<Runtime Scenario 1\>
 
 - Create an accommodation ad
@@ -265,26 +297,6 @@ USC 3: Search for accommodation
 4. The user selects an ad.
 5. The system shows detail view of the ad. The user have the possibility to go back to the search results.
 
-````
-```
-import static com.qmetry.qaf.automation.step.client.RuntimeScenarioFactory.scenario;
-@Test(description="")
-        public void testWithGivenWhenThen() {
-                scenario().
-                given("a precondition",()->{
-                        //write appropriate code...
-                }).
-                when("some action performed",()->{
-                        //write appropriate code...
-                }).
-                then("it should have expected outcome",()->{
-                        //write appropriate code...
-                }).
-                execute();
-        }
-```
-````
-
 Alternative flow 1: search for appartement
 
 Alternative flow 2: search for a room
@@ -297,7 +309,7 @@ Postcondition:
 
 ## \<Runtime Scenario n\>
 
-# Deployment View {#section-deployment-view}
+# Deployment View
 
 ## Infrastructure Level 1
 
@@ -338,9 +350,31 @@ _\<diagram + explanation\>_
 
 _\<explanation\>_
 
-## _\<Concept 2\>_
+## _\<Testing Concept\>_
 
-_\<explanation\>_
+_\<Continuous integration (CI) is a software practice that requires frequently committing code to a shared repository. Committing code more often detects errors sooner and reduces the amount of code a developer needs to debug when finding the source of an error. Frequent code updates also make it easier to merge changes from different members of a software development team. This is great for developers, who can spend more time writing code and less time debugging errors or resolving merge conflicts.\>_
+
+We would like to implement [continuous integration using GitHub Actions](https://docs.github.com/en/actions/automating-builds-and-tests/about-continuous-integration)
+
+````
+```
+import static com.qmetry.qaf.automation.step.client.RuntimeScenarioFactory.scenario;
+@Test(description="")
+        public void testWithGivenWhenThen() {
+                scenario().
+                given("a precondition",()->{
+                        //write appropriate code...
+                }).
+                when("some action performed",()->{
+                        //write appropriate code...
+                }).
+                then("it should have expected outcome",()->{
+                        //write appropriate code...
+                }).
+                execute();
+        }
+```
+````
 
 ...
 
