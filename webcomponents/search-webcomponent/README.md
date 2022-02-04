@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm run start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -12,15 +12,19 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
+
+## Package
+
+Run `npm run package` to compile the built JS files in the `dist/` folder into one and move it to the `am-ui` folder.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npm run test` to execute the unit tests via [Jest](https://jestjs.io).
 
-## Running end-to-end tests
+## Lint
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run `npm run test` to lint the project via [Angular-Eslint](https://github.com/angular-eslint/angular-eslint), [GTS](https://github.com/google/gts) and [Stylelint](https://stylelint.io).
 
 ## Further help
 

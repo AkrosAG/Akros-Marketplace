@@ -6,8 +6,12 @@
     "marketplace-ui": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {"style": "scss"},
-        "@schematics/angular:application": {"strict": true}
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
       },
       "root": "",
       "sourceRoot": "src",
@@ -73,12 +77,16 @@
             "sslKey": "src/cert.key"
           },
           "configurations": {
-            "production": {"browserTarget": "marketplace-ui:build:production"}
+            "production": {
+              "browserTarget": "marketplace-ui:build:production"
+            }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {"browserTarget": "marketplace-ui:build"}
+          "options": {
+            "browserTarget": "marketplace-ui:build"
+          }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -99,16 +107,22 @@
             "devServerTarget": "marketplace-ui:serve"
           },
           "configurations": {
-            "production": {"devServerTarget": "marketplace-ui:serve:production"}
+            "production": {
+              "devServerTarget": "marketplace-ui:serve:production"
+            }
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
-          "options": {"lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]}
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
         }
       }
     }
   },
   "defaultProject": "marketplace-ui",
-  "cli": {"defaultCollection": "@angular-eslint/schematics"}
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

@@ -32,4 +32,4 @@ const joinedScripts =
 angularConfig.projects['marketplace-ui'].architect.build.options.scripts =
   joinedScripts;
 
-fs.writeFileSync('./angular.json', JSON.stringify(angularConfig));
+fs.writeFileSync('./angular.json', JSON.stringify(angularConfig, null, 2));
