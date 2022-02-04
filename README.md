@@ -34,6 +34,10 @@ The application should serve
 4. **admin-ui**: Administration and configuration tool for the dynamic parameters of the marketplace.
 5. **am-auth-backend**: Service Backend for authorisation and authentification.
 6. **am-ui**: Marketplace Frontend Site. Web Site for the marketplace. Accesses the Rest Services of **data-backend-services** to fetch data and configuration for the marketplace. Accesses the **ui-auth-backend** and **am-ui-login** for login of users.
-7. **am-ui-login**: Rest Service for authorisation and authentification. Stores the data in the database schema **userdb**.
-8. **documents**: Temporary documents of the project.
-9. **architecture**: Architecture documents of the project.
+   - **build_scripts**: Build scripts to be used for npm
+7. **documents**: Temporary documents of the project.
+8. **architecture**: Architecture documents of the project.
+9. **webcomponents**: Reusable webcomponents for the UI
+   - **build_scripts**: Build scripts to be used for npm
+   - **search-webcomponent**: Search-Module implemented in Angular
+10. **.github**: Workflows for Github Actions
