@@ -100,7 +100,7 @@ export class AuthStore {
         }),
         shareReplay()
       )
-      .subscribe(t => {});
+      .subscribe(() => {});
   }
 
   private postLogin(

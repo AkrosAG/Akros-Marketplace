@@ -1,18 +1,1 @@
-<div class="home-container">
-  <div class="home-main">
-    <div class="home-boxes-container">
-      <div class="home-box">
-        <mp-categories-list
-          [categoriesList]="$any(categories$ | async)"
-          (categoryWasSelected)="onCategorySelected($event)"
-        ></mp-categories-list>
-      </div>
-      <div class="home-box" [ngClass]="{ hidden: !$any(categorySelected$ | async) }">
-        <mp-search-form *ngIf="$any(categorySelected$ | async)"
-          [selectedCategorySearchFields]="$any(selectedCategorySearchFields$ | async)"
-        ></mp-search-form>
-      </div>
-    </div>
-  </div>
-  <div class="home-bottom">Section button create advertisement</div>
-</div>
+<search-component></search-component>

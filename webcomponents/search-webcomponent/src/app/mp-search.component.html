@@ -1,0 +1,50 @@
+<div class="accordion accordion-flush" id="accordionParent">
+  <div
+    class="accordion-item border-t-0 border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
+    *ngFor="let option of $any(categories$ | async); let indexOfelement = index"
+  >
+    <h2
+      class="accordion-header mb-0"
+      [attr.id]="'flush-heading-' + indexOfelement"
+    >
+      <button
+        class="accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+        type="button"
+        data-bs-toggle="collapse"
+        [attr.data-bs-target]="'flush-collapse-' + indexOfelement"
+        aria-expanded="false"
+        [attr.aria-controls]="'flush-collapse-' + indexOfelement"
+        (click)="categorySelect(indexOfelement)"
+        [ngClass]="{
+          selected: currentSelected === indexOfelement,
+          collapsed: indexOfelement !== currentSelected
+        }"
+      >
+        {{ option.description }}
+      </button>
+    </h2>
+    <div
+      [attr.id]="'flush-collapse-' + indexOfelement"
+      class="accordion-collapse border-0 show"
+      [ngClass]="{collapse: $any(categorySelected$ | async)}"
+      [attr.aria-labelby]="'flush-heading-' + indexOfelement"
+      data-bs-parent="#accordionParent"
+    >
+      <div class="accordion-body py-4 px-5">
+        <div
+          class="flex w-full"
+          *ngIf="
+            $any(categorySelected$ | async) &&
+            currentSelected === indexOfelement
+          "
+        >
+          <mp-search-form class="flex-1"
+            [selectedCategorySearchFields]="
+              $any(selectedCategorySearchFields$ | async)
+            "
+          ></mp-search-form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
