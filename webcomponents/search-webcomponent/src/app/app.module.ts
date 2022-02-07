@@ -3,7 +3,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {MpSearchComponent} from './mp-search.component';
-import {CategoriesListComponent} from './categories-list/categories-list.component';
 import {SearchFormComponent} from './search-form/search-form.component';
 import {DynamicFormFieldComponent} from './shared/form/dynamic-form-field.component';
 import {SwitchCasesDirective} from './shared/form/switch-cases.directive';
@@ -27,7 +26,6 @@ import {createCustomElement} from '@angular/elements';
   declarations: [
     MpSearchComponent,
     SearchFormComponent,
-    CategoriesListComponent,
     DynamicFormFieldComponent,
     SwitchCasesDirective,
   ],
