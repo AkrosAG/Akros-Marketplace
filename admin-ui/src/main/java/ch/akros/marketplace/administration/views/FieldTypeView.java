@@ -139,6 +139,14 @@ public class FieldTypeView extends Div implements BeforeEnterObserver {
         txtDescription.setValue(fieldType.getDescription());
         txtShortDescription.setValue(fieldType.getShortDescription());
 
+        txtSortNumber.setValue(fieldType.getSortNumber() != null ? fieldType.getSortNumber().doubleValue() : null);
+        chkOffer.setValue(fieldType.isOffer());
+        chkSearch.setValue(fieldType.isSearch());
+        chkRequired.setValue(fieldType.isRequired());
+        chkSearchable.setValue(fieldType.isSearchable());
+        comboFieldTypeDefinitions.setValue(fieldTypeDefinitionService.findById(fieldType.getFieldTypeDefinition()
+                                                                                        .getFieldTypeDefinitionId()));
+
         if (needsMinMaxRange(fieldTypeDefinition)) {
           txtMinValue.setEnabled(true);
           txtMaxValue.setEnabled(true);
@@ -156,14 +164,6 @@ public class FieldTypeView extends Div implements BeforeEnterObserver {
           txtMinValue.setValue(null);
           txtMaxValue.setValue(null);
         }
-
-        txtSortNumber.setValue(fieldType.getSortNumber() != null ? fieldType.getSortNumber().doubleValue() : null);
-        chkOffer.setValue(fieldType.isOffer());
-        chkSearch.setValue(fieldType.isSearch());
-        chkRequired.setValue(fieldType.isRequired());
-        chkSearchable.setValue(fieldType.isSearchable());
-        comboFieldTypeDefinitions.setValue(fieldTypeDefinitionService.findById(fieldType.getFieldTypeDefinition()
-                                                                                        .getFieldTypeDefinitionId()));
 
         return;
       }
@@ -413,7 +413,20 @@ public class FieldTypeView extends Div implements BeforeEnterObserver {
                            && !comboFieldTypeDefinitions.isEmpty();
 
       if (needsMinMaxRange(comboFieldTypeDefinitions.getValue())) {
-        enableSave |= !txtMinValue.isEmpty() && !txtMaxValue.isEmpty();
+        enableSave &= !txtMinValue.isEmpty() && !txtMaxValue.isEmpty();
+
+        txtMinValue.setEnabled(true);
+        txtMaxValue.setEnabled(true);
+        txtMinValue.setRequiredIndicatorVisible(true);
+        txtMaxValue.setRequiredIndicatorVisible(true);
+      }
+      else {
+        txtMinValue.setEnabled(false);
+        txtMaxValue.setEnabled(false);
+        txtMinValue.setRequiredIndicatorVisible(false);
+        txtMaxValue.setRequiredIndicatorVisible(false);
+        txtMinValue.setValue(null);
+        txtMaxValue.setValue(null);
       }
 
       btnSave.setEnabled(enableSave);
