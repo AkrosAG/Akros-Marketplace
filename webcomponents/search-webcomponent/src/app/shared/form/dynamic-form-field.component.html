@@ -34,6 +34,7 @@
       [formControlName]="formField.key"
       class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
     >
+    <option value="-1">{{'select' | translate }}</option>
       <option
         *ngFor="let opt of formField.options"
         [value]="opt.fieldTypeChooseId"
@@ -62,6 +63,6 @@
   </div>
 
   <div class="errorMessage" *ngIf="!isValid">
-    {{ formField.label }} is required
+    {{ errorMessages.error[appLng] }}
   </div>
 </div>

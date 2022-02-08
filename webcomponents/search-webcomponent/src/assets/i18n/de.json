@@ -1,6 +1,7 @@
 {
-  "home": {
-    "categories-description": "Suchen Sie relevante Informationen",
-    "search-form": "Suche"
-  }
+  "categories-description": "Suchen Sie relevante Informationen",
+  "search-form": "Suche",
+  "offers": "Offers",
+  "searches": "Searches",
+  "select": "Art der Unterkunft"
 }

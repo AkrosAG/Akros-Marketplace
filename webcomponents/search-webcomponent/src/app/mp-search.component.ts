@@ -60,12 +60,4 @@ export class MpSearchComponent implements OnInit {
     }
   }
 
-  // onCategorySelected(categoryId: number) {
-  //   console.log(categoryId);
-  //   if (this.currentCategoryId !== categoryId) {
-  //     this.currentCategoryId = categoryId;
-  //     this.store.dispatch(storeActions.resetCategorySelected());
-  //     this.store.dispatch(storeActions.getCategorySearchFields({categoryId}));
-  //   }
-  // }
 }
