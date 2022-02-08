@@ -1,6 +1,8 @@
 body {
   margin: 0;
+  font-family: sans-serif;
 }
+
 .container {
   display: grid;
   grid-template-columns: 1fr min(80%, 80rem) 1fr;
