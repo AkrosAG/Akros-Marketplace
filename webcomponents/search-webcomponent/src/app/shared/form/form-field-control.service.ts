@@ -67,8 +67,6 @@ export class FormFieldControlService {
             },
           };
           break;
-        default:
-          break;
       }
     });
     return validationMessages;

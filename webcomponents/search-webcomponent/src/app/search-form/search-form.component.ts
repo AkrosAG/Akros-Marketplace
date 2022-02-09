@@ -1,9 +1,8 @@
-import {TranslateService} from '@ngx-translate/core';
 import {FormFieldControlService} from './../shared/form/form-field-control.service';
 import {FormFieldBase} from './../shared/form/form-field-base';
 import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {ValidationMessages} from '../utils/ValidationMessages';
+import {ValidationMessages} from '../utils/form/ValidationMessages';
 
 @Component({
   selector: 'mp-search-form',
@@ -20,8 +19,7 @@ export class SearchFormComponent implements OnInit {
   @Input() selectedCategorySearchFields: FormFieldBase<string>[] | null = [];
 
   constructor(
-    private formFieldControlService: FormFieldControlService,
-    private translate: TranslateService
+    private formFieldControlService: FormFieldControlService
   ) {}
 
   ngOnInit() {
