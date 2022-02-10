@@ -30,10 +30,12 @@ This module serves the authentication of the users.
 
 
 ## Rest Services
+Docker server.port=9443
 
 | Rest Service End Point       | Rest Service Controller                     | Description                               |
 |------------------------------|---------------------------------------------|-------------------------------------------|
-| Authentication               | AuthController                              | Accountmanagement: Register a social User |
-| User                         | UserController                              | Usermanagement: Get List of All users     |
+| Authentication               | AuthController      /api/auth/signup        | Accountmanagement: Register a social User |
+| User                         | UserController     /api/allusers            | Usermanagement: Get List of All users     |
+
 
 
