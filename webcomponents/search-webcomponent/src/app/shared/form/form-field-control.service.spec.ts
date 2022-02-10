@@ -14,7 +14,7 @@ describe('FormFieldControlService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should create the a form group', () => {
+  it('should create the form group from a set of form fields', () => {
     const formField1 = {
       key: 'test',
       value: 'value',
@@ -44,7 +44,7 @@ describe('FormFieldControlService', () => {
     expect(formGroup).toBeInstanceOf(FormGroup);
   });
 
-  it('should create validation messages', () => {
+  it('should create validation messages from a set of form fields', () => {
     const k1 = 'Zimmer';
     const k2 = 'Preis';
     const expectedM1 = {"Preis": {"error": {"de": "Falscher Wert", "en": "Incorrect value"}}};

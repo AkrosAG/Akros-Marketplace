@@ -8,12 +8,12 @@ import {FormFieldBase} from './form-field-base';
 export class FormFieldControlService {
   constructor() {}
 
-  private emailPatternRegex: string =
-    '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
-  private zipCodePatternRegex: string = '[0-9]{4}';
-  private numberPatternRegex: string = '[0-9]';
-  private urlPatternRegex: string = '^https?://(.*)|^www.(.*)';
-  private alphabeticPatternRegex: string = '^((?![0-9]).)*$';
+  // private emailPatternRegex: string =
+  //   '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+  // private zipCodePatternRegex: string = '[0-9]{4}';
+  private numberPatternRegex: string = '^[0-9]*$';
+  // private urlPatternRegex: string = '^https?://(.*)|^www.(.*)';
+  // private alphabeticPatternRegex: string = '^((?![0-9]).)*$';
 
   toFormGroup(formFields: FormFieldBase<string>[]): FormGroup {
     const group: any = {};
