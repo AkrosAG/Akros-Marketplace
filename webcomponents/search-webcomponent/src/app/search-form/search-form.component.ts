@@ -27,7 +27,7 @@ export class SearchFormComponent implements OnInit {
       this.selectedCategorySearchFields as FormFieldBase<string>[]
     );
     // TODO fix in back and del, no empty category should be allowed
-    this.showForm = Object.keys(this.form.value).length === 0 ? false : true;
+    this.showForm = Object.keys(this.form.value).length === 1 ? false : true;
     this.errorMessages = this.formFieldControlService.getValidationMessages(
       this.selectedCategorySearchFields as FormFieldBase<string>[]
     );
