@@ -139,24 +139,6 @@ public class FieldTypeView extends Div implements BeforeEnterObserver {
         txtDescription.setValue(fieldType.getDescription());
         txtShortDescription.setValue(fieldType.getShortDescription());
 
-        if (needsMinMaxRange(fieldTypeDefinition)) {
-          txtMinValue.setEnabled(true);
-          txtMaxValue.setEnabled(true);
-          txtMinValue.setRequiredIndicatorVisible(true);
-          txtMaxValue.setRequiredIndicatorVisible(true);
-
-          txtMinValue.setValue(fieldType.getMinValue() != null ? fieldType.getMinValue().doubleValue() : null);
-          txtMaxValue.setValue(fieldType.getMaxValue() != null ? fieldType.getMaxValue().doubleValue() : null);
-        }
-        else {
-          txtMinValue.setEnabled(false);
-          txtMaxValue.setEnabled(false);
-          txtMinValue.setRequiredIndicatorVisible(false);
-          txtMaxValue.setRequiredIndicatorVisible(false);
-          txtMinValue.setValue(null);
-          txtMaxValue.setValue(null);
-        }
-
         txtSortNumber.setValue(fieldType.getSortNumber() != null ? fieldType.getSortNumber().doubleValue() : null);
         chkOffer.setValue(fieldType.isOffer());
         chkSearch.setValue(fieldType.isSearch());
@@ -164,6 +146,11 @@ public class FieldTypeView extends Div implements BeforeEnterObserver {
         chkSearchable.setValue(fieldType.isSearchable());
         comboFieldTypeDefinitions.setValue(fieldTypeDefinitionService.findById(fieldType.getFieldTypeDefinition()
                                                                                         .getFieldTypeDefinitionId()));
+
+        if (needsMinMaxRange(fieldTypeDefinition)) {
+          txtMinValue.setValue(fieldType.getMinValue() != null ? fieldType.getMinValue().doubleValue() : null);
+          txtMaxValue.setValue(fieldType.getMaxValue() != null ? fieldType.getMaxValue().doubleValue() : null);
+        }
 
         return;
       }
@@ -413,7 +400,7 @@ public class FieldTypeView extends Div implements BeforeEnterObserver {
                            && !comboFieldTypeDefinitions.isEmpty();
 
       if (needsMinMaxRange(comboFieldTypeDefinitions.getValue())) {
-        enableSave |= !txtMinValue.isEmpty() && !txtMaxValue.isEmpty();
+        enableSave &= !txtMinValue.isEmpty() && !txtMaxValue.isEmpty();
       }
 
       btnSave.setEnabled(enableSave);
@@ -421,20 +408,42 @@ public class FieldTypeView extends Div implements BeforeEnterObserver {
   }
 
   private boolean needsMinMaxRange(FieldTypeDefinition fieldTypeDefinition) {
+    boolean result = false;
     if (fieldTypeDefinition == null) {
-      return false;
+      result = false;
+    }
+    else {
+      switch (EFieldTypeDefinition.values()[fieldTypeDefinition.getFieldTypeDefinitionId()]) {
+        case NUMBER:
+        case PRICE:
+        case TEXT_MULTI_LINE:
+        case TEXT_SINGLE_LINE: {
+          result = true;
+          break;
+        }
+
+        default: {
+          result = false;
+        }
+      }
     }
 
-    switch (EFieldTypeDefinition.values()[fieldTypeDefinition.getFieldTypeDefinitionId()]) {
-      case NUMBER:
-      case PRICE:
-      case TEXT_MULTI_LINE:
-      case TEXT_SINGLE_LINE:
-        return true;
-
-      default:
-        return false;
+    if (result) {
+      txtMinValue.setEnabled(true);
+      txtMaxValue.setEnabled(true);
+      txtMinValue.setRequiredIndicatorVisible(true);
+      txtMaxValue.setRequiredIndicatorVisible(true);
     }
+    else {
+      txtMinValue.setEnabled(false);
+      txtMaxValue.setEnabled(false);
+      txtMinValue.setRequiredIndicatorVisible(false);
+      txtMaxValue.setRequiredIndicatorVisible(false);
+      txtMinValue.setValue(null);
+      txtMaxValue.setValue(null);
+    }
+
+    return result;
   }
 
   private Component createEditorButtons() {

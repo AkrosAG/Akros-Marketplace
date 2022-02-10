@@ -11,6 +11,9 @@ import {FormFieldBase} from './form-field-base';
 export class DynamicFormFieldComponent {
   @Input() formField!: FormFieldBase<string>;
   @Input() form!: FormGroup;
+  @Input() errorMessages: any;
+  @Input() appLng: string;
+
   get isValid() {
     return this.form.controls[this.formField.key].valid;
   }
