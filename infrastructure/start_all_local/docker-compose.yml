@@ -4,14 +4,15 @@ services:
   client-ui:
     container_name: client-ui
     build:
-      context: ../../am-ui
+      context: ../..
+      dockerfile: ./am-ui/Dockerfile
     ports:
-      - 80:80
+      - 4200:443
     networks:
       marketplacenet:
     depends_on:
-      marketplace-service:
-      auth-service:
+      - marketplace-service
+      - auth-service
 
   marketplace-service:
     container_name: marketplace-service
@@ -32,8 +33,7 @@ services:
     build:
       context: ../../auth-service
     ports:
-      - 18080:8080
-      - 18443:8443
+      - 8080:8080
     environment:
       - POSTGRES_USER_DB_URL=jdbc:postgresql://postgres_am_db:5432/am
     networks:
@@ -61,7 +61,7 @@ services:
     container_name: postgres_am_db
     hostname: postgres_am_db
     deploy:
-      mode: global    
+      mode: global
     environment:
       - POSTGRES_USER=am
       - POSTGRES_PASSWORD=am
@@ -76,7 +76,7 @@ services:
         aliases:
           - postgres_am_db
     healthcheck:
-      test: [ "CMD", "pg_isready", "-q", "-d", "am", "-U", "am" ]
+      test: ["CMD", "pg_isready", "-q", "-d", "am", "-U", "am"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -86,7 +86,7 @@ services:
     container_name: postgres_user_db
     hostname: postgres_user_db
     deploy:
-      mode: global    
+      mode: global
     environment:
       - POSTGRES_USER=userdb
       - POSTGRES_PASSWORD=userdb
@@ -101,7 +101,7 @@ services:
         aliases:
           - postgres_user_db
     healthcheck:
-      test: [ "CMD", "pg_isready", "-q", "-d", "userdb", "-U", "userdb" ]
+      test: ["CMD", "pg_isready", "-q", "-d", "userdb", "-U", "userdb"]
       interval: 10s
       timeout: 5s
       retries: 5

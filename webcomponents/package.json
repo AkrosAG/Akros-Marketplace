@@ -1,0 +1,14 @@
+{
+  "name": "webcomponents",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "node build_scripts/install-webcomponents.js",
+    "build": "node build_scripts/build-webcomponents.js",
+    "test": "node build_scripts/test-webcomponents.js",
+    "lint": "node build_scripts/lint-webcomponents.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

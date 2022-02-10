@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "build:webcomponents": "node build_scripts/install-webcomponents.js && node build_scripts/build-webcomponents.js && node build_scripts/package-webcomponents.js && node build_scripts/add-to-script-array.js",
+    "prestart": "npm run build:webcomponents",
     "start": "ng serve",
+    "prebuild": "npm run build:webcomponents",
     "build": "ng build",
     "test": "jest --coverage",
     "clear_jest": "jest --clearCache",

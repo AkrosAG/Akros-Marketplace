@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  ownUrl: 'http://localhost:4200',
+  ownUrl: 'https://localhost',
   apiUrl: 'https://localhost:8443',
   authUrl: 'http://localhost:8080',
   signOn: {

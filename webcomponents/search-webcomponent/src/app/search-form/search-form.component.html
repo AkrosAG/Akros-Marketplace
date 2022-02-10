@@ -1,0 +1,62 @@
+<div class="justify-center">
+  <div class="block p-3 pb-50 rounded-lg shadow-lg bg-white" *ngIf="showForm">
+    <div *ngIf="showForm">
+      <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+
+        <div class="mb-12 flex">
+          <div class="form-check form-check-inline flex-1 pl-4">
+            <input
+              class="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+              type="radio"
+              name="searchOrOffer"
+              id="searchRadio" [value]="true"
+              formControlName="searchOrOffer"
+              checked
+            />
+            <label
+              class="form-check-label inline-block text-gray-800 pl-4"
+              for="searchRadio"
+              >{{'searches' | translate }}</label
+            >
+          </div>
+          <div class="form-check form-check-inline flex-1 pl-4">
+            <input
+              class="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+              type="radio" [value]="false"
+              formControlName="searchOrOffer"
+              name="searchOrOffer"
+              id="offerRadio"
+            />
+            <label
+              class="form-check-label inline-block text-gray-800 pl-4"
+              for="offerRadio"
+              >{{'offers' | translate }}</label
+            >
+          </div>
+        </div>
+
+        <div
+          *ngFor="let formField of selectedCategorySearchFields"
+          class="mb-4 w-full"
+        >
+          <mp-form-field
+            [formField]="formField"
+            [form]="form"
+            [errorMessages]="errorMessages[formField.key]"
+            [appLng]="appLng"
+          ></mp-form-field>
+        </div>
+        <div class="float-right">
+          <button
+            type="submit"
+            [ngClass]="{error: !form.valid}"
+            class="btn-primary"
+          >
+            {{ 'search-form' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

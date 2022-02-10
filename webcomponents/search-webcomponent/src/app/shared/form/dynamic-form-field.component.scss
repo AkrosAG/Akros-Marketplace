@@ -1,0 +1,32 @@
+input[type="date"]::before {
+  content: attr(placeholder);
+  position: absolute;
+  color: #999999;
+}
+
+input[type="date"] {
+  color: #ffffff;
+}
+
+input[type="date"]:focus,
+input[type="date"]:valid {
+  color: #666666;
+}
+
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+  content: "";
+}
+
+.errorMessage {
+  color: red;
+  font-size: 0.8em;
+  font-weight: bold;
+  padding: 2px;
+  margin-left: 3px;
+}
+
+option:first-child
+{
+    color: #ccc;
+}

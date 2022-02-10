@@ -1,0 +1,32 @@
+.card {
+  margin: 0 auto;
+  height: 100%;
+  width: 70%;
+  background-color: white;
+  box-shadow: 2px 4px 14px 2px rgb(169 169 169 / 91%);
+  padding: 8px;
+  transition: 5s;
+}
+
+.float-right {
+  float: right;
+}
+
+.btn-primary {
+  @apply inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out;
+  &.error {
+    background-color: #ee7c7c;
+  }
+}
+
+.pb-50 {
+  padding-bottom: 50px;
+}
+
+.pl-4 {
+  padding-left: 4px;
+}
+
+.mb-12 {
+  margin-bottom: 12px;
+}

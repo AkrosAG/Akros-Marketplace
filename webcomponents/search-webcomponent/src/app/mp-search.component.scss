@@ -1,0 +1,28 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.accordion-flush {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.accordion-button:not(.collapsed) {
+  &:hover {
+    background-color: rgb(2 59 124 / 15%);
+  }
+
+  &.selected {
+    background-color: #5757ec;
+    color: white;
+  }
+
+  &::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    transform: rotate(-180deg);
+  }
+}
+
+.flex-1 {
+  flex: 1;
+}
