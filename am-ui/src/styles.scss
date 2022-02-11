@@ -1,6 +1,8 @@
 body {
   margin: 0;
   font-family: sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(207, 204, 204) rgb(235, 234, 234);
 }
 
 .container {
@@ -11,4 +13,16 @@ body {
 mp-navbar {
   display: grid;
   grid-template-columns: 1fr min(80%, 80rem) 1fr;
+}
+
+body::-webkit-scrollbar {
+  width: 11px;
+}
+body::-webkit-scrollbar-track {
+  background: rgb(235, 234, 234);
+}
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(207, 204, 204) ;
+  border-radius: 6px;
+  border: 3px solid rgb(194, 194, 194);
 }
