@@ -1,10 +1,9 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 .accordion-flush {
   max-width: 420px;
-  margin: 0 auto;
 }
 
 .accordion-button:not(.collapsed) {

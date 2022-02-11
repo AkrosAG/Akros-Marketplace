@@ -1,31 +1,29 @@
-.home-container {
-  display: flex;
-  flex-direction: column;
-  height: 88vh;
-}
-
-.home-main {
+.search-component-wrapper {
   background-image: url("./../../../assets/images/akros-bg.png");
   background-size: cover;
   background-repeat: no-repeat;
-  flex: 62;
-
-  .home-boxes-container {
-    height: 100%;
-    display: flex;
-
-    .home-box {
-      flex: 1;
-      padding: 4% 0%;
-
-      &.hidden {
-        visibility: hidden;
-      }
-    }
-  }
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.home-bottom {
-  flex: 32;
-  border-bottom: 1px solid gray;
+.main {
+  grid-column: 2;
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
+
+  * {
+    width: 70%;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  button {
+    width: 10%;
+    margin: 0 auto;
+  }
 }
