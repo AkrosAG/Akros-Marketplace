@@ -11,7 +11,7 @@ RUN jar -xf ../*.jar
 
 FROM openjdk:11-jre-slim
 
-EXPOSE 8080 8443
+EXPOSE 8080 8443 9443
 
 VOLUME /tmp
 ARG DEPENDENCY=/workdir/server/target/dependency
