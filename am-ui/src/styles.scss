@@ -2,7 +2,7 @@ body {
   margin: 0;
   font-family: sans-serif;
   scrollbar-width: thin;
-  scrollbar-color: rgb(207, 204, 204) rgb(235, 234, 234);
+  scrollbar-color: #cfcccc #ebeaea;
 }
 
 .container {
@@ -18,11 +18,13 @@ mp-navbar {
 body::-webkit-scrollbar {
   width: 11px;
 }
+
 body::-webkit-scrollbar-track {
-  background: rgb(235, 234, 234);
+  background: #ebeaea;
 }
+
 body::-webkit-scrollbar-thumb {
-  background-color: rgb(207, 204, 204) ;
+  background-color: #cfcccc;
   border-radius: 6px;
-  border: 3px solid rgb(194, 194, 194);
+  border: 3px solid #c2c2c2;
 }
