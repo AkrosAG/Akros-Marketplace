@@ -20,6 +20,7 @@
     "fix:style": "npx stylelint \"**/*.scss\" --fix",
     "clean": "gts clean",
     "e2e": "ng e2e",
+    "e2e:headless": "ng run marketplace-ui:cypress-run",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },

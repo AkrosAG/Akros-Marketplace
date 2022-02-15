@@ -17,7 +17,8 @@ services:
   marketplace-service:
     container_name: marketplace-service
     build:
-      context: ../../marketplace-service
+      context: ../..
+      dockerfile: ./marketplace-service/Dockerfile
     ports:
       - 8443:8443
     environment:
@@ -31,7 +32,8 @@ services:
   auth-service:
     container_name: auth-service
     build:
-      context: ../../auth-service
+      context: ../..
+      dockerfile: ./auth-service/Dockerfile
     ports:
       - 8080:8080
     environment:

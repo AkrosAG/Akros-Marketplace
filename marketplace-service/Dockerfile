@@ -1,21 +1,10 @@
 FROM maven:3.6.3-jdk-11 AS builder
-WORKDIR /workdir/server
-COPY pom.xml /workdir/server/pom.xml
-RUN mvn dependency:go-offline
-
-COPY src /workdir/server/src
-RUN mvn install -DskipTests
-RUN mkdir  -p target/dependency
-WORKDIR /workdir/server/target/dependency
-RUN jar -xf ../*.jar
+COPY ./ ./
+RUN mvn clean package -DskipTests
 
 FROM openjdk:11-jre-slim
 
 EXPOSE 8080 8443
 
-VOLUME /tmp
-ARG DEPENDENCY=/workdir/server/target/dependency
-COPY --from=builder ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY --from=builder ${DEPENDENCY}/META-INF /app/META-INF
-COPY --from=builder ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","ch.akros.marketplace.service.MarketplaceServiceApplication"]
+COPY --from=builder /marketplace-service/target/marketplace-service-1.0.0-SNAPSHOT.jar /app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
