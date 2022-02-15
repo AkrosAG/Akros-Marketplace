@@ -1,10 +1,17 @@
+import {LocalizationService} from './data/services/localization.service';
 import {Store} from '@ngrx/store';
 import {MarketplaceState} from './data/store/marketplace.state';
 import {FormFieldBase} from 'src/app/shared/form/form-field-base';
 import {Observable} from 'rxjs';
 import {Category} from 'src/app/data/models/Category';
 import {FormGroup} from '@angular/forms';
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewEncapsulation,
+  Input,
+  SimpleChanges,
+} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 
 import * as storeSelector from './data/store/marketplace.selector';
@@ -26,13 +33,20 @@ export class MpSearchComponent implements OnInit {
 
   title = 'search-webcomponent';
   public appLoaded: boolean = true;
+  public appLanguage: string;
   private currentCategoryId = 1;
+  @Input() language: string;
 
   constructor(
-    private readonly translate: TranslateService,
-    private store: Store<MarketplaceState>
-  ) {
-    translate.setDefaultLang('de');
+    private store: Store<MarketplaceState>,
+    private localization: LocalizationService
+  ) { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes && changes.language) {
+      this.appLanguage = changes.language.currentValue;
+      this.localization.use(this.appLanguage);
+    }
   }
 
   ngOnInit(): void {
@@ -59,5 +73,4 @@ export class MpSearchComponent implements OnInit {
       this.store.dispatch(storeActions.getCategorySearchFields({categoryId}));
     }
   }
-
 }

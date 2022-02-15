@@ -4,9 +4,25 @@
     src="../../../assets/images/am_logo.png"
     (click)="navigateHome()"
   />
-  <img
+  <div class="settings-container">
+    <div class="language-container">
+      <img
+      class="language-icon"
+      src="../../../assets/images/en.png"
+      (click)="changeLanguage('en')"
+    />
+    <img
+      class="language-icon"
+      src="../../../assets/images/de.png"
+      (click)="changeLanguage('de')"
+    />
+    </div>
+    <img
     class="user-icon"
     src="../../../assets/images/userIcon.png"
     (click)="userMenu()"
   />
+  </div>
+
+
 </header>

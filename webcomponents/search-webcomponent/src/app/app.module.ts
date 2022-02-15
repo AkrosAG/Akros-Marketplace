@@ -1,3 +1,4 @@
+import {LocalizationService} from './data/services/localization.service';
 import {ApplicationRef, DoBootstrap, Injector, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
@@ -57,6 +58,7 @@ import {createCustomElement} from '@angular/elements';
     RestHelperService,
     FormFieldControlService,
     FormFieldsBuilderService,
+    LocalizationService,
   ],
   entryComponents: [MpSearchComponent],
 })

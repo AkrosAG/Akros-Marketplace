@@ -12,7 +12,7 @@ export class DynamicFormFieldComponent {
   @Input() formField!: FormFieldBase<string>;
   @Input() form!: FormGroup;
   @Input() errorMessages: any;
-  @Input() appLng: string;
+  @Input() appLanguage: string;
 
   get isValid() {
     return this.form.controls[this.formField.key].valid;
