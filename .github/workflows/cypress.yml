@@ -29,6 +29,7 @@ jobs:
       - run: npm ci
         working-directory: ./am-ui
       - run: npm run build:webcomponents
+        working-directory: ./am-ui
       - run: npm run e2e:headless
         working-directory: ./am-ui
       - name: Stop containers
