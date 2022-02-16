@@ -18,7 +18,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/FieldTypeDefinitionResponseDTO'
 
-  /listCategories:
+  /categories:
     get:
       summary: List categories
       description: used for primary search page
@@ -31,7 +31,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/VWCategoryResponseDTO'
 
-  /listCategorySearchFieldTypes/{categoryId}:
+  /categorySearchFields/{categoryId}:
     get:
       summary: List the search field types for one categorie
       description: used for primary search page
@@ -167,37 +167,30 @@ components:
         categoryId:
           type: integer
           format: int64
-        description:
+        key:
           type: string
-          example: Unterkuenfte
-        searchCount:
-          type: integer
-          example: 5
-        offerCount:
-          type: integer
-          example: 5
+
+    CategoryFieldsResponseDTO:
+      type: object
+      properties:
+        id:
+          type:
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldTypeResponseDTO'
 
     FieldTypeResponseDTO:
       type: object
       properties:
-        categoryId:
-          type: integer
-          format: int64
         fieldTypeId:
           type: integer
           format: int64
         fieldTypeDefinitionId:
           type: integer
           format: int32
-        fieldTypeDefinitionDescription:
+        key:
           type: string
-          example: Number
-        description:
-          type: string
-          example: Beschreibung
-        shortDescription:
-          type: string
-          example: Beschreibung der Unterkunft
         minValue:
           type: integer
           example: 5
@@ -221,7 +214,7 @@ components:
         fieldTypeChooseId:
           type: integer
           format: int64
-        description:
+        key:
           type: string
         sortNumber:
           type: integer
