@@ -11,6 +11,7 @@ import {AuthStore} from './../../../data/services/login/auth.service';
 export class NavbarComponent {
   constructor(public auth: AuthStore, private translate: TranslateService) {}
 
+  /* istanbul ignore next */
   public navigateHome(): void {
     console.log('GO HOME');
   }

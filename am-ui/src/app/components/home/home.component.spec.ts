@@ -34,5 +34,11 @@ describe('HomeComponent', () => {
     it('should be created', () => {
       expect(component).toBeTruthy();
     });
+
+    it('subscription should be closed after calling OnDestroy', () => {
+      expect(component.subscription.closed).toBeFalsy();
+      component.ngOnDestroy();
+      expect(component.subscription.closed).toBeTruthy();
+    });
   });
 });
