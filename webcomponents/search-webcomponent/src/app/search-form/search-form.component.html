@@ -10,28 +10,28 @@
               class="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
               type="radio"
               name="searchOrOffer"
-              id="searchRadio" [value]="true"
+              id="offerRadio" [value]="false"
               formControlName="searchOrOffer"
               checked
             />
             <label
               class="form-check-label inline-block text-gray-800 pl-4"
-              for="searchRadio"
-              >{{'searches' | translate }}</label
+              for="offerRadio"
+              >{{'searchForm.offers' | translate }}</label
             >
           </div>
           <div class="form-check form-check-inline flex-1 pl-4">
             <input
               class="form-check-input form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-              type="radio" [value]="false"
+              type="radio" [value]="true"
               formControlName="searchOrOffer"
               name="searchOrOffer"
-              id="offerRadio"
+              id="searchRadio"
             />
             <label
               class="form-check-label inline-block text-gray-800 pl-4"
-              for="offerRadio"
-              >{{'offers' | translate }}</label
+              for="searchRadio"
+              >{{'searchForm.searches' | translate }}</label
             >
           </div>
         </div>
@@ -44,7 +44,7 @@
             [formField]="formField"
             [form]="form"
             [errorMessages]="errorMessages[formField.key]"
-            [appLng]="appLng"
+            [appLanguage]="appLanguage"
           ></mp-form-field>
         </div>
         <div class="float-right">
@@ -53,7 +53,7 @@
             [ngClass]="{error: !form.valid}"
             class="btn-primary"
           >
-            {{ 'search-form' | translate }}
+            {{ 'searchForm.search' | translate }}
           </button>
         </div>
       </form>

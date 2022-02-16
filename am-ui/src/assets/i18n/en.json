@@ -1,5 +1,7 @@
 {
   "home": {
-    "categories-description": "Search for relevant information"
+    "information": "Post relevant information",
+    "find": "Find relevant information",
+    "about": "About Akros Marketplace"
   }
 }

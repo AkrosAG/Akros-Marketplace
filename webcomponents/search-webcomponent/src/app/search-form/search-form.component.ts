@@ -14,9 +14,9 @@ export class SearchFormComponent implements OnInit {
   public errorMessages: ValidationMessages<any>;
   public payLoad = '';
   public showForm = false;
-  public appLng: string;
 
   @Input() selectedCategorySearchFields: FormFieldBase<string>[] | null = [];
+  @Input() appLanguage: string;
 
   constructor(
     private formFieldControlService: FormFieldControlService
@@ -31,9 +31,6 @@ export class SearchFormComponent implements OnInit {
     this.errorMessages = this.formFieldControlService.getValidationMessages(
       this.selectedCategorySearchFields as FormFieldBase<string>[]
     );
-    // Should be 'de'
-    // this.appLng = this.translate.currentLang;
-    this.appLng = "de";
   }
 
   /* istanbul ignore next */

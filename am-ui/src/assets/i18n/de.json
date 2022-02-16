@@ -1,5 +1,7 @@
 {
   "home": {
-    "categories-description": "Suchen Sie relevante Informationen"
+    "information": "Veröffentliche relevante Informationen",
+    "find": "Relevante Informationen finden",
+    "about": "Über Akros Marketplace"
   }
 }

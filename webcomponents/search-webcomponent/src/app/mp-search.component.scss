@@ -3,7 +3,7 @@
 @import 'tailwindcss/utilities';
 
 .accordion-flush {
-  max-width: 420px;
+  min-width: 380px;
 }
 
 .accordion-button:not(.collapsed) {
