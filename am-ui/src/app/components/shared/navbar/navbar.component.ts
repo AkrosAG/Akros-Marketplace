@@ -31,6 +31,7 @@ export class NavbarComponent {
     this.auth.logout();
   }
 
+  /* istanbul ignore next */
   public changeLanguage(lng: string) {
     this.translate.use(lng);
   }
