@@ -28,6 +28,7 @@ jobs:
           cache-dependency-path: am-ui/package-lock.json
       - run: npm ci
         working-directory: ./am-ui
+      - run: npm run build:webcomponents
       - run: npm run e2e:headless
         working-directory: ./am-ui
       - name: Stop containers
