@@ -1,6 +1,6 @@
-import { TranslateService } from '@ngx-translate/core';
-import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
+import {Component, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'mp-home',
@@ -11,12 +11,12 @@ export class HomeComponent implements OnInit {
   public appLanguage: string;
   public subscription: Subscription;
 
-  constructor(private translate: TranslateService) { }
+  constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {
-    this.subscription = this.translate.onLangChange.subscribe((appLanguage) => {
+    this.subscription = this.translate.onLangChange.subscribe(appLanguage => {
       this.appLanguage = appLanguage.lang;
-    })
+    });
   }
 
   ngOnDestroy() {
