@@ -1,5 +1,5 @@
 import {TranslateService} from '@ngx-translate/core';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -7,7 +7,7 @@ import {Subscription} from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   public appLanguage: string;
   public subscription: Subscription;
 

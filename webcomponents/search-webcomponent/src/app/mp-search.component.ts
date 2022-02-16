@@ -11,8 +11,8 @@ import {
   ViewEncapsulation,
   Input,
   SimpleChanges,
+  OnChanges,
 } from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
 
 import * as storeSelector from './data/store/marketplace.selector';
 import * as storeActions from './data/store/marketplace.actions';
@@ -23,7 +23,7 @@ import * as storeActions from './data/store/marketplace.actions';
   styleUrls: ['./mp-search.component.scss'],
   encapsulation: ViewEncapsulation.ShadowDom,
 })
-export class MpSearchComponent implements OnInit {
+export class MpSearchComponent implements OnInit, OnChanges {
   public categories$: Observable<Category[]>;
   public selectedCategorySearchFields$: Observable<FormFieldBase<string>[]>;
   public categorySelected$ = new Observable<Boolean>();
@@ -40,7 +40,7 @@ export class MpSearchComponent implements OnInit {
   constructor(
     private store: Store<MarketplaceState>,
     private localization: LocalizationService
-  ) { }
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes && changes.language) {
