@@ -31,6 +31,10 @@ paths:
                 items:
                   $ref: '#/components/schemas/VWCategoryResponseDTO'
 
+
+#ALSO DELETE
+
+
   /categorySearchFields/{categoryId}:
     get:
       summary: List the search field types for one categorie
@@ -52,8 +56,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/CategoryFieldsResponseDTO'
 
+####
+
+
+
   /topics/{topicId}:
-    
     get:
       summary: Load a topic 
       description: Load a topic
@@ -102,12 +109,13 @@ paths:
         200:
           description: OK
 
-  /searchTopic:
-    get:
-      summary: Save a topic 
-      description: Save a topic
+  #/topic-searches:
+  /topics/search:
+    post:
+      summary: Search for topics
+      description: Search for topics
       requestBody:
-        description: All values to save a topic
+        description: All fields for search query
         content:
           application/json:
             schema:
@@ -120,33 +128,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TopicSearchListResponseDTO'
-
-  /topicFields/{categoryId}/{search}:
-    get:
-      summary: List the field types to edit and add another search/offer topic 
-      description: used to get the fields to add a new topic
-      parameters:
-        - name: categoryId
-          in: path
-          required: true
-          description: Foreign Key ID to Category.
-          schema:
-            type: integer
-            format: int64
-        - name: search
-          in: path
-          required: true
-          description: true for 'OFFER' and false for 'SEARCH' 
-          schema:
-            type: boolean
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/CategoryFieldsResponseDTO'
 
 components:
   schemas:
@@ -199,12 +180,14 @@ components:
         maxValue:
           type: integer
           example: 5
-        search:
+        request:
           type: boolean
           example: false
         offer:
           type: boolean
           example: false
+        create:
+          type: boolean
         fieldTypeChooses:
           type: array
           items:
