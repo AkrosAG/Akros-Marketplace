@@ -50,51 +50,10 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/FieldTypeResponseDTO'
+                  $ref: '#/components/schemas/CategoryFieldsResponseDTO'
 
-  /listTopicFieldTypes/{categoryId}/{search}:
-    get:
-      summary: List the field types to edit and add another search/offer topic 
-      description: used to get the fields to add a new topic
-      parameters:
-        - name: categoryId
-          in: path
-          required: true
-          description: Foreign Key ID to Category.
-          schema:
-            type: integer
-            format: int64
-        - name: search
-          in: path
-          required: true
-          description: valid values are 'SEARCH' and 'OFFER' 
-          schema:
-            type: string
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/FieldTypeResponseDTO'
-
-  /saveTopic:
-    post:
-      summary: Save a topic 
-      description: Save a topic
-      requestBody:
-        description: All values to save a topic
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TopicStoreRequestDTO'
-        required: true
-      responses:
-        200:
-          description: OK
-
-  /loadTopic/{topicId}:
+  /topics/{topicId}:
+    
     get:
       summary: Load a topic 
       description: Load a topic
@@ -114,7 +73,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/TopicLoadResponseDTO'
 
-  /deleteTopic/{topicId}:
+    post:
+      summary: Save a topic 
+      description: Save a topic
+      requestBody:
+        description: All values to save a topic
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TopicStoreRequestDTO'
+        required: true
+      responses:
+        200:
+          description: OK
+
     delete:
       summary: Delete a topic 
       description: Delete a topic
@@ -149,6 +121,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/TopicSearchListResponseDTO'
 
+  /topicFields/{categoryId}/{search}:
+    get:
+      summary: List the field types to edit and add another search/offer topic 
+      description: used to get the fields to add a new topic
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          description: Foreign Key ID to Category.
+          schema:
+            type: integer
+            format: int64
+        - name: search
+          in: path
+          required: true
+          description: true for 'OFFER' and false for 'SEARCH' 
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CategoryFieldsResponseDTO'
+
 components:
   schemas:
     FieldTypeDefinitionResponseDTO:
@@ -173,8 +172,9 @@ components:
     CategoryFieldsResponseDTO:
       type: object
       properties:
-        id:
-          type:
+        categoryId:
+          type: integer
+          format: int64
         fields:
           type: array
           items:
@@ -191,6 +191,8 @@ components:
           format: int32
         key:
           type: string
+        sortNumber:
+          type: integer
         minValue:
           type: integer
           example: 5
