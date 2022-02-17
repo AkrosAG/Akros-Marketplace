@@ -270,7 +270,8 @@ _\<white box template\>_
 ![Context View of AM](https://user-images.githubusercontent.com/41478805/152165162-87954f1b-29e4-4670-8d77-fac106446ff7.png)
 
 ## \<Use Case Diagram\>
-![image](https://user-images.githubusercontent.com/96523998/154435703-a64d2dee-2c99-4582-8b55-41b0a8d53b88.png)
+![image](https://user-images.githubusercontent.com/96523998/154435703-a64d2dee-2c99-4582-8b55-41b0a8d53b88.png) ![image](https://user-images.githubusercontent.com/96523998/154487230-3a51163f-5b49-416b-bfbe-a8712cc9dccd.png)
+
 
 
 ## \<Runtime Scenario 1\>
