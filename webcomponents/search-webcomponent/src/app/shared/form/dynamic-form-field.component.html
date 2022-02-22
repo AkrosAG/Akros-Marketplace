@@ -38,6 +38,20 @@
         {{ opt.description }}
       </option>
     </select>
+    <select
+      [id]="formField.key"
+      *mpSwitchCases="[13]"
+      [formControlName]="formField.key"
+      class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+    >
+      <option value="-1">-</option>
+      <option
+        *ngFor="let opt of selectCounterValues"
+        [value]="opt"
+      >
+        {{ opt.description }}
+      </option>
+    </select>
     <input
       *ngSwitchCase="7"
       [formControlName]="formField.key"

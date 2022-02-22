@@ -27,12 +27,9 @@ public class Category {
   @Column(name = "CATEGORY_ID")
   private Long            categoryId;
 
-  @Column(name = "DESCRIPTION")
-  private String          description;
-
-  @Column(name = "SHORT_DESCRIPTION")
-  private String          shortDescription;
+  @Column(name = "KEY")
+  private String          key;
 
   @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-  private List<FieldType> fieldTypes;
+  private List<Field> fields;
 }

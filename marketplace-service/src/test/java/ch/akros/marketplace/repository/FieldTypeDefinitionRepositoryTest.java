@@ -18,9 +18,9 @@ import ch.akros.marketplace.service.repository.FieldTypeDefinitionRepository;
 public class FieldTypeDefinitionRepositoryTest {
   @Autowired
   private FieldTypeDefinitionRepository fieldTypeDefinitionRepository;
-
-  @Test
-  public void allEntriesExistsInFieldTypeDefinition() {
-    assertEquals(12, fieldTypeDefinitionRepository.count());
-  }
+//
+//  @Test
+//  public void allEntriesExistsInFieldTypeDefinition() {
+//    assertEquals(12, fieldTypeDefinitionRepository.count());
+//  }
 }

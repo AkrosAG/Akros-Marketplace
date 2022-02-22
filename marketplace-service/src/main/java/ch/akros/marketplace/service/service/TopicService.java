@@ -6,39 +6,28 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import ch.akros.marketplace.api.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import ch.akros.marketplace.api.model.FieldTypeChooseResponseDTO;
-import ch.akros.marketplace.api.model.FieldTypeResponseDTO;
-import ch.akros.marketplace.api.model.TopicLoadResponseDTO;
-import ch.akros.marketplace.api.model.TopicSearchColumnHeaderResponseDTO;
-import ch.akros.marketplace.api.model.TopicSearchFieldTypeValuesRequestDTO;
-import ch.akros.marketplace.api.model.TopicSearchListResponseDTO;
-import ch.akros.marketplace.api.model.TopicSearchRequestDTO;
-import ch.akros.marketplace.api.model.TopicSearchResponseDTO;
-import ch.akros.marketplace.api.model.TopicSearchValueResponseDTO;
-import ch.akros.marketplace.api.model.TopicStoreRequestDTO;
-import ch.akros.marketplace.api.model.TopicValueLoadResponseDTO;
-import ch.akros.marketplace.api.model.TopicValueStoreRequestDTO;
 import ch.akros.marketplace.service.constants.EFieldTypeDefinition;
 import ch.akros.marketplace.service.entity.Category;
-import ch.akros.marketplace.service.entity.FieldType;
-import ch.akros.marketplace.service.entity.FieldTypeChoose;
+import ch.akros.marketplace.service.entity.Field;
+import ch.akros.marketplace.service.entity.FieldOption;
 import ch.akros.marketplace.service.entity.Topic;
 import ch.akros.marketplace.service.entity.TopicValue;
 import ch.akros.marketplace.service.repository.AdvertiserRepository;
 import ch.akros.marketplace.service.repository.CategoryRepository;
-import ch.akros.marketplace.service.repository.FieldTypeRepository;
+import ch.akros.marketplace.service.repository.FieldRepository;
 import ch.akros.marketplace.service.repository.TopicRepository;
 
 @Service
 public class TopicService {
   @Autowired
-  private FieldTypeRepository  fieldTypeRepository;
+  private FieldRepository fieldRepository;
 
   @Autowired
   private CategoryRepository   categoryRepository;
@@ -55,26 +44,25 @@ public class TopicService {
   @Autowired
   private CategoryService      categoryService;
 
-  public List<FieldTypeResponseDTO> listTopicFieldTypes(Long categoryId, String searchOrOffer) {
-    return fieldTypeRepository.listTopicSearchFieldTypes(categoryId, "SEARCH".equals(searchOrOffer))
+  public List<FieldTypeResponseDTO> listTopicFieldTypes(Long categoryId, String requestOrOffer) {
+    return fieldRepository.listTopicSearchFieldTypes(categoryId, "REQUEST".equals(requestOrOffer))
                               .stream()
                               .map(this::toFieldTypeResponseDTO)
                               .collect(Collectors.toList());
   }
 
-  private FieldTypeResponseDTO toFieldTypeResponseDTO(FieldType fieldType) {
+  private FieldTypeResponseDTO toFieldTypeResponseDTO(Field field) {
     FieldTypeResponseDTO result = new FieldTypeResponseDTO();
-    result.setCategoryId(fieldType.getCategory().getCategoryId());
-    result.setFieldTypeId(fieldType.getFieldTypeId());
-    result.setFieldTypeDefinitionId(fieldType.getFieldTypeDefinition().getFieldTypeDefinitionId());
-    result.setFieldTypeDefinitionDescription(fieldType.getFieldTypeDefinition().getDescription());
-    result.setDescription(fieldType.getDescription());
-    result.setShortDescription(fieldType.getShortDescription());
-    result.setMinValue(fieldType.getMinValue());
-    result.setMaxValue(fieldType.getMaxValue());
-    result.setSearch(fieldType.isSearch());
-    result.setOffer(fieldType.isOffer());
-    result.setFieldTypeChooses(fieldType.getFieldTypeChooses()
+    result.setFieldTypeId(field.getFieldId());
+    result.setFieldTypeDefinitionId(field.getFieldTypeDefinition().getFieldTypeDefinitionId());
+    result.setKey(field.getKey());
+    result.setMinValue(field.getMinValue());
+    result.setMaxValue(field.getMaxValue());
+    result.setRequest(field.isRequest());
+    result.setOffer(field.isOffer());
+    result.setCreate(field.isCreation());
+    result.setSortNumber(field.getSortNumber());
+    result.setFieldTypeOptions(field.getFieldOptions()
                                         .stream()
                                         .sorted((e1, e2) -> e1.getSortNumber() - e2.getSortNumber())
                                         .map(this::toFieldTypeChoosesResponseDTO)
@@ -82,28 +70,29 @@ public class TopicService {
     return result;
   }
 
-  private FieldTypeChooseResponseDTO toFieldTypeChoosesResponseDTO(FieldTypeChoose fieldTypeChoose) {
-    FieldTypeChooseResponseDTO result = new FieldTypeChooseResponseDTO();
-    result.setFieldTypeChooseId(fieldTypeChoose.getFieldTypeChooseId());
-    result.setDescription(fieldTypeChoose.getDescription());
-    result.setSortNumber(fieldTypeChoose.getSortNumber());
+  private FieldTypeOptionResponseDTO toFieldTypeChoosesResponseDTO(FieldOption fieldOption) {
+    FieldTypeOptionResponseDTO result = new FieldTypeOptionResponseDTO();
+    result.setFieldTypeOptionId(fieldOption.getFieldTypeOptionId());
+    result.setKey(fieldOption.getKey());
+    result.setSortNumber(fieldOption.getSortNumber());
     return result;
   }
 
-  public void storeTopic(TopicStoreRequestDTO topicStoreResponseDTO) {
+  public void saveTopic(TopicSaveRequestDTO topicSaveResponseDTO) {
     Topic topic = new Topic();
 
-    topic.setTopicId(topicStoreResponseDTO.getTopicId());
-    final Category category = categoryRepository.getById(topicStoreResponseDTO.getCategoryId());
+    topic.setTopicId(topicSaveResponseDTO.getTopicId());
+    final Category category = categoryRepository.getById(topicSaveResponseDTO.getCategoryId());
+    //TODO CHECK IF NEEDED
     topic.setCategory(category);
 
     topic.setValidFrom(LocalDate.now());
     topic.setValidTo(LocalDate.now().plusDays(365));
-    topic.setSearchOrOffer(topicStoreResponseDTO.getSearchOrOffer());
+    topic.setRequestOrOffer(topicSaveResponseDTO.getRequestOrOffer());
 
     topic.setAdvertiser(advertiserRepository.getById(1L));
 
-    topic.setTopicValues(topicStoreResponseDTO.getTopicValueStores()
+    topic.setTopicValues(topicSaveResponseDTO.getTopicValues()
                                               .stream()
                                               .map(e -> toTopicValue(category, topic, e))
                                               .collect(Collectors.toList()));
@@ -113,15 +102,13 @@ public class TopicService {
 
   private TopicValue toTopicValue(Category category,
                                   Topic topic,
-                                  TopicValueStoreRequestDTO topicValueStoreResponseDTO)
+                                  TopicValueSaveRequestDTO topicValueSaveResponseDTO)
   {
     TopicValue result = new TopicValue();
-    result.setFieldType(fieldTypeRepository.getById(topicValueStoreResponseDTO.getFieldTypeId()));
+    result.setField(fieldRepository.getById(topicValueSaveResponseDTO.getFieldTypeId()));
     result.setCategory(category);
     result.setTopic(topic);
-    result.setValueNum(topicValueStoreResponseDTO.getValueNum());
-    result.setValueVarchar(topicValueStoreResponseDTO.getValueVarchar());
-    result.setValueDate(topicValueStoreResponseDTO.getValueDate());
+    result.setValue(topicValueSaveResponseDTO.getValue());
     return result;
   }
 
@@ -129,17 +116,16 @@ public class TopicService {
     Topic topic = topicRepository.getById(topicId);
 
     TopicLoadResponseDTO result = new TopicLoadResponseDTO();
-    result.setSearchOrOffer(topic.getSearchOrOffer());
+    result.setRequestOrOffer(topic.getRequestOrOffer());
     result.setCategoryId(topic.getCategory().getCategoryId());
     result.setTopicId(topicId);
 
     result.setTopicValues(topic.getTopicValues()
                                .stream()
-                               .sorted((e1, e2) -> e1.getFieldType().getSortNumber()
-                                                   - e2.getFieldType().getSortNumber())
+                               .sorted((e1, e2) -> e1.getField().getSortNumber()
+                                                   - e2.getField().getSortNumber())
                                .map(this::toTopicValueLoadResponseDTO)
                                .collect(Collectors.toList()));
-
     return result;
   }
 
@@ -149,27 +135,23 @@ public class TopicService {
     result.setTopicValueId(topicValue.getTopicValueId());
 
     // from FieldTypeDefinition
-    result.setFieldTypeDefinitionId(topicValue.getFieldType().getFieldTypeDefinition().getFieldTypeDefinitionId());
-    result.setFieldTypeDefinitionDescription(topicValue.getFieldType().getFieldTypeDefinition().getDescription());
-    result.setFieldTypeChooses(topicValue.getFieldType()
-                                         .getFieldTypeChooses()
+    result.setFieldTypeDefinitionId(topicValue.getField().getFieldTypeDefinition().getFieldTypeDefinitionId());
+    result.setFieldTypeDefinitionDescription(topicValue.getField().getFieldTypeDefinition().getDescription());
+    result.setFieldTypeOptions(topicValue.getField()
+                                         .getFieldOptions()
                                          .stream()
                                          .sorted((e1, e2) -> e1.getSortNumber() - e2.getSortNumber())
                                          .map(this::toFieldTypeChoosesResponseDTO)
                                          .collect(Collectors.toList()));
 
     // from FieldType
-    result.setFieldTypeId(topicValue.getFieldType().getFieldTypeId());
-    result.setFieldTypeDescription(topicValue.getFieldType().getDescription());
-    result.setFieldTypeShortDescription(topicValue.getFieldType().getShortDescription());
-    result.setMaxValue(topicValue.getFieldType().getMaxValue());
-    result.setMinValue(topicValue.getFieldType().getMinValue());
+    result.setFieldTypeId(topicValue.getField().getFieldId());
+    result.setFieldTypeDescription(topicValue.getField().getKey());
+    result.setMaxValue(topicValue.getField().getMaxValue());
+    result.setMinValue(topicValue.getField().getMinValue());
 
     // from TopicValue
-    result.setValueBoolean(topicValue.getValueBoolean());
-    result.setValueDate(topicValue.getValueDate());
-    result.setValueNum(topicValue.getValueNum());
-    result.setValueVarchar(topicValue.getValueVarchar());
+    result.setValue(topicValue.getValue());
 
     return result;
   }
@@ -184,9 +166,9 @@ public class TopicService {
 
     StringBuilder sqlStringBuilder = null;
 
-    if (topicSearchRequestDTO.getSearchOrOffer() != null && topicSearchRequestDTO.getSearchOrOffer().length() >= 0) {
-      sqlStringBuilder = new StringBuilder("select t.topic_id from topic t where t.category_id=:categoryId and t.search_or_offer=:searchOrOffer");
-      namedParameters.addValue("searchOrOffer", topicSearchRequestDTO.getSearchOrOffer());
+    if (topicSearchRequestDTO.getRequestOrOffer() != null) {
+      sqlStringBuilder = new StringBuilder("select t.topic_id from topic t where t.category_id=:categoryId and t.request_or_offer=:requestOrOffer");
+      namedParameters.addValue("requestOrOffer", topicSearchRequestDTO.getRequestOrOffer());
     }
     else {
       sqlStringBuilder = new StringBuilder("select t.topic_id from topic t where t.category_id=:categoryId");
@@ -224,7 +206,7 @@ public class TopicService {
                                StringBuilder sqlStringBuilder,
                                MapSqlParameterSource namedParameters)
   {
-    Integer fieldTypeDefinitionId = fieldTypeRepository.getById(topicSearchFieldTypeValuesRequestDTO.getFieldTypeId())
+    Integer fieldTypeDefinitionId = fieldRepository.getById(topicSearchFieldTypeValuesRequestDTO.getFieldTypeId())
                                                        .getFieldTypeDefinition()
                                                        .getFieldTypeDefinitionId();
     EFieldTypeDefinition eFieldTypeDefinition = EFieldTypeDefinition.values()[fieldTypeDefinitionId];
@@ -281,7 +263,7 @@ public class TopicService {
         namedParameters.addValue(String.format("fieldTypeId%d", i),
                                  topicSearchFieldTypeValuesRequestDTO.getFieldTypeId());
         namedParameters.addValue(String.format("valueBoolean%d", i),
-                                 topicSearchFieldTypeValuesRequestDTO.getValueBoolean());
+                                 topicSearchFieldTypeValuesRequestDTO.getValue());
         break;
       }
 
@@ -295,7 +277,7 @@ public class TopicService {
         namedParameters.addValue(String.format("fieldTypeId%d", i),
                                  topicSearchFieldTypeValuesRequestDTO.getFieldTypeId());
         namedParameters.addValue(String.format("valueVarchar%d", i),
-                                 topicSearchFieldTypeValuesRequestDTO.getValueVarchar());
+                                 topicSearchFieldTypeValuesRequestDTO.getValue());
         break;
       }
 
@@ -307,8 +289,7 @@ public class TopicService {
   private TopicSearchColumnHeaderResponseDTO toTopicSearchColumnHeaderResponseDTO(FieldTypeResponseDTO fieldTypeResponseDTO) {
     TopicSearchColumnHeaderResponseDTO result = new TopicSearchColumnHeaderResponseDTO();
     result.setFieldTypeId(fieldTypeResponseDTO.getFieldTypeId());
-    result.setDescription(fieldTypeResponseDTO.getDescription());
-    result.setShortDescription(fieldTypeResponseDTO.getShortDescription());
+    result.setDescription(fieldTypeResponseDTO.getKey());
     return result;
   }
 
@@ -332,10 +313,7 @@ public class TopicService {
     result.setFieldTypeDefinitionId(topicValueLoadResponseDTO.getFieldTypeDefinitionId());
     result.setFieldTypeId(topicValueLoadResponseDTO.getFieldTypeId());
     result.setTopicId(topicId);
-    result.setValueBoolean(null);
-    result.setValueDate(null);
-    result.setValueNum(null);
-    result.setValueVarchar(null);
+    result.setValue(null);
     return result;
   }
 }

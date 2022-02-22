@@ -29,7 +29,7 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/VWCategoryResponseDTO'
+                  $ref: '#/components/schemas/CategoryResponseDTO'
 
 
 #ALSO DELETE
@@ -50,11 +50,7 @@ paths:
       responses:
         200:
           description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/CategoryFieldsResponseDTO'
+                ##  $ref: '#/components/schemas/CategoryFieldsResponseDTO'
 
 ####
 
@@ -79,7 +75,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TopicLoadResponseDTO'
-
+  /topics:
     post:
       summary: Save a topic 
       description: Save a topic
@@ -88,12 +84,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TopicStoreRequestDTO'
+              $ref: '#/components/schemas/TopicSaveRequestDTO'
         required: true
       responses:
         200:
           description: OK
-
     delete:
       summary: Delete a topic 
       description: Delete a topic
@@ -141,7 +136,7 @@ components:
           type: string
           example: Parkplatz
 
-    VWCategoryResponseDTO:
+    CategoryResponseDTO:
       type: object
       properties:
         categoryId:
@@ -149,13 +144,6 @@ components:
           format: int64
         key:
           type: string
-
-    CategoryFieldsResponseDTO:
-      type: object
-      properties:
-        categoryId:
-          type: integer
-          format: int64
         fields:
           type: array
           items:
@@ -188,15 +176,15 @@ components:
           example: false
         create:
           type: boolean
-        fieldTypeChooses:
+        fieldTypeOptions:
           type: array
           items:
-            $ref: '#/components/schemas/FieldTypeChooseResponseDTO'
+            $ref: '#/components/schemas/FieldTypeOptionResponseDTO'
 
-    FieldTypeChooseResponseDTO:
+    FieldTypeOptionResponseDTO:
       type: object
       properties:
-        fieldTypeChooseId:
+        fieldTypeOptionId:
           type: integer
           format: int64
         key:
@@ -204,7 +192,7 @@ components:
         sortNumber:
           type: integer
 
-    TopicStoreRequestDTO:
+    TopicSaveRequestDTO:
       type: object
       properties:
         topicId:
@@ -213,29 +201,21 @@ components:
         categoryId:
           type: integer
           format: int64
-        searchOrOffer:
-          type: string
-          example: OFFER or SEARCH
-        topicValueStores:
+        requestOrOffer:
+          type: boolean
+        topicValues:
           type: array
           items:
-            $ref: '#/components/schemas/TopicValueStoreRequestDTO'
+            $ref: '#/components/schemas/TopicValueSaveRequestDTO'
 
-    TopicValueStoreRequestDTO:
+    TopicValueSaveRequestDTO:
       type: object
       properties:
         fieldTypeId:
           type: integer
           format: int64
-        valueNum:
-          type: double
-          format: int64
-        valueVarchar:
+        value:
           type: string
-        valueDate:
-          type: date
-        valueBoolean:
-          type: boolean
 
     TopicLoadResponseDTO:
       type: object
@@ -246,9 +226,8 @@ components:
         categoryId:
           type: integer
           format: int64
-        searchOrOffer:
-          type: string
-          example: OFFER or SEARCH
+        requestOrOffer:
+          type: boolean
         topicValues:
           type: array
           items:
@@ -281,19 +260,12 @@ components:
         maxValue:
           type: integer
           example: 5
-        valueNum:
-          type: double
-          format: int64
-        valueVarchar:
+        value:
           type: string
-        valueDate:
-          type: date
-        valueBoolean:
-          type: boolean
-        fieldTypeChooses:
+        fieldTypeOptions:
           type: array
           items:
-            $ref: '#/components/schemas/FieldTypeChooseResponseDTO'
+            $ref: '#/components/schemas/FieldTypeOptionResponseDTO'
 
     TopicSearchRequestDTO:
       type: object
@@ -301,9 +273,8 @@ components:
         categoryId:
           type: integer
           format: int64
-        searchOrOffer:
-          type: string
-          example: OFFER or SEARCH (may be null for both)
+        requestOrOffer:
+          type: boolean
         searchValues:
           type: array
           items:
@@ -321,12 +292,8 @@ components:
         valueNumTo:
           type: double
           format: int64
-        valueVarchar:
+        value:
           type: string
-        valueDate:
-          type: date
-        valueBoolean:
-          type: boolean
 
     TopicSearchListResponseDTO:
       type: object
@@ -364,7 +331,6 @@ components:
           items:
             $ref: '#/components/schemas/TopicSearchValueResponseDTO'
 
-
     TopicSearchValueResponseDTO:
       type: object
       properties:
@@ -374,15 +340,8 @@ components:
         fieldTypeId:
           type: integer
           format: int64
-        valueNum:
-          type: double
-          format: int64
-        valueVarchar:
+        value:
           type: string
-        valueDate:
-          type: date
-        valueBoolean:
-          type: boolean
         fieldTypeDefinitionId:
           type: integer
           format: int32

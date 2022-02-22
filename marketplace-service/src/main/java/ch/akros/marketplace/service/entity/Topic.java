@@ -45,6 +45,8 @@ public class Topic {
   @ToString.Exclude
   private Advertiser       advertiser;
 
+
+//  TODO CHECK IF ENTIRE CATEGORY IS NEEDED
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(referencedColumnName = "CATEGORY_ID", name = "CATEGORY_ID",
       foreignKey = @ForeignKey(name = "TOPIC_CATEGORY_FK"))
@@ -60,6 +62,6 @@ public class Topic {
   @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
   private List<TopicValue> topicValues;
 
-  @Column(name = "SEARCH_OR_OFFER")
-  private String           searchOrOffer;
+  @Column(name = "REQUEST_OR_OFFER")
+  private Boolean           requestOrOffer;
 }

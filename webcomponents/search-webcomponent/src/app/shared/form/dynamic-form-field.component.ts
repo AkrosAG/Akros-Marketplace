@@ -1,3 +1,4 @@
+import { appConfig } from './../../../../../../am-ui/src/config';
 import {Component, Input} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 
@@ -13,6 +14,8 @@ export class DynamicFormFieldComponent {
   @Input() form!: FormGroup;
   @Input() errorMessages: any;
   @Input() appLanguage: string;
+
+  public selectCounterValues = appConfig.selectCounterValues;
 
   get isValid() {
     return this.form.controls[this.formField.key].valid;
