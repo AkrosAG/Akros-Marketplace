@@ -128,9 +128,9 @@ insert into field (field_type_definition_id, category_id, key, min_value, max_va
 insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (3, 1, 'description', 1, 1000, 2, true, false, true, true, true);
 insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (11, 1, 'fromDate', null, null, 3, true, true, true, true, false);
 insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (11, 1, 'toDate', null, null, 4, false, true, true, true, false);
-insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (1, 1, 'rooms', 1, 10, 3, true, false, false, true, true);
-insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (1, 1, 'fromRooms', 1, 10, 5, true, true, false, true, false);
-insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (1, 1, 'toRooms', 1, 10, 6, true, true, false, true, false);
+insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (13, 1, 'rooms', 1, 10, 3, true, false, false, true, true);
+insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (13, 1, 'fromRooms', 1, 10, 5, true, true, false, true, false);
+insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (13, 1, 'toRooms', 1, 10, 6, true, true, false, true, false);
 insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (12, 1, 'price', 1, 1000, 7, true, false, false, true, true);
 insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (12, 1, 'fromPrice', 1, 1000, 7, true, true, false, true, false);
 insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (12, 1, 'toPrice', 1, 1000, 8, true, true, false, true, false);
@@ -138,17 +138,17 @@ insert into field (field_type_definition_id, category_id, key, min_value, max_va
 insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (1, 1, 'fromSize', 1, 1000, 9, true, true, false, true, false);
 insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (1, 1, 'toSize', 1, 1000, 10, true, true, false, true, false);
 insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (5, 1, 'type', null, null, 1, true, true, true, true, true);
-insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (5, 1, 'region', 1, 100, 2, true, true, true, true, false);
-insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (5, 1, 'address', 1, 100, 3, true, false, true, true, true);
+insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (2, 1, 'region', 1, 100, 2, true, true, true, true, false);
+insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (3, 1, 'address', 1, 100, 3, true, false, true, true, true);
 
 insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (5, 2, 'fromRegion', 1, 100, 1, true, true, true, true, false);
 insert into field (field_type_definition_id, category_id, key, min_value, max_value, sort_number, required, searchable, request, offer, creation) values (5, 2, 'toRegion', 2, 100, 1, true, true, true, true, false);
 
 -- Field Option
-insert into field_option (field_id, key, sort_number) values (8, 'room', 1);
-insert into field_option (field_id, key, sort_number) values (8, 'apartment', 2);
-insert into field_option (field_id, key, sort_number) values (8, 'house', 3);
-insert into field_option (field_id, key, sort_number) values (8, 'parking', 4);
+insert into field_option (field_id, key, sort_number) values (14, 'room', 1);
+insert into field_option (field_id, key, sort_number) values (14, 'apartment', 2);
+insert into field_option (field_id, key, sort_number) values (14, 'house', 3);
+insert into field_option (field_id, key, sort_number) values (14, 'parking', 4);
 
 -- Advertiser
 insert into advertiser (first_name, last_name, email, phone_number) values ('J', 'R', 'j.r@world.com', '0123456789' );

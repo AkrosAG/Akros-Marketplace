@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
 @Getter
 @Setter
 @Builder
@@ -26,11 +25,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Table(name = "FIELD_OPTION")
+@Entity(name = "fieldOption")
 public class FieldOption {
   @Id
   @Column(name = "FIELD_OPTION_ID", nullable = false, unique = true)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long      fieldTypeOptionId;
+  private Long      fieldOptionId;
 
   @Column(name = "KEY")
   private String    key;

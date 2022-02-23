@@ -31,31 +31,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/CategoryResponseDTO'
 
-
-#ALSO DELETE
-
-
-  /categorySearchFields/{categoryId}:
-    get:
-      summary: List the search field types for one categorie
-      description: used for primary search page
-      parameters:
-        - name: categoryId
-          in: path
-          required: true
-          description: Foreign Key ID to Category.
-          schema:
-            type: integer
-            format: int64
-      responses:
-        200:
-          description: OK
-                ##  $ref: '#/components/schemas/CategoryFieldsResponseDTO'
-
-####
-
-
-
   /topics/{topicId}:
     get:
       summary: Load a topic 
@@ -147,12 +122,12 @@ components:
         fields:
           type: array
           items:
-            $ref: '#/components/schemas/FieldTypeResponseDTO'
+            $ref: '#/components/schemas/FieldResponseDTO'
 
-    FieldTypeResponseDTO:
+    FieldResponseDTO:
       type: object
       properties:
-        fieldTypeId:
+        fieldId:
           type: integer
           format: int64
         fieldTypeDefinitionId:
@@ -168,23 +143,23 @@ components:
         maxValue:
           type: integer
           example: 5
+        searchable:
+          type: boolean
         request:
           type: boolean
-          example: false
         offer:
           type: boolean
-          example: false
-        create:
+        creation:
           type: boolean
-        fieldTypeOptions:
+        fieldOptions:
           type: array
           items:
-            $ref: '#/components/schemas/FieldTypeOptionResponseDTO'
+            $ref: '#/components/schemas/FieldOptionResponseDTO'
 
-    FieldTypeOptionResponseDTO:
+    FieldOptionResponseDTO:
       type: object
       properties:
-        fieldTypeOptionId:
+        fieldOptionId:
           type: integer
           format: int64
         key:
@@ -239,13 +214,13 @@ components:
         topicValueId:
           type: integer
           format: int64
-        fieldTypeId:
+        fieldId:
           type: integer
           format: int64
-        fieldTypeDescription:
+        fieldDescription:
           type: string
           example: Beschreibung
-        fieldTypeShortDescription:
+        fieldShortDescription:
           type: string
           example: Beschreibung
         fieldTypeDefinitionId:
@@ -265,7 +240,7 @@ components:
         fieldTypeOptions:
           type: array
           items:
-            $ref: '#/components/schemas/FieldTypeOptionResponseDTO'
+            $ref: '#/components/schemas/FieldOptionResponseDTO'
 
     TopicSearchRequestDTO:
       type: object
@@ -278,12 +253,12 @@ components:
         searchValues:
           type: array
           items:
-            $ref: '#/components/schemas/TopicSearchFieldTypeValuesRequestDTO'
+            $ref: '#/components/schemas/TopicSearchFieldValuesRequestDTO'
 
-    TopicSearchFieldTypeValuesRequestDTO:
+    TopicSearchFieldValuesRequestDTO:
       type: object
       properties:
-        fieldTypeId:
+        fieldId:
           type: integer
           format: int64
         valueNumFrom:
@@ -310,7 +285,7 @@ components:
     TopicSearchColumnHeaderResponseDTO:
       type: object
       properties:
-        fieldTypeId:
+        fieldId:
           type: integer
           format: int64
         description:
@@ -337,14 +312,14 @@ components:
         topicId:
           type: integer
           format: int64
-        fieldTypeId:
+        fieldId:
           type: integer
           format: int64
         value:
           type: string
-        fieldTypeDefinitionId:
+        fieldDefinitionId:
           type: integer
           format: int32
-        fieldTypeDefinitionDescription:
+        fieldDefinitionDescription:
           type: string
           example: Number
