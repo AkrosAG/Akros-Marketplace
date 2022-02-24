@@ -16,7 +16,7 @@ public class MarketplaceServiceApplication {
   @Value("${connectionString:}")
   private String connectionStringRemote;
 
-  @Value("${spring.datasource.url}")
+  @Value("${spring.datasource.url:}")
   private String connectionStringLocale;
 
   public static void main(String[] args) {
