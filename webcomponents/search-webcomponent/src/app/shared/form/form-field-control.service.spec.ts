@@ -1,4 +1,3 @@
-import {ValidationMessages} from './../../utils/form/ValidationMessages';
 import {FormGroup} from '@angular/forms';
 import {FormFieldBase} from './form-field-base';
 import {FormFieldControlService} from './form-field-control.service';
@@ -28,6 +27,7 @@ describe('FormFieldControlService', () => {
       required: false,
       type: 10
     } as FormFieldBase<string>;
+
     const formField3 = {
       key: 'test',
       required: true,
@@ -38,9 +38,10 @@ describe('FormFieldControlService', () => {
       key: 'test2',
       required: false,
     } as FormFieldBase<string>;
+
     const formFields = [formField1, formField2, formField3, formField4];
     const formGroup = service.toFormGroup(formFields);
-    expect(Object.keys(formGroup.value).length).toEqual(2);
+    expect(Object.keys(formGroup.value).length).toEqual(3);
     expect(formGroup).toBeInstanceOf(FormGroup);
   });
 

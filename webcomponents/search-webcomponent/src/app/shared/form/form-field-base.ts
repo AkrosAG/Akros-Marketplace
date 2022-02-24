@@ -1,4 +1,4 @@
-import {FieldTypeChooseResponse} from 'src/app/data/models/FieldTypeChooseResponse';
+import {FieldOption} from 'src/app/data/models/FieldOption';
 
 export class FormFieldBase<T> {
   value: T | undefined;
@@ -10,9 +10,11 @@ export class FormFieldBase<T> {
   type: number;
   min: number;
   max: number;
-  options: FieldTypeChooseResponse[];
+  options: FieldOption[];
+  searchable: boolean;
   offer: boolean;
-  search: boolean;
+  request: boolean;
+  creation: boolean;
 
   constructor(
     options: {
@@ -25,9 +27,11 @@ export class FormFieldBase<T> {
       type?: number;
       min?: number;
       max?: number;
-      options?: FieldTypeChooseResponse[];
+      options?: FieldOption[];
+      searchable?: boolean;
+      request?: boolean;
       offer?: boolean;
-      search?: boolean;
+      creation?: boolean;
     } = {}
   ) {
     this.value = options.value;
@@ -40,7 +44,9 @@ export class FormFieldBase<T> {
     this.min = options.min === undefined ? 0 : options.min;
     this.max = options.max === undefined ? 0 : options.max;
     this.options = options.options || [];
+    this.searchable = !!options.searchable;
     this.offer = !!options.offer;
-    this.search = !!options.search;
+    this.request = !!options.request;
+    this.creation = !!options.creation;
   }
 }

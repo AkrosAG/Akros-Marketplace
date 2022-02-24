@@ -7,6 +7,7 @@ const marketplaceInitialState: MarketplaceState = {
   categories: [],
   selectedCategorySearchFields: [],
   categorySelected: false,
+  currentCategoryKey: '',
 };
 
 export const marketplaceReducer = createReducer<MarketplaceState>(
@@ -17,16 +18,19 @@ export const marketplaceReducer = createReducer<MarketplaceState>(
       return {
         ...state,
         categories: action.categories,
+        selectedCategorySearchFields: action.searchFields,
+        currentCategoryKey: action.currentCategoryKey
       };
     }
   ),
   on(
-    marketplaceActions.getCategorySearchFieldsSuccess,
+    marketplaceActions.setCategorySearchFields,
     (state, action): MarketplaceState => {
       return {
         ...state,
         categorySelected: true,
         selectedCategorySearchFields: action.selectedCategorySearchFields,
+        currentCategoryKey: action.currentCategoryKey,
       };
     }
   ),

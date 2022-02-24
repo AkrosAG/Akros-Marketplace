@@ -1,4 +1,3 @@
-import {FieldTypeResponse} from './../models/FieldTypeResponse';
 import {RestHelperService} from './../../utils/restHelperService';
 import {Category} from '../models/Category';
 import {Injectable} from '@angular/core';
@@ -26,37 +25,13 @@ export class CategoriesService {
 
   public getCategories(): Observable<Category[]> {
     return this.httpClient
-      .get<Category[]>('api/listCategories', {
+      .get<Category[]>('api/categories', {
         headers: this.defaultHeaders,
         // withCredentials: this.withCredentials,
       })
       .pipe(
         tap(() =>
           this.logger.info('[CategoriesService]', "getCategories method'")
-        ),
-        catchError(err => {
-          return this.restHelper.handleError(
-            'Error in the loading of data.',
-            err
-          );
-        })
-      );
-  }
-
-  public getSearchFieldTypes(
-    categoryId: number
-  ): Observable<FieldTypeResponse[]> {
-    return this.httpClient
-      .get<FieldTypeResponse[]>(
-        `api/listCategorySearchFieldTypes/${categoryId}`,
-        {
-          headers: this.defaultHeaders,
-          // withCredentials: this.withCredentials,
-        }
-      )
-      .pipe(
-        tap(() =>
-          this.logger.info('[CategoriesService]', "getSearchFieldTypes method'")
         ),
         catchError(err => {
           return this.restHelper.handleError(

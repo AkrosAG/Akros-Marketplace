@@ -4,5 +4,6 @@ import {Category} from '../models/Category';
 export interface MarketplaceState {
   categories: Category[];
   selectedCategorySearchFields: FormFieldBase<string>[];
-  categorySelected: Boolean;
+  categorySelected: boolean;
+  currentCategoryKey: string;
 }

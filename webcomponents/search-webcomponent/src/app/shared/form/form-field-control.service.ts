@@ -40,7 +40,7 @@ export class FormFieldControlService {
           break;
       }
     });
-    group['searchOrOffer'] = new FormControl(false, [Validators.required]);
+    group['requestOrOffer'] = new FormControl(false, [Validators.required]);
     return new FormGroup(group);
   }
 

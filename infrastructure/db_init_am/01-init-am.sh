@@ -120,7 +120,7 @@ insert into field_type_definition values (12, 'Price');
 insert into field_type_definition values (13, 'Select counter');
 
 -- categories
-insert into category (key) values ('accommodation');
+insert into category (key) values ('accomodation');
 insert into category (key) values ('carShare');
 
 -- Field

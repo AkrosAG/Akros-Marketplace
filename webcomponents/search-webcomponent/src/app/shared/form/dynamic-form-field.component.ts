@@ -14,6 +14,7 @@ export class DynamicFormFieldComponent {
   @Input() form!: FormGroup;
   @Input() errorMessages: any;
   @Input() appLanguage: string;
+  @Input() currentCategoryKey: string;
 
   public selectCounterValues = appConfig.selectCounterValues;
 

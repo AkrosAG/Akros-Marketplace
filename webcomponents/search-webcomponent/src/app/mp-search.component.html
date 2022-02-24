@@ -1,7 +1,10 @@
 <div class="accordion accordion-flush" id="accordionParent">
   <div
     class="accordion-item border-t-0 border-l-0 border-r-0 rounded-none bg-white border border-gray-200"
-    *ngFor="let option of $any(categories$ | async); let indexOfelement = index"
+    *ngFor="
+      let category of $any(categories$ | async);
+      let indexOfelement = index
+    "
   >
     <h2
       class="accordion-header mb-0"
@@ -14,13 +17,13 @@
         [attr.data-bs-target]="'flush-collapse-' + indexOfelement"
         aria-expanded="false"
         [attr.aria-controls]="'flush-collapse-' + indexOfelement"
-        (click)="categorySelect(indexOfelement)"
+        (click)="categorySelect(indexOfelement, category)"
         [ngClass]="{
           selected: currentSelected === indexOfelement,
           collapsed: indexOfelement !== currentSelected
         }"
       >
-        {{ option.description }}
+        {{ 'searchForm.categories.' + category.key + '.title' | translate }}
       </button>
     </h2>
     <div
@@ -33,10 +36,7 @@
       <div class="accordion-body">
         <div
           class="flex w-full py-4 px-5"
-          *ngIf="
-            $any(categorySelected$ | async) &&
-            currentSelected === indexOfelement
-          "
+          *ngIf="currentSelected === indexOfelement"
         >
           <mp-search-form
             class="flex-1"
@@ -44,6 +44,7 @@
             [selectedCategorySearchFields]="
               $any(selectedCategorySearchFields$ | async)
             "
+            [currentCategoryKey]="$any(currentCategoryKey$ | async)"
           ></mp-search-form>
         </div>
       </div>

@@ -6,7 +6,10 @@
       [id]="formField.key"
       type="text"
       class="bg-grey-lightest border-2 focus:border-orange p-2 rounded-lg shadow-inner w-full"
-      placeholder="{{ formField.label }}"
+      placeholder="{{
+        'searchForm.categories.' + currentCategoryKey + '.' + formField.key
+          | translate
+      }}"
     />
     <input
       *mpSwitchCases="[2, 4, 8, 9]"
@@ -14,7 +17,10 @@
       [id]="formField.key"
       type="text"
       class="bg-grey-lightest border-2 focus:border-orange p-2 rounded-lg shadow-inner w-full"
-      placeholder="{{ formField.label }}"
+      placeholder="{{
+        'searchForm.categories.' + currentCategoryKey + '.' + formField.key
+          | translate
+      }}"
     />
     <textarea
       *ngSwitchCase="3"
@@ -30,12 +36,13 @@
       [formControlName]="formField.key"
       class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
     >
-      <option value="-1">{{ 'searchForm.select' | translate }}</option>
-      <option
-        *ngFor="let opt of formField.options"
-        [value]="opt.fieldTypeChooseId"
-      >
-        {{ opt.description }}
+      <option value="-1">
+        {{
+          'searchForm.categories.' + currentCategoryKey + '.type' | translate
+        }}
+      </option>
+      <option *ngFor="let opt of formField.options" [value]="opt.fieldOptionId">
+        {{ opt.key }}
       </option>
     </select>
     <select
@@ -44,12 +51,13 @@
       [formControlName]="formField.key"
       class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
     >
-      <option value="-1">-</option>
-      <option
-        *ngFor="let opt of selectCounterValues"
-        [value]="opt"
-      >
-        {{ opt.description }}
+      <option value="-1">
+        {{
+          'searchForm.categories.' + currentCategoryKey + '.' + formField.key | translate
+        }}
+      </option>
+      <option *ngFor="let opt of selectCounterValues" [value]="opt">
+        {{ opt }}
       </option>
     </select>
     <input
@@ -60,14 +68,16 @@
     />
     <input
       class="bg-grey-lightest border-2 focus:border-orange p-2 rounded-lg shadow-inner w-full"
-      placeholder="{{ formField.label }}"
+      placeholder="{{
+        'searchForm.' + currentCategoryKey + '.' + formField.key | translate
+      }}"
       *ngSwitchCase="11"
       [formControlName]="formField.key"
       [id]="formField.key"
       type="date"
     />
   </div>
-  <div class="errorMessage" *ngIf="!isValid">
+  <div class="error-message" *ngIf="!isValid">
     {{ errorMessages.error[appLanguage] }}
   </div>
 </div>

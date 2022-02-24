@@ -1,6 +1,6 @@
+import { Field } from './Field';
 export interface Category {
   categoryId: number;
-  description: string;
-  searchCount?: number;
-  offerCount?: number;
+  key: string;
+  fields: Field[];
 }

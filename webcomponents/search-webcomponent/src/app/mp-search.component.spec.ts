@@ -1,3 +1,4 @@
+import {FormFieldControlService} from './shared/form/form-field-control.service';
 import {TestBed} from '@angular/core/testing';
 import {
   TranslateModule,
@@ -7,6 +8,8 @@ import {
 } from '@ngx-translate/core';
 import {MpSearchComponent} from './mp-search.component';
 import {provideMockStore, MockStore} from '@ngrx/store/testing';
+
+jest.mock('./shared/form/form-field-control.service');
 
 describe('MpSearchComponent', () => {
   const initialState = {
@@ -26,7 +29,11 @@ describe('MpSearchComponent', () => {
         }),
       ],
       declarations: [MpSearchComponent],
-      providers: [TranslateService, provideMockStore({initialState})],
+      providers: [
+        FormFieldControlService,
+        TranslateService,
+        provideMockStore({initialState}),
+      ],
     }).compileComponents();
   });
 
@@ -46,8 +53,13 @@ describe('MpSearchComponent', () => {
     const fixture = TestBed.createComponent(MpSearchComponent);
     const app = fixture.componentInstance;
     const store = TestBed.inject(MockStore);
+    const cat = {
+      categoryId: 0,
+      key: '',
+      fields: [],
+    };
     store.dispatch = jest.fn();
-    app.categorySelect(2);
+    app.categorySelect(2, cat);
     expect(store.dispatch).toHaveBeenCalled();
   });
 });

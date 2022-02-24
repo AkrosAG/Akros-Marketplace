@@ -1,3 +1,4 @@
+import {FormFieldsBuilderService} from './utils/formFieldsBuilderService';
 import {LocalizationService} from './data/services/localization.service';
 import {Store} from '@ngrx/store';
 import {MarketplaceState} from './data/store/marketplace.state';
@@ -26,10 +27,11 @@ import * as storeActions from './data/store/marketplace.actions';
 export class MpSearchComponent implements OnInit, OnChanges {
   public categories$: Observable<Category[]>;
   public selectedCategorySearchFields$: Observable<FormFieldBase<string>[]>;
-  public categorySelected$ = new Observable<Boolean>();
+  public categorySelected$ = new Observable<boolean>();
+  public currentCategoryKey$: Observable<string>;
   public form: FormGroup;
   public categorySelected: boolean[] = [];
-  public currentSelected: number = 1;
+  public currentSelected: number = 0;
 
   title = 'search-webcomponent';
   public appLoaded: boolean = true;
@@ -39,7 +41,8 @@ export class MpSearchComponent implements OnInit, OnChanges {
 
   constructor(
     private store: Store<MarketplaceState>,
-    private localization: LocalizationService
+    private localization: LocalizationService,
+    private formFieldsBuilderService: FormFieldsBuilderService
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -50,6 +53,8 @@ export class MpSearchComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    this.appLanguage = this.language ? this.language : 'de';
+    this.localization.use(this.appLanguage);
     this.categories$ = this.store.select(storeSelector.getCategories);
     this.selectedCategorySearchFields$ = this.store.select(
       storeSelector.getCategorySearchFields
@@ -57,20 +62,28 @@ export class MpSearchComponent implements OnInit, OnChanges {
     this.categorySelected$ = this.store.select(
       storeSelector.getIfCategorySelected
     );
-    this.store.dispatch(storeActions.loadCategories());
-    this.store.dispatch(
-      storeActions.getCategorySearchFields({categoryId: this.currentCategoryId})
+    this.currentCategoryKey$ = this.store.select(
+      storeSelector.getCurrentCategoryKey
     );
+    this.store.dispatch(storeActions.loadCategories());
   }
 
-  public categorySelect(categoryId: number) {
+  public categorySelect(index: number, category: Category) {
     this.categorySelected[this.currentSelected] = false;
-    this.currentSelected = categoryId;
-    this.categorySelected[categoryId] = true;
-    if (this.currentCategoryId !== categoryId) {
-      this.currentCategoryId = categoryId;
+    this.currentSelected = index;
+    this.categorySelected[index] = true;
+    if (this.currentCategoryId !== category.categoryId) {
+      this.currentCategoryId = category.categoryId;
       this.store.dispatch(storeActions.resetCategorySelected());
-      this.store.dispatch(storeActions.getCategorySearchFields({categoryId}));
+      const formFields = this.formFieldsBuilderService.searchFieldsToFormFields(
+        category.fields
+      );
+      this.store.dispatch(
+        storeActions.setCategorySearchFields({
+          selectedCategorySearchFields: formFields,
+          currentCategoryKey: category.key,
+        })
+      );
     }
   }
 }

@@ -60,6 +60,6 @@ public class Topic {
   @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
   private List<TopicValue> topicValues;
 
-  @Column(name = "SEARCH_OR_OFFER")
-  private String           searchOrOffer;
+  @Column(name = "REQUEST_OR_OFFER")
+  private String           requestOrOffer;
 }
