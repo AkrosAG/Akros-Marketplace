@@ -14,6 +14,9 @@ logging:
             StatementCreatorUtils: DEBUG
     root: INFO
 spring:
+  profiles:
+    # change to dev for local development
+    active: prod
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
@@ -25,9 +28,3 @@ server:
     key-store-password: 123456
     key-store-type: PKCS12
   port: 8443
-
-azure:
-  keyvault:
-    client-id: bc8c5b34-1189-4ae3-99fe-bffc0c7b04fc
-    enabled: true
-    uri: https://am-kv.vault.azure.net/
