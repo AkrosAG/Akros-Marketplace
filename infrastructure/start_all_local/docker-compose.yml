@@ -4,8 +4,8 @@ services:
   client-ui:
     container_name: client-ui
     build:
-      context: ../..
-      dockerfile: ./am-ui/Dockerfile
+      context: ../../am-ui
+      Dockerfile: ./Dockerfile.local
     ports:
       - 4200:443
     networks:
@@ -17,8 +17,7 @@ services:
   marketplace-service:
     container_name: marketplace-service
     build:
-      context: ../..
-      dockerfile: ./marketplace-service/Dockerfile
+      context: ../../marketplace-service
     ports:
       - 8443:8443
     environment:
@@ -32,8 +31,7 @@ services:
   auth-service:
     container_name: auth-service
     build:
-      context: ../..
-      dockerfile: ./auth-service/Dockerfile
+      context: ../../auth-service
     ports:
       - 8080:8080
     environment:

@@ -7,10 +7,10 @@ build = async () => {
     './dist/search-webcomponent/polyfills.js',
     './dist/search-webcomponent/runtime.js',
   ];
-  await fs.ensureDir('../../am-ui/src/assets/scripts/webcomponents');
+  await fs.ensureDir('../../src/assets/scripts/webcomponents');
   await concat(
     files,
-    '../../am-ui/src/assets/scripts/webcomponents/search-webcomponent.js'
+    '../../src/assets/scripts/webcomponents/search-webcomponent.js'
   );
 };
 build();

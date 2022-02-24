@@ -3,6 +3,7 @@ package ch.akros.marketplace.service;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,9 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 @SpringBootApplication
 public class MarketplaceServiceApplication {
   private static final String POSTGRES_DB_URL_ENV = "POSTGRES_AM_DB_URL";
+
+  @Value("${connectionString}")
+  private String connectionString;
 
   public static void main(String[] args) {
     SpringApplication application = new SpringApplication(MarketplaceServiceApplication.class);
@@ -26,14 +30,13 @@ public class MarketplaceServiceApplication {
     if (System.getenv(POSTGRES_DB_URL_ENV) != null && System.getenv(POSTGRES_DB_URL_ENV).length() > 0) {
       // using container orchestration
       dataSource.setUrl(System.getenv(POSTGRES_DB_URL_ENV));
+      dataSource.setUsername("am");
+      dataSource.setPassword("am");
     }
     else {
-      // localhost for local development and unit tests
-      dataSource.setUrl("jdbc:postgresql://localhost:5432/am");
+      dataSource.setUrl(connectionString);
     }
 
-    dataSource.setUsername("am");
-    dataSource.setPassword("am");
     return dataSource;
   }
 }

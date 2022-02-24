@@ -35,3 +35,27 @@ jobs:
       - run: npm run build --if-present
       - run: npm run lint
       - run: npm run test
+      - working-directory: ./am-ui/webcomponents
+        run: npm ci
+      - working-directory: ./am-ui/webcomponents
+        run: npm build
+      - working-directory: ./am-ui/webcomponents
+        run: npm lint
+      - working-directory: ./am-ui/webcomponents
+        run: npm test
+
+      - uses: azure/docker-login@v1
+        with:
+          login-server: ampcr.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - run: |
+          docker build . -t ampcr.azurecr.io/am-ui:${{ github.sha }}
+          docker push ampcr.azurecr.io/am-ui:${{ github.sha }}
+
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: "am-ui"
+          publish-profile: ${{ secrets.AM_UI_PUBLISH_PROFILE }}
+          images: "ampcr.azurecr.io/am-ui:${{ github.sha }}"

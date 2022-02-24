@@ -1,10 +1,12 @@
 FROM maven:3.6.3-jdk-11 AS builder
-COPY ./ ./
+WORKDIR /usr/local/app
+
+COPY ./ /usr/local/app/
 RUN mvn clean package -DskipTests
 
 FROM openjdk:11-jre-slim
 
-EXPOSE 8080 8443
+EXPOSE 8080 8443 9443
 
-COPY --from=builder /auth-service/target/auth-service-0.0.1-SNAPSHOT.jar /app.jar
+COPY --from=builder /usr/local/app/target/auth-service-0.0.1-SNAPSHOT.jar /app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
