@@ -13,7 +13,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 public class MarketplaceServiceApplication {
   private static final String POSTGRES_DB_URL_ENV = "POSTGRES_AM_DB_URL";
 
-  @Value("${connectionString}")
+  @Value("${connectionString:}")
   private String connectionString;
 
   public static void main(String[] args) {
@@ -33,8 +33,12 @@ public class MarketplaceServiceApplication {
       dataSource.setUsername("am");
       dataSource.setPassword("am");
     }
-    else {
+    else if(!connectionString.isEmpty()){
       dataSource.setUrl(connectionString);
+    } else {
+      dataSource.setUrl("jdbc:postgresql://localhost:5432/am");
+      dataSource.setUsername("am");
+      dataSource.setPassword("am");
     }
 
     return dataSource;
