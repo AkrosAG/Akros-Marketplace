@@ -47,13 +47,13 @@ jobs:
         run: npm ci
       - name: Build webcomponents
         working-directory: ./am-ui/webcomponents
-        run: npm build
+        run: npm run build
       - name: Lint webcomponents
         working-directory: ./am-ui/webcomponents
-        run: npm lint
+        run: npm run lint
       - name: Test webcomponents
         working-directory: ./am-ui/webcomponents
-        run: npm test
+        run: npm run test
 
       - uses: azure/docker-login@v1
         with:
