@@ -7,9 +7,11 @@ on:
   push:
     paths:
       - "am-ui/**"
+      - ".github/workflows/frontend.yml"
   pull_request:
     paths:
       - "am-ui/**"
+      - ".github/workflows/frontend.yml"
 
 jobs:
   build:
@@ -46,16 +48,16 @@ jobs:
 
       - uses: azure/docker-login@v1
         with:
-          login-server: ampcr.azurecr.io
+          login-server: akrosmarketplace.azurecr.io
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - run: |
-          docker build . -t ampcr.azurecr.io/am-ui:${{ github.sha }}
-          docker push ampcr.azurecr.io/am-ui:${{ github.sha }}
+          docker build . -t akrosmarketplace.azurecr.io/am-ui:${{ github.sha }}
+          docker push akrosmarketplace.azurecr.io/am-ui:${{ github.sha }}
 
       - uses: azure/webapps-deploy@v2
         with:
           app-name: "am-ui"
           publish-profile: ${{ secrets.AM_UI_PUBLISH_PROFILE }}
-          images: "ampcr.azurecr.io/am-ui:${{ github.sha }}"
+          images: "akrosmarketplace.azurecr.io/am-ui:${{ github.sha }}"

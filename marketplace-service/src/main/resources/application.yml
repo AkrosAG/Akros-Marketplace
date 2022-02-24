@@ -28,6 +28,6 @@ server:
 
 azure:
   keyvault:
-    client-id: e7d342a9-acd3-4fe1-9f04-6b7c848ed1e7
+    client-id: b8dce283-6e48-49d2-811c-dd838c842277
     enabled: true
-    uri: https://amp-test-keyvault.vault.azure.net/
+    uri: https://am-kv.vault.azure.net/

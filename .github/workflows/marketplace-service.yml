@@ -1,9 +1,10 @@
-name: Java CI with Maven
+name: Marketplace-Service
 
 on:
   push:
     paths:
       - "marketplace-service/**"
+      - ".github/workflows/marketplace-service.yml"
 
 jobs:
   build:
@@ -18,16 +19,16 @@ jobs:
 
       - uses: azure/docker-login@v1
         with:
-          login-server: ampcr.azurecr.io
+          login-server: akrosmarketplace.azurecr.io
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - run: |
-          docker build . -t ampcr.azurecr.io/amp-marketplace-service:${{ github.sha }}
-          docker push ampcr.azurecr.io/amp-marketplace-service:${{ github.sha }}
+          docker build . -t akrosmarketplace.azurecr.io/am-marketplace-service:${{ github.sha }}
+          docker push akrosmarketplace.azurecr.io/am-marketplace-service:${{ github.sha }}
 
       - uses: azure/webapps-deploy@v2
         with:
-          app-name: "amp-marketplace-service"
+          app-name: "am-marketplace-service"
           publish-profile: ${{ secrets.MARKETPLACE_SERVICE_PUBLISH_PROFILE }}
-          images: "ampcr.azurecr.io/amp-marketplace-service:${{ github.sha }}"
+          images: "akrosmarketplace.azurecr.io/am-marketplace-service:${{ github.sha }}"
