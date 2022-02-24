@@ -2,7 +2,7 @@ FROM maven:3.6.3-jdk-11 AS builder
 WORKDIR /usr/local/app
 
 COPY ./ /usr/local/app/
-RUN mvn clean package -DskipTests -Pprod
+RUN mvn clean package -DskipTests -Pdev
 
 FROM openjdk:11-jre-slim
 

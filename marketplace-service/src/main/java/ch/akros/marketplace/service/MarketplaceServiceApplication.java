@@ -14,7 +14,10 @@ public class MarketplaceServiceApplication {
   private static final String POSTGRES_DB_URL_ENV = "POSTGRES_AM_DB_URL";
 
   @Value("${connectionString:}")
-  private String connectionString;
+  private String connectionStringRemote;
+
+  @Value("${spring.datasource.url}")
+  private String connectionStringLocale;
 
   public static void main(String[] args) {
     SpringApplication application = new SpringApplication(MarketplaceServiceApplication.class);
@@ -33,10 +36,10 @@ public class MarketplaceServiceApplication {
       dataSource.setUsername("am");
       dataSource.setPassword("am");
     }
-    else if(!connectionString.isEmpty()){
-      dataSource.setUrl(connectionString);
+    else if(!connectionStringRemote.isEmpty()){
+      dataSource.setUrl(connectionStringRemote);
     } else {
-      dataSource.setUrl("jdbc:postgresql://localhost:5432/am");
+      dataSource.setUrl(connectionStringLocale);
       dataSource.setUsername("am");
       dataSource.setPassword("am");
     }

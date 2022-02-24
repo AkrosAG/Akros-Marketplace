@@ -18,6 +18,7 @@ services:
     container_name: marketplace-service
     build:
       context: ../../marketplace-service
+      dockerfile: ./Dockerfile.local
     ports:
       - 8443:8443
     environment:
