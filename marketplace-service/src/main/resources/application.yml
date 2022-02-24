@@ -28,6 +28,6 @@ server:
 
 azure:
   keyvault:
-    client-id: b8dce283-6e48-49d2-811c-dd838c842277
+    client-id: bc8c5b34-1189-4ae3-99fe-bffc0c7b04fc
     enabled: true
     uri: https://am-kv.vault.azure.net/
