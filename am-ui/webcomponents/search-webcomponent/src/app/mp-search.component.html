@@ -38,7 +38,9 @@
             currentSelected === indexOfelement
           "
         >
-          <mp-search-form class="flex-1"
+          <mp-search-form
+            class="flex-1"
+            [appLanguage]="appLanguage"
             [selectedCategorySearchFields]="
               $any(selectedCategorySearchFields$ | async)
             "

@@ -17,3 +17,19 @@ header {
   display: inline;
   cursor: pointer;
 }
+
+.settings-container {
+  display: inline-flex;
+
+  .language-container {
+    margin-right: 8px;
+
+    .language-icon {
+      cursor: pointer;
+      margin: 0 2px;
+      max-width: 20px;
+      position: relative;
+      top: 28px;
+    }
+  }
+}

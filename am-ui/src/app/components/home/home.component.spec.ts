@@ -1,3 +1,8 @@
+import {
+  TranslateLoader,
+  TranslateFakeLoader,
+  TranslateModule,
+} from '@ngx-translate/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {HomeComponent} from './home.component';
 
@@ -7,6 +12,14 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateFakeLoader,
+          },
+        }),
+      ],
       declarations: [HomeComponent],
     }).compileComponents();
   });
@@ -20,6 +33,12 @@ describe('HomeComponent', () => {
   describe('HomeComponent', () => {
     it('should be created', () => {
       expect(component).toBeTruthy();
+    });
+
+    it('subscription should be closed after calling OnDestroy', () => {
+      expect(component.subscription.closed).toBeFalsy();
+      component.ngOnDestroy();
+      expect(component.subscription.closed).toBeTruthy();
     });
   });
 });

@@ -1,11 +1,11 @@
 <div class="search-component-wrapper">
-  <search-component></search-component>
+  <search-component [language]="appLanguage"></search-component>
 </div>
 <section class="container">
   <div class="main">
-    <h1 class="header">Post Relevant Information</h1>
+    <h1 class="header">{{'home.information' | translate }}</h1>
     <button>CREATE AN AD</button>
-    <h1 class="header">About Akros Marketplace</h1>
+    <h1 class="header">{{'home.about' | translate }}</h1>
     <p class="text">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis
       euismod ante ut tincidunt. Donec ex leo, volutpat nec lorem at, commodo
