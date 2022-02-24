@@ -5,7 +5,7 @@ services:
     container_name: client-ui
     build:
       context: ../../am-ui
-      Dockerfile: ./Dockerfile.local
+      dockerfile: ./Dockerfile.local
     ports:
       - 4200:443
     networks:

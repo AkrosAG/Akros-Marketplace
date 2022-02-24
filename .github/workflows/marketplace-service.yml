@@ -3,7 +3,7 @@ name: Java CI with Maven
 on:
   push:
     paths:
-      - "./marketplace-service"
+      - "marketplace-service/**"
 
 jobs:
   build:

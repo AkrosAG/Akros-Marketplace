@@ -17,7 +17,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-        ddl-auto: none
+      ddl-auto: none
 
 server:
   ssl:
@@ -31,6 +31,3 @@ azure:
     client-id: e7d342a9-acd3-4fe1-9f04-6b7c848ed1e7
     enabled: true
     uri: https://amp-test-keyvault.vault.azure.net/
-
-#http:
-#  port: 8080
