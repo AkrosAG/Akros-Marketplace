@@ -33,17 +33,26 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
           cache-dependency-path: am-ui/package-lock.json
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm run lint
-      - run: npm run test
-      - working-directory: ./am-ui/webcomponents
+      - name: Install UI
         run: npm ci
-      - working-directory: ./am-ui/webcomponents
+      - name: Build UI
+        run: npm run build --if-present
+      - name: Lint UI
+        run: npm run lint
+      - name: Test UI
+        run: npm run test
+
+      - name: Install webcomponents
+        working-directory: ./am-ui/webcomponents
+        run: npm ci
+      - name: Build webcomponents
+        working-directory: ./am-ui/webcomponents
         run: npm build
-      - working-directory: ./am-ui/webcomponents
+      - name: Lint webcomponents
+        working-directory: ./am-ui/webcomponents
         run: npm lint
-      - working-directory: ./am-ui/webcomponents
+      - name: Test webcomponents
+        working-directory: ./am-ui/webcomponents
         run: npm test
 
       - uses: azure/docker-login@v1
