@@ -1,4 +1,4 @@
-import { appConfig } from './../../../../../../am-ui/src/config';
+import {appConfig} from '../../../../../../am-ui/src/config';
 import {Component, Input} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 

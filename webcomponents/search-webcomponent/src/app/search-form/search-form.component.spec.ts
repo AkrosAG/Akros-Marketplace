@@ -1,3 +1,4 @@
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
   TranslateModule,
   TranslateLoader,
@@ -5,7 +6,7 @@ import {
 } from '@ngx-translate/core';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {FormFieldControlService} from '../shared/form/form-field-control.service';
+import {FormFieldControlService} from './form/form-field-control.service';
 import {SearchFormComponent} from './search-form.component';
 
 describe('SearchFormComponent', () => {
@@ -15,11 +16,13 @@ describe('SearchFormComponent', () => {
 
   beforeEach(async () => {
     service = new FormFieldControlService();
-    await TestBed.configureTestingModule({
+    fixture = await TestBed.configureTestingModule({
       declarations: [SearchFormComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [{provide: FormFieldControlService}],
       imports: [
+        FormsModule,
+        ReactiveFormsModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,

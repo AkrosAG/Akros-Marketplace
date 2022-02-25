@@ -1,7 +1,8 @@
-import {Field} from '../data/models/Field';
+import {Field} from '../../data/models/Field';
 import {Injectable} from '@angular/core';
-import {FormFieldBase} from 'src/app/shared/form/form-field-base';
+import {FormFieldBase} from '../../search-form/form/form-field-base';
 
+  /* istanbul ignore next */
 @Injectable()
 export class FormFieldsBuilderService {
   public searchFieldsToFormFields(

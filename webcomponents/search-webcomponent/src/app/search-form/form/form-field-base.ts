@@ -15,7 +15,7 @@ export class FormFieldBase<T> {
   offer: boolean;
   request: boolean;
   creation: boolean;
-
+  /* istanbul ignore next */
   constructor(
     options: {
       value?: T;

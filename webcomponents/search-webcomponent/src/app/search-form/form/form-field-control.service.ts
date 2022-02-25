@@ -1,6 +1,6 @@
+import {ValidationMessages} from '../../utils/validators/ValidationMessages';
 import {Injectable} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ValidationMessages} from '../../utils/ValidationMessages';
 
 import {FormFieldBase} from './form-field-base';
 

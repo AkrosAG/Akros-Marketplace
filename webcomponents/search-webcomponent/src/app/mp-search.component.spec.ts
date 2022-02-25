@@ -1,4 +1,6 @@
-import {FormFieldControlService} from './shared/form/form-field-control.service';
+import {LocalizationService} from './data/services/localization.service';
+import {FormFieldsBuilderService} from './utils/form/form-fields-builder.service';
+import {FormFieldControlService} from './search-form/form/form-field-control.service';
 import {TestBed} from '@angular/core/testing';
 import {
   TranslateModule,
@@ -9,7 +11,9 @@ import {
 import {MpSearchComponent} from './mp-search.component';
 import {provideMockStore, MockStore} from '@ngrx/store/testing';
 
-jest.mock('./shared/form/form-field-control.service');
+jest.mock('./search-form/form/form-field-control.service');
+jest.mock('./utils/form/form-fields-builder.service');
+jest.mock('./data/services/localization.service');
 
 describe('MpSearchComponent', () => {
   const initialState = {
@@ -31,6 +35,8 @@ describe('MpSearchComponent', () => {
       declarations: [MpSearchComponent],
       providers: [
         FormFieldControlService,
+        FormFieldsBuilderService,
+        LocalizationService,
         TranslateService,
         provideMockStore({initialState}),
       ],

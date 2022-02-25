@@ -1,5 +1,5 @@
 import {Store} from '@ngrx/store';
-import {FormFieldsBuilderService} from './../../utils/formFieldsBuilderService';
+import {FormFieldsBuilderService} from '../../utils/form/form-fields-builder.service';
 import {CategoriesService} from '../services/categories.service';
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';

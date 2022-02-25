@@ -1,8 +1,8 @@
-import {FormFieldsBuilderService} from './utils/formFieldsBuilderService';
+import {FormFieldsBuilderService} from './utils/form/form-fields-builder.service';
 import {LocalizationService} from './data/services/localization.service';
 import {Store} from '@ngrx/store';
 import {MarketplaceState} from './data/store/marketplace.state';
-import {FormFieldBase} from 'src/app/shared/form/form-field-base';
+import {FormFieldBase} from 'src/app/search-form/form/form-field-base';
 import {Observable} from 'rxjs';
 import {Category} from 'src/app/data/models/Category';
 import {FormGroup} from '@angular/forms';
@@ -44,14 +44,14 @@ export class MpSearchComponent implements OnInit, OnChanges {
     private localization: LocalizationService,
     private formFieldsBuilderService: FormFieldsBuilderService
   ) {}
-
+  /* istanbul ignore next */
   ngOnChanges(changes: SimpleChanges) {
     if (changes && changes.language) {
       this.appLanguage = changes.language.currentValue;
       this.localization.use(this.appLanguage);
     }
   }
-
+  /* istanbul ignore next */
   ngOnInit(): void {
     this.appLanguage = this.language ? this.language : 'de';
     this.localization.use(this.appLanguage);

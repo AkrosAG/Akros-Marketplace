@@ -1,4 +1,4 @@
-import {FormFieldBase} from './../../shared/form/form-field-base';
+import {FormFieldBase} from '../../search-form/form/form-field-base';
 import {Category} from '../models/Category';
 
 export interface MarketplaceState {
