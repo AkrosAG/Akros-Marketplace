@@ -1,37 +1,42 @@
 # This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run a linter across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Webcomponents
+name: Cypress
 
 on:
   push:
-    paths:
-      - "webcomponents/**"
+    branches:
+      - main
   pull_request:
-    paths:
-      - "webcomponents/**"
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  docker:
     strategy:
       matrix:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    defaults:
-      run:
-        working-directory: ./webcomponents
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+      - name: Start containers
+        working-directory: ./infrastructure/start_all_local
+        run: docker-compose up -d --build postgres_am_db admin-ui marketplace-service postgres_user_db auth-service
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-          cache-dependency-path: webcomponents/package-lock.json
+          cache-dependency-path: am-ui/package-lock.json
       - run: npm ci
-      - run: npm run build --if-present
-      - run: npm run lint
-      - run: npm run test
+        working-directory: ./am-ui
+      - run: npm run build:webcomponents
+        working-directory: ./am-ui
+      - run: npm run e2e:headless
+        working-directory: ./am-ui
+      - name: Stop containers
+        working-directory: ./infrastructure/start_all_local
+        if: always()
+        run: docker-compose down

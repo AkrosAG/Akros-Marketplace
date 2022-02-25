@@ -7,3 +7,7 @@ coverage/
 build_scripts/
 
 src/assets/
+
+cypress/
+
+webcomponents/

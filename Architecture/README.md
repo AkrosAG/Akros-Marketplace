@@ -22,11 +22,11 @@
    3. [Level 3](#level-3)
 6. [Runtime View](#runtime-view)
    1. [\<Runtime Scenario 1\>](#runtime-scenario-1)
-   2. [\<Runtime Scenario 2\>](#runtime-scenario-2)
-   3. [\<Runtime Scenario 3\>](#runtime-scenario-3)
-   4. [Precondition:](#precondition)
-   5. [Basic flow: default search](#basic-flow-default-search)
-   6. [\<Runtime Scenario n\>](#runtime-scenario-n)
+   3. [\<Runtime Scenario 2\>](#runtime-scenario-2)
+   4. [\<Runtime Scenario 3\>](#runtime-scenario-3)
+   5. [Precondition:](#precondition)
+   6. [Basic flow: default search](#basic-flow-default-search)
+   7. [\<Runtime Scenario n\>](#runtime-scenario-n)
 7. [Deployment View](#deployment-view)
    1. [Infrastructure Level 1](#infrastructure-level-1)
    2. [Infrastructure Level 2](#infrastructure-level-2)
@@ -268,6 +268,11 @@ _\<white box template\>_
 # Runtime View
 
 ![Context View of AM](https://user-images.githubusercontent.com/41478805/152165162-87954f1b-29e4-4670-8d77-fac106446ff7.png)
+
+## \<Use Case Diagram\>
+![image](https://user-images.githubusercontent.com/96523998/154435703-a64d2dee-2c99-4582-8b55-41b0a8d53b88.png) ![image](https://user-images.githubusercontent.com/96523998/154487230-3a51163f-5b49-416b-bfbe-a8712cc9dccd.png)
+
+
 
 ## \<Runtime Scenario 1\>
 

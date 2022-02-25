@@ -1,0 +1,39 @@
+{
+  "groups": [
+    {
+      "name": "app",
+      "type": "ch.akros.am.userservice.config.AppProperties",
+      "sourceType": "ch.akros.am.userservice.config.AppProperties"
+    },
+    {
+      "name": "app.auth",
+      "type": "ch.akros.am.userservice.config.AppProperties$Auth",
+      "sourceType": "ch.akros.am.userservice.config.AppProperties",
+      "sourceMethod": "getAuth()"
+    },
+    {
+      "name": "app.oauth2",
+      "type": "ch.akros.am.userservice.config.AppProperties$OAuth2",
+      "sourceType": "ch.akros.am.userservice.config.AppProperties",
+      "sourceMethod": "getOauth2()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.auth.token-expiration-msec",
+      "type": "java.lang.Long",
+      "sourceType": "ch.akros.am.userservice.config.AppProperties$Auth"
+    },
+    {
+      "name": "app.auth.token-secret",
+      "type": "java.lang.String",
+      "sourceType": "ch.akros.am.userservice.config.AppProperties$Auth"
+    },
+    {
+      "name": "app.oauth2.authorized-redirect-uris",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "ch.akros.am.userservice.config.AppProperties$OAuth2"
+    }
+  ],
+  "hints": []
+}

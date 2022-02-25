@@ -1,0 +1,34 @@
+name: Marketplace-Service
+
+on:
+  push:
+    paths:
+      - "marketplace-service/**"
+      - ".github/workflows/marketplace-service.yml"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./marketplace-service
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: azure/docker-login@v1
+        with:
+          login-server: akrosmarketplace.azurecr.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - run: |
+          docker build . -t akrosmarketplace.azurecr.io/am-marketplace-service:${{ github.sha }}
+          docker push akrosmarketplace.azurecr.io/am-marketplace-service:${{ github.sha }}
+
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: "am-marketplace-service"
+          publish-profile: ${{ secrets.MARKETPLACE_SERVICE_PUBLISH_PROFILE }}
+          images: "akrosmarketplace.azurecr.io/am-marketplace-service:${{ github.sha }}"

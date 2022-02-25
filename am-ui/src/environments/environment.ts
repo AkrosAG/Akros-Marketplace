@@ -9,7 +9,7 @@
 
 export const environment = {
   production: false,
-  ownUrl: 'http://localhost:4200',
+  ownUrl: 'https://localhost:4200',
   apiUrl: 'https://localhost:8443',
   authUrl: 'http://localhost:8080',
   signOn: {

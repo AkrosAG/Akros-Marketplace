@@ -1,4 +1,5 @@
-import {appConfig} from '../../../../../../am-ui/src/config';
+import {searchWebComponentConfig} from './../../config';
+
 import {Component, Input} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 
@@ -16,7 +17,7 @@ export class DynamicFormFieldComponent {
   @Input() appLanguage: string;
   @Input() currentCategoryKey: string;
 
-  public selectCounterValues = appConfig.selectCounterValues;
+  public selectCounterValues = searchWebComponentConfig.selectCounterValues;
 
   get isValid() {
     return this.form.controls[this.formField.key].valid;

@@ -7,14 +7,13 @@ FROM node:latest as build
 WORKDIR /usr/local/app
 
 # Add the source code to app
-COPY ./am-ui /usr/local/app/
-COPY ./webcomponents/ /usr/local/webcomponents/
+COPY ./ /usr/local/app/
 
 # Install all the dependencies
 RUN npm install
 
 # Generate the build of the application
-RUN npm run build
+RUN npm run build:prod
 
 # Stage 2: Serve app with nginx server
 
@@ -23,8 +22,8 @@ FROM nginx:latest
 
 # Copy the build output to replace the default nginx contents.
 COPY --from=build /usr/local/app/dist/marketplace-ui /usr/share/nginx/html
-COPY ./am-ui/src/cert.pem /usr/share/nginx/cert.pem
-COPY ./am-ui/src/cert.key /usr/share/nginx/cert.key
-COPY ./am-ui/nginx.conf /etc/nginx/nginx.conf
+COPY ./src/cert.pem /usr/share/nginx/cert.pem
+COPY ./src/cert.key /usr/share/nginx/cert.key
+COPY ./nginx-prod.conf /etc/nginx/nginx.conf
 # Expose port 80
 EXPOSE 80
