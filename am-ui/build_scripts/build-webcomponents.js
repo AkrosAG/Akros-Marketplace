@@ -5,7 +5,7 @@ const cp = require('child_process');
 const os = require('os');
 
 // get library path
-const path = resolve(__dirname, '../../webcomponents/');
+const path = resolve(__dirname, '../webcomponents/');
 
 fs.readdirSync(path).forEach(function (mod) {
   const modPath = join(path, mod);

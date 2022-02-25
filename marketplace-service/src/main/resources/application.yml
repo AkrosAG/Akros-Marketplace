@@ -14,10 +14,12 @@ logging:
             StatementCreatorUtils: DEBUG
     root: INFO
 spring:
+  profiles:
+    active: @profileActive@
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-        ddl-auto: none
+      ddl-auto: none
 
 server:
   ssl:
@@ -25,6 +27,3 @@ server:
     key-store-password: 123456
     key-store-type: PKCS12
   port: 8443
-
-#http:
-#  port: 8080
