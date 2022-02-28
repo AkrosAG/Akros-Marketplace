@@ -54,7 +54,20 @@ jobs:
       - name: Test webcomponents
         working-directory: ./am-ui/webcomponents
         run: npm run test
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    defaults:
+      run:
+        working-directory: ./am-ui
+    steps:
+      - uses: actions/checkout@v2
       - uses: azure/docker-login@v1
         with:
           login-server: akrosmarketplace.azurecr.io
