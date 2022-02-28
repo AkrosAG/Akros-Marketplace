@@ -55,7 +55,7 @@ jobs:
         working-directory: ./am-ui/webcomponents
         run: npm run test
   deploy:
-    needs: test
+    needs: build
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
