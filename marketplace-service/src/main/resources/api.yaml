@@ -1,11 +1,17 @@
 openapi: 3.0.3
 info:
   title: Akros Marketplace
-  version: 1.0.0-SNAPSHOT
+  version: 1.0.0
+  x-api-id: e1208a31-c22b-12d4-2a88-72c398d3ac31
+  x-audience: company-internal
   description: YAML Swagger Configuration for the Akros Marketplace
+  contact:
+    name: Akros Marketplace API Support
+    url: https://www.akros.ch/kontakt/
+    email: support@example.com
 
 paths:
-  /listFieldTypeDefinition:
+  /list-field-type-definitions:
     get:
       summary: List the field type definitions
       description: helper function only
@@ -15,8 +21,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/FieldTypeDefinitionResponseDTO'
+                $ref: '#/components/schemas/FieldTypeDefinitionResponseDTO'
 
   /categories:
     get:
@@ -28,8 +33,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/CategoryResponseDTO'
+                $ref: '#/components/schemas/CategoryResponseDTO'
 
   /topics/{topicId}:
     get:
@@ -80,7 +84,7 @@ paths:
           description: OK
 
   #/topic-searches:
-  /topics/search:
+  /topics/searches:
     post:
       summary: Search for topics
       description: Search for topics
@@ -100,21 +104,41 @@ paths:
                 $ref: '#/components/schemas/TopicSearchListResponseDTO'
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
   schemas:
+
     FieldTypeDefinitionResponseDTO:
       type: object
       properties:
-        fieldTypeDefinitionId:
+        field_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldTypeDefinitionDTO'
+
+    FieldTypeDefinitionDTO:
+      type: object
+      properties:
+        field_type_definition_id:
           type: integer
           format: int32
         description:
           type: string
-          example: Parkplatz
 
     CategoryResponseDTO:
       type: object
       properties:
-        categoryId:
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryDTO'
+
+    CategoryDTO:
+      type: object
+      properties:
+        category_id:
           type: integer
           format: int64
         key:
@@ -127,22 +151,23 @@ components:
     FieldResponseDTO:
       type: object
       properties:
-        fieldId:
+        field_id:
           type: integer
           format: int64
-        fieldTypeDefinitionId:
+        field_type_definition_id:
           type: integer
           format: int32
         key:
           type: string
-        sortNumber:
+        sort_number:
           type: integer
-        minValue:
+          format: int32
+        min_value:
           type: integer
-          example: 5
-        maxValue:
+          format: int32
+        max_value:
           type: integer
-          example: 5
+          format: int32
         searchable:
           type: boolean
         request:
@@ -151,7 +176,7 @@ components:
           type: boolean
         creation:
           type: boolean
-        fieldOptions:
+        field_options:
           type: array
           items:
             $ref: '#/components/schemas/FieldOptionResponseDTO'
@@ -159,26 +184,27 @@ components:
     FieldOptionResponseDTO:
       type: object
       properties:
-        fieldOptionId:
+        field_option_id:
           type: integer
           format: int64
         key:
           type: string
-        sortNumber:
+        sort_number:
           type: integer
+          format: int32
 
     TopicSaveRequestDTO:
       type: object
       properties:
-        topicId:
+        topic_id:
           type: integer
           format: int64
-        categoryId:
+        category_id:
           type: integer
           format: int64
-        requestOrOffer:
+        request_or_offer:
           type: boolean
-        topicValues:
+        topic_values:
           type: array
           items:
             $ref: '#/components/schemas/TopicValueSaveRequestDTO'
@@ -186,7 +212,7 @@ components:
     TopicValueSaveRequestDTO:
       type: object
       properties:
-        fieldTypeId:
+        field_type_id:
           type: integer
           format: int64
         value:
@@ -195,15 +221,15 @@ components:
     TopicLoadResponseDTO:
       type: object
       properties:
-        topicId:
+        topic_id:
           type: integer
           format: int64
-        categoryId:
+        category_id:
           type: integer
           format: int64
-        requestOrOffer:
+        request_or_offer:
           type: boolean
-        topicValues:
+        topic_values:
           type: array
           items:
             $ref: '#/components/schemas/TopicValueLoadResponseDTO'
@@ -211,33 +237,33 @@ components:
     TopicValueLoadResponseDTO:
       type: object
       properties:
-        topicValueId:
+        topic_value_id:
           type: integer
           format: int64
-        fieldId:
+        field_id:
           type: integer
           format: int64
-        fieldDescription:
+        field_description:
           type: string
           example: Beschreibung
-        fieldShortDescription:
+        field_short_description:
           type: string
           example: Beschreibung
-        fieldTypeDefinitionId:
+        field_type_definition_id:
           type: integer
           format: int32
-        fieldTypeDefinitionDescription:
+        field_type_definition_description:
           type: string
           example: Number
-        minValue:
+        min_value:
           type: integer
-          example: 5
-        maxValue:
+          format: int32
+        max_value:
           type: integer
-          example: 5
+          format: int32
         value:
           type: string
-        fieldTypeOptions:
+        field_type_options:
           type: array
           items:
             $ref: '#/components/schemas/FieldOptionResponseDTO'
@@ -245,12 +271,12 @@ components:
     TopicSearchRequestDTO:
       type: object
       properties:
-        categoryId:
+        category_id:
           type: integer
           format: int64
-        requestOrOffer:
+        request_or_offer:
           type: boolean
-        searchValues:
+        search_values:
           type: array
           items:
             $ref: '#/components/schemas/TopicSearchFieldValuesRequestDTO'
@@ -258,22 +284,22 @@ components:
     TopicSearchFieldValuesRequestDTO:
       type: object
       properties:
-        fieldId:
+        field_id:
           type: integer
           format: int64
-        valueNumFrom:
-          type: double
-          format: int64
-        valueNumTo:
-          type: double
-          format: int64
+        value_num_from:
+          type: integer
+          format: int32
+        value_num_to:
+          type: integer
+          format: int32
         value:
           type: string
 
     TopicSearchListResponseDTO:
       type: object
       properties:
-        columnHeader:
+        column_header:
           type: array
           items:
             $ref: '#/components/schemas/TopicSearchColumnHeaderResponseDTO'
@@ -285,23 +311,23 @@ components:
     TopicSearchColumnHeaderResponseDTO:
       type: object
       properties:
-        fieldId:
+        field_id:
           type: integer
           format: int64
         description:
           type: string
           example: Beschreibung
-        shortDescription:
+        short_description:
           type: string
           example: Beschreibung der Unterkunft
 
     TopicSearchResponseDTO:
       type: object
       properties:
-        topicId:
+        topic_id:
           type: integer
           format: int64
-        topicValues:
+        topic_values:
           type: array
           items:
             $ref: '#/components/schemas/TopicSearchValueResponseDTO'
@@ -309,17 +335,20 @@ components:
     TopicSearchValueResponseDTO:
       type: object
       properties:
-        topicId:
+        topic_id:
           type: integer
           format: int64
-        fieldId:
+        field_id:
           type: integer
           format: int64
         value:
           type: string
-        fieldDefinitionId:
+        field_definition_id:
           type: integer
           format: int32
-        fieldDefinitionDescription:
+        field_definition_description:
           type: string
           example: Number
+
+security:
+  - bearerAuth: []

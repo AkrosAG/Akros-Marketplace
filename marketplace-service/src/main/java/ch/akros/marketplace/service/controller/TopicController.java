@@ -58,7 +58,7 @@ public class TopicController implements TopicsApi {
     }
 
     @Override
-    public ResponseEntity<TopicSearchListResponseDTO> topicsSearchPost(TopicSearchRequestDTO topicSearchRequestDTO) {
+    public ResponseEntity<TopicSearchListResponseDTO> topicsSearchesPost(TopicSearchRequestDTO topicSearchRequestDTO) {
         try {
             log.debug("TopicController.topicsSearchPost() called");
             TopicSearchListResponseDTO topicSearchListResponseDTO = topicService.searchTopic(topicSearchRequestDTO);

@@ -1,5 +1,5 @@
+import {CategoriesResponse} from './../models/CategoriesResponse';
 import {RestHelperService} from './../../utils/restHelperService';
-import {Category} from '../models/Category';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -23,9 +23,9 @@ export class CategoriesService {
     // this.withCredentials = true;
   }
 
-  public getCategories(): Observable<Category[]> {
+  public getCategories(): Observable<CategoriesResponse> {
     return this.httpClient
-      .get<Category[]>('api/categories', {
+      .get<CategoriesResponse>('api/categories', {
         headers: this.defaultHeaders,
         // withCredentials: this.withCredentials,
       })

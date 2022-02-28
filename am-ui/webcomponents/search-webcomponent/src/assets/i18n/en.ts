@@ -5,30 +5,30 @@ export default {
     searches: 'Searches',
     categories: {
       accomodation: {
-        title: "Accomodation",
+        title: 'Accomodation',
         types: {
-          room: "Room",
-          apartment: "Apartment",
-          house: "House",
-          parking: "Parking space"
+          room: 'Room',
+          apartment: 'Apartment',
+          house: 'House',
+          parking: 'Parking space',
         },
-        type: "Type of accomodation",
-        region: "Region, City or Canton",
-        fromDate: "From",
-        toDate: "To",
-        fromRooms: "Minimum rooms",
-        toRooms: "Maximum rooms",
-        fromPrice: "Minimum price",
-        toPrice: "Maximum price",
-        fromSize: "Minimum size",
-        toSize: "Maximum size"
+        type: 'Type of accomodation',
+        region: 'Region, City or Canton',
+        fromDate: 'From',
+        toDate: 'To',
+        fromRooms: 'Minimum rooms',
+        toRooms: 'Maximum rooms',
+        fromPrice: 'Minimum price',
+        toPrice: 'Maximum price',
+        fromSize: 'Minimum size',
+        toSize: 'Maximum size',
       },
       carShare: {
-        title: "Car sharing",
+        title: 'Car sharing',
         types: {
-          share: "Car sharing"
-        }
-      }
-    }
+          share: 'Car sharing',
+        },
+      },
+    },
   },
 };

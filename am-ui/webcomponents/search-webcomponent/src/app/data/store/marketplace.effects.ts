@@ -25,11 +25,11 @@ export class MarketPlaceEffects {
         this.categoriesService.getCategories().pipe(
           map(categories => {
             return marketplaceActions.loadCategoriesSuccess({
-              categories: categories,
-              currentCategoryKey: categories[0].key,
+              categories: categories.categories,
+              currentCategoryKey: categories.categories[0].key,
               searchFields:
                 this.formFieldsBuilderService.searchFieldsToFormFields(
-                  categories[0].fields
+                  categories.categories[0].fields
                 ),
             });
           }),

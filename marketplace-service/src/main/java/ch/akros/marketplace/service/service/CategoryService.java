@@ -4,6 +4,7 @@ package ch.akros.marketplace.service.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ch.akros.marketplace.api.model.CategoryDTO;
 import ch.akros.marketplace.api.model.CategoryResponseDTO;
 import ch.akros.marketplace.service.entity.Category;
 import ch.akros.marketplace.service.repository.CategoryRepository;
@@ -25,12 +26,12 @@ public class CategoryService {
   @Autowired
   private FieldRepository fieldRepository;
 
-  public List<CategoryResponseDTO> listCategories() {
-    List<CategoryResponseDTO> list = categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "key"))
+  public List<CategoryDTO> listCategories() {
+    List<CategoryDTO> list = categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "key"))
                                .stream()
-                               .map(this::toCategoryResponseDTO)
+                               .map(this::toCategoryDTO)
                                .collect(Collectors.toList());
-    for (CategoryResponseDTO element : list) {
+    for (CategoryDTO element : list) {
       List<FieldResponseDTO> categoryFields = listCategorySearchFieldTypes(element.getCategoryId());
       for (FieldResponseDTO field : categoryFields) {
         System.out.println(field.getFieldId());
@@ -42,8 +43,8 @@ public class CategoryService {
     return list;
   }
 
-  private CategoryResponseDTO toCategoryResponseDTO(Category category) {
-    CategoryResponseDTO result = new CategoryResponseDTO();
+  private CategoryDTO toCategoryDTO(Category category) {
+    CategoryDTO result = new CategoryDTO();
     result.setCategoryId(category.getCategoryId());
     result.setKey(category.getKey());
 

@@ -1,15 +1,15 @@
 import {FieldOption} from './FieldOption';
 
 export interface Field {
-  fieldId: number;
-  fieldTypeDefinitionId: number;
+  field_id: number;
+  field_type_definition_id: number;
   key: string;
-  sortNumber: number;
-  minvalue: number;
-  maxValue: number;
+  sort_number: number;
+  min_value: number;
+  max_value: number;
   searchable: boolean;
   request: boolean;
   offer: boolean;
   creation: boolean;
-  fieldOptions: FieldOption[];
+  field_options: FieldOption[];
 }

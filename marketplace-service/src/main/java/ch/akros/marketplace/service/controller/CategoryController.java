@@ -4,6 +4,7 @@ package ch.akros.marketplace.service.controller;
 import java.util.List;
 
 import ch.akros.marketplace.api.CategoriesApi;
+import ch.akros.marketplace.api.model.CategoryDTO;
 import ch.akros.marketplace.api.model.CategoryResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,12 +21,14 @@ public class CategoryController implements CategoriesApi {
     private CategoryService categoryService;
 
     @Override
-    public ResponseEntity<List<CategoryResponseDTO>> categoriesGet() {
+    public ResponseEntity<CategoryResponseDTO> categoriesGet() {
         try {
             log.debug("CategoryController.categoriesGet() called");
 
-            List<CategoryResponseDTO> categoryResponseDTOList = categoryService.listCategories();
-            return ResponseEntity.status(HttpStatus.OK).body(categoryResponseDTOList);
+            List<CategoryDTO> categoryDTOList = categoryService.listCategories();
+            CategoryResponseDTO response = new CategoryResponseDTO();
+            response.setCategories(categoryDTOList);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
         }
         catch (Exception ex) {
             log.error(ex.getMessage(), ex);
