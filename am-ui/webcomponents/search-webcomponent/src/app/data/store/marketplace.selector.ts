@@ -15,8 +15,15 @@ export const getCategorySearchFields = createSelector(
   getMarketplaceState,
   state => state.selectedCategorySearchFields
 );
+
 /* istanbul ignore next */
 export const getIfCategorySelected = createSelector(
   getMarketplaceState,
   state => state.categorySelected
+);
+
+/* istanbul ignore next */
+export const getCurrentCategoryKey = createSelector(
+  getMarketplaceState,
+  state => state.currentCategoryKey
 );

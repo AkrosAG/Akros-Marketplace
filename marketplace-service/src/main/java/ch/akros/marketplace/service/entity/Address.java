@@ -32,11 +32,8 @@ public class Address {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long   addressId;
 
-  @ManyToOne
-  @ToString.Exclude
-  @JoinColumn(referencedColumnName = "KANTON_ID", name = "KANTON_ID",
-      foreignKey = @ForeignKey(name = "ADDRESS_KANTON_FK"))
-  private Kanton kanton;
+  @Column(name = "REGION")
+  private String region;
 
   @Column(name = "STREET_NAME")
   private String streetName;

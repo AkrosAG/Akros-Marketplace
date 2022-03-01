@@ -38,7 +38,7 @@ public class Advertiser {
   private String      firstName;
 
   @Column(name = "SURENAME")
-  private String      sureName;
+  private String      lastName;
 
   @Column(name = "EMAIL")
   private String      email;

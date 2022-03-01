@@ -5,8 +5,8 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {MpSearchComponent} from './mp-search.component';
 import {SearchFormComponent} from './search-form/search-form.component';
-import {DynamicFormFieldComponent} from './shared/form/dynamic-form-field.component';
-import {SwitchCasesDirective} from './shared/form/switch-cases.directive';
+import {DynamicFormFieldComponent} from './search-form/form/dynamic-form-field.component';
+import {SwitchCasesDirective} from './search-form/form/switch-cases.directive';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {MarketPlaceEffects} from './data/store/marketplace.effects';
@@ -15,9 +15,8 @@ import {marketplaceReducer} from './data/store/marketplace.reducer';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {CategoriesService} from './data/services/categories.service';
-import {FormFieldControlService} from './shared/form/form-field-control.service';
-import {FormFieldsBuilderService} from './utils/formFieldsBuilderService';
+import {FormFieldControlService} from './search-form/form/form-field-control.service';
+import {FormFieldsBuilderService} from './utils/form/form-fields-builder.service';
 import {RestHelperService} from './utils/restHelperService';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import {environment} from 'src/environments/environment';
@@ -54,7 +53,6 @@ import {createCustomElement} from '@angular/elements';
     }),
   ],
   providers: [
-    CategoriesService,
     RestHelperService,
     FormFieldControlService,
     FormFieldsBuilderService,

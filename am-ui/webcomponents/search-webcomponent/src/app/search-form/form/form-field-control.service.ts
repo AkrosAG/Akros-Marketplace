@@ -1,6 +1,6 @@
+import {ValidationMessages} from '../../utils/validators/ValidationMessages';
 import {Injectable} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ValidationMessages} from '../../utils/ValidationMessages';
 
 import {FormFieldBase} from './form-field-base';
 
@@ -40,7 +40,7 @@ export class FormFieldControlService {
           break;
       }
     });
-    group['searchOrOffer'] = new FormControl(false, [Validators.required]);
+    group['requestOrOffer'] = new FormControl(false, [Validators.required]);
     return new FormGroup(group);
   }
 

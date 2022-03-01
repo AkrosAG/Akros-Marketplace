@@ -19,28 +19,26 @@ import lombok.extern.slf4j.Slf4j;
 public class FieldTypeRepositoryTest {
   @Autowired
   private CategoryRepository categoryRepository;
-
-  @Test
-  public void allEntriesExistsInFieldTypeDefinition() {
-    Category category = categoryRepository.getById(1L);
-
-    if (category != null) {
-      log.error(String.format("category[id:%d/description:%s/shortDescription:%s/fieldTypeSize:%d]",
-                              category.getCategoryId(),
-                              category.getDescription(),
-                              category.getShortDescription(),
-                              category.getFieldTypes().size()));
-
-      category.getFieldTypes()
-              .forEach(e -> log.error(String.format("fieldType[id:%d/description:%s/shortDescription:%s/sortNumber:%d/minValue:%d/maxValue:%d/fieldTypeDefinitionId:%d/fieldTypeDefinitionDescription:%s]",
-                                                    e.getFieldTypeId(),
-                                                    e.getDescription(),
-                                                    e.getShortDescription(),
-                                                    e.getSortNumber(),
-                                                    e.getMinValue(),
-                                                    e.getMaxValue(),
-                                                    e.getFieldTypeDefinition().getFieldTypeDefinitionId(),
-                                                    e.getFieldTypeDefinition().getDescription())));
-    }
-  }
+//
+//  @Test
+//  public void allEntriesExistsInFieldTypeDefinition() {
+//    Category category = categoryRepository.getById(1L);
+//
+//    if (category != null) {
+//      log.error(String.format("category[id:%d/description:%s/shortDescription:%s/fieldTypeSize:%d]",
+//                              category.getCategoryId(),
+//                              category.getKey(),
+//                              category.getFields().size()));
+//
+//      category.getFields()
+//              .forEach(e -> log.error(String.format("fieldType[id:%d/description:%s/shortDescription:%s/sortNumber:%d/minValue:%d/maxValue:%d/fieldTypeDefinitionId:%d/fieldTypeDefinitionDescription:%s]",
+//                                                    e.getFieldTypeId(),
+//                                                    e.getKey(),
+//                                                    e.getSortNumber(),
+//                                                    e.getMinValue(),
+//                                                    e.getMaxValue(),
+//                                                    e.getFieldTypeDefinition().getFieldTypeDefinitionId(),
+//                                                    e.getFieldTypeDefinition().getDescription())));
+//    }
+//  }
 }

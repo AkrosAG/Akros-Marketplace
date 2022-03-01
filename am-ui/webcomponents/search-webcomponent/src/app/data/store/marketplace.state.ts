@@ -1,8 +1,9 @@
-import {FormFieldBase} from './../../shared/form/form-field-base';
-import {Category} from '../models/Category';
+import {CategoryDto} from 'src/app/api/models';
+import {FormFieldBase} from '../../search-form/form/form-field-base';
 
 export interface MarketplaceState {
-  categories: Category[];
+  categories: CategoryDto[];
   selectedCategorySearchFields: FormFieldBase<string>[];
-  categorySelected: Boolean;
+  categorySelected: boolean;
+  currentCategoryKey: string;
 }

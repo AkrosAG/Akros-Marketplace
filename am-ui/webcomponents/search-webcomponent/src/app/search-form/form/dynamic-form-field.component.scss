@@ -1,16 +1,16 @@
 input[type="date"]::before {
   content: attr(placeholder);
   position: absolute;
-  color: #999999;
+  color: #999;
 }
 
 input[type="date"] {
-  color: #ffffff;
+  color: #fff;
 }
 
 input[type="date"]:focus,
 input[type="date"]:valid {
-  color: #666666;
+  color: #666;
 }
 
 input[type="date"]:focus::before,
@@ -18,7 +18,7 @@ input[type="date"]:valid::before {
   content: "";
 }
 
-.errorMessage {
+.error-message {
   color: red;
   font-size: 0.8em;
   font-weight: bold;
@@ -26,7 +26,6 @@ input[type="date"]:valid::before {
   margin-left: 3px;
 }
 
-option:first-child
-{
-    color: #ccc;
+option:first-child {
+  color: #ccc;
 }

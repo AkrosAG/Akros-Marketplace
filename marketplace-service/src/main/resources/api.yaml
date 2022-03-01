@@ -1,25 +1,40 @@
 openapi: 3.0.3
 info:
   title: Akros Marketplace
-  version: 1.0.0-SNAPSHOT
+  version: 1.0.0
+  x-api-id: e1208a31-c22b-12d4-2a88-72c398d3ac31
+  x-audience: company-internal
   description: YAML Swagger Configuration for the Akros Marketplace
+  contact:
+    name: Akros Marketplace API Support
+    url: https://www.akros.ch/kontakt/
+    email: support@example.com
 
 paths:
-  /listFieldTypeDefinition:
+  /list-field-type-definitions:
     get:
+      tags:
+        - FieldTypeDefinitions
       summary: List the field type definitions
-      description: helper function only
+      description: Helper function to see different possible field types that frontend must handle
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/FieldTypeDefinitionResponseDTO'
+                $ref: "#/components/schemas/FieldTypeDefinitionResponseDTO"
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: "#/components/schemas/Problem"
 
-  /listCategories:
+  /categories:
     get:
+      tags:
+        - Categories
       summary: List categories
       description: used for primary search page
       responses:
@@ -28,75 +43,19 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/VWCategoryResponseDTO'
-
-  /listCategorySearchFieldTypes/{categoryId}:
-    get:
-      summary: List the search field types for one categorie
-      description: used for primary search page
-      parameters:
-        - name: categoryId
-          in: path
-          required: true
-          description: Foreign Key ID to Category.
-          schema:
-            type: integer
-            format: int64
-      responses:
-        200:
-          description: OK
+                $ref: "#/components/schemas/CategoryResponseDTO"
+        default:
+          description: Unexpected error
           content:
-            application/json:
+            "application/problem+json":
               schema:
-                items:
-                  $ref: '#/components/schemas/FieldTypeResponseDTO'
+                $ref: "#/components/schemas/Problem"
 
-  /listTopicFieldTypes/{categoryId}/{search}:
+  /topics/{topicId}:
     get:
-      summary: List the field types to edit and add another search/offer topic 
-      description: used to get the fields to add a new topic
-      parameters:
-        - name: categoryId
-          in: path
-          required: true
-          description: Foreign Key ID to Category.
-          schema:
-            type: integer
-            format: int64
-        - name: search
-          in: path
-          required: true
-          description: valid values are 'SEARCH' and 'OFFER' 
-          schema:
-            type: string
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/FieldTypeResponseDTO'
-
-  /saveTopic:
-    post:
-      summary: Save a topic 
-      description: Save a topic
-      requestBody:
-        description: All values to save a topic
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TopicStoreRequestDTO'
-        required: true
-      responses:
-        200:
-          description: OK
-
-  /loadTopic/{topicId}:
-    get:
-      summary: Load a topic 
+      tags:
+        - Topics
+      summary: Load a topic
       description: Load a topic
       parameters:
         - name: topicId
@@ -112,11 +71,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TopicLoadResponseDTO'
+                $ref: "#/components/schemas/TopicLoadResponseDTO"
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: "#/components/schemas/Problem"
+  /topics:
+    post:
+      tags:
+        - Topics
+      summary: Save a topic
+      description: Save a topic
+      requestBody:
+        description: All values to save a topic
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TopicSaveRequestDTO"
+        required: true
+      responses:
+        200:
+          description: OK
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: "#/components/schemas/Problem"
 
-  /deleteTopic/{topicId}:
     delete:
-      summary: Delete a topic 
+      tags:
+        - Topics
+      summary: Delete a topic
       description: Delete a topic
       parameters:
         - name: topicId
@@ -129,17 +117,26 @@ paths:
       responses:
         200:
           description: OK
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: "#/components/schemas/Problem"
 
-  /searchTopic:
-    get:
-      summary: Save a topic 
-      description: Save a topic
+  #/topic-searches:
+  /topics/searches:
+    post:
+      tags:
+        - Topics
+      summary: Search for topics
+      description: Search for topics
       requestBody:
-        description: All values to save a topic
+        description: All fields for search query
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TopicSearchRequestDTO'
+              $ref: "#/components/schemas/TopicSearchRequestDTO"
         required: true
       responses:
         200:
@@ -147,267 +144,356 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TopicSearchListResponseDTO'
+                $ref: "#/components/schemas/TopicSearchListResponseDTO"
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: "#/components/schemas/Problem"
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
   schemas:
     FieldTypeDefinitionResponseDTO:
       type: object
       properties:
-        fieldTypeDefinitionId:
+        field_types:
+          type: array
+          items:
+            $ref: "#/components/schemas/FieldTypeDefinitionDTO"
+
+    FieldTypeDefinitionDTO:
+      type: object
+      required:
+        - field_type_definition_id
+      properties:
+        field_type_definition_id:
           type: integer
           format: int32
         description:
           type: string
-          example: Parkplatz
 
-    VWCategoryResponseDTO:
+    CategoryResponseDTO:
       type: object
+      required:
+        - categories
       properties:
-        categoryId:
+        categories:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryDTO"
+
+    CategoryDTO:
+      type: object
+      required:
+        - category_id
+        - key
+        - fields
+      properties:
+        category_id:
           type: integer
           format: int64
-        description:
+        key:
           type: string
-          example: Unterkuenfte
-        searchCount:
-          type: integer
-          example: 5
-        offerCount:
-          type: integer
-          example: 5
+        fields:
+          type: array
+          items:
+            $ref: "#/components/schemas/FieldResponseDTO"
 
-    FieldTypeResponseDTO:
+    FieldResponseDTO:
       type: object
+      required:
+        - field_id
+        - field_type_definition_id
+        - key
+        - creation
       properties:
-        categoryId:
+        field_id:
           type: integer
           format: int64
-        fieldTypeId:
-          type: integer
-          format: int64
-        fieldTypeDefinitionId:
+        field_type_definition_id:
           type: integer
           format: int32
-        fieldTypeDefinitionDescription:
+        key:
           type: string
-          example: Number
-        description:
-          type: string
-          example: Beschreibung
-        shortDescription:
-          type: string
-          example: Beschreibung der Unterkunft
-        minValue:
+        sort_number:
           type: integer
-          example: 5
-        maxValue:
+          format: int32
+        min_value:
           type: integer
-          example: 5
-        search:
+          format: int32
+        max_value:
+          type: integer
+          format: int32
+        searchable:
           type: boolean
-          example: false
+        request:
+          type: boolean
         offer:
           type: boolean
-          example: false
-        fieldTypeChooses:
-          type: array
-          items:
-            $ref: '#/components/schemas/FieldTypeChooseResponseDTO'
-
-    FieldTypeChooseResponseDTO:
-      type: object
-      properties:
-        fieldTypeChooseId:
-          type: integer
-          format: int64
-        description:
-          type: string
-        sortNumber:
-          type: integer
-
-    TopicStoreRequestDTO:
-      type: object
-      properties:
-        topicId:
-          type: integer
-          format: int64
-        categoryId:
-          type: integer
-          format: int64
-        searchOrOffer:
-          type: string
-          example: OFFER or SEARCH
-        topicValueStores:
-          type: array
-          items:
-            $ref: '#/components/schemas/TopicValueStoreRequestDTO'
-
-    TopicValueStoreRequestDTO:
-      type: object
-      properties:
-        fieldTypeId:
-          type: integer
-          format: int64
-        valueNum:
-          type: double
-          format: int64
-        valueVarchar:
-          type: string
-        valueDate:
-          type: date
-        valueBoolean:
+        creation:
           type: boolean
+        field_options:
+          type: array
+          items:
+            $ref: "#/components/schemas/FieldOptionResponseDTO"
+
+    FieldOptionResponseDTO:
+      type: object
+      required:
+        - field_option_id
+        - key
+      properties:
+        field_option_id:
+          type: integer
+          format: int64
+        key:
+          type: string
+        sort_number:
+          type: integer
+          format: int32
+
+    TopicSaveRequestDTO:
+      type: object
+      required:
+        - topic_id
+        - category_id
+        - request_or_offer
+        - topic_values
+      properties:
+        topic_id:
+          type: integer
+          format: int64
+        category_id:
+          type: integer
+          format: int64
+        request_or_offer:
+          type: boolean
+        topic_values:
+          type: array
+          items:
+            $ref: "#/components/schemas/TopicValueSaveRequestDTO"
+
+    TopicValueSaveRequestDTO:
+      type: object
+      required:
+        - field_type_id
+        - value
+      properties:
+        field_type_id:
+          type: integer
+          format: int64
+        value:
+          type: string
 
     TopicLoadResponseDTO:
       type: object
+      required:
+        - topic_id
+        - category_id
+        - request_or_offer
+        - topic_values
       properties:
-        topicId:
+        topic_id:
           type: integer
           format: int64
-        categoryId:
+        category_id:
           type: integer
           format: int64
-        searchOrOffer:
-          type: string
-          example: OFFER or SEARCH
-        topicValues:
+        request_or_offer:
+          type: boolean
+        topic_values:
           type: array
           items:
-            $ref: '#/components/schemas/TopicValueLoadResponseDTO'
+            $ref: "#/components/schemas/TopicValueLoadResponseDTO"
 
     TopicValueLoadResponseDTO:
       type: object
+      required:
+        - topic_value_id
+        - field_id
       properties:
-        topicValueId:
+        topic_value_id:
           type: integer
           format: int64
-        fieldTypeId:
+        field_id:
           type: integer
           format: int64
-        fieldTypeDescription:
+        field_description:
           type: string
           example: Beschreibung
-        fieldTypeShortDescription:
+        field_short_description:
           type: string
           example: Beschreibung
-        fieldTypeDefinitionId:
+        field_type_definition_id:
           type: integer
           format: int32
-        fieldTypeDefinitionDescription:
+        field_type_definition_description:
           type: string
           example: Number
-        minValue:
+        min_value:
           type: integer
-          example: 5
-        maxValue:
+          format: int32
+        max_value:
           type: integer
-          example: 5
-        valueNum:
-          type: double
-          format: int64
-        valueVarchar:
+          format: int32
+        value:
           type: string
-        valueDate:
-          type: date
-        valueBoolean:
-          type: boolean
-        fieldTypeChooses:
+        field_type_options:
           type: array
           items:
-            $ref: '#/components/schemas/FieldTypeChooseResponseDTO'
+            $ref: "#/components/schemas/FieldOptionResponseDTO"
 
     TopicSearchRequestDTO:
       type: object
+      required:
+        - category_id
+        - request_or_offer
       properties:
-        categoryId:
+        category_id:
           type: integer
           format: int64
-        searchOrOffer:
-          type: string
-          example: OFFER or SEARCH (may be null for both)
-        searchValues:
+        request_or_offer:
+          type: boolean
+        search_values:
           type: array
           items:
-            $ref: '#/components/schemas/TopicSearchFieldTypeValuesRequestDTO'
+            $ref: "#/components/schemas/TopicSearchFieldValuesRequestDTO"
 
-    TopicSearchFieldTypeValuesRequestDTO:
+    TopicSearchFieldValuesRequestDTO:
       type: object
+      required:
+        - field_id
+        - value
       properties:
-        fieldTypeId:
+        field_id:
           type: integer
           format: int64
-        valueNumFrom:
-          type: double
-          format: int64
-        valueNumTo:
-          type: double
-          format: int64
-        valueVarchar:
+        value_num_from:
+          type: integer
+          format: int32
+        value_num_to:
+          type: integer
+          format: int32
+        value:
           type: string
-        valueDate:
-          type: date
-        valueBoolean:
-          type: boolean
 
     TopicSearchListResponseDTO:
       type: object
+      required:
+        - column_header
+        - topics
       properties:
-        columnHeader:
+        column_header:
           type: array
           items:
-            $ref: '#/components/schemas/TopicSearchColumnHeaderResponseDTO'
+            $ref: "#/components/schemas/TopicSearchColumnHeaderResponseDTO"
         topics:
           type: array
           items:
-            $ref: '#/components/schemas/TopicSearchResponseDTO'
+            $ref: "#/components/schemas/TopicSearchResponseDTO"
 
     TopicSearchColumnHeaderResponseDTO:
       type: object
+      required:
+        - field_id
       properties:
-        fieldTypeId:
+        field_id:
           type: integer
           format: int64
         description:
           type: string
           example: Beschreibung
-        shortDescription:
+        short_description:
           type: string
           example: Beschreibung der Unterkunft
 
     TopicSearchResponseDTO:
       type: object
+      required:
+        - topic_id
       properties:
-        topicId:
+        topic_id:
           type: integer
           format: int64
-        topicValues:
+        topic_values:
           type: array
           items:
-            $ref: '#/components/schemas/TopicSearchValueResponseDTO'
-
+            $ref: "#/components/schemas/TopicSearchValueResponseDTO"
 
     TopicSearchValueResponseDTO:
       type: object
+      required:
+        - topic_id
+        - field_id
+        - value
       properties:
-        topicId:
+        topic_id:
           type: integer
           format: int64
-        fieldTypeId:
+        field_id:
           type: integer
           format: int64
-        valueNum:
-          type: double
-          format: int64
-        valueVarchar:
+        value:
           type: string
-        valueDate:
-          type: date
-        valueBoolean:
-          type: boolean
-        fieldTypeDefinitionId:
+        field_definition_id:
           type: integer
           format: int32
-        fieldTypeDefinitionDescription:
+        field_definition_description:
           type: string
           example: Number
+
+    Problem:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri-reference
+          description: >
+            A URI reference that uniquely identifies the problem type only in the
+            context of the provided API. Opposed to the specification in RFC-7807,
+            it is neither recommended to be dereferenceable and point to a
+            human-readable documentation nor globally unique for the problem type.
+          default: "about:blank"
+          example: "/problem/connection-error"
+        title:
+          type: string
+          description: >
+            A short summary of the problem type. Written in English and readable
+            for engineers, usually not suited for non technical stakeholders and
+            not localized.
+          example: Service Unavailable
+        status:
+          type: integer
+          format: int32
+          description: >
+            The HTTP status code generated by the origin server for this occurrence
+            of the problem.
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 503
+        detail:
+          type: string
+          description: >
+            A human readable explanation specific to this occurrence of the
+            problem that is helpful to locate the problem and give advice on how
+            to proceed. Written in English and readable for engineers, usually not
+            suited for non technical stakeholders and not localized.
+          example: Connection to database timed out
+        instance:
+          type: string
+          format: uri-reference
+          description: >
+            A URI reference that identifies the specific occurrence of the problem,
+            e.g. by adding a fragment identifier or sub-path to the problem type.
+            May be used to locate the root of this problem in the source code.
+          example: "/problem/connection-error#token-info-read-timed-out"
+
+security:
+  - bearerAuth: []

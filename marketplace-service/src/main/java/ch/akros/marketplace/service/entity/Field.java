@@ -23,24 +23,21 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Table(name = "FIELD_TYPE")
-@Entity(name = "fieldType")
-public class FieldType {
+@Table(name = "FIELD")
+@Entity(name = "field")
+public class Field {
 	@Id
-	@Column(name = "FIELD_TYPE_ID", unique = true)
+	@Column(name = "FIELD_ID", unique = true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long fieldTypeId;
+	private Long fieldId;
 
 	@ManyToOne
 	@ToString.Exclude
-	@JoinColumn(referencedColumnName = "CATEGORY_ID", name = "CATEGORY_ID", foreignKey = @ForeignKey(name = "FIELD_TYPE_CATEGORY_FK"))
+	@JoinColumn(referencedColumnName = "CATEGORY_ID", name = "CATEGORY_ID", foreignKey = @ForeignKey(name = "FIELD_CATEGORY_FK"))
 	private Category category;
 
-	@Column(name = "DESCRIPTION")
-	private String description;
-
-	@Column(name = "SHORT_DESCRIPTION")
-	private String shortDescription;
+	@Column(name = "KEY")
+	private String key;
 
 	@Column(name = "MIN_VALUE")
 	private Integer minValue;
@@ -57,17 +54,20 @@ public class FieldType {
 	@Column(name = "SEARCHABLE")
 	private boolean searchable;
 
-	@Column(name = "SEARCH")
-	private boolean search;
+	@Column(name = "REQUEST")
+	private boolean request;
 
 	@Column(name = "OFFER")
 	private boolean offer;
 
-	@OneToMany(mappedBy = "fieldType", cascade = CascadeType.ALL)
-	private List<FieldTypeChoose> fieldTypeChooses;
+	@Column(name = "CREATION")
+	private boolean creation;
+
+	@OneToMany(mappedBy = "field", cascade = CascadeType.ALL)
+	private List<FieldOption> fieldOptions;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(referencedColumnName = "FIELD_TYPE_DEFINITION_ID", name = "FIELD_TYPE_DEFINITION_ID", foreignKey = @ForeignKey(name = "FIELD_TYPE_FIELD_TYPE_DEFINITION_FK"))
+	@JoinColumn(referencedColumnName = "FIELD_TYPE_DEFINITION_ID", name = "FIELD_TYPE_DEFINITION_ID", foreignKey = @ForeignKey(name = "FIELD_FIELD_TYPE_DEFINITION_FK"))
 	@ToString.Exclude
 	private FieldTypeDefinition fieldTypeDefinition;
 }

@@ -1,8 +1,6 @@
 
 package ch.akros.marketplace.service.entity;
 
-import java.time.LocalDate;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -49,20 +47,11 @@ public class TopicValue {
   private Category  category;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(referencedColumnName = "FIELD_TYPE_ID", name = "FIELD_TYPE_ID",
-      foreignKey = @ForeignKey(name = "TOPIC_VALUE_FIELD_TYPE_FK"))
+  @JoinColumn(referencedColumnName = "FIELD_ID", name = "FIELD_ID",
+      foreignKey = @ForeignKey(name = "TOPIC_VALUE_FIELD_FK"))
   @ToString.Exclude
-  private FieldType fieldType;
+  private Field field;
 
-  @Column(name = "VALUE_NUM")
-  private Double    valueNum;
-
-  @Column(name = "VALUE_VARCHAR")
-  private String    valueVarchar;
-
-  @Column(name = "VALUE_DATE")
-  private LocalDate valueDate;
-
-  @Column(name = "VALUE_BOOLEAN")
-  private Boolean   valueBoolean;
+  @Column(name = "VALUE")
+  private String value;
 }

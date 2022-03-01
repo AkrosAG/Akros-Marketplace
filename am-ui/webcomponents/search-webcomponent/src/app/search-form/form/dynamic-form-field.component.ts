@@ -1,3 +1,5 @@
+import {searchWebComponentConfig} from './../../config';
+
 import {Component, Input} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 
@@ -13,6 +15,9 @@ export class DynamicFormFieldComponent {
   @Input() form!: FormGroup;
   @Input() errorMessages: any;
   @Input() appLanguage: string;
+  @Input() currentCategoryKey: string;
+
+  public selectCounterValues = searchWebComponentConfig.selectCounterValues;
 
   get isValid() {
     return this.form.controls[this.formField.key].valid;

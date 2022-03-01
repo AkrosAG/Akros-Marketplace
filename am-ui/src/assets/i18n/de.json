@@ -3,5 +3,22 @@
     "information": "Veröffentliche relevante Informationen",
     "find": "Relevante Informationen finden",
     "about": "Über Akros Marketplace"
+  },
+  "categories": {
+    "accomodation": {
+      "title": "Unterkünfte",
+      "types": {
+        "room": "Zimmer",
+        "apartment": "Wohnung",
+        "house": "Haus",
+        "parking": "Parkplatz"
+      }
+    },
+    "carSharing": {
+      "title": "Mitfahrgelegenheiten",
+      "types": {
+        "share": "Mitfahrgelegenheiten"
+      }
+    }
   }
 }

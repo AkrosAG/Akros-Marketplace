@@ -1,10 +1,7 @@
 {
-  "/api/": {
+  "/categories": {
     "target": "https://localhost:8443",
-    "secure": false,
-    "pathRewrite": {
-      "^/api": ""
-    }
+    "secure": false
   },
   "/api/auth": {
     "target": "https://localhost:8080",

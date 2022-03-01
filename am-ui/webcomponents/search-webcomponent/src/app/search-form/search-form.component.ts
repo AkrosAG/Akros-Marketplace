@@ -1,8 +1,8 @@
-import {FormFieldControlService} from './../shared/form/form-field-control.service';
-import {FormFieldBase} from './../shared/form/form-field-base';
+import {FormFieldControlService} from './form/form-field-control.service';
+import {FormFieldBase} from './form/form-field-base';
 import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {ValidationMessages} from '../utils/form/ValidationMessages';
+import {ValidationMessages} from '../utils/validators/ValidationMessages';
 
 @Component({
   selector: 'mp-search-form',
@@ -13,21 +13,17 @@ export class SearchFormComponent implements OnInit {
   public form!: FormGroup;
   public errorMessages: ValidationMessages<any>;
   public payLoad = '';
-  public showForm = false;
 
   @Input() selectedCategorySearchFields: FormFieldBase<string>[] | null = [];
   @Input() appLanguage: string;
+  @Input() currentCategoryKey: string;
 
-  constructor(
-    private formFieldControlService: FormFieldControlService
-  ) {}
+  constructor(private formFieldControlService: FormFieldControlService) {}
 
   ngOnInit() {
     this.form = this.formFieldControlService.toFormGroup(
       this.selectedCategorySearchFields as FormFieldBase<string>[]
     );
-    // TODO fix in back and del, no empty category should be allowed
-    this.showForm = Object.keys(this.form.value).length === 1 ? false : true;
     this.errorMessages = this.formFieldControlService.getValidationMessages(
       this.selectedCategorySearchFields as FormFieldBase<string>[]
     );

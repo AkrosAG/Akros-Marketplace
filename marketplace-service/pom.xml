@@ -144,6 +144,52 @@
 		
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
+
+			<plugin>
+				<groupId>com.ethlo.zally</groupId>
+				<artifactId>zally-maven-plugin</artifactId>
+				<version>1.0.3</version>
+				<configuration>
+					<!--Configure severities that fail the build. Default is MUST, SHOULD -->
+					<failOn>MUST</failOn>
+					<!-- The input file to validate -->
+					<source>src/main/resources/api.yaml</source>
+					<!--Ignore certain rules. Default is none -->
+					<skipRules>
+						<skipRule>CommonFieldTypesRule</skipRule>
+						<skipRule>SecureAllEndpointsWithScopesRule</skipRule>
+						<skipRule>NoVersionInUriRule</skipRule>
+					</skipRules>
+					<ruleConfig>
+						<!-- NOTE: The rule elements' content can be written in JSON or YAML -->
+						<PluralizeResourceNamesRule>
+							whitelist:
+							- current
+							- self
+						</PluralizeResourceNamesRule>
+					</ruleConfig>
+					<!-- Write the result of the validation to file. Optional-->
+					<resultFile>target/api_validation_result.yaml</resultFile>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>report</goal>
+							<goal>validate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<!-- The pluggable rule-set you want to run -->
+						<groupId>org.zalando</groupId>
+						<artifactId>zally-ruleset-zalando</artifactId>
+						<version>2.1.0</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+
 			<!-- SpringBoot maven plugin -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
