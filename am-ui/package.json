@@ -10,7 +10,7 @@
     "start_ssl": "ng serve --ssl true",
     "prebuild": "npm run build:webcomponents",
     "build": "ng build",
-    "build:prod": "ng build --configuration production",
+    "build:prod": "npm run build:webcomponents && ng build --configuration production",
     "test": "jest --coverage",
     "clear_jest": "jest --clearCache",
     "lint": "npm run lint:angular && npm run lint:typescript && npm run lint:style",
