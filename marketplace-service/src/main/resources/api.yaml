@@ -158,6 +158,8 @@ components:
 
     FieldTypeDefinitionDTO:
       type: object
+      required:
+        - field_type_definition_id
       properties:
         field_type_definition_id:
           type: integer
@@ -167,6 +169,8 @@ components:
 
     CategoryResponseDTO:
       type: object
+      required:
+      - categories
       properties:
         categories:
           type: array
@@ -175,6 +179,10 @@ components:
 
     CategoryDTO:
       type: object
+      required:
+        - category_id
+        - key
+        - fields
       properties:
         category_id:
           type: integer
@@ -188,6 +196,11 @@ components:
 
     FieldResponseDTO:
       type: object
+      required:
+        - field_id
+        - field_type_definition_id
+        - key
+        - creation
       properties:
         field_id:
           type: integer
@@ -221,6 +234,9 @@ components:
 
     FieldOptionResponseDTO:
       type: object
+      required:
+        - field_option_id
+        - key
       properties:
         field_option_id:
           type: integer
@@ -233,6 +249,11 @@ components:
 
     TopicSaveRequestDTO:
       type: object
+      required:
+        - topic_id
+        - category_id
+        - request_or_offer
+        - topic_values
       properties:
         topic_id:
           type: integer
@@ -249,6 +270,9 @@ components:
 
     TopicValueSaveRequestDTO:
       type: object
+      required:
+        - field_type_id
+        - value
       properties:
         field_type_id:
           type: integer
@@ -258,6 +282,11 @@ components:
 
     TopicLoadResponseDTO:
       type: object
+      required:
+        - topic_id
+        - category_id
+        - request_or_offer
+        - topic_values
       properties:
         topic_id:
           type: integer
@@ -274,6 +303,9 @@ components:
 
     TopicValueLoadResponseDTO:
       type: object
+      required:
+        - topic_value_id
+        - field_id
       properties:
         topic_value_id:
           type: integer
@@ -308,6 +340,9 @@ components:
 
     TopicSearchRequestDTO:
       type: object
+      required:
+        - category_id
+        - request_or_offer
       properties:
         category_id:
           type: integer
@@ -321,6 +356,9 @@ components:
 
     TopicSearchFieldValuesRequestDTO:
       type: object
+      required:
+        - field_id
+        - value
       properties:
         field_id:
           type: integer
@@ -336,6 +374,9 @@ components:
 
     TopicSearchListResponseDTO:
       type: object
+      required:
+        - column_header
+        - topics
       properties:
         column_header:
           type: array
@@ -348,6 +389,8 @@ components:
 
     TopicSearchColumnHeaderResponseDTO:
       type: object
+      required:
+        - field_id
       properties:
         field_id:
           type: integer
@@ -361,6 +404,8 @@ components:
 
     TopicSearchResponseDTO:
       type: object
+      required:
+        - topic_id
       properties:
         topic_id:
           type: integer
@@ -372,6 +417,10 @@ components:
 
     TopicSearchValueResponseDTO:
       type: object
+      required:
+        - topic_id
+        - field_id
+        - value
       properties:
         topic_id:
           type: integer
