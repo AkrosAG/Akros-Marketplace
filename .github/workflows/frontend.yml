@@ -35,23 +35,17 @@ jobs:
           cache-dependency-path: am-ui/package-lock.json
       - name: Install UI
         run: npm ci
-      - name: Build UI
+      - name: Build UI and Webcomponents
         run: npm run build --if-present
       - name: Lint UI
         run: npm run lint
       - name: Test UI
         run: npm run test
 
-      - name: Install webcomponents
-        working-directory: ./am-ui/webcomponents
-        run: npm ci
-      - name: Build webcomponents
-        working-directory: ./am-ui/webcomponents
-        run: npm run build
-      - name: Lint webcomponents
+      - name: Lint Webcomponents
         working-directory: ./am-ui/webcomponents
         run: npm run lint
-      - name: Test webcomponents
+      - name: Test Webcomponents
         working-directory: ./am-ui/webcomponents
         run: npm run test
   deploy:
