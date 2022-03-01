@@ -36,7 +36,6 @@
     "@ngrx/store": "^13.0.2",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
-    "@openapitools/openapi-generator-cli": "^2.4.26",
     "ng-openapi-gen": "^0.20.0",
     "ngx-logger": "^5.0.7",
     "rxjs": "~7.4.0",
@@ -71,6 +70,7 @@
     "stylelint-config-standard-scss": "^3.0.0",
     "tailwindcss": "latest",
     "ts-node": "~8.3.0",
-    "typescript": "~4.5.4"
+    "typescript": "~4.5.4",
+    "ng-openapi-gen": "^0.20.0"
   }
 }
