@@ -7,7 +7,7 @@ import {of} from 'rxjs';
 
 import * as marketplaceActions from './../store/marketplace.actions';
 import {MarketplaceState} from './../store/marketplace.state';
-import {ApiService} from 'src/app/api/services';
+import {CategoriesService} from 'src/app/api/services/categories.service';
 
 @Injectable()
 export class MarketPlaceEffects {
@@ -15,14 +15,14 @@ export class MarketPlaceEffects {
     private actions$: Actions,
     private store$: Store<MarketplaceState>,
     private formFieldsBuilderService: FormFieldsBuilderService,
-    private apiService: ApiService
+    private categoriesService: CategoriesService
   ) {}
 
   loadCategories$ = createEffect(() =>
     this.actions$.pipe(
       ofType(marketplaceActions.loadCategories),
       switchMap(() =>
-        this.apiService.categoriesGet().pipe(
+        this.categoriesService.categoriesGet().pipe(
           map(categories => {
             return marketplaceActions.loadCategoriesSuccess({
               categories: categories.categories,
