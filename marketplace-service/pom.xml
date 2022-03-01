@@ -208,7 +208,7 @@
 						</goals>
 						<configuration>
 							<inputSpec>
-								src/main/resources/api.yaml
+								${project.basedir}/src/main/resources/api.yaml
 							</inputSpec>
 							<generatorName>spring</generatorName>
 							<apiPackage>ch.akros.marketplace.api</apiPackage>
