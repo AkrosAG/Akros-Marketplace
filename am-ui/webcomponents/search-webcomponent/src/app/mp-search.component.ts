@@ -72,8 +72,8 @@ export class MpSearchComponent implements OnInit, OnChanges {
     this.categorySelected[this.currentSelected] = false;
     this.currentSelected = index;
     this.categorySelected[index] = true;
-    if (this.currentCategoryId !== category.categoryId) {
-      this.currentCategoryId = category.categoryId;
+    if (this.currentCategoryId !== category.category_id) {
+      this.currentCategoryId = category.category_id;
       this.store.dispatch(storeActions.resetCategorySelected());
       const formFields = this.formFieldsBuilderService.searchFieldsToFormFields(
         category.fields
