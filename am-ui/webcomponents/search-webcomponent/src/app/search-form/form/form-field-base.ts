@@ -1,4 +1,4 @@
-import {FieldOption} from 'src/app/data/models/FieldOption';
+import {FieldOptionResponseDto} from 'src/app/api/models';
 
 export class FormFieldBase<T> {
   value: T | undefined;
@@ -10,7 +10,7 @@ export class FormFieldBase<T> {
   type: number;
   min: number;
   max: number;
-  options: FieldOption[];
+  options: FieldOptionResponseDto[];
   searchable: boolean;
   offer: boolean;
   request: boolean;
@@ -26,7 +26,7 @@ export class FormFieldBase<T> {
       type?: number;
       min?: number;
       max?: number;
-      options?: FieldOption[];
+      options?: FieldOptionResponseDto[];
       searchable?: boolean;
       request?: boolean;
       offer?: boolean;

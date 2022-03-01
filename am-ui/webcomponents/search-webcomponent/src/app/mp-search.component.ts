@@ -4,7 +4,6 @@ import {Store} from '@ngrx/store';
 import {MarketplaceState} from './data/store/marketplace.state';
 import {FormFieldBase} from 'src/app/search-form/form/form-field-base';
 import {Observable} from 'rxjs';
-import {Category} from 'src/app/data/models/Category';
 import {FormGroup} from '@angular/forms';
 import {
   Component,
@@ -17,6 +16,7 @@ import {
 
 import * as storeSelector from './data/store/marketplace.selector';
 import * as storeActions from './data/store/marketplace.actions';
+import {CategoryDto} from './api/models';
 
 @Component({
   selector: 'mp-search',
@@ -25,7 +25,7 @@ import * as storeActions from './data/store/marketplace.actions';
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class MpSearchComponent implements OnInit, OnChanges {
-  public categories$: Observable<Category[]>;
+  public categories$: Observable<CategoryDto[]>;
   public selectedCategorySearchFields$: Observable<FormFieldBase<string>[]>;
   public categorySelected$ = new Observable<boolean>();
   public currentCategoryKey$: Observable<string>;
@@ -68,7 +68,7 @@ export class MpSearchComponent implements OnInit, OnChanges {
     this.store.dispatch(storeActions.loadCategories());
   }
 
-  public categorySelect(index: number, category: Category) {
+  public categorySelect(index: number, category: CategoryDto) {
     this.categorySelected[this.currentSelected] = false;
     this.currentSelected = index;
     this.categorySelected[index] = true;

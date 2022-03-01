@@ -1,6 +1,6 @@
 import {FormFieldBase} from '../../search-form/form/form-field-base';
-import {Category} from '../models/Category';
 import {createAction, props} from '@ngrx/store';
+import {CategoryDto} from 'src/app/api/models';
 
 // Categories related actions
 
@@ -11,7 +11,7 @@ export const loadCategories = createAction(
 export const loadCategoriesSuccess = createAction(
   '[Categories] Get list of categories success',
   props<{
-    categories: Category[];
+    categories: CategoryDto[];
     searchFields: FormFieldBase<string>[];
     currentCategoryKey: string;
   }>()

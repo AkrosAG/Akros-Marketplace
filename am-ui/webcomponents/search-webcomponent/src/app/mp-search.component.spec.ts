@@ -60,7 +60,7 @@ describe('MpSearchComponent', () => {
     const app = fixture.componentInstance;
     const store = TestBed.inject(MockStore);
     const cat = {
-      categoryId: 0,
+      category_id: 0,
       key: '',
       fields: [],
     };

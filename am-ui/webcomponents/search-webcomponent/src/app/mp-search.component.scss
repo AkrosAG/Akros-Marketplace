@@ -1,6 +1,6 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 .accordion-flush {
   min-width: 380px;
@@ -8,10 +8,9 @@
   max-height: 65vh;
 
   &::-webkit-scrollbar {
-    width: 0px;
+    width: 0;
   }
 }
-
 
 .accordion-body {
   min-width: 380px;
@@ -19,10 +18,9 @@
   max-height: 65vh;
 
   &::-webkit-scrollbar {
-    width: 0px;
+    width: 0;
   }
 }
-
 
 .accordion-button:not(.collapsed) {
   &:hover {

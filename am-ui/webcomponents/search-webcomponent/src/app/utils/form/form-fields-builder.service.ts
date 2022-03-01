@@ -1,12 +1,12 @@
-import {Field} from '../../data/models/Field';
 import {Injectable} from '@angular/core';
 import {FormFieldBase} from '../../search-form/form/form-field-base';
+import {FieldResponseDto} from 'src/app/api/models';
 
 /* istanbul ignore next */
 @Injectable()
 export class FormFieldsBuilderService {
   public searchFieldsToFormFields(
-    searchFields: Field[]
+    searchFields: FieldResponseDto[]
   ): FormFieldBase<string>[] {
     const formFields: FormFieldBase<string>[] = [];
     searchFields.forEach(searchField => {

@@ -15,7 +15,6 @@ import {marketplaceReducer} from './data/store/marketplace.reducer';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {CategoriesService} from './data/services/categories.service';
 import {FormFieldControlService} from './search-form/form/form-field-control.service';
 import {FormFieldsBuilderService} from './utils/form/form-fields-builder.service';
 import {RestHelperService} from './utils/restHelperService';
@@ -54,7 +53,6 @@ import {createCustomElement} from '@angular/elements';
     }),
   ],
   providers: [
-    CategoriesService,
     RestHelperService,
     FormFieldControlService,
     FormFieldsBuilderService,

@@ -41,7 +41,10 @@
           'searchForm.categories.' + currentCategoryKey + '.type' | translate
         }}
       </option>
-      <option *ngFor="let opt of formField.options" [value]="opt.fieldOptionId">
+      <option
+        *ngFor="let opt of formField.options"
+        [value]="opt.field_option_id"
+      >
         {{ opt.key }}
       </option>
     </select>
@@ -53,7 +56,8 @@
     >
       <option value="-1">
         {{
-          'searchForm.categories.' + currentCategoryKey + '.' + formField.key | translate
+          'searchForm.categories.' + currentCategoryKey + '.' + formField.key
+            | translate
         }}
       </option>
       <option *ngFor="let opt of selectCounterValues" [value]="opt">

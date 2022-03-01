@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build --output-hashing=none",
-    "watch": "ng build --watch --configuration development",
+    "start": "npm run openapi-gen && ng serve",
+    "build": "npm run openapi-gen && ng build --output-hashing=none",
+    "watch": "npm run openapi-gen && ng build --watch --configuration development",
     "test": "jest --coverage",
     "prepackage": "npm run build",
     "package": "node package-script.js",
@@ -17,7 +17,9 @@
     "fix": "npm run fix:angular && npm run fix:typescript && npm run fix:style",
     "fix:angular": "ng lint --fix",
     "fix:typescript": "gts fix",
-    "fix:style": "npx stylelint \"**/*.scss\" --fix"
+    "fix:style": "npx stylelint \"**/*.scss\" --fix",
+    "openapi-gen": "ng-openapi-gen --input ../../../marketplace-service/src/main/resources/api.yaml --output src/app/api",
+    "openapi-gen2": "openapi-generator-cli generate -i ../../../marketplace-service/src/main/resources/api.yaml -g typescript-angular -o src/app/api"
   },
   "private": true,
   "dependencies": {
@@ -35,6 +37,7 @@
     "@ngrx/store": "^13.0.2",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "ng-openapi-gen": "^0.20.0",
     "ngx-logger": "^5.0.7",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
