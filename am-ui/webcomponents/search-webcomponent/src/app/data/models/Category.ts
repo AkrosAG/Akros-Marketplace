@@ -1,6 +1,6 @@
-import { Field } from './Field';
+import {Field} from './Field';
 export interface Category {
-  categoryId: number;
+  category_id: number;
   key: string;
   fields: Field[];
 }
