@@ -14,7 +14,7 @@ paths:
   /list-field-type-definitions:
     get:
       summary: List the field type definitions
-      description: helper function only
+      description: Helper function to see different possible field types that frontend must handle
       responses:
         200:
           description: OK
@@ -22,6 +22,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FieldTypeDefinitionResponseDTO'
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: 'https://opensource.zalando.com/restful-api-guidelines/models/problem-1.0.1.yaml#/Problem'
 
   /categories:
     get:
@@ -34,6 +40,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CategoryResponseDTO'
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: 'https://opensource.zalando.com/restful-api-guidelines/models/problem-1.0.1.yaml#/Problem'
 
   /topics/{topicId}:
     get:
@@ -54,6 +66,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TopicLoadResponseDTO'
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: 'https://opensource.zalando.com/restful-api-guidelines/models/problem-1.0.1.yaml#/Problem'
   /topics:
     post:
       summary: Save a topic 
@@ -68,6 +86,13 @@ paths:
       responses:
         200:
           description: OK
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: 'https://opensource.zalando.com/restful-api-guidelines/models/problem-1.0.1.yaml#/Problem'
+
     delete:
       summary: Delete a topic 
       description: Delete a topic
@@ -82,6 +107,12 @@ paths:
       responses:
         200:
           description: OK
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: 'https://opensource.zalando.com/restful-api-guidelines/models/problem-1.0.1.yaml#/Problem'
 
   #/topic-searches:
   /topics/searches:
@@ -102,14 +133,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TopicSearchListResponseDTO'
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: 'https://opensource.zalando.com/restful-api-guidelines/models/problem-1.0.1.yaml#/Problem'
 
 components:
+
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
-  schemas:
 
+  schemas:
     FieldTypeDefinitionResponseDTO:
       type: object
       properties:
