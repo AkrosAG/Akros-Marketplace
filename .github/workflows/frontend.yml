@@ -66,7 +66,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - run: |
-          docker build -f am-ui/Dockerfile -t akrosmarketplace.azurecr.io/am-ui:${{ github.sha }}
+          docker build . -f am-ui/Dockerfile -t akrosmarketplace.azurecr.io/am-ui:${{ github.sha }}
           docker push akrosmarketplace.azurecr.io/am-ui:${{ github.sha }}
 
       - uses: azure/webapps-deploy@v2

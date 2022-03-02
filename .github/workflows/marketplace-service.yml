@@ -22,7 +22,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - run: |
-          docker build -f marketplace-service/Dockerfile -t akrosmarketplace.azurecr.io/am-marketplace-service:${{ github.sha }}
+          docker build . -f marketplace-service/Dockerfile -t akrosmarketplace.azurecr.io/am-marketplace-service:${{ github.sha }}
           docker push akrosmarketplace.azurecr.io/am-marketplace-service:${{ github.sha }}
 
       - uses: azure/webapps-deploy@v2
