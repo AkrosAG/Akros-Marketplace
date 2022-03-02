@@ -18,7 +18,7 @@
     "fix:angular": "ng lint --fix",
     "fix:typescript": "gts fix",
     "fix:style": "npx stylelint \"**/*.scss\" --fix",
-    "openapi-gen": "ng-openapi-gen --input ../../../marketplace-service/src/main/resources/api.yaml --output src/app/api"
+    "openapi-gen": "ng-openapi-gen --input ../../../api.yaml --output src/app/api"
   },
   "private": true,
   "dependencies": {

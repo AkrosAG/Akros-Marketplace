@@ -4,10 +4,11 @@
 FROM node:latest as build
 
 # Set the working directory
-WORKDIR /usr/local/app
+WORKDIR /usr/local/app/am-ui
 
 # Add the source code to app
-COPY ./ /usr/local/app/
+COPY ./am-ui /usr/local/app/am-ui
+COPY ./api.yaml /usr/local/app
 
 # Install all the dependencies
 RUN npm install
@@ -21,9 +22,9 @@ RUN npm run build
 FROM nginx:latest
 
 # Copy the build output to replace the default nginx contents.
-COPY --from=build /usr/local/app/dist/marketplace-ui /usr/share/nginx/html
-COPY ./src/cert.pem /usr/share/nginx/cert.pem
-COPY ./src/cert.key /usr/share/nginx/cert.key
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /usr/local/app/am-ui/dist/marketplace-ui /usr/share/nginx/html
+COPY ./am-ui/src/cert.pem /usr/share/nginx/cert.pem
+COPY ./am-ui/src/cert.key /usr/share/nginx/cert.key
+COPY ./am-ui/nginx.conf /etc/nginx/nginx.conf
 # Expose port 80
 EXPOSE 80
