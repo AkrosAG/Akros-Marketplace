@@ -1,3 +1,6 @@
+import {BrownbagVueComponent} from './components/brownbag/vue/vue.component';
+import {BrownbagReactComponent} from './components/brownbag/react/react.component';
+import {BrownbagComponent} from './components/brownbag/brownbag.component';
 import {CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
@@ -64,7 +67,14 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
 }
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NavbarComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NavbarComponent,
+    BrownbagComponent,
+    BrownbagReactComponent,
+    BrownbagVueComponent,
+  ],
   imports: [
     BrowserModule,
     FormsModule,

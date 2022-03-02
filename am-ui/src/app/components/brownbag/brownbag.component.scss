@@ -1,0 +1,33 @@
+.main-container {
+  .split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+
+    &.left {
+      left: 0;
+      background-color: rgba(87, 167, 91, 0.25);
+    }
+
+    &.right {
+      right: 0;
+      background-color: rgba(40, 85, 209, 0.25);
+    }
+
+    .centered {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      img {
+        cursor: pointer;
+        width: 225px;
+      }
+    }
+  }
+}
