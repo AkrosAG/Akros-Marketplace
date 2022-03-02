@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run openapi-gen && ng serve",
-    "build": "npm run openapi-gen && ng build --output-hashing=none",
+    "build": "npm run openapi-gen && ng build --output-hashing=none --configuration development",
+    "build:prod": "npm run openapi-gen && ng build --output-hashing=none --configuration production",
     "watch": "npm run openapi-gen && ng build --watch --configuration development",
     "test": "jest --coverage",
     "prepackage": "npm run build",
@@ -18,7 +19,7 @@
     "fix:angular": "ng lint --fix",
     "fix:typescript": "gts fix",
     "fix:style": "npx stylelint \"**/*.scss\" --fix",
-    "openapi-gen": "ng-openapi-gen --input ../../../marketplace-service/src/main/resources/api.yaml --output src/app/api"
+    "openapi-gen": "ng-openapi-gen --input ../../../api.yaml --output src/app/api"
   },
   "private": true,
   "dependencies": {

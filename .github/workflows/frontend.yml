@@ -57,9 +57,6 @@ jobs:
       matrix:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    defaults:
-      run:
-        working-directory: ./am-ui
     steps:
       - uses: actions/checkout@v2
       - uses: azure/docker-login@v1
@@ -69,7 +66,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - run: |
-          docker build . -t akrosmarketplace.azurecr.io/am-ui:${{ github.sha }}
+          docker build . -f am-ui/Dockerfile -t akrosmarketplace.azurecr.io/am-ui:${{ github.sha }}
           docker push akrosmarketplace.azurecr.io/am-ui:${{ github.sha }}
 
       - uses: azure/webapps-deploy@v2

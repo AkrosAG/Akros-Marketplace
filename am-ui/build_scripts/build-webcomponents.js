@@ -6,6 +6,7 @@ const os = require('os');
 
 // get library path
 const path = resolve(__dirname, '../webcomponents/');
+const isProduction = process.argv[2] === '--prod';
 
 fs.readdirSync(path).forEach(function (mod) {
   const modPath = join(path, mod);
@@ -18,10 +19,19 @@ fs.readdirSync(path).forEach(function (mod) {
   // npm binary based on OS
   const npmCmd = os.platform().startsWith('win') ? 'npm.cmd' : 'npm';
 
-  // install folder
-  cp.spawn(npmCmd, ['run', 'build'], {
-    env: process.env,
-    cwd: modPath,
-    stdio: 'inherit',
-  });
+  if (isProduction) {
+    console.log('Building for production!');
+    cp.spawn(npmCmd, ['run', 'build:prod'], {
+      env: process.env,
+      cwd: modPath,
+      stdio: 'inherit',
+    });
+  } else {
+    console.log('Building for dev!');
+    cp.spawn(npmCmd, ['run', 'build'], {
+      env: process.env,
+      cwd: modPath,
+      stdio: 'inherit',
+    });
+  }
 });

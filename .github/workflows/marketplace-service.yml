@@ -12,10 +12,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./marketplace-service
-
     steps:
       - uses: actions/checkout@v2
 
@@ -26,7 +22,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - run: |
-          docker build . -t akrosmarketplace.azurecr.io/am-marketplace-service:${{ github.sha }}
+          docker build . -f marketplace-service/Dockerfile -t akrosmarketplace.azurecr.io/am-marketplace-service:${{ github.sha }}
           docker push akrosmarketplace.azurecr.io/am-marketplace-service:${{ github.sha }}
 
       - uses: azure/webapps-deploy@v2
