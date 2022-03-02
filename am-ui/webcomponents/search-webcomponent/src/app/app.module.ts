@@ -21,6 +21,7 @@ import {RestHelperService} from './utils/restHelperService';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import {environment} from 'src/environments/environment';
 import {createCustomElement} from '@angular/elements';
+import {ApiModule} from './api/api.module';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import {createCustomElement} from '@angular/elements';
         deps: [HttpClient],
       },
     }),
+    ApiModule.forRoot({rootUrl: environment.ownUrl}),
   ],
   providers: [
     RestHelperService,
@@ -72,6 +74,7 @@ export class AppModule implements DoBootstrap {
     if (document.querySelector('mp-search')) {
       appRef.bootstrap(MpSearchComponent);
     }
+    console.log(environment.ownUrl);
   }
 }
 

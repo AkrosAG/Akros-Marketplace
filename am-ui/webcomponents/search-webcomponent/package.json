@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run openapi-gen && ng serve",
-    "build": "npm run openapi-gen && ng build --output-hashing=none",
+    "build": "npm run openapi-gen && ng build --output-hashing=none --configuration development",
+    "build:prod": "npm run openapi-gen && ng build --output-hashing=none --configuration production",
     "watch": "npm run openapi-gen && ng build --watch --configuration development",
     "test": "jest --coverage",
     "prepackage": "npm run build",

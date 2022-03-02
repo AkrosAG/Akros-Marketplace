@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  ownUrl: 'https://am-ui.azurewebsites.net',
+  production: true,
 };

@@ -10,6 +10,7 @@
     "start_ssl": "ng serve --ssl true",
     "prebuild": "npm run build:webcomponents",
     "build": "ng build",
+    "prebuild:prod": "node build_scripts/install-webcomponents.js && node build_scripts/build-webcomponents.js --prod && node build_scripts/package-webcomponents.js && node build_scripts/add-to-script-array.js",
     "build:prod": "npm run build:webcomponents && ng build --configuration production",
     "test": "jest --coverage",
     "clear_jest": "jest --clearCache",
