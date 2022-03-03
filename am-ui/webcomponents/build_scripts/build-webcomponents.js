@@ -20,14 +20,12 @@ fs.readdirSync(path).forEach(function (mod) {
   const isProduction = process.argv[2] === '--prod';
 
   if (isProduction) {
-    console.log('Building for production!');
     cp.spawn(npmCmd, ['run', 'build:prod'], {
       env: process.env,
       cwd: modPath,
       stdio: 'inherit',
     });
   } else {
-    console.log('Building for dev!');
     cp.spawn(npmCmd, ['run', 'build'], {
       env: process.env,
       cwd: modPath,
