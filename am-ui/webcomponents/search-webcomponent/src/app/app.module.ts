@@ -74,7 +74,6 @@ export class AppModule implements DoBootstrap {
     if (document.querySelector('mp-search')) {
       appRef.bootstrap(MpSearchComponent);
     }
-    console.log(environment.ownUrl);
   }
 }
 

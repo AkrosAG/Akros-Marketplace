@@ -12,5 +12,6 @@ build = async () => {
     files,
     '../../src/assets/scripts/webcomponents/search-webcomponent.js'
   );
+  console.log('##### Finished packaging search-webcomponent! #####');
 };
 build();

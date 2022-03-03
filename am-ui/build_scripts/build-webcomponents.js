@@ -20,14 +20,14 @@ fs.readdirSync(path).forEach(function (mod) {
   const npmCmd = os.platform().startsWith('win') ? 'npm.cmd' : 'npm';
 
   if (isProduction) {
-    console.log('Building for production!');
+    console.log('##### Building components production! #####');
     cp.spawn(npmCmd, ['run', 'build:prod'], {
       env: process.env,
       cwd: modPath,
       stdio: 'inherit',
     });
   } else {
-    console.log('Building for dev!');
+    console.log('##### Building components for dev! #####');
     cp.spawn(npmCmd, ['run', 'build'], {
       env: process.env,
       cwd: modPath,
