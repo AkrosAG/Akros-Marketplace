@@ -26,10 +26,14 @@ scriptFiles.forEach(script => {
   webcomponents.push(relativePath);
 });
 
-const joinedScripts =
-  angularConfig.projects[
-    'marketplace-ui'
-  ].architect.build.options.scripts.concat(webcomponents);
+const joinedScripts = angularConfig.projects[
+  'marketplace-ui'
+].architect.build.options.scripts
+  .filter(script => {
+    webcomponents.includes(script);
+  })
+  .concat(webcomponents);
+console.log(webcomponents);
 
 angularConfig.projects['marketplace-ui'].architect.build.options.scripts =
   joinedScripts;
