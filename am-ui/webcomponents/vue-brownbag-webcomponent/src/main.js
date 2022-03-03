@@ -1,6 +1,6 @@
-import {defineCustomeElement} from 'vue';
+import {defineCustomElement} from 'vue';
 import VueWebComponent from './components/VueWebComponent';
 
-const CustomElement = defineCustomeElement(VueWebComponent);
+const CustomElement = defineCustomElement(VueWebComponent);
 
-customElements.define('vue-brownbag-webcomponent', CustomElement);
+window.customElements.define('vue-brownbag-webcomponent', CustomElement);
