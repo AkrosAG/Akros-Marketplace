@@ -84,6 +84,7 @@
       <button class="button is-primary is-large" type="submit">Suche</button>
     </form>
   </section>
+  <!-- eslint-disable-next-line -->
   <section id="childSection">
     <VueChildComponent :childData="childData" />
   </section>
@@ -95,6 +96,7 @@ export default {
   data () {
     return {
       formData: {
+        type: '',
         region: '',
         beginDate: '',
         endDate: '',
