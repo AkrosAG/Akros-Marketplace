@@ -10,19 +10,21 @@ const webcomponentsPath = resolve(
 );
 
 const EXTENSION = '.js';
-
+const scriptFiles = [];
 const webcomponents = [];
 
-fs.readdirSync(webcomponentsPath)
-  .filter(file => {
-    path.extname(file).toLowerCase() === EXTENSION;
-  })
-  .forEach(file => {
-    const relativePath = path
-      .relative('./', join(webcomponentsPath, file))
-      .replace(/\\/g, '/');
-    webcomponents.push(relativePath);
-  });
+fs.readdirSync(webcomponentsPath).forEach(file => {
+  if (path.extname(file).toLowerCase() === EXTENSION) {
+    scriptFiles.push(file);
+  }
+});
+
+scriptFiles.forEach(script => {
+  const relativePath = path
+    .relative('./', join(webcomponentsPath, script))
+    .replace(/\\/g, '/');
+  webcomponents.push(relativePath);
+});
 
 const joinedScripts =
   angularConfig.projects[
