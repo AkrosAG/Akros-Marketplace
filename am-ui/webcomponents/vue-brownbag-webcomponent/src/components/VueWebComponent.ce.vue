@@ -249,4 +249,13 @@ fieldset {
   padding-bottom: 0.75rem;
   margin-bottom: calc(1.5rem - 0.75rem);
 }
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 </style>
