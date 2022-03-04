@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  input {
+    @apply block
+    w-full
+    px-3
+    py-1.5
+    text-base
+    font-normal
+    text-gray-700
+    bg-white bg-clip-padding
+    border border-solid border-gray-300
+    rounded
+    transition
+    ease-in-out
+    m-0
+    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none;
+  }
+  button {
+    float: right;
+    @apply px-6
+    py-2.5
+    text-white
+    bg-blue-600
+    font-medium
+    text-xs
+    leading-tight
+    uppercase
+    rounded
+    shadow-md
+    hover:bg-blue-700 hover:shadow-lg
+    focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+    active:bg-blue-800 active:shadow-lg
+    transition
+    duration-150
+    ease-in-out;
+  }
+}
+
+.button-wrapper {
+  height: 24px;
+}
+
+.split {
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+  background-color: rgb(255 255 255);
+}
+
+.left {
+  left: 25%;
+}
+
+.right {
+  left: 75%;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+body {
+  background-color: rgba(40, 85, 209, 0.25);
+}
+
+h2 {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+span {
+  font-style: italic;
+}
+
+li {
+  margin-bottom: 12px;
+}
+
+.red {
+  background-color: red;
+}
+
+.red:hover {
+  background-color: #e62b2b;
+}

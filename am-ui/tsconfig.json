@@ -28,5 +28,6 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "include": ["src/**/*.ts", "test/**/*.ts", "setup-jest.ts"]
+  "include": ["src/**/*.ts", "test/**/*.ts", "setup-jest.ts"],
+  "jsx": "react",
 }

@@ -28,4 +28,6 @@ hs_err_pid*
 # VS Code Files
 .vscode/
 
+**/node_modules
+
 *.DS_Store
