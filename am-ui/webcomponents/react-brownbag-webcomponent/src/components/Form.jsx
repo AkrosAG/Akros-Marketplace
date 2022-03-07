@@ -51,7 +51,7 @@ export default class Form extends React.Component {
     this.setState(modState);
   };
 
-  handleCallback = () =>{
+  handleCallback = () => {
     const originalState = {
       form: {
         title: '',
@@ -67,14 +67,17 @@ export default class Form extends React.Component {
       showList: false,
     };
     this.setState(originalState);
-}
+  };
 
   render() {
     let list;
     if (this.state.showList) {
       list = (
         <div className="split right centered block p-6 rounded-lg shadow-lg bg-white max-w-sm">
-          <List values={this.state.form} parentCallback = {this.handleCallback}></List>
+          <List
+            values={this.state.form}
+            parentCallback={this.handleCallback}
+          ></List>
         </div>
       );
     } else {
