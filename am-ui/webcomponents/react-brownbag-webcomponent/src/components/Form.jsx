@@ -96,7 +96,7 @@ export default class Form extends React.Component {
           {this.renderField('type')}
           {this.renderField('address')}
           <div className="button-wrapper">
-            <button onClick={this.showList}>Submit</button>
+            <button onClick={this.showList} className="">Submit</button>
           </div>
         </div>
         {list}

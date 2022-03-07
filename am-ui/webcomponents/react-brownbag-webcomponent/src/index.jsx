@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import IndexStyles from './index.css';
 import AppStyles from './App.css';
-import ComponentStyle from './styles/styles.css';
-import ListStyle from './styles/list.css';
+import ComponentStyles from './styles/main.css';
 import App from './App';
 
 // Comment in for webcomponent development only
@@ -18,7 +17,7 @@ class ReactBrownbagWebComponent extends HTMLElement {
     const mountPoint = document.createElement('div');
 
     const style = document.createElement('style');
-    style.textContent = AppStyles + IndexStyles + ComponentStyle + ListStyle;
+    style.textContent = AppStyles + IndexStyles + ComponentStyles;
 
     root.appendChild(mountPoint);
     root.appendChild(style);

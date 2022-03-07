@@ -9,6 +9,7 @@
     "@vitejs/plugin-react": "^1.2.0",
     "concat": "^1.0.3",
     "fs-extra": "^10.0.1",
+    "postcss-cli": "^9.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
@@ -23,7 +24,9 @@
     "eject": "react-scripts eject",
     "prepackage": "npm run build",
     "package": "node package-script.js",
-    "export": "npm run build && npm run package"
+    "export": "npm run build && npm run package",
+    "prebuild": "postcss src/styles/styles.css -o src/styles/main.css",
+    "predev": "postcss src/styles/styles.css -o src/styles/main.css"
   },
   "eslintConfig": {
     "extends": [

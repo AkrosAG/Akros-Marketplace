@@ -40,6 +40,28 @@
   }
 }
 
+h2 {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+span {
+  font-style: italic;
+}
+
+li {
+  margin-bottom: 12px;
+}
+
+.red {
+  background-color: red;
+}
+
+.red:hover {
+  background-color: #e62b2b;
+}
+
 .button-wrapper {
   height: 24px;
 }
@@ -66,30 +88,4 @@
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-}
-
-body {
-  background-color: rgba(40, 85, 209, 0.25);
-}
-
-h2 {
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-span {
-  font-style: italic;
-}
-
-li {
-  margin-bottom: 12px;
-}
-
-.red {
-  background-color: red;
-}
-
-.red:hover {
-  background-color: #e62b2b;
 }
