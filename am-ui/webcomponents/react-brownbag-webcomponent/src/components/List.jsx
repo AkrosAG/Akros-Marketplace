@@ -35,7 +35,9 @@ export default class List extends React.Component {
         <h2>Values received form Form component</h2>
         <ul>{listItems}</ul>
         <div className="button-wrapper">
-          <button className='red' onClick={this.reset}>RESET</button>
+          <button className="red" onClick={this.reset}>
+            RESET
+          </button>
         </div>
       </div>
     );

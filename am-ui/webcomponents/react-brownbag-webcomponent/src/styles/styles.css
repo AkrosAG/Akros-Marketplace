@@ -89,3 +89,13 @@ li {
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
+.dates-input {
+  display: inline-block;
+  width: 48%;
+}
+
+.rooms-selector {
+  display: inline-block;
+  width: 48%;
+}
