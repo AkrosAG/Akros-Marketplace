@@ -6,7 +6,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5vh 0;
+  padding: 7vh 0;
+
+  h1 {
+    text-align: center;
+    color: white;
+  }
 }
 
 .main {
@@ -27,4 +32,13 @@
     width: 10%;
     margin: 0 auto;
   }
+}
+
+.accordion-block {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  max-width: 360px;
+  height: 500px;
+  margin: 20px auto;
 }
