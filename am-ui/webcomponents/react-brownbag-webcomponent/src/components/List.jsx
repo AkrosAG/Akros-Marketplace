@@ -15,7 +15,6 @@ export default class List extends React.Component {
   };
 
   render() {
-    console.log(Object.entries(this.state.values));
     const listItems = Object.entries(this.state.values).map(element =>
       element[1] ? (
         <li>

@@ -204,8 +204,6 @@ export default class Form extends React.Component {
           ></List>
         </div>
       );
-    } else {
-      list = <br></br>;
     }
     return (
       <div>
