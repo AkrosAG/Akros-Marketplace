@@ -1,6 +1,11 @@
 <ng-container *ngIf="appLoaded; else loader">
-  <mp-navbar></mp-navbar>
-  <router-outlet></router-outlet>
+  <div id="container-wrapper">
+    <mp-navbar></mp-navbar>
+    <div id="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+    <mp-footer></mp-footer>
+  </div>
 </ng-container>
 
 <ng-template #loader>
