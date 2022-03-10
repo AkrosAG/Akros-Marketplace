@@ -54,8 +54,8 @@ describe('NavbarComponent', () => {
       (router: Router) => {
         const spy = jest.spyOn(router, 'navigate');
         component.navigateHome();
-        const url = spy.mock.calls[0];
-        expect(url).toBe('home');
+        const url = spy.mock.calls[0][0];
+        expect(url).toStrictEqual(['home']);
       }
     ));
   });
