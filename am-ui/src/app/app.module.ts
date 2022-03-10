@@ -1,3 +1,4 @@
+import {CreateComponent} from './components/create/create.component';
 import {CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
@@ -36,7 +37,7 @@ import {RestHelperService} from './utils/restHelperService';
 import {UserService} from './data/services/login/user.service';
 
 import {environment} from 'src/environments/environment';
-import { FooterComponent } from './components/shared/footer/footer.component';
+import {FooterComponent} from './components/shared/footer/footer.component';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -65,7 +66,13 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
 }
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NavbarComponent, FooterComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NavbarComponent,
+    CreateComponent,
+    FooterComponent,
+  ],
   imports: [
     BrowserModule,
     FormsModule,

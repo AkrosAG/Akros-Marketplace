@@ -1,3 +1,4 @@
+import {RouterTestingModule} from '@angular/router/testing';
 import {
   TranslateLoader,
   TranslateFakeLoader,
@@ -13,6 +14,7 @@ describe('HomeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,

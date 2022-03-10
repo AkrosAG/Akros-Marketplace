@@ -1,8 +1,9 @@
 {
   "home": {
     "information": "Veröffentliche relevante Informationen",
-    "find": "Relevante Informationen finden",
-    "about": "Über Akros Marketplace"
+    "find": "Finde was Du suchst",
+    "about": "Über Akros Marketplace",
+    "create": "Eine Anzeige erstellen"
   },
   "categories": {
     "accomodation": {

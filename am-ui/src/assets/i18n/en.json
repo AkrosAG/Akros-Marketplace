@@ -1,8 +1,9 @@
 {
   "home": {
     "information": "Post relevant information",
-    "find": "Find relevant information",
-    "about": "About Akros Marketplace"
+    "find": "Find what You are looking for",
+    "about": "About Akros Marketplace",
+    "create": "Create an Add"
   },
   "categories": {
     "accomodation": {

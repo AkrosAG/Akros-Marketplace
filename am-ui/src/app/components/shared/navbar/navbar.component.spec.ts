@@ -1,3 +1,4 @@
+import {Router} from '@angular/router';
 import {
   TranslateFakeLoader,
   TranslateService,
@@ -5,15 +6,19 @@ import {
   TranslateLoader,
 } from '@ngx-translate/core';
 import {AuthStore} from './../../../data/services/login/auth.service';
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, inject, TestBed} from '@angular/core/testing';
 import {NavbarComponent} from './navbar.component';
 
 jest.mock('./../../../data/services/login/auth.service');
+class MockRouter {
+  navigate(url: string) {
+    return url;
+  }
+}
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -25,7 +30,11 @@ describe('NavbarComponent', () => {
         }),
       ],
       declarations: [NavbarComponent],
-      providers: [AuthStore, TranslateService],
+      providers: [
+        AuthStore,
+        TranslateService,
+        {provide: Router, useClass: MockRouter},
+      ],
     }).compileComponents();
   });
 
@@ -39,5 +48,15 @@ describe('NavbarComponent', () => {
     it('should be created', () => {
       expect(component).toBeTruthy();
     });
+
+    it('should attempt call router with home value', inject(
+      [Router],
+      (router: Router) => {
+        const spy = jest.spyOn(router, 'navigate');
+        component.navigateHome();
+        const url = spy.mock.calls[0][0];
+        expect(url).toStrictEqual(['home']);
+      }
+    ));
   });
 });
