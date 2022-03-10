@@ -1,4 +1,4 @@
-import { CreateComponent } from './components/create/create.component';
+import {CreateComponent} from './components/create/create.component';
 import {HomeComponent} from './components/home/home.component';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
