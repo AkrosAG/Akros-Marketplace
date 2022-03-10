@@ -1,24 +1,28 @@
-<div class="search-component-wrapper">
-  <search-component [language]="appLanguage"></search-component>
+<div id="intro">
+    <div class="container intro-block">
+        <h1 class="text-white">Find What You Are Looking for</h1>
+        <div id="accordion-block">
+          <search-component [language]="appLanguage"></search-component>
+        </div>
+    </div>
 </div>
-<section class="container">
-  <div class="main">
-    <h1 class="header">{{'home.information' | translate }}</h1>
-    <button>CREATE AN AD</button>
-    <h1 class="header">{{'home.about' | translate }}</h1>
-    <p class="text">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis
-      euismod ante ut tincidunt. Donec ex leo, volutpat nec lorem at, commodo
-      interdum neque. Quisque vel vestibulum nisl, vitae ultrices augue. Nunc
-      quam erat, tincidunt vel aliquam sit amet, porta ac justo. In scelerisque
-      et odio eu efficitur.
-      <br />
-      <br />
-      Sed commodo justo sit amet tortor lacinia, nec posuere est malesuada.
-      Vestibulum convallis mi sed velit sollicitudin mattis. Sed aliquam lorem
-      vel orci tristique, consectetur elementum arcu facilisis. Pellentesque
-      rhoncus, odio sed mollis finibus, nisl leo sagittis velit, a finibus orci
-      dui id tellus.
-    </p>
-  </div>
-</section>
+
+<div class="container-fluid akros-beige">
+  <div class="container content-block light-beige">
+      <div class="text-block">
+          <h2>{{'home.information' | translate }}</h2>
+          <div class="post-btn-block">
+              <a href="" class="btn big-btn"><svg class="icon-btn" viewBox="0 0 24 24"><use xlink:href="#symbol-label"></use></svg> Post An Ad</a>
+          </div>
+      </div>
+  </div><!-- /.container -->
+</div><!-- /.container-fluid -->
+<div class="container-fluid">
+  <div class="container content-block white">
+      <div class="text-block">
+          <h2>{{'home.about' | translate }}</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque eu arcu at gravida. Donec eget lacinia libero. Curabitur semper nisi eget nisi tempus, ac imperdiet enim viverra. <a href="https://google.com">Sample link</a> nisi leo, lacinia non semper tempus, scelerisque non libero. In faucibus fringilla purus non placerat. Nulla aliquet sodales ex, ac maximus justo laoreet sed. Pellentesque est augue, finibus sed hendrerit vitae, iaculis eget sem.</p>
+          <p>Nulla facilisi. Nulla in orci leo. Maecenas hendrerit eget urna nec accumsan. Pellentesque eros ex, congue quis orci ac, varius sodales tellus. Vivamus tristique vitae enim vitae ornare. Nam id quam vel nunc egestas convallis sed ac nunc. Vestibulum iaculis nisi quis arcu egestas, vitae interdum ligula elementum sodales. Phasellus ac ornare risus, sit amet mattis tellus.</p>
+      </div>
+  </div><!-- /.container -->
+</div><!-- /.container-fluid -->

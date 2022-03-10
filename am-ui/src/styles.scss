@@ -164,10 +164,10 @@ input[type='checkbox'] {
   color: #fff;
 }
 
-.container {
+/* .container {
   display: grid;
   grid-template-columns: 1fr min(80%, 80rem) 1fr;
-}
+} */
 
 mp-navbar {
   display: grid;
@@ -236,4 +236,231 @@ body::-webkit-scrollbar-thumb {
 .text-block {
   max-width: 840px;
   margin: 0 auto;
+}
+
+/*                  Utility Styles
+****************************************************/
+.block {
+  display: block;
+}
+.no-display {
+  display: none;
+}
+.flex {
+  display: flex;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.center {
+  margin: 0 auto;
+}
+.no-wrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.white {
+  background-color: #fff;
+}
+.matte-white {
+  background-color: #f6f6f6;
+}
+.black {
+  background-color: #232323;
+}
+.grey {
+  background-color: #868686;
+}
+.light-grey {
+  background-color: #b0b0b0;
+}
+.akros-beige {
+  background-color: #c3bcb3;
+}
+.light-beige {
+  background-color: #ece6df;
+}
+.akros-red {
+  background-color: #d60929;
+}
+.dark-red {
+  background-color: #9c132c;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+.text-white {
+  color: #fff;
+}
+.text-dark {
+  color: #232323;
+}
+.space-after-1 {
+  margin-bottom: 1em;
+}
+.space-after-2 {
+  margin-bottom: 2em;
+}
+.space-after-3 {
+  margin-bottom: 3em;
+}
+.btn {
+  display: inline-block;
+  padding: 6px 24px;
+  vertical-align: middle;
+  text-align: center;
+  color: #e9d3d6;
+  color: rgba(255, 255, 255, .8);
+  background-color: #9c132c;
+  border-radius: 1.2em;
+}
+.btn:hover {
+  color: #fff;
+  background-color: #d60929;
+}
+.icon-btn {
+  display: inline-block;
+  width: 18px;
+  height: auto;
+  margin: -2px 6px 2px;
+  vertical-align: middle;
+  fill: #e9d3d6;
+  fill: rgba(255, 255, 255, .8);
+  -moz-transition: fill .3s ease-in 0s;
+  -webkit-transition: fill .3s ease-in 0s;
+  transition: fill .3s ease-in 0s;
+}
+.btn:hover .icon-btn {
+  fill: #fff;
+}
+.big-btn {
+  display: block;
+  max-width: 360px;
+  margin: 0 auto;
+  padding: 8px 24px;
+  font-size: 1.1em;
+  text-transform: uppercase;
+}
+.submit-btn {
+  display: block;
+  flex: auto;
+  margin: .6em auto 0;
+  font-size: 11.5pt;
+  cursor: pointer;
+}
+
+.cleaner, 
+.container:after, 
+.clearfix:after {
+  display: block;
+  clear: both;
+  height: 0;
+  content: '';
+  visibility: hidden;
+}
+
+
+
+
+/*                           MEDIA QUERIES
+***********************************************************************/
+
+/*                               600px
+--------------------------------------------------------------------- */
+@media screen and (min-width: 600px) {
+  .intro-block, .content-block {
+    padding: 20px;
+  }
+  .intro-block h1 {
+    width: auto;
+  }
+  #logo {
+    margin: 11px 0;
+    width: 140px;
+    height: 48px;
+  }
+  .btn-signin-wrap {
+    margin-left: 60px;
+  }
+  .signin-label {
+    display: inline;
+  }
+  .header-menu {
+    top: 38px;
+  }
+}
+
+
+/*                               900px
+--------------------------------------------------------------------- */
+@media screen and (min-width: 900px) {
+  .intro-block, .content-block {
+    padding: 30px;
+  }
+}
+
+
+/*                              1200px
+--------------------------------------------------------------------- */
+@media screen and (min-width: 1200px) {
+  body {
+    font-size: 12pt;
+  }
+  h1 {
+    font-size: 2.8em;
+  }
+  h2 {
+    font-size:2.25em;
+  }
+  h3 {
+    font-size: 1.9em;
+  }
+  h4 {
+    font-size: 1.55em;
+  }
+  h5 {
+    font-size: 1.33em;
+  }
+  h6 {
+    font-size: 1.05em;
+  }
+  .container {
+    width: 94%;
+  }
+  .branding-block {
+    padding: 0;
+  }
+  .intro-block, .content-block {
+    padding: 40px;
+  }
+  #logo {
+    margin: 15px 0;
+    width: 175px;
+    height: 60px;
+  }
+  .header-menu {
+    top: 42px;
+  }
+  .header-menu a {
+    font-size: .9em;
+  }
+  #accordion-block {
+    margin: 30px auto 20px;
+  }
+}
+
+
+/*                              1536px
+--------------------------------------------------------------------- */
+@media screen and (min-width: 1536px) {
 }
