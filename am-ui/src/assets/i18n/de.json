@@ -5,6 +5,13 @@
     "about": "Über Akros Marketplace",
     "create": "Eine Anzeige erstellen"
   },
+  "navbar": {
+    "sigin": "anmelden",
+    "profile": "Mein Profil",
+    "ads": "Meine Anzeigen",
+    "login": "Login",
+    "register": "Jetzt registrieren"
+  },
   "categories": {
     "accomodation": {
       "title": "Unterkünfte",

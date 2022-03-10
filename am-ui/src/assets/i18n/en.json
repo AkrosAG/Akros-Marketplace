@@ -5,6 +5,13 @@
     "about": "About Akros Marketplace",
     "create": "Create an Add"
   },
+  "navbar": {
+    "sigin": "sign in",
+    "profile": "My Profile",
+    "ads": "My Ads",
+    "login": "Login",
+    "register": "Register Now"
+  },
   "categories": {
     "accomodation": {
       "title": "Accomodation",

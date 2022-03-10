@@ -1,11 +1,16 @@
-import {RouterTestingModule} from '@angular/router/testing';
+import {Router} from '@angular/router';
 import {
   TranslateLoader,
   TranslateFakeLoader,
   TranslateModule,
 } from '@ngx-translate/core';
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {HomeComponent} from './home.component';
+class MockRouter {
+  navigate(url: string) {
+    return url;
+  }
+}
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -14,7 +19,6 @@ describe('HomeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
@@ -23,6 +27,7 @@ describe('HomeComponent', () => {
         }),
       ],
       declarations: [HomeComponent],
+      providers: [{provide: Router, useClass: MockRouter}],
     }).compileComponents();
   });
 
@@ -42,5 +47,15 @@ describe('HomeComponent', () => {
       component.ngOnDestroy();
       expect(component.subscription.closed).toBeTruthy();
     });
+
+    it('should attempt call router with create value', inject(
+      [Router],
+      (router: Router) => {
+        const spy = jest.spyOn(router, 'navigate');
+        component.navigateCreateAdd();
+        const url = spy.mock.calls[0][0];
+        expect(url).toStrictEqual(['create']);
+      }
+    ));
   });
 });

@@ -1,35 +1,112 @@
-header {
-  padding: 6px 0;
-  grid-column: 2;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/*                      Header
+****************************************************/
+#logo {
+  display: block;
+  margin: 12px 0;
+  width: 105px;
+  height: 36px;
 }
 
-.logo {
-  width: 140px;
-  display: inline;
+.logo-wrap {
+  flex: auto;
+}
+
+.nav {
+  position: relative;
   cursor: pointer;
-}
 
-.user-icon {
-  width: 50px;
-  display: inline;
-  cursor: pointer;
-}
+  &.signin {
+    margin-left: 20px;
+    text-align: right;
+  }
 
-.settings-container {
-  display: inline-flex;
+  a {
+    color: #868686;
 
-  .language-container {
-    margin-right: 8px;
+    &:hover {
+      color: #d60929;
+    }
 
-    .language-icon {
+    .btn-header {
+      display: block;
+      padding: 6px 0 6px 8px;
+      color: #868686;
       cursor: pointer;
-      margin: 0 2px;
-      max-width: 20px;
-      position: relative;
-      top: 28px;
+
+      &:hover {
+        color: #d60929;
+      }
     }
   }
+
+  .header-menu.active {
+    height: auto;
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+
+  .header-menu a {
+    display: block;
+    padding: 8px 12px 8px 16px;
+    font-weight: 400;
+    white-space: nowrap;
+    color: #464646;
+  }
+
+  .header-menu a:hover {
+    color: #232323;
+    background-color: #f0f0f0;
+  }
+
+  .header-menu a.active {
+    color: #d60929;
+  }
+}
+
+.icon-header {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin: -2px 2px 2px 0;
+  vertical-align: middle;
+  fill: #868686;
+  transition: fill 0.3s ease-in 0s;
+}
+
+.btn-header:hover .icon-header,
+.btn-header.active .icon-header {
+  fill: #d60929;
+}
+
+.signin-label {
+  display: none;
+}
+
+.header-menu {
+  position: absolute;
+  right: 0;
+  top: 34px;
+  padding: 6px 0;
+  text-align: left;
+  background-color: #fff;
+  border-radius: 0.2em;
+  box-shadow: 2px 2px 10px rgb(0 0 0 / 50%);
+  opacity: 0;
+  transform: scale(1, 0);
+  transform-origin: top center;
+  transition: all 0.3s ease-in 0s;
+  z-index: 99;
+}
+
+#lang-menu {
+  min-width: 60px;
+}
+
+#signin-menu {
+  min-width: 160px;
+}
+
+.language-label {
+  text-transform: uppercase;
+  margin-left: 4px;
 }

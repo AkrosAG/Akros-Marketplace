@@ -1,28 +1,48 @@
-<header class="nav-container">
-  <img
-    class="logo"
-    src="../../../assets/images/am_logo.png"
-    (click)="navigateHome()"
-  />
-  <div class="settings-container">
-    <div class="language-container">
-      <img
-      class="language-icon"
-      src="../../../assets/images/en.png"
-      (click)="changeLanguage('en')"
-    />
-    <img
-      class="language-icon"
-      src="../../../assets/images/de.png"
-      (click)="changeLanguage('de')"
-    />
+<header id="header" class="nav-container">
+  <div class="container branding-block">
+    <div class="logo-wrap">
+      <a id="logo" title="AKROS Marketplace"
+        ><img
+          src="./../../../../assets/images/am_logo.png"
+          class="block"
+          alt="AKROS Marketplace"
+          (click)="navigate('home')"
+      /></a>
     </div>
-    <img
-    class="user-icon"
-    src="../../../assets/images/userIcon.png"
-    (click)="userMenu()"
-  />
+    <nav class="nav">
+      <a id="btn-language" class="btn-header" (click)="showMenu('lng')">
+        <svg class="icon-header" viewBox="0 0 24 24">
+          <use xlink:href="#symbol-language"></use>
+        </svg>
+        <span class="language-label">{{ currentLng }}</span> &dtrif;
+      </a>
+      <ul id="lang-menu" class="header-menu">
+        <li><a (click)="changeLanguage('de')">DE</a></li>
+        <li><a (click)="changeLanguage('en')">EN</a></li>
+      </ul>
+    </nav>
+    <nav class="nav signin">
+      <a id="btn-signin" class="btn-header" (click)="showMenu('sign')">
+        <svg class="icon-header" viewBox="0 0 24 24">
+          <use xlink:href="#symbol-signin"></use>
+        </svg>
+        <span class="signin-label">{{ 'navbar.signin' | translate }}</span>
+        &dtrif;
+      </a>
+      <ul id="signin-menu" class="header-menu">
+        <li>
+          <a (click)="navigate('profile')">{{ 'navbar.profile' | translate }}</a>
+        </li>
+        <li>
+          <a (click)="navigate('ads')">{{ 'navbar.ads' | translate }}</a>
+        </li>
+        <li>
+          <a (click)="showModal('login')">{{ 'navbar.login' | translate }}</a>
+        </li>
+        <li>
+          <a (click)="showModal('register')">{{ 'navbar.register' | translate }}</a>
+        </li>
+      </ul>
+    </nav>
   </div>
-
-
 </header>
