@@ -1,37 +1,98 @@
-.search-component-wrapper {
-  background-image: url("./../../../assets/images/akros-bg.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 65vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 7vh 0;
-
-  h1 {
-    text-align: center;
-    color: white;
-  }
+/*                      Intro
+****************************************************/
+#intro {
+  background:
+    #938c83 url("./../../../assets/images/akros-bg.jpg") no-repeat
+    center / cover fixed;
 }
 
-.main {
-  grid-column: 2;
+#accordion-block {
   display: flex;
-  flex-flow: column wrap;
-  align-content: center;
+  flex-direction: column;
+  width: auto;
+  max-width: 360px;
+  height: 500px;
+  margin: 20px auto;
+}
 
-  * {
-    width: 70%;
-  }
+.accordion-btn {
+  position: relative;
+  margin-top: 2px;
+  padding: 8px 18px;
+  font-size: 1.1em;
+  font-weight: 500;
+  color: #f4efe9;
+  color: rgb(255 255 255 / 80%);
+  background-color: #938c83;
+  border-radius: 1em;
+  cursor: pointer;
+  z-index: 1;
+}
 
-  h1 {
-    text-align: center;
-  }
+.accordion-btn:hover,
+.accordion-btn.active {
+  color: #fff;
+  background-color: #635c53;
+}
 
-  button {
-    width: 10%;
-    margin: 0 auto;
-  }
+.accordion-btn.active {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.btn-arrow {
+  position: absolute;
+  top: 13px;
+  right: 16px;
+  display: block;
+  width: 9px;
+  height: 16px;
+  fill: #f4efe9;
+  fill: rgb(255 255 255 / 80%);
+  transition: all 0.3s ease-in 0s;
+}
+
+.active .btn-arrow {
+  fill: #fff;
+  transform: rotate(90deg);
+}
+
+.accordion-form-wrap {
+  display: none;
+  flex: auto;
+  padding: 12px;
+  border-bottom-right-radius: 1em;
+  border-bottom-left-radius: 1em;
+  background-color: #ece6df;
+}
+
+.accordion-btn.active + .accordion-form-wrap {
+  display: block;
+}
+
+#intro .simple-field {
+  font-size: 10pt;
+}
+
+.accordion-form p {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8em;
+}
+
+.simple-field.half {
+  width: 48%;
+  width: calc(50% - 6px);
+}
+
+.simple-field.full-width {
+  width: 100%;
+}
+
+/*                      Content
+****************************************************/
+.post-btn-block {
+  margin: 2.5em auto;
 }
 
 .accordion-block {
