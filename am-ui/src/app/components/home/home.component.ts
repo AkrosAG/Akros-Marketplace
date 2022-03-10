@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
@@ -11,7 +12,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   public appLanguage: string;
   public subscription: Subscription;
 
-  constructor(private translate: TranslateService) {}
+  constructor(private translate: TranslateService, private router: Router) {}
+
+  public navigateCreateAdd() {
+    this.router.navigate(['create']);
+  }
 
   ngOnInit(): void {
     this.subscription = this.translate.onLangChange.subscribe(appLanguage => {

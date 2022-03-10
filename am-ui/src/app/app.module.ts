@@ -1,3 +1,4 @@
+import {CreateComponent} from './components/create/create.component';
 import {CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
@@ -64,7 +65,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
 }
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NavbarComponent],
+  declarations: [AppComponent, HomeComponent, NavbarComponent, CreateComponent],
   imports: [
     BrowserModule,
     FormsModule,

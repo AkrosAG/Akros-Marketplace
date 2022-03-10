@@ -1,3 +1,4 @@
+import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {OAuthProviderEnum} from './../../../data/services/login/OAuthProviderEnum';
 import {Component} from '@angular/core';
@@ -9,11 +10,15 @@ import {AuthStore} from './../../../data/services/login/auth.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  constructor(public auth: AuthStore, private translate: TranslateService) {}
+  constructor(
+    public auth: AuthStore,
+    private translate: TranslateService,
+    private router: Router
+  ) {}
 
   /* istanbul ignore next */
   public navigateHome(): void {
-    console.log('GO HOME');
+    this.router.navigate(['home']);
   }
 
   /* istanbul ignore next */
