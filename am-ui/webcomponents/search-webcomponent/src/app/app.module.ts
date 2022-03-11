@@ -9,9 +9,9 @@ import {DynamicFormFieldComponent} from './search-form/form/dynamic-form-field.c
 import {SwitchCasesDirective} from './search-form/form/switch-cases.directive';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
-import {MarketPlaceEffects} from './data/store/marketplace.effects';
-import {marketplaceStoreName} from './data/store/marketplace.selector';
-import {marketplaceReducer} from './data/store/marketplace.reducer';
+import {SearchWebcomponentEffects} from './data/store/search-webcomponent.effects';
+import {SearchWebcomponentStoreName} from './data/store/search-webcomponent.selector';
+import {searchWebcomponentReducer} from './data/store/search-webcomponent.reducer';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
@@ -42,9 +42,9 @@ import {ApiModule} from './api/api.module';
       serverLogLevel: NgxLoggerLevel.OFF,
     }),
     StoreModule.forRoot({}),
-    StoreModule.forFeature(marketplaceStoreName, marketplaceReducer),
+    StoreModule.forFeature(SearchWebcomponentStoreName, searchWebcomponentReducer),
     EffectsModule.forRoot([]),
-    EffectsModule.forFeature([MarketPlaceEffects]),
+    EffectsModule.forFeature([SearchWebcomponentEffects]),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

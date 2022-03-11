@@ -2,29 +2,29 @@ import {Store} from '@ngrx/store';
 import {FormFieldsBuilderService} from '../../utils/form/form-fields-builder.service';
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {catchError, map, switchMap, withLatestFrom} from 'rxjs/operators';
+import {catchError, map, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs';
 
-import * as marketplaceActions from './../store/marketplace.actions';
-import {MarketplaceState} from './../store/marketplace.state';
+import * as searchWebcomponentActions from './search-webcomponent.actions';
+import {SearchWebcomponentState} from './search-webcomponent.state';
 import {CategoriesService} from 'src/app/api/services/categories.service';
 
 @Injectable()
-export class MarketPlaceEffects {
+export class SearchWebcomponentEffects {
   constructor(
     private actions$: Actions,
-    private store$: Store<MarketplaceState>,
+    private store$: Store<SearchWebcomponentState>,
     private formFieldsBuilderService: FormFieldsBuilderService,
     private categoriesService: CategoriesService
   ) {}
 
   loadCategories$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(marketplaceActions.loadCategories),
+      ofType(searchWebcomponentActions.loadCategories),
       switchMap(() =>
         this.categoriesService.categoriesGet().pipe(
           map(categories => {
-            return marketplaceActions.loadCategoriesSuccess({
+            return searchWebcomponentActions.loadCategoriesSuccess({
               categories: categories.categories,
               currentCategoryKey: categories.categories[0].key,
               searchFields:
@@ -35,7 +35,7 @@ export class MarketPlaceEffects {
           }),
           catchError(error =>
             of(
-              marketplaceActions.loadCategoriesFailure({
+              searchWebcomponentActions.loadCategoriesFailure({
                 error: error.toString(),
               })
             )

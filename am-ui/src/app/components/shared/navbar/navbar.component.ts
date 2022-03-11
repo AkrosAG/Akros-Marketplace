@@ -1,9 +1,11 @@
+import { appConfig } from './../../../../config';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {OAuthProviderEnum} from './../../../data/services/login/OAuthProviderEnum';
 import {Component, HostListener} from '@angular/core';
 import {AuthStore} from './../../../data/services/login/auth.service';
 
+import * as storeActions from './../../../data/store/marketplace.actions';
 @Component({
   selector: 'mp-navbar',
   templateUrl: './navbar.component.html',
@@ -20,7 +22,7 @@ export class NavbarComponent {
     private translate: TranslateService,
     private router: Router
   ) {
-    this.currentLng = this.translate.currentLang;
+    this.currentLng = appConfig.appLanguage;
   }
 
   /* istanbul ignore next */
@@ -45,6 +47,8 @@ export class NavbarComponent {
 
   /* istanbul ignore next */
   public changeLanguage(lng: string) {
+    storeActions.setCurrentLanguage({currentLanguage: lng});
+    this.currentLng = lng;
     this.translate.use(lng);
   }
 

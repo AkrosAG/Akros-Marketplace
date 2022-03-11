@@ -1,7 +1,7 @@
 import {FormFieldsBuilderService} from './utils/form/form-fields-builder.service';
 import {LocalizationService} from './data/services/localization.service';
 import {Store} from '@ngrx/store';
-import {MarketplaceState} from './data/store/marketplace.state';
+import {SearchWebcomponentState} from './data/store/search-webcomponent.state';
 import {FormFieldBase} from 'src/app/search-form/form/form-field-base';
 import {Observable} from 'rxjs';
 import {FormGroup} from '@angular/forms';
@@ -14,8 +14,8 @@ import {
   OnChanges,
 } from '@angular/core';
 
-import * as storeSelector from './data/store/marketplace.selector';
-import * as storeActions from './data/store/marketplace.actions';
+import * as storeSelector from './data/store/search-webcomponent.selector';
+import * as storeActions from './data/store/search-webcomponent.actions';
 import {CategoryDto} from './api/models';
 
 @Component({
@@ -40,7 +40,7 @@ export class MpSearchComponent implements OnInit, OnChanges {
   @Input() language: string;
 
   constructor(
-    private store: Store<MarketplaceState>,
+    private store: Store<SearchWebcomponentState>,
     private localization: LocalizationService,
     private formFieldsBuilderService: FormFieldsBuilderService
   ) {}
@@ -52,8 +52,8 @@ export class MpSearchComponent implements OnInit, OnChanges {
     }
   }
   /* istanbul ignore next */
-  ngOnInit(): void {
-    this.appLanguage = this.language ? this.language : 'de';
+  async ngOnInit() {
+    this.appLanguage = this.language;
     this.localization.use(this.appLanguage);
     this.categories$ = this.store.select(storeSelector.getCategories);
     this.selectedCategorySearchFields$ = this.store.select(

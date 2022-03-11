@@ -2,7 +2,7 @@
   <div id="container-wrapper">
     <mp-navbar></mp-navbar>
     <div id="content-wrapper">
-      <router-outlet></router-outlet>
+      <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
     </div>
     <mp-footer></mp-footer>
   </div>
