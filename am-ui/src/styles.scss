@@ -1,88 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 /*                              RESET
 ***********************************************************************/
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, 
+p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, 
+dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, 
+var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, 
+legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, 
+canvas, details, embed, figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary, time, mark, audio, video {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -111,7 +37,7 @@ blockquote::before,
 blockquote::after,
 q::before,
 q::after {
-  content: "";
+  content: '';
   content: none;
 }
 
@@ -199,12 +125,13 @@ img {
   height: auto;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="date"],
-input[type="file"],
-input[type="tel"],
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='date'],
+input[type='file'],
+input[type='tel'],
+input[type='number'],
 select,
 textarea {
   box-sizing: border-box;
@@ -218,7 +145,7 @@ textarea {
   appearance: none;
 }
 
-input[type="submit"] {
+input[type='submit'] {
   border: none;
   cursor: pointer;
 }
@@ -243,8 +170,8 @@ input:-webkit-autofill {
   -webkit-text-fill-color: #5c5c5c !important;
 } */
 
-input[type="radio"],
-input[type="checkbox"] {
+input[type='radio'],
+input[type='checkbox'] {
   display: inline-block;
   width: 1.33em;
   height: 1.33em;
@@ -298,6 +225,11 @@ body::-webkit-scrollbar-thumb {
 
 #header {
   background-color: #fff;
+}
+
+#intro {
+  background: #938c83 url('./assets/images/akros-bg.jpg') no-repeat center /
+    cover fixed;
 }
 
 #content-wrapper {
@@ -358,6 +290,10 @@ body::-webkit-scrollbar-thumb {
 
 .flex {
   display: flex;
+}
+
+.auto-flex {
+  flex: auto;
 }
 
 .left {
@@ -426,6 +362,10 @@ body::-webkit-scrollbar-thumb {
   text-align: left;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+
 .text-white {
   color: #fff;
 }
@@ -455,6 +395,7 @@ body::-webkit-scrollbar-thumb {
   color: rgb(255 255 255 / 80%);
   background-color: #9c132c;
   border-radius: 1.2em;
+  cursor: pointer;
 }
 
 .btn:hover {
@@ -500,7 +441,7 @@ body::-webkit-scrollbar-thumb {
   display: block;
   clear: both;
   height: 0;
-  content: "";
+  content: '';
   visibility: hidden;
 }
 
