@@ -1,4 +1,4 @@
-import { appConfig } from './../../../../config';
+import {appConfig} from './../../../../config';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {OAuthProviderEnum} from './../../../data/services/login/OAuthProviderEnum';
