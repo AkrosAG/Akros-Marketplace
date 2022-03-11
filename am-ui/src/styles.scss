@@ -205,6 +205,7 @@ input[type="password"],
 input[type="date"],
 input[type="file"],
 input[type="tel"],
+input[type="number"],
 select,
 textarea {
   box-sizing: border-box;
@@ -300,6 +301,12 @@ body::-webkit-scrollbar-thumb {
   background-color: #fff;
 }
 
+#intro {
+  background:
+    #938c83 url("./assets/images/akros-bg.jpg") no-repeat center /
+    cover fixed;
+}
+
 #content-wrapper {
   padding: 0 0 60px;
 }
@@ -358,6 +365,10 @@ body::-webkit-scrollbar-thumb {
 
 .flex {
   display: flex;
+}
+
+.auto-flex {
+  flex: auto;
 }
 
 .left {
@@ -426,6 +437,10 @@ body::-webkit-scrollbar-thumb {
   text-align: left;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+
 .text-white {
   color: #fff;
 }
@@ -455,6 +470,7 @@ body::-webkit-scrollbar-thumb {
   color: rgb(255 255 255 / 80%);
   background-color: #9c132c;
   border-radius: 1.2em;
+  cursor: pointer;
 }
 
 .btn:hover {
