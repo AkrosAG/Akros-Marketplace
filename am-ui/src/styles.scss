@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 /*                              RESET
 ***********************************************************************/
@@ -111,7 +111,7 @@ blockquote::before,
 blockquote::after,
 q::before,
 q::after {
-  content: "";
+  content: '';
   content: none;
 }
 
@@ -199,13 +199,13 @@ img {
   height: auto;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="date"],
-input[type="file"],
-input[type="tel"],
-input[type="number"],
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='date'],
+input[type='file'],
+input[type='tel'],
+input[type='number'],
 select,
 textarea {
   box-sizing: border-box;
@@ -219,7 +219,7 @@ textarea {
   appearance: none;
 }
 
-input[type="submit"] {
+input[type='submit'] {
   border: none;
   cursor: pointer;
 }
@@ -244,8 +244,8 @@ input:-webkit-autofill {
   -webkit-text-fill-color: #5c5c5c !important;
 } */
 
-input[type="radio"],
-input[type="checkbox"] {
+input[type='radio'],
+input[type='checkbox'] {
   display: inline-block;
   width: 1.33em;
   height: 1.33em;
@@ -302,8 +302,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 #intro {
-  background:
-    #938c83 url("./assets/images/akros-bg.jpg") no-repeat center /
+  background: #938c83 url('./assets/images/akros-bg.jpg') no-repeat center /
     cover fixed;
 }
 
@@ -516,7 +515,7 @@ body::-webkit-scrollbar-thumb {
   display: block;
   clear: both;
   height: 0;
-  content: "";
+  content: '';
   visibility: hidden;
 }
 

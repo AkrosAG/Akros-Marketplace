@@ -5,7 +5,7 @@
       [formControlName]="formField.key"
       [id]="formField.key"
       type="text"
-      class="bg-grey-lightest border-2 focus:border-orange p-2 rounded-lg shadow-inner w-full"
+      class="bg-grey-lightest border-2 focus:border-orange p-2 shadow-inner w-full"
       placeholder="{{
         'searchForm.categories.' + currentCategoryKey + '.' + formField.key
           | translate
@@ -16,7 +16,7 @@
       [formControlName]="formField.key"
       [id]="formField.key"
       type="text"
-      class="bg-grey-lightest border-2 focus:border-orange p-2 rounded-lg shadow-inner w-full"
+      class="bg-grey-lightest border-2 focus:border-orange p-2 shadow-inner w-full"
       placeholder="{{
         'searchForm.categories.' + currentCategoryKey + '.' + formField.key
           | translate
@@ -71,7 +71,7 @@
       type="checkbox"
     />
     <input
-      class="bg-grey-lightest border-2 focus:border-orange p-2 rounded-lg shadow-inner w-full"
+      class="bg-grey-lightest border-2 focus:border-orange p-2 shadow-inner w-full"
       placeholder="{{
         'searchForm.' + currentCategoryKey + '.' + formField.key | translate
       }}"
@@ -81,7 +81,7 @@
       type="date"
     />
   </div>
-  <div class="error-message" *ngIf="!isValid">
+  <!-- <div class="error-message" *ngIf="!isValid">
     {{ errorMessages.error[appLanguage] }}
-  </div>
+  </div> -->
 </div>

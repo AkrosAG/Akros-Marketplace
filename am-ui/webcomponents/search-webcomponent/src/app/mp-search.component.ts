@@ -37,7 +37,7 @@ export class MpSearchComponent implements OnInit, OnChanges {
   public appLoaded: boolean = true;
   public appLanguage: string;
   private currentCategoryId = 1;
-  @Input() language: string;
+  @Input() language = 'de';
 
   constructor(
     private store: Store<SearchWebcomponentState>,
