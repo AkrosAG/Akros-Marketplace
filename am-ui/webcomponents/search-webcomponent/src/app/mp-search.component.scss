@@ -1,7 +1,7 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 .accordion {
   font: 400 11pt/1.5 Inter, Helvetica, sans-serif;
@@ -14,10 +14,12 @@
     &::-webkit-scrollbar {
       width: 0;
     }
+    .accordion-item {
+      border-bottom: 0px;
+    }
   }
 
   .accordion-body {
-    min-width: 380px;
     overflow-y: scroll;
     max-height: 65vh;
     flex: auto;
@@ -53,7 +55,7 @@
       }
 
       &::after {
-        background-image: url("./../assets/images/arrow.png");
+        background-image: url('./../assets/images/arrow.png');
         transform: rotate(-180deg);
         position: relative;
         top: -4px;
@@ -61,7 +63,7 @@
     }
 
     &::after {
-      background-image: url("./../assets/images/arrow.png");
+      background-image: url('./../assets/images/arrow.png');
       position: relative;
       top: 4px;
     }
