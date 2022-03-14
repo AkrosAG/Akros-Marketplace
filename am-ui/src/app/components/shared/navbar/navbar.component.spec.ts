@@ -94,6 +94,5 @@ describe('NavbarComponent', () => {
       component.clickout();
       expect(component.lngMenuShown).toBeFalsy();
     });
-
   });
 });
