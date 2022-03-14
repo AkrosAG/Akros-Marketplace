@@ -22,14 +22,14 @@
       </ul>
     </nav>
     <nav class="nav signin">
-      <a id="btn-signin" class="btn-header" (click)="showMenu('sign')">
+      <a id="btn-signin" class="btn-header" (click)="showMenu('user')">
         <svg class="icon-header" viewBox="0 0 24 24">
           <use xlink:href="#symbol-signin"></use>
         </svg>
         <span class="signin-label">{{ 'navbar.signin' | translate }}</span>
         &dtrif;
       </a>
-      <ul id="signin-menu" class="header-menu">
+      <ul id="user-menu" class="header-menu">
         <li>
           <a (click)="navigate('profile')">{{ 'navbar.profile' | translate }}</a>
         </li>

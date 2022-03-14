@@ -13,8 +13,8 @@ import * as storeActions from './../../../data/store/marketplace.actions';
 })
 export class NavbarComponent {
   public currentLng: String;
-  private lngMenuShown = false;
-  private optionsMenuShown = false;
+  public lngMenuShown = false;
+  public optionsMenuShown = false;
   private menuEvent = false;
 
   constructor(
@@ -25,7 +25,6 @@ export class NavbarComponent {
     this.currentLng = appConfig.appLanguage;
   }
 
-  /* istanbul ignore next */
   public navigate(route: string): void {
     this.router.navigate([route]);
   }
@@ -52,14 +51,13 @@ export class NavbarComponent {
     this.translate.use(lng);
   }
 
-  /* istanbul ignore next */
   public showMenu(tag: string) {
     let element;
     switch (tag) {
       case 'lng':
         if (this.optionsMenuShown) {
           this.optionsMenuShown = false;
-          document.getElementById('signin-menu')?.classList.toggle('active');
+          document.getElementById('user-menu')?.classList.toggle('active');
         }
         element = document.getElementById('lang-menu');
         this.lngMenuShown = true;
@@ -69,7 +67,7 @@ export class NavbarComponent {
           this.lngMenuShown = false;
           document.getElementById('lang-menu')?.classList.toggle('active');
         }
-        element = document.getElementById('signin-menu');
+        element = document.getElementById('user-menu');
         this.optionsMenuShown = true;
         break;
     }
@@ -77,7 +75,6 @@ export class NavbarComponent {
     element?.classList.toggle('active');
   }
 
-  /* istanbul ignore next */
   @HostListener('document:click')
   clickout() {
     if (this.menuEvent) {
@@ -87,7 +84,7 @@ export class NavbarComponent {
         document.getElementById('lang-menu')?.classList.toggle('active');
         this.lngMenuShown = false;
       } else if (this.optionsMenuShown) {
-        document.getElementById('signin-menu')?.classList.toggle('active');
+        document.getElementById('user-menu')?.classList.toggle('active');
         this.optionsMenuShown = false;
       }
     }

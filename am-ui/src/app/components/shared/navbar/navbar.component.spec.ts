@@ -58,5 +58,42 @@ describe('NavbarComponent', () => {
         expect(url).toStrictEqual(['home']);
       }
     ));
+
+    it('will display user menu when user icon is clicked', () => {
+      component.showMenu('user');
+      expect(component.optionsMenuShown).toBeTruthy();
+    });
+
+    it('will display language menu when language icon is clicked', () => {
+      component.showMenu('lng');
+      expect(component.lngMenuShown).toBeTruthy();
+    });
+
+    it('closes language menu if open and user menu is clicked', () => {
+      component.showMenu('lng');
+      component.showMenu('user');
+      expect(component.optionsMenuShown).toBeTruthy();
+      expect(component.lngMenuShown).toBeFalsy();
+    });
+
+    it('closes user menu if open and language menu is clicked', () => {
+      component.showMenu('user');
+      component.showMenu('lng');
+      expect(component.optionsMenuShown).toBeFalsy();
+      expect(component.lngMenuShown).toBeTruthy();
+    });
+
+    it('closes user menu if open clicked anywhere on the screen', () => {
+      component.optionsMenuShown = true;
+      component.clickout();
+      expect(component.optionsMenuShown).toBeFalsy();
+    });
+
+    it('closes language menu if open clicked anywhere on the screen', () => {
+      component.lngMenuShown = true;
+      component.clickout();
+      expect(component.lngMenuShown).toBeFalsy();
+    });
+
   });
 });
