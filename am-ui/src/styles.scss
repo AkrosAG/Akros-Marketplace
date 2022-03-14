@@ -268,10 +268,10 @@ input[type="checkbox"] {
   grid-template-columns: 1fr min(80%, 80rem) 1fr;
 } */
 
-mp-navbar {
-  display: grid;
-  grid-template-columns: 1fr min(80%, 80rem) 1fr;
-}
+// mp-navbar {
+//   display: grid;
+//   grid-template-columns: 1fr min(80%, 80rem) 1fr;
+// }
 
 body::-webkit-scrollbar {
   width: 11px;

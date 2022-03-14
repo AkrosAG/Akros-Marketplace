@@ -29,3 +29,9 @@ input[type="date"]:valid::before {
 option:first-child {
   color: #ccc;
 }
+
+input,
+select {
+  background-color: #f6f6f6;
+  border-radius: 1.5rem;
+}

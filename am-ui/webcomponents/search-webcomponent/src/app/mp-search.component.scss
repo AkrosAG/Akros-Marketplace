@@ -1,43 +1,73 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 
-.accordion-flush {
-  min-width: 380px;
-  overflow-y: scroll;
-  max-height: 65vh;
+.accordion {
+  font: 400 11pt/1.5 Inter, Helvetica, sans-serif;
 
-  &::-webkit-scrollbar {
-    width: 0;
-  }
-}
+  .accordion-flush {
+    min-width: 380px;
+    overflow-y: scroll;
+    max-height: 65vh;
 
-.accordion-body {
-  min-width: 380px;
-  overflow-y: scroll;
-  max-height: 65vh;
-
-  &::-webkit-scrollbar {
-    width: 0;
-  }
-}
-
-.accordion-button:not(.collapsed) {
-  &:hover {
-    background-color: rgb(2 59 124 / 15%);
+    &::-webkit-scrollbar {
+      width: 0;
+    }
   }
 
-  &.selected {
-    background-color: #5757ec;
-    color: white;
+  .accordion-body {
+    min-width: 380px;
+    overflow-y: scroll;
+    max-height: 65vh;
+    flex: auto;
+    padding: 12px;
+    border-bottom-right-radius: 1em;
+    border-bottom-left-radius: 1em;
+    background-color: #ece6df;
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
   }
 
-  &::after {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
-    transform: rotate(-180deg);
-  }
-}
+  .accordion-button {
+    position: relative;
+    margin-top: 2px;
+    padding: 8px 18px;
+    font-size: 1.1em;
+    font-weight: 500;
+    background-color: #938c83;
+    border-radius: 1em;
+    cursor: pointer;
+    color: #fff;
 
-.flex-1 {
-  flex: 1;
+    &:not(.collapsed).selected {
+      &:hover {
+        background-color: rgb(2 59 124 / 15%);
+      }
+
+      &.selected {
+        background-color: #635c53;
+        color: white;
+      }
+
+      &::after {
+        background-image: url("./../assets/images/arrow.png");
+        transform: rotate(-180deg);
+        position: relative;
+        top: -4px;
+      }
+    }
+
+    &::after {
+      background-image: url("./../assets/images/arrow.png");
+      position: relative;
+      top: 4px;
+    }
+  }
+
+  .flex-1 {
+    flex: 1;
+  }
 }

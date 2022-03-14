@@ -1,9 +1,16 @@
 {
   "home": {
-    "information": "Post relevant information",
+    "information": "Post Your Adverticement for Free",
     "find": "Find what You are looking for",
     "about": "About Akros Marketplace",
     "create": "Create an Add"
+  },
+  "navbar": {
+    "sigin": "sign in",
+    "profile": "My Profile",
+    "ads": "My Ads",
+    "login": "Login",
+    "register": "Register Now"
   },
   "categories": {
     "accomodation": {

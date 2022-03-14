@@ -1,13 +1,3 @@
-.card {
-  margin: 0 auto;
-  height: 100%;
-  width: 70%;
-  background-color: white;
-  box-shadow: 2px 4px 14px 2px rgb(169 169 169 / 91%);
-  padding: 8px;
-  transition: 5s;
-}
-
 .float-right {
   float: right;
 }
@@ -22,14 +12,37 @@
   }
 }
 
-.pb-50 {
-  padding-bottom: 50px;
-}
-
 .pl-4 {
   padding-left: 4px;
 }
 
 .mb-12 {
   margin-bottom: 12px;
+}
+
+.form {
+  input {
+    box-sizing: border-box;
+    color: #5c5c5c;
+    border: 1px solid transparent;
+    border-radius: 1.1em;
+    background-color: #f6f6f6;
+    box-shadow: 0 1px 0 0 #fff;
+
+    &:checked {
+      background-color: #0d6efd;
+      background-image: unset;
+      border-color: #fff;
+      border-width: 3px;
+    }
+  }
+
+  .form-field {
+    width: 48%;
+    display: inline-block;
+
+    &:nth-child(even) {
+      float: right;
+    }
+  }
 }

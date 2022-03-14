@@ -1,4 +1,3 @@
-import {CreateComponent} from './components/create/create.component';
 import {CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
@@ -26,9 +25,18 @@ import {
   PublicClientApplication,
 } from '@azure/msal-browser';
 
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {MarketPlaceEffects} from './data/store/marketplace.effects';
+import {marketplaceStoreName} from './data/store/marketplace.selector';
+import {marketplaceReducer} from './data/store/marketplace.reducer';
+
 import {HomeComponent} from './components/home/home.component';
 import {NavbarComponent} from './components/shared/navbar/navbar.component';
-
+import {FooterComponent} from './components/shared/footer/footer.component';
+import {AddsComponent} from './components/adds/adds.component';
+import {ProfileComponent} from './components/profile/profile.component';
+import {CreateComponent} from './components/create/create.component';
 import {ErrorInterceptor} from './data/services/login/error.interceptor';
 import {JwtInterceptor} from './data/services/login/jwt.interceptor';
 import {AuthGuard} from './data/services/login/auth.guard';
@@ -37,7 +45,6 @@ import {RestHelperService} from './utils/restHelperService';
 import {UserService} from './data/services/login/user.service';
 
 import {environment} from 'src/environments/environment';
-import {FooterComponent} from './components/shared/footer/footer.component';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -72,6 +79,8 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     NavbarComponent,
     CreateComponent,
     FooterComponent,
+    ProfileComponent,
+    AddsComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,6 +88,10 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
+    StoreModule.forRoot({}),
+    StoreModule.forFeature(marketplaceStoreName, marketplaceReducer),
+    EffectsModule.forRoot([]),
+    EffectsModule.forFeature([MarketPlaceEffects]),
     LoggerModule.forRoot({
       level: !environment.production
         ? NgxLoggerLevel.DEBUG
