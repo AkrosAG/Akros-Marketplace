@@ -45,4 +45,50 @@
       float: right;
     }
   }
+
+  .btn {
+    display: block;
+    max-width: 360px;
+    margin: 0 auto;
+    padding: 8px 24px;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    transition: 0.3s;
+    &.big {
+      padding: 6px 24px;
+      vertical-align: middle;
+      text-align: center;
+      color: #e9d3d6;
+      background-color: #9c132c;
+      border-radius: 1.2em;
+      cursor: pointer;
+      &.error {
+        background-color: #868686;
+        color: #fff;
+      }
+      &:hover {
+        background-color: #d60929;
+        color: #fff;
+      }
+    }
+    .icon-btn {
+      display: inline-block;
+      width: 18px;
+      height: auto;
+      margin: -2px 6px 2px;
+      vertical-align: middle;
+      fill: #e9d3d6;
+      transition: fill 0.3s ease-in 0s;
+      &.error {
+        fill: #fff;
+      }
+    }
+  }
+  .error-message {
+    color: red;
+    font-size: 0.9em;
+    font-weight: bold;
+    padding: 2px;
+    margin-bottom: 10px;
+  }
 }

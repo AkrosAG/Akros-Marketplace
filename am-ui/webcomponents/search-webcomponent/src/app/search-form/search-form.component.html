@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="form" class="form">
+<form [formGroup]="form" class="form">
   <div class="mb-12 flex">
     <div class="form-check form-check-inline flex-1 pl-4">
       <input
@@ -43,11 +43,29 @@
       [errorMessages]="errorMessages[formField.key]"
       [appLanguage]="appLanguage"
       [currentCategoryKey]="currentCategoryKey"
+
     ></mp-form-field>
   </div>
-  <div class="float-right">
-    <button type="submit" [ngClass]="{error: !form.valid}" class="btn-primary">
-      {{ 'searchForm.search' | translate }}
-    </button>
+    <div class="error-message" *ngIf="!form.valid">
+      <!-- TODO a logic to receive event from mp-form-field upon error and construct error message based on the sum of active
+       errors, then use [innerHtml] to display constructed msg -->
+    Test for a generic error to see how it fits in the layout
   </div>
+  <a [ngClass]="{error: !form.valid}" class="btn big" (click)="onSubmit()">
+    <svg class="icon-btn" [ngClass]="{error: !form.valid}" viewBox="0 0 24 24">
+      <rect
+        x="-0.55"
+        y="17.34"
+        width="10.09"
+        height="4.33"
+        rx="1.44"
+        ry="1.44"
+        transform="translate(-12.47 8.89) rotate(-45)"
+      />
+      <path
+        d="M15,0a9,9,0,1,0,9,9A9,9,0,0,0,15,0Zm0,16a7,7,0,1,1,7-7A7,7,0,0,1,15,16Z"
+      />
+    </svg>
+    {{ 'searchForm.search' | translate }}
+  </a>
 </form>

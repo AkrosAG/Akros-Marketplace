@@ -18,14 +18,6 @@ input[type="date"]:valid::before {
   content: "";
 }
 
-.error-message {
-  color: red;
-  font-size: 0.8em;
-  font-weight: bold;
-  padding: 2px;
-  margin-left: 3px;
-}
-
 option:first-child {
   color: #ccc;
 }
@@ -34,4 +26,13 @@ input,
 select {
   background-color: #f6f6f6;
   border-radius: 1.5rem;
+}
+
+.error {
+  border-color: #d60929;
+  color: red;
+}
+
+textarea:focus, input:focus{
+  outline: none;
 }
