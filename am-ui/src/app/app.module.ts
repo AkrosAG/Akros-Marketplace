@@ -27,7 +27,7 @@ import {
 
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
-import {MarketPlaceEffects} from './data/store/marketplace.effects';
+import {MarketplaceEffects} from './data/store/marketplace.effects';
 import {marketplaceStoreName} from './data/store/marketplace.selector';
 import {marketplaceReducer} from './data/store/marketplace.reducer';
 
@@ -91,7 +91,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     StoreModule.forRoot({}),
     StoreModule.forFeature(marketplaceStoreName, marketplaceReducer),
     EffectsModule.forRoot([]),
-    EffectsModule.forFeature([MarketPlaceEffects]),
+    EffectsModule.forFeature([MarketplaceEffects]),
     LoggerModule.forRoot({
       level: !environment.production
         ? NgxLoggerLevel.DEBUG
