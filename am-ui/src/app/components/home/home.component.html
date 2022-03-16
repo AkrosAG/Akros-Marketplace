@@ -2,7 +2,14 @@
   <div class="container intro-block">
     <h1 class="text-white">{{ 'home.find' | translate }}</h1>
     <div id="accordion-block">
-      <search-component [language]="appLanguage"></search-component>
+      <search-component [language]="appLanguage"
+      [selectedCategorySearchFields]="
+        $any(selectedCategorySearchFields$ | async)
+      "
+      [currentCategoryKey]="$any(currentCategoryKey$ | async)"
+      [categories]="$any(categories$ | async)"
+      [categoryIsSelected]="$any(categorySelected$ | async)"
+      (categorySelection)="categoryChange($event)"></search-component>
     </div>
   </div>
 </div>

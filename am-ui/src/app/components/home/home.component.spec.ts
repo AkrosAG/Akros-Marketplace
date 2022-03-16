@@ -6,6 +6,10 @@ import {
 } from '@ngx-translate/core';
 import {ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {HomeComponent} from './home.component';
+import {FormFieldsBuilderService} from './../../data/services/form-fields-builder.service';
+import {provideMockStore, MockStore} from '@ngrx/store/testing';
+
+jest.mock('./../../data/services/form-fields-builder.service');
 class MockRouter {
   navigate(url: string) {
     return url;
@@ -15,6 +19,11 @@ class MockRouter {
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+  const initialState = {
+    categories: [],
+    selectedCategorySearchFields: [],
+    categorySelected: false,
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -27,7 +36,11 @@ describe('HomeComponent', () => {
         }),
       ],
       declarations: [HomeComponent],
-      providers: [{provide: Router, useClass: MockRouter}],
+      providers: [
+        {provide: Router, useClass: MockRouter},
+        FormFieldsBuilderService,
+        provideMockStore({initialState}),
+      ],
     }).compileComponents();
   });
 
@@ -57,5 +70,26 @@ describe('HomeComponent', () => {
         expect(url).toStrictEqual(['create']);
       }
     ));
+
+    it('should dispatch loadCategories action upon category selection', () => {
+      const fixture = TestBed.createComponent(HomeComponent);
+      const app = fixture.componentInstance;
+      const store = TestBed.inject(MockStore);
+      const cat = {
+        category_id: 0,
+        key: '',
+        fields: [{field_id: 17}],
+      };
+      const event = {
+        detail: {
+          category: cat,
+          index: 2,
+        },
+      };
+      app.ngOnInit();
+      store.dispatch = jest.fn();
+      app.categoryChange(event);
+      expect(store.dispatch).toHaveBeenCalled();
+    });
   });
 });
