@@ -6,10 +6,10 @@
     "build:webcomponents": "node build_scripts/install-webcomponents.js && node build_scripts/build-webcomponents.js && node build_scripts/package-webcomponents.js && node build_scripts/add-to-script-array.js",
     "prestart": "npm run build:webcomponents",
     "prestart_ssl": "npm run build:webcomponents",
-    "start": "ng serve",
-    "start_ssl": "ng serve --ssl true",
+    "start": "npm run openapi-gen && ng serve",
+    "start_ssl": "npm run openapi-gen && ng serve --ssl true",
     "prebuild": "npm run build:webcomponents",
-    "build": "ng build",
+    "build": "npm run openapi-gen && ng build",
     "prebuild:prod": "node build_scripts/install-webcomponents.js && node build_scripts/build-webcomponents.js --prod && node build_scripts/package-webcomponents.js && node build_scripts/add-to-script-array.js",
     "build:prod": "ng build --configuration production",
     "test": "jest --coverage",
@@ -26,7 +26,8 @@
     "e2e": "ng e2e",
     "e2e:headless": "ng run marketplace-ui:cypress-run",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "openapi-gen": "ng-openapi-gen --input ../api.yaml --output src/app/api"
   },
   "private": true,
   "dependencies": {
@@ -51,7 +52,8 @@
     "ngx-logger": "^5.0.4",
     "rxjs": "^6.6.7",
     "tslib": "^2.0.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "ng-openapi-gen": "^0.20.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^13.1.4",
@@ -76,6 +78,7 @@
     "stylelint-config-standard-scss": "^3.0.0",
     "ts-node": "~8.3.0",
     "typescript": "~4.5.4",
-    "cypress": "latest"
+    "cypress": "latest",
+    "ng-openapi-gen": "^0.20.0"
   }
 }

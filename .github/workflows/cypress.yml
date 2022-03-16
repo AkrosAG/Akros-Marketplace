@@ -32,6 +32,8 @@ jobs:
           cache-dependency-path: am-ui/package-lock.json
       - run: npm ci
         working-directory: ./am-ui
+      - run: npm run openapi-gen
+        working-directory: ./am-ui
       - run: npm run build:webcomponents
         working-directory: ./am-ui
       - run: npm run e2e:headless

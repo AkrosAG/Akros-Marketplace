@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {FieldResponseDto} from 'src/app/api/models';
-import {FormFieldBase} from '../data/models/form-field-base';
+import {FormFieldBase} from '../models/form-field-base';
 
 /* istanbul ignore next */
 @Injectable()
