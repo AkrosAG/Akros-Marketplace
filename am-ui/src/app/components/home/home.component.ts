@@ -56,7 +56,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   categoryChange(categorySelectionEvent: any) {
-    console.log(categorySelectionEvent);
     const fields = categorySelectionEvent.detail['category']['fields'];
     const key = categorySelectionEvent.detail['category']['key'];
     this.store.dispatch(storeActions.resetCategorySelected());

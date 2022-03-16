@@ -13,6 +13,7 @@
     "register": "Register Now"
   },
   "categories": {
+    "addCategory": "Category",
     "accomodation": {
       "title": "Accomodation",
       "types": {
@@ -22,7 +23,7 @@
         "parking": "Parking space"
       }
     },
-    "carSharing": {
+    "carShare": {
       "title": "Car sharing",
       "types": {
         "share": "Car sharing"
