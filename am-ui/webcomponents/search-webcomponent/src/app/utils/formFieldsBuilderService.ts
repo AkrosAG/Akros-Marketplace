@@ -1,26 +1,26 @@
-import {Field} from '../../data/models/Field';
 import {Injectable} from '@angular/core';
-import {FormFieldBase} from '../../search-form/form/form-field-base';
+import {FieldResponseDto} from 'src/app/api/models';
+import {FormFieldBase} from '../data/models/form-field-base';
 
-  /* istanbul ignore next */
+/* istanbul ignore next */
 @Injectable()
 export class FormFieldsBuilderService {
   public searchFieldsToFormFields(
-    searchFields: Field[]
+    searchFields: FieldResponseDto[]
   ): FormFieldBase<string>[] {
     const formFields: FormFieldBase<string>[] = [];
     searchFields.forEach(searchField => {
       const field = new FormFieldBase<string>({
         key: searchField.key,
         required: false,
-        type: searchField.fieldTypeDefinitionId,
-        min: searchField.minvalue,
-        max: searchField.maxValue,
-        options: searchField.fieldOptions,
+        type: searchField.field_type_definition_id,
+        min: searchField.min_value,
+        max: searchField.max_value,
+        options: searchField.field_options,
         offer: searchField.offer,
         request: searchField.request,
         creation: searchField.creation,
-        order: searchField.sortNumber,
+        order: searchField.sort_number,
       });
       formFields.push(field);
     });

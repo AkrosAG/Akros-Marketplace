@@ -43,6 +43,7 @@ import {AuthGuard} from './data/services/login/auth.guard';
 
 import {RestHelperService} from './utils/restHelperService';
 import {UserService} from './data/services/login/user.service';
+import {FormFieldsBuilderService} from './data/services/form-fields-builder.service';
 
 import {environment} from 'src/environments/environment';
 
@@ -110,6 +111,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     RestHelperService,
     UserService,
     AuthGuard,
+    FormFieldsBuilderService,
     {
       provide: LOCALE_ID,
       useValue: 'de-ch',
