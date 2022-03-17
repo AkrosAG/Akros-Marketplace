@@ -6,7 +6,7 @@
     "create": "Create an Add"
   },
   "navbar": {
-    "sigin": "sign in",
+    "signin": "sign in",
     "profile": "My Profile",
     "ads": "My Ads",
     "login": "Login",

@@ -6,7 +6,7 @@
     "create": "Eine Anzeige erstellen"
   },
   "navbar": {
-    "sigin": "anmelden",
+    "signin": "anmelden",
     "profile": "Mein Profil",
     "ads": "Meine Anzeigen",
     "login": "Login",
