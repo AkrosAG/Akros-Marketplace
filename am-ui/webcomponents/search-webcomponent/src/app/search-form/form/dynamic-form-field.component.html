@@ -6,7 +6,7 @@
       [id]="formField.key"
       type="text"
       [ngClass]="{error: !form.controls[formField.key].valid}"
-      class="bg-grey-lightest border-2 focus:border-orange p-2 shadow-inner w-full"
+      class="bg-grey-lightest focus:border-orange shadow-inner w-full"
       placeholder="{{
         'searchForm.categories.' + currentCategoryKey + '.' + formField.key
           | translate
@@ -17,7 +17,7 @@
       [formControlName]="formField.key"
       [id]="formField.key"
       type="text"
-      class="bg-grey-lightest border-2 focus:border-orange p-2 shadow-inner w-full"
+      class="bg-grey-lightest focus:border-orange shadow-inner w-full"
       placeholder="{{
         'searchForm.categories.' + currentCategoryKey + '.' + formField.key
           | translate
@@ -27,7 +27,7 @@
       *ngSwitchCase="3"
       [formControlName]="formField.key"
       [id]="formField.key"
-      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+      class="shadow-inner focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
       placeholder="--"
     ></textarea>
     <select
@@ -35,7 +35,7 @@
       *mpSwitchCases="[5, 6]"
       [multiple]="formField.type === 6"
       [formControlName]="formField.key"
-      class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm sm:text-sm"
+      class="block w-full border-gray-300 bg-white rounded-md shadow-inner sm:text-sm"
     >
       <option value="-1">
         {{
@@ -53,7 +53,7 @@
       [id]="formField.key"
       *mpSwitchCases="[13]"
       [formControlName]="formField.key"
-      class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm sm:text-sm"
+      class="block w-full border-gray-300 bg-white rounded-md shadow-inner sm:text-sm"
     >
       <option value="-1">
         {{
@@ -72,7 +72,7 @@
       type="checkbox"
     />
     <input
-      class="bg-grey-lightest border-2 focus:border-orange p-2 shadow-inner w-full"
+      class="bg-grey-lightest focus:border-orange shadow-inner w-full"
       placeholder="{{
         'searchForm.' + currentCategoryKey + '.' + formField.key | translate
       }}"
