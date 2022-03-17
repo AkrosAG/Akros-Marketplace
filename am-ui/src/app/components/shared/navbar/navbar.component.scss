@@ -123,7 +123,7 @@
 
   .nav {
     &.signin {
-      margin-left: 60px;
+      margin-left: 40px;
     }
   }
 
@@ -144,6 +144,12 @@
     margin: 15px 0;
     width: 175px;
     height: 60px;
+  }
+
+  .nav {
+    &.signin {
+      margin-left: 60px;
+    }
   }
 
   .header-menu {
