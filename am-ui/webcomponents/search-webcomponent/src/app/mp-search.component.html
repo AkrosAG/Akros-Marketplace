@@ -2,7 +2,7 @@
   <div
     class="accordion-item border-t-0 border-l-0 border-r-0 rounded-none border border-gray-200"
     *ngFor="
-      let category of categories;
+      let category of $any(categories$ | async);
       let indexOfelement = index
     "
   >
@@ -29,7 +29,7 @@
     <div
       [attr.id]="'flush-collapse-' + indexOfelement"
       class="accordion-collapse border-0 show"
-      [ngClass]="{collapse: categoryIsSelected}"
+      [ngClass]="{collapse: $any(categorySelected$ | async)}"
       [attr.aria-labelby]="'flush-heading-' + indexOfelement"
       data-bs-parent="#accordionParent"
     >
@@ -38,8 +38,10 @@
           <mp-search-form
             class="flex-1"
             [appLanguage]="appLanguage"
-            [selectedCategorySearchFields]="selectedCategorySearchFields"
-            [currentCategoryKey]="currentCategoryKey"
+            [selectedCategorySearchFields]="
+              $any(selectedCategorySearchFields$ | async)
+            "
+            [currentCategoryKey]="$any(currentCategoryKey$ | async)"
           ></mp-search-form>
         </div>
       </div>
