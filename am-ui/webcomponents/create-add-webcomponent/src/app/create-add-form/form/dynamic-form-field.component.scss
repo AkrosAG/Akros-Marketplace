@@ -1,0 +1,41 @@
+input[type="date"]::before {
+  content: attr(placeholder);
+  position: absolute;
+  color: #999;
+}
+
+input[type="date"] {
+  color: #fff;
+}
+
+input[type="date"]:focus,
+input[type="date"]:valid {
+  color: #666;
+}
+
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+  content: "";
+}
+
+option:first-child {
+  color: #ccc;
+}
+
+input,
+select {
+  background-color: #f6f6f6;
+  border-radius: 1.5rem;
+  padding: 0.25em 0.8em 0.2em;
+  height: 30px;
+  margin-bottom: 4px;
+}
+
+.error {
+  border-color: #d60929;
+  color: #ff0029;
+}
+
+textarea:focus, input:focus{
+  outline: none;
+}

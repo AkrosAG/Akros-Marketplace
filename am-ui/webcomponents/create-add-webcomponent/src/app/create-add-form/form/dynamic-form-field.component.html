@@ -1,0 +1,85 @@
+<div [formGroup]="form">
+  <div [ngSwitch]="formField.type">
+    <input
+      *mpSwitchCases="[1, 12]"
+      [formControlName]="formField.key"
+      [id]="formField.key"
+      type="text"
+      [ngClass]="{error: !form.controls[formField.key].valid}"
+      class="bg-grey-lightest focus:border-orange shadow-inner w-full"
+      placeholder="{{
+        'searchForm.categories.' + currentCategoryKey + '.' + formField.key
+          | translate
+      }}"
+    />
+    <input
+      *mpSwitchCases="[2, 4, 8, 9]"
+      [formControlName]="formField.key"
+      [id]="formField.key"
+      type="text"
+      class="bg-grey-lightest focus:border-orange shadow-inner w-full"
+      placeholder="{{
+        'searchForm.categories.' + currentCategoryKey + '.' + formField.key
+          | translate
+      }}"
+    />
+    <textarea
+      *ngSwitchCase="3"
+      [formControlName]="formField.key"
+      [id]="formField.key"
+      class="shadow-inner focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+      placeholder="--"
+    ></textarea>
+    <select
+      [id]="formField.key"
+      *mpSwitchCases="[5, 6]"
+      [multiple]="formField.type === 6"
+      [formControlName]="formField.key"
+      class="block w-full border-gray-300 bg-white rounded-md shadow-inner sm:text-sm"
+    >
+      <option value="-1">
+        {{
+          'searchForm.categories.' + currentCategoryKey + '.type' | translate
+        }}
+      </option>
+      <option
+        *ngFor="let opt of formField.options"
+        [value]="opt.field_option_id"
+      >
+        {{ opt.key }}
+      </option>
+    </select>
+    <select
+      [id]="formField.key"
+      *mpSwitchCases="[13]"
+      [formControlName]="formField.key"
+      class="block w-full border-gray-300 bg-white rounded-md shadow-inner sm:text-sm"
+    >
+      <option value="-1">
+        {{
+          'searchForm.categories.' + currentCategoryKey + '.' + formField.key
+            | translate
+        }}
+      </option>
+      <option *ngFor="let opt of selectCounterValues" [value]="opt">
+        {{ opt }}
+      </option>
+    </select>
+    <input
+      *ngSwitchCase="7"
+      [formControlName]="formField.key"
+      [id]="formField.key"
+      type="checkbox"
+    />
+    <input
+      class="bg-grey-lightest focus:border-orange shadow-inner w-full"
+      placeholder="{{
+        'searchForm.' + currentCategoryKey + '.' + formField.key | translate
+      }}"
+      *ngSwitchCase="11"
+      [formControlName]="formField.key"
+      [id]="formField.key"
+      type="date"
+    />
+  </div>
+</div>

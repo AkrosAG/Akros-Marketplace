@@ -1,0 +1,16 @@
+{
+  "/categories": {
+    "target": "https://localhost:8443",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  },
+  "/topics": {
+    "target": "https://localhost:8443",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}
