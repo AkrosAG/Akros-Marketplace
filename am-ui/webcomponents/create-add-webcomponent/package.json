@@ -1,0 +1,29 @@
+{
+  "name": "create-add-webcomponent",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "serve": "vite dev",
+    "build": "vite build",
+    "dev": "vite",
+    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\"",
+    "package": "node package-script.js",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@kazupon/vue-i18n-loader": "^0.5.0",
+    "@vue/cli-service": "^5.0.3",
+    "axios": "^0.26.1",
+    "concat": "^1.0.3",
+    "vue": "^3.2.25",
+    "vue-axios": "^3.4.1",
+    "vue-i18n": "^9.1.0"
+  },
+  "devDependencies": {
+    "@intlify/vue-i18n-loader": "^3.0.0",
+    "@vitejs/plugin-vue": "^2.2.0",
+    "node-sass": "^7.0.1",
+    "sass-loader": "^12.6.0",
+    "vite": "^2.8.0"
+  }
+}

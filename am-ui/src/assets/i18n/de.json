@@ -29,5 +29,10 @@
         "share": "Mitfahrgelegenheiten"
       }
     }
+  },
+  "topics": {
+    "create": {
+      "title": "Veröffentlichen Sie Ihre Anzeige kostenlos"
+    }
   }
 }

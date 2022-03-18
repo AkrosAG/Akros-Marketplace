@@ -29,5 +29,10 @@
         "share": "Car sharing"
       }
     }
+  },
+  "topics": {
+    "create": {
+      "title": "Post Your Advertisement for Free"
+    }
   }
 }
