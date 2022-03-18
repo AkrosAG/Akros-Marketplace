@@ -22,7 +22,7 @@ export class SearchWebcomponentEffects {
     this.actions$.pipe(
       ofType(searchWebcomponentActions.loadCategories),
       switchMap(() =>
-        this.categoriesService.categoriesGet().pipe(
+        this.categoriesService.categoriesCreateGet({create: false}).pipe(
           map(categories => {
             return searchWebcomponentActions.loadCategoriesSuccess({
               categories: categories.categories,

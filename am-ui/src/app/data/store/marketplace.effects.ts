@@ -22,7 +22,7 @@ export class MarketplaceEffects {
     this.actions$.pipe(
       ofType(marketplaceActions.loadCategories),
       switchMap(() =>
-        this.categoriesService.categoriesGet().pipe(
+        this.categoriesService.categoriesCreateGet({create: false}).pipe(
           map(categories => {
             return marketplaceActions.loadCategoriesSuccess({
               categories: categories.categories,
