@@ -1,3 +1,5 @@
+@import "./../../../assets/styles/colors";
+
 /*                      Intro
 ****************************************************/
 
@@ -18,7 +20,7 @@
   font-weight: 500;
   color: #f4efe9;
   color: rgb(255 255 255 / 80%);
-  background-color: #938c83;
+  background-color: $greige;
   border-radius: 1em;
   cursor: pointer;
   z-index: 1;
@@ -27,7 +29,7 @@
 .accordion-btn:hover,
 .accordion-btn.active {
   color: #fff;
-  background-color: #635c53;
+  background-color: $taupe;
 }
 
 .accordion-btn.active {
@@ -48,7 +50,7 @@
 }
 
 .active .btn-arrow {
-  fill: #fff;
+  fill: $white;
   transform: rotate(90deg);
 }
 
@@ -58,7 +60,7 @@
   padding: 12px;
   border-bottom-right-radius: 1em;
   border-bottom-left-radius: 1em;
-  background-color: #ece6df;
+  background-color: $sandy;
 }
 
 .accordion-btn.active + .accordion-form-wrap {
