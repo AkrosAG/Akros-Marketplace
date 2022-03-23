@@ -29,5 +29,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   showResults(event: Event) {
     console.log((event as CustomEvent).detail);
+    this.router.navigate(['search-results']);
   }
 }
