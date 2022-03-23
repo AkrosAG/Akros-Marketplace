@@ -17,7 +17,7 @@ export class SearchFormComponent implements OnInit {
   public errorMessages: ValidationMessages<any>;
   public payLoad: TopicSearchRequestDto = {
     category_id: 0,
-    request_or_offer: false,
+    request_or_offer: '',
   };
 
   @Input() selectedCategorySearchFields: FormFieldBase<string>[] | null = [];
