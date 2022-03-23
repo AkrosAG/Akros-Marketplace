@@ -27,4 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+  showResults(event: Event) {
+    console.log((event as CustomEvent).detail);
+  }
 }

@@ -42,6 +42,8 @@
               $any(selectedCategorySearchFields$ | async)
             "
             [currentCategoryKey]="$any(currentCategoryKey$ | async)"
+            [currentCategoryId]="$any(currentCategoryId$ | async)"
+            (submitEvent)="relayToContainer($event)"
           ></mp-search-form>
         </div>
       </div>

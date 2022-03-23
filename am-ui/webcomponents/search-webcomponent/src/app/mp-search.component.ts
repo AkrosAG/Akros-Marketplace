@@ -12,11 +12,13 @@ import {
   Input,
   SimpleChanges,
   OnChanges,
+  EventEmitter,
 } from '@angular/core';
 
 import * as storeSelector from './data/store/search-webcomponent.selector';
 import * as storeActions from './data/store/search-webcomponent.actions';
 import {CategoryDto} from './api/models';
+import {Output} from '@angular/core';
 
 @Component({
   selector: 'mp-search',
@@ -29,15 +31,17 @@ export class MpSearchComponent implements OnInit, OnChanges {
   public selectedCategorySearchFields$: Observable<FormFieldBase<string>[]>;
   public categorySelected$ = new Observable<boolean>();
   public currentCategoryKey$: Observable<string>;
+  public currentCategoryId$: Observable<number>;
   public form: FormGroup;
   public categorySelected: boolean[] = [];
   public currentSelected: number = 0;
+  private currentCategoryId = 1;
 
   title = 'search-webcomponent';
   public appLoaded: boolean = true;
   public appLanguage: string;
-  private currentCategoryId = 1;
   @Input() language = 'de';
+  @Output() submitToContainerEvent = new EventEmitter<any>();
 
   constructor(
     private store: Store<SearchWebcomponentState>,
@@ -65,6 +69,9 @@ export class MpSearchComponent implements OnInit, OnChanges {
     this.currentCategoryKey$ = this.store.select(
       storeSelector.getCurrentCategoryKey
     );
+    this.currentCategoryId$ = this.store.select(
+      storeSelector.getCurrentCategoryId
+    );
     this.store.dispatch(storeActions.loadCategories());
   }
 
@@ -82,8 +89,13 @@ export class MpSearchComponent implements OnInit, OnChanges {
         storeActions.setCategorySearchFields({
           selectedCategorySearchFields: formFields,
           currentCategoryKey: category.key,
+          currentCategoryId: category.category_id,
         })
       );
     }
+  }
+
+  relayToContainer(event: Event) {
+    this.submitToContainerEvent.emit(event);
   }
 }

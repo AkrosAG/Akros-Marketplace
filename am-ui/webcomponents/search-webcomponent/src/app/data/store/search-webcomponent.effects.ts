@@ -27,6 +27,7 @@ export class SearchWebcomponentEffects {
             return searchWebcomponentActions.loadCategoriesSuccess({
               categories: categories.categories,
               currentCategoryKey: categories.categories[0].key,
+              currentCategoryId: categories.categories[0].category_id,
               searchFields:
                 this.formFieldsBuilderService.searchFieldsToFormFields(
                   categories.categories[0].fields

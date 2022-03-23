@@ -63,5 +63,5 @@ public class Topic {
   private List<TopicValue> topicValues;
 
   @Column(name = "REQUEST_OR_OFFER")
-  private Boolean           requestOrOffer;
+  private String           requestOrOffer;
 }

@@ -11,6 +11,7 @@ export class FormFieldsBuilderService {
     const formFields: FormFieldBase<string>[] = [];
     searchFields.forEach(searchField => {
       const field = new FormFieldBase<string>({
+        id: searchField.field_id,
         key: searchField.key,
         required: false,
         type: searchField.field_type_definition_id,

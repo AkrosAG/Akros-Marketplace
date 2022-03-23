@@ -3,6 +3,10 @@
     "target": "https://localhost:8443",
     "secure": false
   },
+  "/topics/searches": {
+    "target": "https://localhost:8443",
+    "secure": false
+  },
   "/api/auth": {
     "target": "https://localhost:8080",
     "secure": false
