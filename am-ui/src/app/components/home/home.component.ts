@@ -28,7 +28,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
   showResults(event: Event) {
-    console.log((event as CustomEvent).detail);
-    this.router.navigate(['search-results']);
+    const topics = (event as CustomEvent).detail.topics;
+    const navigationExtras = {
+      state: {
+        topics: topics,
+      },
+    };
+    this.router.navigate(['search-results'], navigationExtras);
   }
 }
