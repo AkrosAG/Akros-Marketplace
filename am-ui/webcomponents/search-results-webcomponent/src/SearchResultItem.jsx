@@ -1,1 +1,7 @@
-export default class List extends React.Component {}
+function SearchResultListItem(props) {
+  const {t, i18n} = useTranslation();
+
+  return <div></div>;
+}
+
+export default SearchResultListItem;
