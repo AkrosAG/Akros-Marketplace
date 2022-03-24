@@ -1,6 +1,7 @@
 import './App.css';
 import SearchResultList from './SearchResultList';
 import ReactDOM from 'react-dom';
+import './i18n';
 
 class SearchResultsWebComponent extends HTMLElement {
   mountPoint;
