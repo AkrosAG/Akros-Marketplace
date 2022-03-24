@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     const navigationExtras = {
       state: {
         topics: topics,
+        language: this.appLanguage,
       },
     };
     this.router.navigate(['search-results'], navigationExtras);

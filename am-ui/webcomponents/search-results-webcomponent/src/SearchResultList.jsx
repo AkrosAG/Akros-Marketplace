@@ -5,6 +5,10 @@ export default class SearchResultList extends React.Component {
     super(props);
   }
   render() {
-    return <div>{this.props.results}</div>;
+    if (this.props.results.length === 0) {
+      return <h1>No results found!</h1>;
+    } else {
+      return <div>{this.props.results}</div>;
+    }
   }
 }
