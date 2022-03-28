@@ -1,51 +1,44 @@
 <script setup>
-import ApiClient from '../api/src/ApiClient'
-import CategoriesApi from '../api/src/api/CategoriesApi'
-import {onMounted, ref, computed, h} from 'vue'
-import CreateAdFields from './CreateAdFields.vue'
+import ApiClient from '../api/src/ApiClient';
+import CategoriesApi from '../api/src/api/CategoriesApi';
+import {onMounted, ref, computed, h} from 'vue';
+import CreateAdFields from './CreateAdFields.vue';
 
-const apiClient = new ApiClient('/')
-const categoriesApi = new CategoriesApi(apiClient)
-const categories = ref([])
-const selectedCategoryKey = ref('')
-const requestOrOffer = ref('offer')
-const fieldsToShow = ref([])
-const showAdFields = ref(false)
+const apiClient = new ApiClient('/');
+const categoriesApi = new CategoriesApi(apiClient);
+const categories = ref([]);
+const selectedCategoryKey = ref('');
+const requestOrOffer = ref('offer');
+const fieldsToShow = ref([]);
+const showAdFields = ref(false);
 
 onMounted(() => {
-  categoriesApi.categoriesCreateGet(true, getCategories)
-})
+  categoriesApi.categoriesCreateGet(true, getCategories);
+});
 
-function getCategories (error, data, response) {
+function getCategories(error, data, response) {
   // Filter fields that are not for creation'
   data.categories.forEach(category => {
-    category.fields = category.fields.filter(field => field.creation)
-  })
-  categories.value = data.categories
-  updateFields()
+    category.fields = category.fields.filter(field => field.creation);
+  });
+  categories.value = data.categories;
+  updateFields();
 }
-function updateFields () {
+function updateFields() {
   const selectedCategory = categories.value.find(
     category => category.key === selectedCategoryKey.value
-  )
-
+  );
   if (selectedCategory && selectedCategory.fields.length > 0) {
-    fieldsToShow.value = selectedCategory.fields
-    fieldsToShow.value.find(field => {
-      if (field.key === 'type') {
-        showAdFields.value = true
-      } else {
-        showAdFields.value = false
-      }
-    })
+    fieldsToShow.value = selectedCategory.fields;
+    showAdFields.value = true;
   } else {
-    showAdFields.value = false
+    showAdFields.value = false;
   }
 }
 const element = computed(e => {
-  console.log(e)
-  return 'ul'
-})
+  console.log(e);
+  return 'ul';
+});
 </script>
 
 <template>
@@ -71,8 +64,9 @@ const element = computed(e => {
             v-for="category in categories"
             :key="category.category_id"
             :value="category.key"
-            >{{ category.key }}</option
           >
+            {{ category.key }}
+          </option>
         </select>
       </p>
       <p>

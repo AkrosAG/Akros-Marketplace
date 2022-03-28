@@ -29,7 +29,7 @@ export default {
                 {field.field_options.map((field) => {
                   return <option value={field.key}>{field.key}</option>
                 })}
-            </select> 
+            </select>
             </p>
             fieldsToRender.push(element)
             break;
