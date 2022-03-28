@@ -8,7 +8,8 @@
     "preview": "vite preview",
     "prepackage": "npm run build",
     "package": "node package-script.js",
-    "export": "npm run build && npm run package"
+    "export": "npm run build && npm run package",
+    "test": "jest"
   },
   "dependencies": {
     "concat": "^1.0.3",
@@ -18,7 +19,11 @@
     "react-i18next": "^11.16.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
     "@vitejs/plugin-react": "^1.0.7",
+    "babel-jest": "^27.5.1",
+    "jest": "^27.5.1",
     "vite": "^2.8.0"
   }
 }

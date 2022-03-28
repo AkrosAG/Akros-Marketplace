@@ -49,7 +49,7 @@ class SearchResultsWebComponent extends HTMLElement {
 customElements.define('search-results-component', SearchResultsWebComponent);
 
 function App() {
-  return <search-results-component></search-results-component>;
+  return <SearchResultList results="" language="de"></SearchResultList>;
 }
 
 export default App;
