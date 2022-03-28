@@ -21,11 +21,11 @@ public class CategoryController implements CategoriesApi {
     private CategoryService categoryService;
 
     @Override
-    public ResponseEntity<CategoryResponseDTO> categoriesGet() {
+    public ResponseEntity<CategoryResponseDTO> categoriesCreateGet(Boolean create) {
         try {
             log.debug("CategoryController.categoriesGet() called");
 
-            List<CategoryDTO> categoryDTOList = categoryService.listCategories();
+            List<CategoryDTO> categoryDTOList = categoryService.listCategories(create);
             CategoryResponseDTO response = new CategoryResponseDTO();
             response.setCategories(categoryDTOList);
             return ResponseEntity.status(HttpStatus.OK).body(response);

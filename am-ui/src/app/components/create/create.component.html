@@ -1,22 +1,12 @@
 <div id="intro">
   <div class="container intro-block">
-    <h1 class="text-white">{{'topics.create.title' | translate}}</h1>
+    <h1 class="text-white">{{ 'topics.create.title' | translate }}</h1>
   </div>
 </div>
-  <create-add-webcomponent></create-add-webcomponent>
+<create-ad-webcomponent></create-ad-webcomponent>
 
-<!--
-<mp-form-field
-[formField]="formField"
-[form]="form"
-[errorMessages]="errorMessages[formField.key]"
-[appLanguage]="appLanguage"
-[currentCategoryKey]="currentCategoryKey"
-
-></mp-form-field> -->
-<!--
-<div class="container-fluid akros-beige">
-  <div class="container auto-flex content-block light-beige">
+<!-- <div class="container-fluid colored">
+  <div class="container auto-flex content-block">
     <div class="form-wrap">
       <form
         method="post"
@@ -28,21 +18,13 @@
       >
         <p>
           <select
-            [id]="'cat'"
-            [formControlName]="'cat'"
+            name="ad-category"
+            id="ad-category"
             class="simple-field full-width uppercase"
           >
-            <option value="-1">
-              {{ 'categories.addCategory' | translate }}
-            </option>
-            <option
-              *ngFor="let category of $any(categories$ | async)"
-              [value]="category.category_id"
-            >
-              {{
-                'categories.' + category.key + '.title' | translate
-              }}
-            </option>
+            <option selected>Ad Category</option>
+            <option value="accommodation">Аccommodation</option>
+            <option value="shared-trip">Shared Trip</option>
           </select>
         </p>
         <p>

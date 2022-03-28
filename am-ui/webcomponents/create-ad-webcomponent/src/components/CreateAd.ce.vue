@@ -13,7 +13,7 @@ const fieldsToShow = ref([])
 const showAdFields = ref(false)
 
 onMounted(() => {
-  categoriesApi.categoriesGet(getCategories)
+  categoriesApi.categoriesCreateGet(true, getCategories)
 })
 
 function getCategories (error, data, response) {
