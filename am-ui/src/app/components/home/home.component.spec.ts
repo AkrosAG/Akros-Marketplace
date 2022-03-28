@@ -57,5 +57,64 @@ describe('HomeComponent', () => {
         expect(url).toStrictEqual(['create']);
       }
     ));
+
+    it('should attempt call router with search-results value', inject(
+      [Router],
+      (router: Router) => {
+        const spy = jest.spyOn(router, 'navigate');
+        const event: CustomEvent = {
+          detail: {
+            topics: [],
+          },
+          initCustomEvent: function (
+            type: string,
+            bubbles?: boolean,
+            cancelable?: boolean,
+            detail?: any
+          ): void {
+            throw new Error('Function not implemented.');
+          },
+          bubbles: false,
+          cancelBubble: false,
+          cancelable: false,
+          composed: false,
+          currentTarget: null,
+          defaultPrevented: false,
+          eventPhase: 0,
+          isTrusted: false,
+          returnValue: false,
+          srcElement: null,
+          target: null,
+          timeStamp: 0,
+          type: '',
+          composedPath: function (): EventTarget[] {
+            throw new Error('Function not implemented.');
+          },
+          initEvent: function (
+            type: string,
+            bubbles?: boolean,
+            cancelable?: boolean
+          ): void {
+            throw new Error('Function not implemented.');
+          },
+          preventDefault: function (): void {
+            throw new Error('Function not implemented.');
+          },
+          stopImmediatePropagation: function (): void {
+            throw new Error('Function not implemented.');
+          },
+          stopPropagation: function (): void {
+            throw new Error('Function not implemented.');
+          },
+          AT_TARGET: 0,
+          BUBBLING_PHASE: 0,
+          CAPTURING_PHASE: 0,
+          NONE: 0,
+        };
+        component.showResults(event);
+        const url = spy.mock.calls[0][0];
+        expect(url).toStrictEqual(['search-results']);
+      }
+    ));
   });
 });

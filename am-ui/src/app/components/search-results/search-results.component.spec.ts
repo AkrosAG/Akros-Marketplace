@@ -28,10 +28,17 @@ describe('SearchResultsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SearchResultsComponent);
     component = fixture.componentInstance;
+    window.history.pushState({results: [], language: 'de'}, '', '');
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('subscription should be closed after calling OnDestroy', () => {
+    expect(component.subscription.closed).toBeFalsy();
+    component.ngOnDestroy();
+    expect(component.subscription.closed).toBeTruthy();
   });
 });
