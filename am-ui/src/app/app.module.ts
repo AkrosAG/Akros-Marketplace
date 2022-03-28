@@ -45,7 +45,7 @@ import {RestHelperService} from './utils/restHelperService';
 import {UserService} from './data/services/login/user.service';
 
 import {environment} from 'src/environments/environment';
-import { SearchResultsComponent } from './components/search-results/search-results.component';
+import {SearchResultsComponent} from './components/search-results/search-results.component';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
