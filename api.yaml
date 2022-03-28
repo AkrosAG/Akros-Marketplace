@@ -11,26 +11,6 @@ info:
     email: support@example.com
 
 paths:
-  /list-field-type-definitions:
-    get:
-      tags:
-        - FieldTypeDefinitions
-      summary: List the field type definitions
-      description: Helper function to see different possible field types that frontend must handle
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FieldTypeDefinitionResponseDTO"
-        default:
-          description: Unexpected error
-          content:
-            "application/problem+json":
-              schema:
-                $ref: "#/components/schemas/Problem"
-
   /categories/{create}:
     get:
       tags:
@@ -166,25 +146,6 @@ components:
       scheme: bearer
 
   schemas:
-    FieldTypeDefinitionResponseDTO:
-      type: object
-      properties:
-        field_types:
-          type: array
-          items:
-            $ref: "#/components/schemas/FieldTypeDefinitionDTO"
-
-    FieldTypeDefinitionDTO:
-      type: object
-      required:
-        - field_type_definition_id
-      properties:
-        field_type_definition_id:
-          type: integer
-          format: int32
-        description:
-          type: string
-
     CategoryResponseDTO:
       type: object
       required:
