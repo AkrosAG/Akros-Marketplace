@@ -1,124 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
-
-/*                              RESET
-***********************************************************************/
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-size: 100%;
-  vertical-align: baseline;
-  border: 0;
-  -webkit-tap-highlight-color: transparent;
-}
-
-ol,
-ul {
-  list-style: none;
-}
-
-img,
-iframe {
-  border: none;
-}
-
-blockquote,
-q {
-  quotes: none;
-}
-
-blockquote::before,
-blockquote::after,
-q::before,
-q::after {
-  content: "";
-  content: none;
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
+@import "./assets/styles/reset";
+@import "./assets/styles/colors";
 
 /*                         GENERAL STYLING
 ***********************************************************************/
@@ -132,8 +14,8 @@ body {
   min-height: 100%;
   overflow-x: hidden;
   font: 400 11pt/1.5 Inter, Helvetica, sans-serif;
-  color: #464646;
-  background-color: #f6f6f6;
+  color: $dark-grey;
+  background-color: $matte-white;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -142,41 +24,41 @@ h1 {
   margin-bottom: 0.33em;
   font: 500 2em/1.2 Inter, Helvetica, sans-serif;
   text-align: center;
-  color: #232323;
+  color: $black;
 }
 
 h2 {
   margin-bottom: 0.33em;
   font: 500 1.8em/1.2 Inter, Helvetica, sans-serif;
   text-align: center;
-  color: #232323;
+  color: $black;
 }
 
 h3 {
   margin-bottom: 0.33em;
   font: 500 1.6em/1.2 Inter, Helvetica, sans-serif;
   text-align: center;
-  color: #232323;
+  color: $black;
 }
 
 h4 {
   margin-bottom: 0.33em;
   font: 500 1.4em/1.2 Inter, Helvetica, sans-serif;
   text-align: center;
-  color: #232323;
+  color: $black;
 }
 
 h5 {
   margin-bottom: 0.33em;
   font: 500 1.2em/1.2 Inter, Helvetica, sans-serif;
   text-align: center;
-  color: #232323;
+  color: $black;
 }
 
 h6 {
   margin-bottom: 0.25em;
   font: 500 1.05em/1.2 Inter, Helvetica, sans-serif;
-  color: #232323;
+  color: $black;
 }
 
 p {
@@ -186,12 +68,12 @@ p {
 a {
   font-weight: 500;
   text-decoration: none;
-  color: #9c132c;
+  color: $dark-red;
   transition: all 0.3s ease-in 0s;
 }
 
 a:hover {
-  color: #d60929;
+  color: $brand-red;
 }
 
 img {
@@ -211,11 +93,11 @@ textarea {
   box-sizing: border-box;
   padding: 0.25em 0.8em 0.2em;
   font: 400 1em/1.4 Inter, Helvetica, sans-serif;
-  color: #5c5c5c;
+  color: $graphite;
   border: 1px solid transparent;
   border-radius: 1.1em;
-  background-color: #f6f6f6;
-  box-shadow: 0 1px 0 0 #fff;
+  background-color: $matte-white;
+  box-shadow: 0 1px 0 0 $white;
   appearance: none;
 }
 
@@ -227,7 +109,7 @@ input[type="submit"] {
 input:focus,
 select:focus,
 textarea:focus {
-  background-color: #fff;
+  background-color: $white;
   outline: none;
 }
 
@@ -235,13 +117,13 @@ textarea:focus {
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  box-shadow: 0 0 4px 40px #f6f6f6 inset, 0 1px 0 0 #fff !important;
+  box-shadow: 0 0 4px 40px $matte-white inset, 0 1px 0 0 #fff !important;
   background-clip: text;
-  border: 1px solid #f6f6f6;
+  border: 1px solid $matte-white;
 }
 
 input:-webkit-autofill {
-  -webkit-text-fill-color: #5c5c5c !important;
+  -webkit-text-fill-color: $graphite !important;
 } */
 
 input[type="radio"],
@@ -254,38 +136,24 @@ input[type="checkbox"] {
 }
 
 ::selection {
-  background-color: #938c83;
-  color: #fff;
+  background-color: $greige;
+  color: $white;
 }
 
 /* ::-moz-selection {
-  background-color: #938c83;
-  color: #fff;
-} */
+  background-color: $greige;
+  color: $white;
+}
 
-/* .container {
+.container {
+  display: grid;
+  grid-template-columns: 1fr min(80%, 80rem) 1fr;
+}
+
+.mp-navbar {
   display: grid;
   grid-template-columns: 1fr min(80%, 80rem) 1fr;
 } */
-
-// mp-navbar {
-//   display: grid;
-//   grid-template-columns: 1fr min(80%, 80rem) 1fr;
-// }
-
-body::-webkit-scrollbar {
-  width: 11px;
-}
-
-body::-webkit-scrollbar-track {
-  background: #ebeaea;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: #cfcccc;
-  border-radius: 6px;
-  border: 3px solid #c2c2c2;
-}
 
 /*                             STRUCTURE
 ***********************************************************************/
@@ -298,12 +166,12 @@ body::-webkit-scrollbar-thumb {
 }
 
 #header {
-  background-color: #fff;
+  background-color: $white;
 }
 
 #intro {
   background:
-    #938c83 url("./assets/images/akros-bg.jpg") no-repeat center /
+    $greige url("./assets/images/akros-bg.jpg") no-repeat center /
     cover fixed;
 }
 
@@ -316,17 +184,33 @@ body::-webkit-scrollbar-thumb {
   bottom: 0;
   width: 100%;
   height: 60px;
-  color: #fff;
-  background-color: #938c83;
-}
-
-.container-fluid {
-  width: auto;
+  color: $white;
+  background-color: $greige;
 }
 
 .container {
   max-width: 1600px;
   margin: 0 auto;
+}
+
+.container-fluid {
+  width: auto;
+
+  &.simple {
+    background-color: $matte-white;
+
+    & .container {
+      background-color: $white;
+    }
+  }
+
+  &.colored {
+    background-color: $akros-beige;
+
+    & .container {
+      background-color: $sandy;
+    }
+  }
 }
 
 .branding-block {
@@ -389,40 +273,64 @@ body::-webkit-scrollbar-thumb {
   text-overflow: ellipsis;
 }
 
-.white {
-  background-color: #fff;
+.dark-red {
+  background-color: $dark-red;
 }
 
-.matte-white {
-  background-color: #f6f6f6;
+.brand-red {
+  background-color: $brand-red;
 }
 
-.black {
-  background-color: #232323;
+.red {
+  background-color: $red;
 }
 
-.grey {
-  background-color: #868686;
+.taupe {
+  background-color: $taupe;
 }
 
-.light-grey {
-  background-color: #b0b0b0;
+.greige {
+  background-color: $greige;
 }
 
 .akros-beige {
-  background-color: #c3bcb3;
+  background-color: $akros-beige;
 }
 
-.light-beige {
-  background-color: #ece6df;
+.sandy {
+  background-color: $sandy;
 }
 
-.akros-red {
-  background-color: #d60929;
+.black {
+  background-color: $black;
 }
 
-.dark-red {
-  background-color: #9c132c;
+.dark-grey {
+  background-color: $dark-grey;
+}
+
+.graphite {
+  background-color: $graphite;
+}
+
+.grey {
+  background-color: $grey;
+}
+
+.silver {
+  background-color: $silver;
+}
+
+.light-grey {
+  background-color: $light-grey;
+}
+
+.matte-white {
+  background-color: $matte-white;
+}
+
+.white {
+  background-color: $white;
 }
 
 .text-center {
@@ -442,11 +350,11 @@ body::-webkit-scrollbar-thumb {
 }
 
 .text-white {
-  color: #fff;
+  color: $white;
 }
 
 .text-dark {
-  color: #232323;
+  color: $black;
 }
 
 .space-after-1 {
@@ -468,14 +376,14 @@ body::-webkit-scrollbar-thumb {
   text-align: center;
   color: #e9d3d6;
   color: rgb(255 255 255 / 80%);
-  background-color: #9c132c;
+  background-color: $dark-red;
   border-radius: 1.2em;
   cursor: pointer;
 }
 
 .btn:hover {
-  color: #fff;
-  background-color: #d60929;
+  color: $white;
+  background-color: $brand-red;
 }
 
 .icon-btn {
@@ -490,7 +398,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .btn:hover .icon-btn {
-  fill: #fff;
+  fill: $white;
 }
 
 .big-btn {
@@ -533,24 +441,6 @@ body::-webkit-scrollbar-thumb {
 
   .intro-block h1 {
     width: auto;
-  }
-
-  #logo {
-    margin: 11px 0;
-    width: 140px;
-    height: 48px;
-  }
-
-  .btn-signin-wrap {
-    margin-left: 60px;
-  }
-
-  .signin-label {
-    display: inline;
-  }
-
-  .header-menu {
-    top: 38px;
   }
 }
 
@@ -605,20 +495,6 @@ body::-webkit-scrollbar-thumb {
   .intro-block,
   .content-block {
     padding: 40px;
-  }
-
-  #logo {
-    margin: 15px 0;
-    width: 175px;
-    height: 60px;
-  }
-
-  .header-menu {
-    top: 42px;
-  }
-
-  .header-menu a {
-    font-size: 0.9em;
   }
 
   #accordion-block {

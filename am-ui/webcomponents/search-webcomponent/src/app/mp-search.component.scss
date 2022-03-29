@@ -45,6 +45,8 @@
     color: #fff;
 
     &:not(.collapsed).selected {
+      box-shadow: none;
+
       &:hover {
         background-color: rgb(2 59 124 / 15%);
       }
@@ -72,4 +74,8 @@
   .flex-1 {
     flex: 1;
   }
+}
+
+*, ::before, ::after {
+  border-style: none;
 }

@@ -26,11 +26,14 @@ input,
 select {
   background-color: #f6f6f6;
   border-radius: 1.5rem;
+  padding: 0.25em 0.8em 0.2em;
+  height: 30px;
+  margin-bottom: 4px;
 }
 
 .error {
   border-color: #d60929;
-  color: red;
+  color: #ff0029;
 }
 
 textarea:focus, input:focus{

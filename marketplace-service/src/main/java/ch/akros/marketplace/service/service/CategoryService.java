@@ -26,13 +26,18 @@ public class CategoryService {
   @Autowired
   private FieldRepository fieldRepository;
 
-  public List<CategoryDTO> listCategories() {
+  public List<CategoryDTO> listCategories(Boolean create) {
     List<CategoryDTO> list = categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "key"))
                                .stream()
                                .map(this::toCategoryDTO)
                                .collect(Collectors.toList());
     for (CategoryDTO element : list) {
-      List<FieldResponseDTO> categoryFields = listCategorySearchFieldTypes(element.getCategoryId());
+      List<FieldResponseDTO> categoryFields = null;
+      if (create) {
+        categoryFields = listCategoryCreateFieldTypes(element.getCategoryId());
+      } else {
+        categoryFields = listCategorySearchFieldTypes(element.getCategoryId());
+      }
       for (FieldResponseDTO field : categoryFields) {
         System.out.println(field.getFieldId());
         List<FieldOptionResponseDTO> options = listFieldOptions(field.getFieldId());
@@ -59,12 +64,19 @@ public class CategoryService {
     return result;
   }
 
-    public List<FieldResponseDTO> listCategorySearchFieldTypes(Long categoryId) {
-      return fieldRepository.listCategorySearchFields(categoryId)
-                                .stream()
-                                .map(this::toFieldResponseDTO)
-                                .collect(Collectors.toList());
-    }
+  public List<FieldResponseDTO> listCategorySearchFieldTypes(Long categoryId) {
+    return fieldRepository.listCategorySearchFields(categoryId)
+            .stream()
+            .map(this::toFieldResponseDTO)
+            .collect(Collectors.toList());
+  }
+
+  public List<FieldResponseDTO> listCategoryCreateFieldTypes(Long categoryId) {
+    return fieldRepository.listCategoryCreateFields(categoryId)
+            .stream()
+            .map(this::toFieldResponseDTO)
+            .collect(Collectors.toList());
+  }
 
 
     private FieldResponseDTO toFieldResponseDTO(Field field) {
