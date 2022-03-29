@@ -17,8 +17,8 @@ function SearchResultList(props) {
   }
 }
 SearchResultList.propTypes = {
-  language: string,
-  results: [],
+  language: String,
+  results: Array,
 };
 
 export default SearchResultList;

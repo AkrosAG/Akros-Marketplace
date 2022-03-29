@@ -37,7 +37,6 @@ class SearchResultsWebComponent extends HTMLElement {
   }
   renderComponent() {
     if (this.results !== '' && this.language !== '') {
-      const React = require('react');
       const searchResultList = (
         <SearchResultList
           results={this.results}
@@ -52,7 +51,6 @@ class SearchResultsWebComponent extends HTMLElement {
 customElements.define('search-results-component', SearchResultsWebComponent);
 
 function App() {
-  const React = require('react');
   return <SearchResultList results="" language="de"></SearchResultList>;
 }
 
