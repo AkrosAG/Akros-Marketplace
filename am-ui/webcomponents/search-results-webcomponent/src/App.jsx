@@ -2,9 +2,12 @@ import './App.css';
 import SearchResultList from './SearchResultList';
 import ReactDOM from 'react-dom';
 import './i18n';
-
+/**
+ * This class wraps the React App into a Webcomponent
+ */
 class SearchResultsWebComponent extends HTMLElement {
   mountPoint;
+
   constructor() {
     super();
     this._results = [];
@@ -31,10 +34,10 @@ class SearchResultsWebComponent extends HTMLElement {
     // Create a mount element
     this.mountPoint = document.createElement('div');
     root.appendChild(this.mountPoint);
-    const style = document.createElement('style');
   }
   renderComponent() {
     if (this.results !== '' && this.language !== '') {
+      const React = require('react');
       const searchResultList = (
         <SearchResultList
           results={this.results}
@@ -49,6 +52,7 @@ class SearchResultsWebComponent extends HTMLElement {
 customElements.define('search-results-component', SearchResultsWebComponent);
 
 function App() {
+  const React = require('react');
   return <SearchResultList results="" language="de"></SearchResultList>;
 }
 

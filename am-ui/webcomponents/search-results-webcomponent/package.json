@@ -9,6 +9,8 @@
     "prepackage": "npm run build",
     "package": "node package-script.js",
     "export": "npm run build && npm run package",
+    "lint": "eslint . --ext .jsx",
+    "fix": "eslint . --ext .jsx --fix",
     "test": "jest"
   },
   "dependencies": {
@@ -23,6 +25,9 @@
     "@babel/preset-react": "^7.16.7",
     "@vitejs/plugin-react": "^1.0.7",
     "babel-jest": "^27.5.1",
+    "eslint": "^8.12.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.29.4",
     "jest": "^27.5.1",
     "vite": "^2.8.0"
   }

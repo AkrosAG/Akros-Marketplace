@@ -1,3 +1,4 @@
+/* eslint-disable */
 function SearchResultListItem(props) {
   const {t, i18n} = useTranslation();
 
