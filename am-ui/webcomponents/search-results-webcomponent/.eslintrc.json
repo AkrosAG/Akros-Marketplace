@@ -14,5 +14,10 @@
   "plugins": ["react"],
   "rules": {
     "require-jsdoc": 0
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
