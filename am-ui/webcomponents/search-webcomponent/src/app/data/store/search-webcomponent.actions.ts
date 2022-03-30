@@ -14,6 +14,7 @@ export const loadCategoriesSuccess = createAction(
     categories: CategoryDto[];
     searchFields: FormFieldBase<string>[];
     currentCategoryKey: string;
+    currentCategoryId: number;
   }>()
 );
 
@@ -27,6 +28,7 @@ export const setCategorySearchFields = createAction(
   props<{
     selectedCategorySearchFields: FormFieldBase<string>[];
     currentCategoryKey: string;
+    currentCategoryId: number;
   }>()
 );
 

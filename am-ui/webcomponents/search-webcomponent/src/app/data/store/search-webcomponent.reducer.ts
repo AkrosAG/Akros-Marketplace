@@ -7,7 +7,8 @@ const searchWebcomponentInitialState: SearchWebcomponentState = {
   categories: [],
   selectedCategorySearchFields: [],
   categorySelected: false,
-  currentCategoryKey: ''
+  currentCategoryKey: '',
+  currentCategoryId: 0,
 };
 
 export const searchWebcomponentReducer = createReducer<SearchWebcomponentState>(
@@ -19,7 +20,8 @@ export const searchWebcomponentReducer = createReducer<SearchWebcomponentState>(
         ...state,
         categories: action.categories,
         selectedCategorySearchFields: action.searchFields,
-        currentCategoryKey: action.currentCategoryKey
+        currentCategoryKey: action.currentCategoryKey,
+        currentCategoryId: action.currentCategoryId,
       };
     }
   ),
@@ -31,13 +33,17 @@ export const searchWebcomponentReducer = createReducer<SearchWebcomponentState>(
         categorySelected: true,
         selectedCategorySearchFields: action.selectedCategorySearchFields,
         currentCategoryKey: action.currentCategoryKey,
+        currentCategoryId: action.currentCategoryId,
       };
     }
   ),
-  on(searchWebcomponentActions.resetCategorySelected, (state): SearchWebcomponentState => {
-    return {
-      ...state,
-      categorySelected: false,
-    };
-  })
+  on(
+    searchWebcomponentActions.resetCategorySelected,
+    (state): SearchWebcomponentState => {
+      return {
+        ...state,
+        categorySelected: false,
+      };
+    }
+  )
 );

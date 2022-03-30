@@ -6,4 +6,5 @@ export interface SearchWebcomponentState {
   selectedCategorySearchFields: FormFieldBase<string>[];
   categorySelected: boolean;
   currentCategoryKey: string;
+  currentCategoryId: number;
 }

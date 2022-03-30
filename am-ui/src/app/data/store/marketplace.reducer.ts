@@ -5,10 +5,6 @@ import * as marketplaceActions from './../store/marketplace.actions';
 
 const marketplaceInitialState: MarketplaceState = {
   currentLanguage: 'de',
-  categories: [],
-  selectedCategorySearchFields: [],
-  categorySelected: false,
-  currentCategoryKey: '',
 };
 
 export const marketplaceReducer = createReducer<MarketplaceState>(
@@ -21,33 +17,5 @@ export const marketplaceReducer = createReducer<MarketplaceState>(
         currentLanguage: action.currentLanguage,
       };
     }
-  ),
-  on(
-    marketplaceActions.loadCategoriesSuccess,
-    (state, action): MarketplaceState => {
-      return {
-        ...state,
-        categories: action.categories,
-        selectedCategorySearchFields: action.searchFields,
-        currentCategoryKey: action.currentCategoryKey,
-      };
-    }
-  ),
-  on(
-    marketplaceActions.setCategorySearchFields,
-    (state, action): MarketplaceState => {
-      return {
-        ...state,
-        categorySelected: true,
-        selectedCategorySearchFields: action.selectedCategorySearchFields,
-        currentCategoryKey: action.currentCategoryKey,
-      };
-    }
-  ),
-  on(marketplaceActions.resetCategorySelected, (state): MarketplaceState => {
-    return {
-      ...state,
-      categorySelected: false,
-    };
-  })
+  )
 );

@@ -1,8 +1,11 @@
 import {FormFieldControlService} from './form/form-field-control.service';
 import {FormFieldBase} from './form/form-field-base';
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {ValidationMessages} from '../utils/validators/ValidationMessages';
+import {TopicsService} from '../api/services';
+import {lastValueFrom} from 'rxjs';
+import {TopicSearchRequestDto} from '../api/models';
 
 @Component({
   selector: 'mp-search-form',
@@ -12,13 +15,21 @@ import {ValidationMessages} from '../utils/validators/ValidationMessages';
 export class SearchFormComponent implements OnInit {
   public form!: FormGroup;
   public errorMessages: ValidationMessages<any>;
-  public payLoad = '';
+  public payLoad: TopicSearchRequestDto = {
+    category_id: 0,
+    request_or_offer: '',
+  };
 
   @Input() selectedCategorySearchFields: FormFieldBase<string>[] | null = [];
   @Input() appLanguage: string;
   @Input() currentCategoryKey: string;
+  @Input() currentCategoryId: number;
+  @Output() submitEvent = new EventEmitter<any>();
 
-  constructor(private formFieldControlService: FormFieldControlService) {}
+  constructor(
+    private formFieldControlService: FormFieldControlService,
+    private topicsService: TopicsService
+  ) {}
 
   ngOnInit() {
     this.form = this.formFieldControlService.toFormGroup(
@@ -30,8 +41,14 @@ export class SearchFormComponent implements OnInit {
   }
 
   /* istanbul ignore next */
-  onSubmit() {
-    this.payLoad = JSON.stringify(this.form.getRawValue());
-    console.log(this.payLoad);
+  async onSubmit() {
+    const formData = JSON.parse(JSON.stringify(this.form.getRawValue()));
+    this.payLoad.category_id = this.currentCategoryId;
+    this.payLoad.request_or_offer = formData.requestOrOffer;
+    // TODO: Map Fields in FormData to Fields in DTO
+    const res = await lastValueFrom(
+      this.topicsService.topicsSearchesPost({body: this.payLoad})
+    );
+    this.submitEvent.emit(res);
   }
 }

@@ -4,6 +4,7 @@ import {CreateComponent} from './components/create/create.component';
 import {HomeComponent} from './components/home/home.component';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {SearchResultsComponent} from './components/search-results/search-results.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent},
   {path: 'myadds', component: AddsComponent},
   {path: 'create', component: CreateComponent},
+  {path: 'search-results', component: SearchResultsComponent},
 ];
 
 @NgModule({

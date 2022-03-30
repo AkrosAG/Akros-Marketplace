@@ -280,7 +280,7 @@ components:
           type: integer
           format: int64
         request_or_offer:
-          type: boolean
+          type: string
         topic_values:
           type: array
           items:
@@ -313,7 +313,7 @@ components:
           type: integer
           format: int64
         request_or_offer:
-          type: boolean
+          type: string
         topic_values:
           type: array
           items:
@@ -366,7 +366,7 @@ components:
           type: integer
           format: int64
         request_or_offer:
-          type: boolean
+          type: string
         search_values:
           type: array
           items:
