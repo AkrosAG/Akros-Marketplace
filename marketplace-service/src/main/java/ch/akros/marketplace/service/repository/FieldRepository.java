@@ -15,6 +15,9 @@ public interface FieldRepository extends JpaRepository<Field, Long> {
   @Query("select ft from field ft where ft.category.categoryId = :categoryId and ft.searchable=true order by sortNumber")
   List<Field> listCategorySearchFields(Long categoryId);
 
+  @Query("select ft from field ft where ft.category.categoryId = :categoryId and ft.creation=true order by sortNumber")
+  List<Field> listCategoryCreateFields(Long categoryId);
+
   @Query("select ft from field ft where ft.category.categoryId = :categoryId and (ft.request=:request or ft.offer!=:request) order by sortNumber")
   List<Field> listTopicSearchFields(Long categoryId, Boolean request);
 

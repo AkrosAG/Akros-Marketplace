@@ -31,12 +31,19 @@ paths:
               schema:
                 $ref: "#/components/schemas/Problem"
 
-  /categories:
+  /categories/{create}:
     get:
       tags:
         - Categories
       summary: List categories
       description: used for primary search page
+      parameters:
+        - name: create
+          in: path
+          required: false
+          description: Return category fields for creation or for search
+          schema:
+            type: boolean
       responses:
         200:
           description: OK

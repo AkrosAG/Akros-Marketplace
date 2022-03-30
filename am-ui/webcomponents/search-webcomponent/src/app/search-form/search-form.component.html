@@ -35,7 +35,7 @@
 
   <div
     *ngFor="let formField of selectedCategorySearchFields"
-    class="mb-4 form-field"
+    class="mb-2 form-field"
   >
     <mp-form-field
       [formField]="formField"
@@ -43,15 +43,14 @@
       [errorMessages]="errorMessages[formField.key]"
       [appLanguage]="appLanguage"
       [currentCategoryKey]="currentCategoryKey"
-
     ></mp-form-field>
   </div>
-    <div class="error-message" *ngIf="!form.valid">
-      <!-- TODO a logic to receive event from mp-form-field upon error and construct error message based on the sum of active
+  <div class="error-message mt-1" *ngIf="!form.valid">
+    <!-- TODO a logic to receive event from mp-form-field upon error and construct error message based on the sum of active
        errors, then use [innerHtml] to display constructed msg -->
     Test for a generic error to see how it fits in the layout
   </div>
-  <a [ngClass]="{error: !form.valid}" class="btn big" (click)="onSubmit()">
+  <a [ngClass]="{error: !form.valid}" class="btn big mt-2" (click)="onSubmit()">
     <svg class="icon-btn" [ngClass]="{error: !form.valid}" viewBox="0 0 24 24">
       <rect
         x="-0.55"
