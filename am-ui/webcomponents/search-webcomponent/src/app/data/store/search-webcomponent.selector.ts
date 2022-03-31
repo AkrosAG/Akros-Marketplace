@@ -27,3 +27,9 @@ export const getCurrentCategoryKey = createSelector(
   getSearchWebcomponentState,
   state => state.currentCategoryKey
 );
+
+/* istanbul ignore next */
+export const getCurrentCategoryId = createSelector(
+  getSearchWebcomponentState,
+  state => state.currentCategoryId
+);

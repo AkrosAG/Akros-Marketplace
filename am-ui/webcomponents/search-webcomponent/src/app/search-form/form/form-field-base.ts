@@ -1,6 +1,7 @@
 import {FieldOptionResponseDto} from 'src/app/api/models';
 
 export class FormFieldBase<T> {
+  id: number;
   value: T | undefined;
   key: string;
   label: string;
@@ -18,6 +19,7 @@ export class FormFieldBase<T> {
   /* istanbul ignore next */
   constructor(
     options: {
+      id?: number;
       value?: T;
       key?: string;
       required?: boolean;
@@ -33,6 +35,7 @@ export class FormFieldBase<T> {
       creation?: boolean;
     } = {}
   ) {
+    this.id = options.id || 0;
     this.value = options.value;
     this.key = options.key || '';
     this.required = !!options.required;

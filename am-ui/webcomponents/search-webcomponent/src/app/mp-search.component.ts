@@ -1,6 +1,9 @@
-import {CategoryEvent} from './data/models/categoryEvent';
+import {FormFieldsBuilderService} from './utils/form/form-fields-builder.service';
 import {LocalizationService} from './data/services/localization.service';
+import {Store} from '@ngrx/store';
+import {SearchWebcomponentState} from './data/store/search-webcomponent.state';
 import {FormFieldBase} from 'src/app/search-form/form/form-field-base';
+import {Observable} from 'rxjs';
 import {FormGroup} from '@angular/forms';
 import {
   Component,
@@ -12,6 +15,8 @@ import {
   EventEmitter,
 } from '@angular/core';
 
+import * as storeSelector from './data/store/search-webcomponent.selector';
+import * as storeActions from './data/store/search-webcomponent.actions';
 import {CategoryDto} from './api/models';
 import {Output} from '@angular/core';
 
@@ -22,23 +27,27 @@ import {Output} from '@angular/core';
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class MpSearchComponent implements OnInit, OnChanges {
+  public categories$: Observable<CategoryDto[]>;
+  public selectedCategorySearchFields$: Observable<FormFieldBase<string>[]>;
+  public categorySelected$ = new Observable<boolean>();
+  public currentCategoryKey$: Observable<string>;
+  public currentCategoryId$: Observable<number>;
   public form: FormGroup;
   public categorySelected: boolean[] = [];
   public currentSelected: number = 0;
+  private currentCategoryId = 1;
 
   title = 'search-webcomponent';
   public appLoaded: boolean = true;
   public appLanguage: string;
-  private currentCategoryId = 1;
-  @Input() language: string;
-  @Input() selectedCategorySearchFields: FormFieldBase<string>[];
-  @Input() categories: CategoryDto[];
-  @Input() currentCategoryKey: string;
-  @Input() categoryIsSelected: boolean;
-  @Output()
-  public categorySelection = new EventEmitter<CategoryEvent>();
+  @Input() language = 'de';
+  @Output() submitToContainerEvent = new EventEmitter<any>();
 
-  constructor(private localization: LocalizationService) {}
+  constructor(
+    private store: Store<SearchWebcomponentState>,
+    private localization: LocalizationService,
+    private formFieldsBuilderService: FormFieldsBuilderService
+  ) {}
   /* istanbul ignore next */
   ngOnChanges(changes: SimpleChanges) {
     if (changes && changes.language) {
@@ -50,6 +59,20 @@ export class MpSearchComponent implements OnInit, OnChanges {
   async ngOnInit() {
     this.appLanguage = this.language;
     this.localization.use(this.appLanguage);
+    this.categories$ = this.store.select(storeSelector.getCategories);
+    this.selectedCategorySearchFields$ = this.store.select(
+      storeSelector.getCategorySearchFields
+    );
+    this.categorySelected$ = this.store.select(
+      storeSelector.getIfCategorySelected
+    );
+    this.currentCategoryKey$ = this.store.select(
+      storeSelector.getCurrentCategoryKey
+    );
+    this.currentCategoryId$ = this.store.select(
+      storeSelector.getCurrentCategoryId
+    );
+    this.store.dispatch(storeActions.loadCategories());
   }
 
   public categorySelect(index: number, category: CategoryDto) {
@@ -58,7 +81,21 @@ export class MpSearchComponent implements OnInit, OnChanges {
     this.categorySelected[index] = true;
     if (this.currentCategoryId !== category.category_id) {
       this.currentCategoryId = category.category_id;
-      this.categorySelection.emit({index, category});
+      this.store.dispatch(storeActions.resetCategorySelected());
+      const formFields = this.formFieldsBuilderService.searchFieldsToFormFields(
+        category.fields
+      );
+      this.store.dispatch(
+        storeActions.setCategorySearchFields({
+          selectedCategorySearchFields: formFields,
+          currentCategoryKey: category.key,
+          currentCategoryId: category.category_id,
+        })
+      );
     }
+  }
+
+  relayToContainer(event: Event) {
+    this.submitToContainerEvent.emit(event);
   }
 }

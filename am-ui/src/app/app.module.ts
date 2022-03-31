@@ -27,7 +27,7 @@ import {
 
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
-import {MarketplaceEffects} from './data/store/marketplace.effects';
+import {MarketPlaceEffects} from './data/store/marketplace.effects';
 import {marketplaceStoreName} from './data/store/marketplace.selector';
 import {marketplaceReducer} from './data/store/marketplace.reducer';
 
@@ -43,9 +43,9 @@ import {AuthGuard} from './data/services/login/auth.guard';
 
 import {RestHelperService} from './utils/restHelperService';
 import {UserService} from './data/services/login/user.service';
-import {FormFieldsBuilderService} from './data/services/form-fields-builder.service';
 
 import {environment} from 'src/environments/environment';
+import {SearchResultsComponent} from './components/search-results/search-results.component';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -82,6 +82,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     FooterComponent,
     ProfileComponent,
     AddsComponent,
+    SearchResultsComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,7 +93,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     StoreModule.forRoot({}),
     StoreModule.forFeature(marketplaceStoreName, marketplaceReducer),
     EffectsModule.forRoot([]),
-    EffectsModule.forFeature([MarketplaceEffects]),
+    EffectsModule.forFeature([MarketPlaceEffects]),
     LoggerModule.forRoot({
       level: !environment.production
         ? NgxLoggerLevel.DEBUG
@@ -111,7 +112,6 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     RestHelperService,
     UserService,
     AuthGuard,
-    FormFieldsBuilderService,
     {
       provide: LOCALE_ID,
       useValue: 'de-ch',
