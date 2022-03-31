@@ -18,7 +18,7 @@
         v-bind:id="'create-add-field-' + field.field_id"
         type="text"
         v-bind:placeholder="field.key"
-        v-model="fieldValues[field.key]"
+        v-model="fieldValues[field.field_id]"
       />
     </div>
 
@@ -28,7 +28,7 @@
         v-bind:id="'create-add-field-' + field.field_id"
         type="text"
         v-bind:placeholder="field.key"
-        v-model="fieldValues[field.key]"
+        v-model="fieldValues[field.field_id]"
       />
     </div>
 
@@ -47,7 +47,7 @@
     >
       <select
         v-bind:id="'create-add-field-' + field.field_id"
-        v-model="fieldValues[field.key]"
+        v-model="fieldValues[field.field_id]"
       >
         <option disabled value="">{{ field.key }}</option>
         <option
@@ -61,7 +61,7 @@
 
     <!-- Boolean checkbox(8,16) -->
     <div
-      class="form-field full"
+      class="form-field checkbox half"
       v-if="
         field.field_type_definition_id === 8 ||
         field.field_type_definition_id === 16
@@ -82,7 +82,8 @@
         v-bind:id="'create-add-field-' + field.field_id"
         type="email"
         v-bind:placeholder="field.key"
-        v-model="fieldValues[field.key]"
+        v-model="fieldValues[field.field_id]"
+        class="nocap"
       />
     </div>
 
@@ -92,7 +93,7 @@
         v-bind:id="'create-add-field-' + field.field_id"
         type="tel"
         v-bind:placeholder="field.key"
-        v-model="fieldValues[field.key]"
+        v-model="fieldValues[field.field_id]"
       />
     </div>
 
@@ -122,7 +123,7 @@
         v-bind:id="'create-add-field-' + field.field_id"
         type="date"
         v-bind:placeholder="field.key"
-        v-model="fieldValues[field.key]"
+        v-model="fieldValues[field.field_id]"
       />
     </div>
 
@@ -139,41 +140,43 @@
     >
       <select
         v-bind:id="'create-add-field-' + field.field_id"
-        v-model="fieldValues[field.key]"
+        v-model="fieldValues[field.field_id]"
       >
         <option disabled value="">{{ field.key }}</option>
-        <option
-          v-for="option in counterOptions"
-          v-bind:value="option"
-        >
+        <option v-for="option in counterOptions" v-bind:value="option">
           {{ option }}
         </option>
       </select>
     </div>
-
   </div>
   <p class="submit-row">
-    <a class="btn auto-flex" v-on:click="submit">Preview and Publish</a>
+    <a class="btn" v-on:click="submit">Preview and Publish</a>
   </p>
 </template>
 
 <script>
 export default {
   props: ['fieldsToShow'],
+  emits: ['submit'],
   methods: {
     submit() {
-      this.$emit('submit', this.fieldValues);
+      const fieldsVals = Object.values(this.fieldValues);
+      const fieldsKeys = Object.keys(this.fieldValues);
+      const fields = fieldsKeys.map((id, i) => {
+        return {field_type_id: id, value: fieldsVals[i]};
+      });
+      this.$emit('submit', fields);
     },
   },
   data() {
     var fieldValues = {};
-    var counterOptions = [1,2,3,4,5,6,7,8];
+    var counterOptions = [1, 2, 3, 4, 5, 6, 7, 8];
     this.fieldsToShow.forEach(field => {
-      fieldValues[field.key] = '';
+      fieldValues[field.field_id] = '';
     });
     return {
       fieldValues,
-      counterOptions
+      counterOptions,
     };
   },
 };

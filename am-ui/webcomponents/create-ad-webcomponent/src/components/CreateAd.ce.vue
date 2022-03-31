@@ -2,6 +2,7 @@
 import ApiClient from '../api/src/ApiClient';
 import CategoriesApi from '../api/src/api/CategoriesApi';
 import TopicsApi from '../api/src/api/TopicsApi';
+import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
 import {onMounted, ref, computed, h} from 'vue';
 import CreateAdFields from './CreateAdFields.vue';
 
@@ -13,6 +14,7 @@ const selectedCategoryKey = ref('');
 const requestOrOffer = ref('offer');
 const fieldsToShow = ref([]);
 const showAdFields = ref(false);
+var currentCategoryId = 0;
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
@@ -34,18 +36,23 @@ function updateFields() {
   if (selectedCategory && selectedCategory.fields.length > 0) {
     fieldsToShow.value = selectedCategory.fields;
     showAdFields.value = true;
+    currentCategoryId = selectedCategory.category_id;
   } else {
     showAdFields.value = false;
   }
 }
 
 function submit(data) {
-  console.log(data);
-  // create formFields with data and remaining requiered info from this
-
-  // post
-  // this.topicsApi.topicsPost()
+  const body = {
+    topic_id: 0,
+    category_id: currentCategoryId,
+    request_or_offer: requestOrOffer.value,
+    topic_values: data,
+  };
+  const dto = new TopicSaveRequestDTO(0, currentCategoryId, requestOrOffer.value, body);
+  topicsApi.topicsPost(dto);
 }
+
 const element = computed(e => {
   console.log(e);
   return 'ul';
@@ -113,7 +120,6 @@ const element = computed(e => {
     </form>
   </div>
 </template>
-
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
@@ -241,11 +247,8 @@ table {
   border-spacing: 0;
 }
 
-/*                         GENERAL STYLING
+/*
 ***********************************************************************/
-* {
-  font: 400 11pt/1.5 Inter, Helvetica, sans-serif;
-}
 html {
   height: 100%;
   -webkit-text-size-adjust: none;
@@ -254,7 +257,6 @@ body {
   height: 100%;
   min-height: 100%;
   overflow-x: hidden;
-  font: 400 11pt/1.5 Inter, Helvetica, sans-serif;
   color: $grey;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -262,13 +264,13 @@ body {
 a {
   font-weight: 500;
   text-decoration: none;
-  color: #9c132c;
+  color: $dark-red;
   -moz-transition: all 0.3s ease-in 0s;
   -webkit-transition: all 0.3s ease-in 0s;
   transition: all 0.3s ease-in 0s;
 }
 a:hover {
-  color: #d60929;
+  color: $akros-red;
 }
 input[type='text'],
 input[type='email'],
@@ -291,10 +293,6 @@ textarea {
   width: 100%;
   margin-bottom: 1em;
   text-transform: capitalize;
-}
-input[type='submit'] {
-  border: none;
-  cursor: pointer;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -332,54 +330,27 @@ input[type='checkbox'] {
 }
 
 .btn {
-  display: inline-block;
-  padding: 6px 24px;
-  vertical-align: middle;
-  text-align: center;
-  color: #e9d3d6;
-  color: rgba(255, 255, 255, 0.8);
-  background-color: #9c132c;
-  border-radius: 1.2em;
-  cursor: pointer;
-}
-.btn:hover {
-  color: #fff;
-  background-color: #d60929;
-}
-.icon-btn {
-  display: inline-block;
-  width: 18px;
-  height: auto;
-  margin: -2px 6px 2px;
-  vertical-align: middle;
-  fill: #e9d3d6;
-  fill: rgba(255, 255, 255, 0.8);
-  -moz-transition: fill 0.3s ease-in 0s;
-  -webkit-transition: fill 0.3s ease-in 0s;
-  transition: fill 0.3s ease-in 0s;
-}
-.btn:hover .icon-btn {
-  fill: #fff;
-}
-.big-btn {
-  display: block;
-  max-width: 360px;
-  margin: 0 auto;
-  padding: 8px 24px;
-  font-size: 1.1em;
-  text-transform: uppercase;
-}
-.submit-btn {
   display: block;
   flex: auto;
   margin: 0.6em auto 0;
   font-size: 11.5pt;
+  text-align: center;
+  color: #e9d3d6;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: $dark-red;
+  border-radius: 1.2em;
   cursor: pointer;
+  padding: 6px 24px;
+}
+.btn:hover {
+  color: #fff;
+  background-color: $akros-red;
 }
 .form-wrap {
-    margin: 1em auto;
-    max-width: 420px;
-    min-height: 70vh;
+  margin: 1em auto;
+  max-width: 420px;
+  min-height: 70vh;
+  font: 400 11pt/1.5 Inter, Helvetica, sans-serif;
 }
 
 .form-field {
@@ -411,12 +382,20 @@ input[type='checkbox'] {
     width: calc(100% - 42px);
     float: left;
   }
+  &.checkbox {
+    position: relative;
+    top: 6px;
+    left: 8px;
+  }
   label {
     text-transform: capitalize;
   }
   textarea {
     max-width: 100%;
     min-width: 100%;
+  }
+  .nocap {
+    text-transform: none;
   }
 }
 
@@ -426,16 +405,11 @@ input[type='checkbox'] {
 /*                               600px
 --------------------------------------------------------------------- */
 @media screen and (min-width: 600px) {
-
 }
 
 /*                               900px
 --------------------------------------------------------------------- */
 @media screen and (min-width: 900px) {
-  .intro-block,
-  .content-block {
-    padding: 30px;
-  }
 }
 
 /*                              1200px
@@ -443,34 +417,6 @@ input[type='checkbox'] {
 @media screen and (min-width: 1200px) {
   body {
     font-size: 12pt;
-  }
-  h1 {
-    font-size: 2.8em;
-  }
-  h2 {
-    font-size: 2.25em;
-  }
-  h3 {
-    font-size: 1.9em;
-  }
-  h4 {
-    font-size: 1.55em;
-  }
-  h5 {
-    font-size: 1.33em;
-  }
-  h6 {
-    font-size: 1.05em;
-  }
-  .container {
-    width: 94%;
-  }
-  .branding-block {
-    padding: 0;
-  }
-  .intro-block,
-  .content-block {
-    padding: 40px;
   }
 }
 

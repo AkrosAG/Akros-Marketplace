@@ -11,20 +11,14 @@ export default defineConfig({
     proxy: {
       '/categories': {
         target: 'https://localhost:8443',
-        changeOrigin: true,
         secure: false,
       },
       '/api/auth': {
         target: 'https://localhost:8080',
         secure: false,
       },
-    },
-  },
-  devServer: {
-    proxy: {
-      '/categories': {
+      '/topics': {
         target: 'https://localhost:8443',
-        changeOrigin: true,
         secure: false,
       },
     },
