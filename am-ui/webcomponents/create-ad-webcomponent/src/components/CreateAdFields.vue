@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable -->
-  <div v-for="field in fieldsToShow" :key="field.field_id">
+  <div v-for="field in fieldsToShow">
     <!-- Inputs Text input fields: full(1), half(2), third(3) -->
     <div
       class="form-field full"
@@ -158,6 +158,17 @@
 export default {
   props: ['fieldsToShow'],
   emits: ['submit'],
+  data() {
+    const fieldValues = {};
+    const counterOptions = [1, 2, 3, 4, 5, 6, 7, 8];
+    this.fieldsToShow.forEach(field => {
+      fieldValues[field.field_id] = '';
+    });
+    return {
+      fieldValues,
+      counterOptions,
+    };
+  },
   methods: {
     submit() {
       const fieldsVals = Object.values(this.fieldValues);
@@ -167,17 +178,6 @@ export default {
       });
       this.$emit('submit', fields);
     },
-  },
-  data() {
-    var fieldValues = {};
-    var counterOptions = [1, 2, 3, 4, 5, 6, 7, 8];
-    this.fieldsToShow.forEach(field => {
-      fieldValues[field.field_id] = '';
-    });
-    return {
-      fieldValues,
-      counterOptions,
-    };
   },
 };
 </script>

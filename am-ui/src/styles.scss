@@ -175,8 +175,9 @@ input[type="checkbox"] {
     cover fixed;
 }
 
-#content-wrapper {
+.content-wrapper {
   padding: 0 0 60px;
+  background-color: $sandy;
 }
 
 #footer {

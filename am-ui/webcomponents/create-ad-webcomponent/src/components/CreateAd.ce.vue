@@ -3,7 +3,7 @@ import ApiClient from '../api/src/ApiClient';
 import CategoriesApi from '../api/src/api/CategoriesApi';
 import TopicsApi from '../api/src/api/TopicsApi';
 import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
-import {onMounted, ref, computed, h} from 'vue';
+import {onMounted, ref, computed, defineProps} from 'vue';
 import CreateAdFields from './CreateAdFields.vue';
 
 const apiClient = new ApiClient('/');
@@ -14,17 +14,15 @@ const selectedCategoryKey = ref('');
 const requestOrOffer = ref('offer');
 const fieldsToShow = ref([]);
 const showAdFields = ref(false);
-var currentCategoryId = 0;
-const props = defineProps({
-  appLanguage: String
-})
+let currentCategoryId = 0;
+const props = defineProps({appLanguage: String});
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
   console.log(props.appLanguage);
 });
 
-function getCategories(error, data, response) {
+function getCategories(_error, data, _response) {
   // Filter fields that are not for creation'
   data.categories.forEach(category => {
     category.fields = category.fields.filter(field => field.creation);
@@ -53,7 +51,12 @@ function submit(data) {
     request_or_offer: requestOrOffer.value,
     topic_values: data,
   };
-  const dto = new TopicSaveRequestDTO(0, currentCategoryId, requestOrOffer.value, body);
+  const dto = new TopicSaveRequestDTO(
+    0,
+    currentCategoryId,
+    requestOrOffer.value,
+    body
+  );
   topicsApi.topicsPost(dto);
 }
 
@@ -66,19 +69,19 @@ const element = computed(e => {
 <template>
   <div class="form-wrap">
     <form
+      id="create-ad-form"
       method="post"
       action="#"
       enctype="multipart/form-data"
       name="create-ad-form"
-      id="create-ad-form"
       class="simple-form"
     >
       <p>
         <select
-          name="ad-category"
           id="ad-category"
-          class="simple-field full-width uppercase"
           v-model="selectedCategoryKey"
+          name="ad-category"
+          class="simple-field full-width uppercase"
           @change="updateFields"
         >
           <option disabled value="">Ad Category</option>
@@ -93,11 +96,11 @@ const element = computed(e => {
       </p>
       <div class="form-field half">
         <input
+          v-model="requestOrOffer"
           type="radio"
           name="type-ad"
           value="offer"
           checked="checked"
-          v-model="requestOrOffer"
           @change="updateFields"
         /><label for="ad-offer" class="radio-label no-wrap uppercase"
           >I Offer</label
@@ -105,11 +108,11 @@ const element = computed(e => {
       </div>
       <div class="form-field half">
         <input
-          type="radio"
           id="ad-search"
+          v-model="requestOrOffer"
+          type="radio"
           name="type-ad"
           value="search"
-          v-model="requestOrOffer"
           @change="updateFields"
         />
         <label for="ad-search" class="radio-label no-wrap uppercase"
@@ -118,9 +121,9 @@ const element = computed(e => {
       </div>
       <CreateAdFields
         v-if="showAdFields"
-        :fieldsToShow="fieldsToShow"
+        :fields-to-show="fieldsToShow"
         @submit="submit"
-      ></CreateAdFields>
+      />
     </form>
   </div>
 </template>
@@ -350,8 +353,9 @@ input[type='checkbox'] {
   color: #fff;
   background-color: $akros-red;
 }
+
 .form-wrap {
-  margin: 1em auto;
+  margin: 0 auto;
   max-width: 420px;
   min-height: 70vh;
   font: 400 11pt/1.5 Inter, Helvetica, sans-serif;
