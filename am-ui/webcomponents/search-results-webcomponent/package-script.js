@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const concat = require('concat');
 
 build = async () => {
-  const files = ['./dist/App.js'];
+  const files = ['./dist/App.jsx'];
   await fs.ensureDir('../../src/assets/scripts/webcomponents');
   await concat(
     files,
