@@ -15,9 +15,13 @@ const requestOrOffer = ref('offer');
 const fieldsToShow = ref([]);
 const showAdFields = ref(false);
 var currentCategoryId = 0;
+const props = defineProps({
+  appLanguage: String
+})
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
+  console.log(props.appLanguage);
 });
 
 function getCategories(error, data, response) {

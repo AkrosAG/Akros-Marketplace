@@ -33,6 +33,7 @@
               "src/styles.scss"
             ],
             "scripts": [
+              "src/assets/scripts/webcomponents/create-ad-webcomponent.js",
               "src/assets/scripts/webcomponents/search-results-webcomponent.js",
               "src/assets/scripts/webcomponents/search-webcomponent.js"
             ],

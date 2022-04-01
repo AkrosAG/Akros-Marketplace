@@ -3,7 +3,11 @@
     <h1 class="text-white">{{ 'topics.create.title' | translate }}</h1>
   </div>
 </div>
-<create-ad-webcomponent></create-ad-webcomponent>
+<div class="webcomponent-container">
+  <create-ad-webcomponent [appLanguage]="appLanguage"></create-ad-webcomponent>
+</div>
+
+<!-- // Design with mock form -->
 
 <!-- <div class="container-fluid colored">
   <div class="container auto-flex content-block">

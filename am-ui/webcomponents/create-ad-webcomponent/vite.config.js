@@ -26,8 +26,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/main.js'),
-      name: 'VueBrownbagWebComponent',
-      fileName: format => `VueBrownbagWebComponent.${format}.js`,
+      name: 'CreateAdWebComponent',
+      fileName: format => `CreateAdWebComponent.${format}.js`,
     },
     rollupOptions: {
       output: {
