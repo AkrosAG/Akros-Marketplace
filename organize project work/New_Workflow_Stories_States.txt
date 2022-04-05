@@ -1,0 +1,18 @@
+- PO/BA creates Story (Status "To specify")
+- When starting to specify status goes to "In specification": 
+	Talks to Dev and Designer if needed BEFORE replenishment
+- When PO/BA thinks specification is complete -> Ready for Refinement
+	- DoR needs to be fulfilled
+		- External dependencies are identified or eliminated
+		- Design (at least LoFi?)
+		- Has acceptance criteria
+		
+- Refinement stays, Estimation mit Cards
+- Planning:	
+	- Cleanup
+	- Taking tickets that are Ready for Dev into Kanban, Tasking
+
+- Prioritization in Backlog Sheet, manually by PO/BA, consulting team for technical tickets
+
+Status:
+To specify - In specification - Ready for Refinement ( - Ready for DEV - Now - Passed/Rejected)
