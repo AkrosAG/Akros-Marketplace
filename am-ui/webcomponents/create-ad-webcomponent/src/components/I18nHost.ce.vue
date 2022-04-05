@@ -1,6 +1,6 @@
 <script lang="ts">
-import { defineComponent, provide, watchEffect } from 'vue'
-import { createI18n, I18nInjectionKey } from 'vue-i18n'
+import {defineComponent, provide, watchEffect} from 'vue'
+import {createI18n, I18nInjectionKey} from 'vue-i18n'
 /**
  * Define the web components that host the i18n instance.
  *
@@ -18,26 +18,27 @@ import { createI18n, I18nInjectionKey } from 'vue-i18n'
  */
 const i18n = createI18n<false>({
   legacy: false, // must set to `false`
-  locale: 'de'
+  locale: 'de',
 })
 export default defineComponent({
   props: {
     locale: {
       type: String,
-      default: 'de'
-    }
+      default: 'de',
+    },
   },
-  setup(props) {
+  setup (props) {
     /**
      * provide i18n instance with `I18nInjectionKey` for other web components
      */
-    console.log(props)
+    console.log('Props: ' + JSON.stringify(props))
     provide(I18nInjectionKey, i18n)
     watchEffect(() => {
+      console.log('Props changed: ' + JSON.stringify(props))
       i18n.global.locale.value = props.locale
     })
     return {}
-  }
+  },
 })
 </script>
 

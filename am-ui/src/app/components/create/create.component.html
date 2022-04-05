@@ -3,7 +3,9 @@
     <h1 class="text-white">{{ 'topics.create.title' | translate }}</h1>
   </div>
 </div>
-<create-ad-webcomponent [appLanguage]="appLanguage"></create-ad-webcomponent>
+<i18n-host [appLanguage]="appLanguage">
+  <create-ad-webcomponent [appLanguage]="appLanguage"></create-ad-webcomponent>
+</i18n-host>
 
 <!-- // Design with mock form -->
 

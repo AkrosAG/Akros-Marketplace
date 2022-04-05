@@ -16,6 +16,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.translate.onLangChange.subscribe(appLanguage => {
       this.appLanguage = appLanguage.lang;
+      console.log('Language changed to ' + this.appLanguage);
     });
   }
 
