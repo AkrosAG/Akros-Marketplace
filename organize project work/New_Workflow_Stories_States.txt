@@ -6,6 +6,7 @@
 		- External dependencies are identified or eliminated
 		- Design (at least LoFi?)
 		- Has acceptance criteria
+		- The story is understood and accepted by the team
 		
 - Refinement stays, Estimation mit Cards
 - Planning:	
