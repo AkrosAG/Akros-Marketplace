@@ -3,8 +3,9 @@ import ApiClient from '../api/src/ApiClient';
 import CategoriesApi from '../api/src/api/CategoriesApi';
 import TopicsApi from '../api/src/api/TopicsApi';
 import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
-import {onMounted, ref, computed, defineProps} from 'vue';
+import {onMounted, ref, computed} from 'vue';
 import CreateAdFields from './CreateAdFields.vue';
+import {useI18n} from 'vue-i18n';
 
 const apiClient = new ApiClient('/');
 const categoriesApi = new CategoriesApi(apiClient);
@@ -16,10 +17,13 @@ const fieldsToShow = ref([]);
 const showAdFields = ref(false);
 let currentCategoryId = 0;
 const props = defineProps({appLanguage: String});
+const {t} = useI18n({
+  inheritLocale: true,
+  useScope: 'local',
+});
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
-  console.log(props.appLanguage);
 });
 
 function getCategories(_error, data, _response) {
@@ -67,6 +71,7 @@ const element = computed(e => {
 </script>
 
 <template>
+  <!-- eslint-disable -->
   <div class="form-wrap">
     <form
       id="create-ad-form"
@@ -102,9 +107,9 @@ const element = computed(e => {
           value="offer"
           checked="checked"
           @change="updateFields"
-        /><label for="ad-offer" class="radio-label no-wrap uppercase"
-          >I Offer</label
-        >
+        /><label for="ad-offer" class="radio-label no-wrap uppercase">
+          {{ t('request') }}
+        </label>
       </div>
       <div class="form-field half">
         <input
@@ -115,9 +120,9 @@ const element = computed(e => {
           value="search"
           @change="updateFields"
         />
-        <label for="ad-search" class="radio-label no-wrap uppercase"
-          >I'm Looking for</label
-        >
+        <label for="ad-search" class="radio-label no-wrap uppercase">{{
+          t('offer')
+        }}</label>
       </div>
       <CreateAdFields
         v-if="showAdFields"
@@ -433,3 +438,16 @@ input[type='checkbox'] {
 @media screen and (min-width: 1536px) {
 }
 </style>
+
+<i18n>
+{
+  "en": {
+    "offer": "I offer",
+    "request": "I'm looking for",
+  },
+  "de": {
+    "offer": "Ich biete",
+    "request": "Ich suche nach",
+  }
+}
+</i18n>
