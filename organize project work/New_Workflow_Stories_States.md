@@ -28,9 +28,10 @@
 - Refinement
 
 Generally the refinement is there to make sure the backlog items are relevant, detailed, prioritized and estimated so that they are ready to get moved to the Kanban board. It will take a look at all the tickets that are in the status **Ready for refinement**. The specification itself should take place *before* the refinement with the relevant parties - The refinement itself will present the results from that specification to the team to make sure it is understood and accepted.
+However, this is only a guideline - If the PO deems it as necessary and the team agrees to it, the agenda can be adjusted - Such as to "specify a ticket together" because the feedback of the entire team would be valuable.
 
 - Planning:	
-	- Cleanup
+	- Cleanup of current tickets
 	- Taking tickets that are *Ready for Dev* into Kanban (Status changes to **In progress**, Tasking
 
 
