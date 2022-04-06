@@ -1,73 +1,68 @@
 <script setup>
-import ApiClient from '../api/src/ApiClient';
-import CategoriesApi from '../api/src/api/CategoriesApi';
-import TopicsApi from '../api/src/api/TopicsApi';
-import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
-import {onMounted, ref, computed} from 'vue';
-import CreateAdFields from './CreateAdFields.vue';
-import {useI18n} from 'vue-i18n';
+import ApiClient from '../api/src/ApiClient'
+import CategoriesApi from '../api/src/api/CategoriesApi'
+import TopicsApi from '../api/src/api/TopicsApi'
+import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO'
+import {onMounted, ref, computed} from 'vue'
+import CreateAdFields from './CreateAdFields.vue'
+import {useI18n} from 'vue-i18n'
 
-const apiClient = new ApiClient('/');
-const categoriesApi = new CategoriesApi(apiClient);
-const topicsApi = new TopicsApi(apiClient);
-const categories = ref([]);
-const selectedCategoryKey = ref('');
-const requestOrOffer = ref('offer');
-const fieldsToShow = ref([]);
-const showAdFields = ref(false);
-let currentCategoryId = 0;
-const props = defineProps({appLanguage: String});
+const apiClient = new ApiClient('/')
+const categoriesApi = new CategoriesApi(apiClient)
+const topicsApi = new TopicsApi(apiClient)
+const categories = ref([])
+const selectedCategoryKey = ref('')
+const requestOrOffer = ref('offer')
+const fieldsToShow = ref([])
+const showAdFields = ref(false)
+let currentCategoryId = 0
+const props = defineProps({appLanguage: String})
 const {t} = useI18n({
   inheritLocale: true,
   useScope: 'local',
-});
+})
 
 onMounted(() => {
-  categoriesApi.categoriesCreateGet(true, getCategories);
-});
+  categoriesApi.categoriesCreateGet(true, getCategories)
+  console.log(locale)
+})
 
-function getCategories(_error, data, _response) {
+function getCategories (_error, data, _response) {
   // Filter fields that are not for creation'
   data.categories.forEach(category => {
-    category.fields = category.fields.filter(field => field.creation);
-  });
-  categories.value = data.categories;
-  updateFields();
+    category.fields = category.fields.filter(field => field.creation)
+  })
+  categories.value = data.categories
+  updateFields()
 }
 
-function updateFields() {
+function updateFields () {
   const selectedCategory = categories.value.find(
     category => category.key === selectedCategoryKey.value
-  );
+  )
   if (selectedCategory && selectedCategory.fields.length > 0) {
-    fieldsToShow.value = selectedCategory.fields;
-    showAdFields.value = true;
-    currentCategoryId = selectedCategory.category_id;
+    fieldsToShow.value = selectedCategory.fields
+    showAdFields.value = true
+    currentCategoryId = selectedCategory.category_id
   } else {
-    showAdFields.value = false;
+    showAdFields.value = false
   }
 }
 
-function submit(data) {
-  const body = {
-    topic_id: 0,
-    category_id: currentCategoryId,
-    request_or_offer: requestOrOffer.value,
-    topic_values: data,
-  };
+function submit (data) {
   const dto = new TopicSaveRequestDTO(
     0,
     currentCategoryId,
-    requestOrOffer.value,
-    body
-  );
-  topicsApi.topicsPost(dto);
+    requestOrOffer.value.toUpperCase(),
+    data
+  )
+  topicsApi.topicsPost(dto)
 }
 
 const element = computed(e => {
-  console.log(e);
-  return 'ul';
-});
+  console.log(e)
+  return 'ul'
+})
 </script>
 
 <template>
