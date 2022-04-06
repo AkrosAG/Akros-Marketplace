@@ -6,6 +6,7 @@ import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO'
 import {onMounted, ref, computed} from 'vue'
 import CreateAdFields from './CreateAdFields.vue'
 import {useI18n} from 'vue-i18n'
+import {i18n} from './../locales/i18n.js';
 
 const apiClient = new ApiClient('/')
 const categoriesApi = new CategoriesApi(apiClient)
@@ -16,7 +17,10 @@ const requestOrOffer = ref('offer')
 const fieldsToShow = ref([])
 const showAdFields = ref(false)
 let currentCategoryId = 0
-const props = defineProps({appLanguage: String})
+const props = defineProps({ appLanguage: {
+    default: 'de',
+    type: String
+  }})
 const {t} = useI18n({
   inheritLocale: true,
   useScope: 'local',
@@ -24,6 +28,7 @@ const {t} = useI18n({
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories)
+  i18n.global.locale = props.appLanguage;
 })
 
 function getCategories (_error, data, _response) {
