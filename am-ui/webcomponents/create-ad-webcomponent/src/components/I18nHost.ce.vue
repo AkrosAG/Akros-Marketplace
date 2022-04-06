@@ -31,10 +31,8 @@ export default defineComponent({
     /**
      * provide i18n instance with `I18nInjectionKey` for other web components
      */
-    console.log('Props: ' + JSON.stringify(props))
     provide(I18nInjectionKey, i18n)
     watchEffect(() => {
-      console.log('Props changed: ' + JSON.stringify(props))
       i18n.global.locale.value = props.locale
     })
     return {}
