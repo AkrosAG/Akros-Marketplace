@@ -24,7 +24,6 @@ const {t} = useI18n({
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories)
-  console.log(locale)
 })
 
 function getCategories (_error, data, _response) {
