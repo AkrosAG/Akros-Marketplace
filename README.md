@@ -17,7 +17,7 @@
 
 Akros Marketplace, short AMP, is an application for companies internal advertising and is used for search and advertise an appartement, a room a roommate. The application is expandable and can include additional categories e.g. to search and advertise ride- or clothes-sharing, rent a car, et cetera.
 
-The project is hosted on Github public. Open source license has to be defined (suggestion: Apache License). Public means that the code is an AKROS business card. Quality and state of the art development is essential.
+The project is hosted on Github public. It is licensed under the Apache License. Public means that the code is an AKROS business card. Quality and state of the art development is essential.
 
 The application should serve
 
@@ -35,9 +35,12 @@ The application should serve
 5. **am-auth-backend**: Service Backend for authorisation and authentification.
 6. **am-ui**: Marketplace Frontend Site. Web Site for the marketplace. Accesses the Rest Services of **data-backend-services** to fetch data and configuration for the marketplace. Accesses the **ui-auth-backend** and **am-ui-login** for login of users.
    - **build_scripts**: Build scripts to be used for npm
+   - **webcomponents**: Reusable webcomponents for the UI
+     - **search-webcomponent**: Search-Module implemented in Angular
+     - **search-results-webcomponent**: Search-Results-Module implemented in React
 7. **documents**: Temporary documents of the project.
 8. **architecture**: Architecture documents of the project.
-9. **webcomponents**: Reusable webcomponents for the UI
-   - **build_scripts**: Build scripts to be used for npm
-   - **search-webcomponent**: Search-Module implemented in Angular
-10. **.github**: Workflows for Github Actions
+9. **.github**: Workflows for Github Actions
+10. **organize project work**: Documentation on methodic workflow
+11. **.run**: IntelliJ Run-Configs
+12. **documents**: Various documentation about the application itself
