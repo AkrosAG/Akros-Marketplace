@@ -18,7 +18,7 @@ export function deepInject(key) {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+// eslint-disable-next-line
 export function useI18n(options) {
   const instance = deepInject(I18nInjectionKey);
   if (instance === undefined) {
