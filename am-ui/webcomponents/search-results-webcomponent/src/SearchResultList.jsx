@@ -10,7 +10,7 @@ function SearchResultList(props) {
   });
 
   if (props.results.length === 0) {
-    return <h1>{t('no-results')}</h1>;
+    return <h1 className='no-results'>{t('no-results')}</h1>;
   } else {
     // TODO: Render result items properly
     return <div>{props.results}</div>;

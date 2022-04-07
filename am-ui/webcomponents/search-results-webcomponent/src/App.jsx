@@ -2,6 +2,10 @@ import './App.css';
 import SearchResultList from './SearchResultList';
 import ReactDOM from 'react-dom';
 import './i18n';
+import IndexStyles from './index.css';
+import AppStyles from './App.css';
+import ComponentStyles from './styles/styles.css';
+import React from 'react';
 /**
  * This class wraps the React App into a Webcomponent
  */
@@ -33,6 +37,10 @@ class SearchResultsWebComponent extends HTMLElement {
     const root = this.attachShadow({mode: 'closed'});
     // Create a mount element
     this.mountPoint = document.createElement('div');
+    // Adding custum style sheets for webcomponents to habe them
+    const style = document.createElement('style');
+    style.textContent = AppStyles + IndexStyles + ComponentStyles;
+    root.appendChild(style);
     root.appendChild(this.mountPoint);
   }
   renderComponent() {
