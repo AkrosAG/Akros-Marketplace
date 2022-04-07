@@ -1,73 +1,75 @@
 <script setup>
-import ApiClient from '../api/src/ApiClient'
-import CategoriesApi from '../api/src/api/CategoriesApi'
-import TopicsApi from '../api/src/api/TopicsApi'
-import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO'
-import {onMounted, ref, computed} from 'vue'
-import CreateAdFields from './CreateAdFields.vue'
-import {useI18n} from 'vue-i18n'
-import {i18n} from '../locales/i18n.ts';
+import ApiClient from '../api/src/ApiClient';
+import CategoriesApi from '../api/src/api/CategoriesApi';
+import TopicsApi from '../api/src/api/TopicsApi';
+import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
+import {onMounted, ref, computed} from 'vue';
+import CreateAdFields from './CreateAdFields.vue';
+import {useI18n} from 'vue-i18n';
+import {i18n, translate} from './../locales/i18n.ts';
 
-const apiClient = new ApiClient('/')
-const categoriesApi = new CategoriesApi(apiClient)
-const topicsApi = new TopicsApi(apiClient)
-const categories = ref([])
-const selectedCategoryKey = ref('')
-const requestOrOffer = ref('offer')
-const fieldsToShow = ref([])
-const showAdFields = ref(false)
-let currentCategoryId = 0
-const props = defineProps({ appLanguage: {
+const apiClient = new ApiClient('/');
+const categoriesApi = new CategoriesApi(apiClient);
+const topicsApi = new TopicsApi(apiClient);
+const categories = ref([]);
+const selectedCategoryKey = ref('');
+const requestOrOffer = ref('offer');
+const fieldsToShow = ref([]);
+const showAdFields = ref(false);
+let currentCategoryId = 0;
+const props = defineProps({
+  appLanguage: {
     default: 'de',
-    type: String
-  }})
+    type: String,
+  },
+});
 const {t} = useI18n({
   inheritLocale: true,
   useScope: 'local',
   globalInjection: true,
-})
+});
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
   i18n.global.locale = props.appLanguage;
-})
+});
 
-function getCategories (_error, data, _response) {
+function getCategories(_error, data, _response) {
   // Filter fields that are not for creation'
   data.categories.forEach(category => {
-    category.fields = category.fields.filter(field => field.creation)
-  })
-  categories.value = data.categories
-  updateFields()
+    category.fields = category.fields.filter(field => field.creation);
+  });
+  categories.value = data.categories;
+  updateFields();
 }
 
-function updateFields () {
+function updateFields() {
   const selectedCategory = categories.value.find(
     category => category.key === selectedCategoryKey.value
-  )
+  );
   if (selectedCategory && selectedCategory.fields.length > 0) {
-    currentCategoryId = selectedCategory.category_id
-    fieldsToShow.value = selectedCategory.fields
-    showAdFields.value = true
+    currentCategoryId = selectedCategory.category_id;
+    fieldsToShow.value = selectedCategory.fields;
+    showAdFields.value = true;
   } else {
-    showAdFields.value = false
+    showAdFields.value = false;
   }
 }
 
-function submit (data) {
+function submit(data) {
   const dto = new TopicSaveRequestDTO(
     0,
     currentCategoryId,
     requestOrOffer.value.toUpperCase(),
     data
-  )
-  topicsApi.topicsPost(dto)
+  );
+  topicsApi.topicsPost(dto);
 }
 
 const element = computed(e => {
-  console.log(e)
-  return 'ul'
-})
+  console.log(e);
+  return 'ul';
+});
 </script>
 
 <template>
@@ -89,13 +91,15 @@ const element = computed(e => {
           class="simple-field full-width uppercase"
           @change="updateFields"
         >
-          <option disabled value="">Ad Category</option>
+          <option disabled value="">
+            {{ translate('category') }}
+          </option>
           <option
             v-for="category in categories"
             :key="category.category_id"
             :value="category.key"
           >
-            {{ category.key }}
+            {{ translate('categories.' + category.key + '.name') }}
           </option>
         </select>
       </p>
@@ -107,7 +111,7 @@ const element = computed(e => {
           value="offer"
           checked="checked"
           @change="updateFields"
-        /><label for="ad-offer" class="radio-label no-wrap uppercase">
+        /><label for="ad-offer" class="radio-label">
           {{ t('request') }}
         </label>
       </div>
@@ -120,7 +124,7 @@ const element = computed(e => {
           value="search"
           @change="updateFields"
         />
-        <label for="ad-search" class="radio-label no-wrap uppercase">{{
+        <label for="ad-search" class="radio-label">{{
           t('offer')
         }}</label>
       </div>
@@ -306,7 +310,6 @@ textarea {
   -webkit-appearance: none;
   width: 100%;
   margin-bottom: 1em;
-  text-transform: capitalize;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -333,7 +336,9 @@ input[type='checkbox'] {
   margin: -2px 5px 2px 0;
   vertical-align: middle;
 }
-
+select {
+  cursor: pointer;
+}
 ::selection {
   background-color: #938c83;
   color: #fff;
@@ -362,10 +367,14 @@ input[type='checkbox'] {
 }
 
 .form-wrap {
-  margin: 0 auto;
+  margin: 20px auto;
   max-width: 420px;
   min-height: 70vh;
   font: 400 11pt/1.5 Inter, Helvetica, sans-serif;
+}
+
+.radio-label {
+  text-transform: capitalize;
 }
 
 .form-field {
@@ -402,8 +411,9 @@ input[type='checkbox'] {
     top: 6px;
     left: 8px;
   }
-  label {
-    text-transform: capitalize;
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.65;
   }
   textarea {
     max-width: 100%;
@@ -440,16 +450,3 @@ input[type='checkbox'] {
 @media screen and (min-width: 1536px) {
 }
 </style>
-
-<i18n>
-{
-  "en": {
-    "offer": "I offer",
-    "request": "I'm looking for",
-  },
-  "de": {
-    "offer": "Ich biete",
-    "request": "Ich suche nach",
-  }
-}
-</i18n>

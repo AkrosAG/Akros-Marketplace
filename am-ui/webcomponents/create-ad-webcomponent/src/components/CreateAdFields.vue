@@ -47,18 +47,25 @@
       v-bind:class="{
         half: field.field_type_definition_id === 6,
         third: field.field_type_definition_id === 7,
+        disabled: field.key === 'price_unit',
       }"
     >
       <select
         v-bind:id="'create-add-field-' + field.field_id"
         v-model="fieldValues[field.field_id]"
       >
-        <option disabled value="">{{ field.key }}</option>
+        <option disabled value="">
+          {{ translate('categories.' + currentCategoryKey + '.' + field.key) }}
+        </option>
         <option
           v-for="option in field.field_options"
           v-bind:value="option.field_option_id"
         >
-          {{ option.key }}
+          {{
+            translate(
+              'categories.' + currentCategoryKey + '.' + field.key + '_options.' + option.key
+            )
+          }}
         </option>
       </select>
     </div>
@@ -77,7 +84,9 @@
         v-bind:placeholder="field.key"
         v-model="fieldValues[field.key]"
       />
-      <label>{{ translate('categories.' + currentCategoryKey + '.' + field.key) }}</label>
+      <label>{{
+        translate('categories.' + currentCategoryKey + '.' + field.key)
+      }}</label>
     </div>
 
     <!-- Input type email(9) -->
@@ -85,7 +94,9 @@
       <input
         v-bind:id="'create-add-field-' + field.field_id"
         type="email"
-        v-bind:placeholder="translate('categories.' + currentCategoryKey + '.' + field.key)"
+        v-bind:placeholder="
+          translate('categories.' + currentCategoryKey + '.' + field.key)
+        "
         v-model="fieldValues[field.field_id]"
         class="nocap"
       />
@@ -96,7 +107,9 @@
       <input
         v-bind:id="'create-add-field-' + field.field_id"
         type="tel"
-        v-bind:placeholder="translate('categories.' + currentCategoryKey + '.' + field.key)"
+        v-bind:placeholder="
+          translate('categories.' + currentCategoryKey + '.' + field.key)
+        "
         v-model="fieldValues[field.field_id]"
       />
     </div>
@@ -126,7 +139,9 @@
       <input
         v-bind:id="'create-add-field-' + field.field_id"
         type="date"
-        v-bind:placeholder="translate('categories.' + currentCategoryKey + '.' + field.key)"
+        v-bind:placeholder="
+          translate('categories.' + currentCategoryKey + '.' + field.key)
+        "
         v-model="fieldValues[field.field_id]"
       />
     </div>

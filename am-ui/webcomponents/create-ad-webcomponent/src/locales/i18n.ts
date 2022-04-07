@@ -9,16 +9,18 @@ export const i18n = createI18n({
       offer: 'I offer',
       request: 'Im looking for',
       publish: 'Preview and publish',
+      category: 'Category',
       categories: {
         accomodation: {
-          title: 'Accomodation',
-          types: {
+          name: 'Accomodation',
+          title: 'Title',
+          type: 'Type of accomodation',
+          type_options: {
             room: 'Room',
             apartment: 'Apartment',
             house: 'House',
             parking: 'Parking space',
           },
-          type: 'Type of accomodation',
           region: 'Region',
           postalCode: 'Zipcode',
           address: 'Address, No.',
@@ -26,8 +28,8 @@ export const i18n = createI18n({
           size: 'Living space (m2)',
           price: 'Rent (CHF)',
           floor: 'Floor',
-          priceUnit: 'Price unit',
-          priceUnits: {
+          price_unit: 'Price unit',
+          price_unit_options: {
             month: 'Per month',
             week: 'Per Week',
             day: 'Per Day',
@@ -39,11 +41,12 @@ export const i18n = createI18n({
           phone: 'Phone number',
           email: 'E-mail',
         },
-      },
-      carShare: {
-        title: 'Car sharing',
-        types: {
-          share: 'Car sharing',
+        carShare: {
+          name: 'Car sharing',
+          title: 'Title',
+          types: {
+            share: 'Car sharing',
+          },
         },
       },
     },
@@ -51,16 +54,17 @@ export const i18n = createI18n({
       offer: 'Ich biete',
       request: 'Ich suche nach',
       publish: 'Vorschau anzeigen und veröffentlichen',
+      category: 'Categorie',
       categories: {
         accomodation: {
-          title: 'Unterkünfte',
-          types: {
+          title: 'Title',
+          type: 'Art der Unterkunft',
+          type_options: {
             room: 'Zimmer',
             apartment: 'Wohnung',
             house: 'Haus',
             parking: 'Parkplatz',
           },
-          type: 'Art der Unterkunft',
           region: 'Region',
           postalCode: 'PLZ',
           address: 'Strasse, Nr.',
@@ -68,8 +72,8 @@ export const i18n = createI18n({
           size: 'Wohnfläche (m2)',
           price: 'Miete (CHF)',
           floor: 'Etage',
-          priceUnit: 'Preiseinheit',
-          priceUnits: {
+          price_unit: 'Preiseinheit',
+          price_unit_options: {
             month: 'Pro Monat',
             week: 'Pro Woche',
             day: 'Pro Tag',
@@ -81,21 +85,21 @@ export const i18n = createI18n({
           phone: 'Telefonnummer',
           email: 'E-mail',
         },
-      },
-      carShare: {
-        title: 'Car sharing',
-        types: {
-          share: 'Car sharing',
+        carShare: {
+          title: 'Title',
+          name: 'Car sharing',
+          types: {
+            share: 'Car sharing',
+          },
         },
       },
     },
   },
 });
 
-
 export const translate = (key: string) => {
   if (!key) {
-      return '';
+    return '';
   }
   return i18n.global.t(key);
 };
