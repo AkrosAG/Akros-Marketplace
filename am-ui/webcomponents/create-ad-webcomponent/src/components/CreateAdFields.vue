@@ -17,7 +17,9 @@
       <input
         v-bind:id="'create-add-field-' + field.field_id"
         type="text"
-        v-bind:placeholder="field.key"
+        v-bind:placeholder="
+          translate('categories.' + currentCategoryKey + '.' + field.key)
+        "
         v-model="fieldValues[field.field_id]"
       />
     </div>
@@ -27,7 +29,9 @@
       <textarea
         v-bind:id="'create-add-field-' + field.field_id"
         type="text"
-        v-bind:placeholder="field.key"
+        v-bind:placeholder="
+          translate('categories.' + currentCategoryKey + '.' + field.key)
+        "
         v-model="fieldValues[field.field_id]"
       />
     </div>
@@ -73,7 +77,7 @@
         v-bind:placeholder="field.key"
         v-model="fieldValues[field.key]"
       />
-      <label>{{ field.key }}</label>
+      <label>{{ translate('categories.' + currentCategoryKey + '.' + field.key) }}</label>
     </div>
 
     <!-- Input type email(9) -->
@@ -81,7 +85,7 @@
       <input
         v-bind:id="'create-add-field-' + field.field_id"
         type="email"
-        v-bind:placeholder="field.key"
+        v-bind:placeholder="translate('categories.' + currentCategoryKey + '.' + field.key)"
         v-model="fieldValues[field.field_id]"
         class="nocap"
       />
@@ -92,7 +96,7 @@
       <input
         v-bind:id="'create-add-field-' + field.field_id"
         type="tel"
-        v-bind:placeholder="field.key"
+        v-bind:placeholder="translate('categories.' + currentCategoryKey + '.' + field.key)"
         v-model="fieldValues[field.field_id]"
       />
     </div>
@@ -122,7 +126,7 @@
       <input
         v-bind:id="'create-add-field-' + field.field_id"
         type="date"
-        v-bind:placeholder="field.key"
+        v-bind:placeholder="translate('categories.' + currentCategoryKey + '.' + field.key)"
         v-model="fieldValues[field.field_id]"
       />
     </div>
@@ -150,7 +154,7 @@
     </div>
   </div>
   <p class="submit-row">
-    <a class="btn" v-on:click="submit">Preview and Publish</a>
+    <a class="btn" v-on:click="submit">{{ translate('publish') }}</a>
   </p>
 </template>
 
@@ -158,7 +162,7 @@
 import {i18n, translate} from './../locales/i18n.ts';
 
 export default {
-  props: ['fieldsToShow', 'appLanguage'],
+  props: ['fieldsToShow', 'appLanguage', 'currentCategoryKey'],
   emits: ['submit'],
   data() {
     const fieldValues = {};
@@ -183,6 +187,9 @@ export default {
         return {field_type_id: id, value: fieldsVals[i]};
       });
       this.$emit('submit', fields);
+    },
+    translate(key) {
+      return translate(key);
     },
   },
   // beforeMount() {

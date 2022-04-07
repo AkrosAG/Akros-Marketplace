@@ -46,9 +46,9 @@ function updateFields () {
     category => category.key === selectedCategoryKey.value
   )
   if (selectedCategory && selectedCategory.fields.length > 0) {
+    currentCategoryId = selectedCategory.category_id
     fieldsToShow.value = selectedCategory.fields
     showAdFields.value = true
-    currentCategoryId = selectedCategory.category_id
   } else {
     showAdFields.value = false
   }
@@ -128,6 +128,7 @@ const element = computed(e => {
         v-if="showAdFields"
         :fields-to-show="fieldsToShow"
         :app-language="appLanguage"
+        :current-category-key="selectedCategoryKey"
         @submit="submit"
       />
     </form>

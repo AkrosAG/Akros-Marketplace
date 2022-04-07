@@ -93,7 +93,7 @@ export const i18n = createI18n({
 });
 
 
-export const translate = (key: string, appLanguage: string) => {
+export const translate = (key: string) => {
   if (!key) {
       return '';
   }
