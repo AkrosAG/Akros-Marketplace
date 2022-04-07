@@ -155,8 +155,10 @@
 </template>
 
 <script>
+import {i18n, translate} from './../locales/i18n.ts';
+
 export default {
-  props: ['fieldsToShow'],
+  props: ['fieldsToShow', 'appLanguage'],
   emits: ['submit'],
   data() {
     const fieldValues = {};
@@ -171,6 +173,10 @@ export default {
   },
   methods: {
     submit() {
+      //TODO DELETE before merge to MASTER, just to test that translations are working
+      console.log(this.appLanguage);
+      console.log(translate('request'));
+      ////////////////////
       const fieldsVals = Object.values(this.fieldValues);
       const fieldsKeys = Object.keys(this.fieldValues);
       const fields = fieldsKeys.map((id, i) => {
@@ -179,5 +185,8 @@ export default {
       this.$emit('submit', fields);
     },
   },
+  // beforeMount() {
+  //   i18n.global.locale = this.appLanguage;
+  // },
 };
 </script>

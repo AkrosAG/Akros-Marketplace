@@ -3,10 +3,12 @@ import {createI18n} from 'vue-i18n';
 export const i18n = createI18n({
   locale: 'en',
   legacy: false,
+  globalInjection: true,
   messages: {
     en: {
       offer: 'I offer',
       request: 'Im looking for',
+      publish: 'Preview and publish',
       categories: {
         accomodation: {
           title: 'Accomodation',
@@ -36,7 +38,6 @@ export const i18n = createI18n({
           about: 'Brief description about me',
           phone: 'Phone number',
           email: 'E-mail',
-          publish: 'Preview and publish',
         },
       },
       carShare: {
@@ -49,6 +50,7 @@ export const i18n = createI18n({
     de: {
       offer: 'Ich biete',
       request: 'Ich suche nach',
+      publish: 'Vorschau anzeigen und veröffentlichen',
       categories: {
         accomodation: {
           title: 'Unterkünfte',
@@ -78,7 +80,6 @@ export const i18n = createI18n({
           about: 'Kurze Beschreibung über mich',
           phone: 'Telefonnummer',
           email: 'E-mail',
-          publish: 'Vorschau anzeigen und veröffentlichen',
         },
       },
       carShare: {
@@ -90,3 +91,11 @@ export const i18n = createI18n({
     },
   },
 });
+
+
+export const translate = (key: string, appLanguage: string) => {
+  if (!key) {
+      return '';
+  }
+  return i18n.global.t(key);
+};
