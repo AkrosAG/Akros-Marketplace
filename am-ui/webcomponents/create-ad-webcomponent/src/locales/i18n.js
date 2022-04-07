@@ -10,7 +10,7 @@ export default createI18n({
       categoriesPlaceholder: 'Ad category',
       categories: {
         accomodation: {
-          title: 'Accomodation',
+          typeTitle: 'Accomodation',
           type: {
             title: 'Type of accomodation',
             types: {
@@ -20,6 +20,7 @@ export default createI18n({
               parking: 'Parking space',
             },
           },
+          title: 'Title',
           region: 'Region',
           postalCode: 'Zipcode',
           address: 'Address, No.',
@@ -27,9 +28,9 @@ export default createI18n({
           size: 'Living space (m2)',
           price: 'Rent (CHF)',
           floor: 'Floor',
-          frequency: {
+          price_unit: {
             title: 'Price unit',
-            frequencies: {
+            price_units: {
               month: 'Per month',
               week: 'Per Week',
               day: 'Per Day',
@@ -44,7 +45,7 @@ export default createI18n({
           publish: 'Preview and publish',
         },
         carShare: {
-          title: 'Car sharing',
+          typeTitle: 'Car sharing',
           types: {
             share: 'Car sharing',
           },
@@ -57,7 +58,7 @@ export default createI18n({
       categoriesPlaceholder: 'Art des Angebots',
       categories: {
         accomodation: {
-          title: 'Unterkünfte',
+          typeTitle: 'Unterkünfte',
           type: {
             title: 'Art der Unterkunft',
             types: {
@@ -67,6 +68,7 @@ export default createI18n({
               parking: 'Parkplatz',
             },
           },
+          title: 'Titel',
           region: 'Region',
           postalCode: 'PLZ',
           address: 'Strasse, Nr.',
@@ -74,9 +76,9 @@ export default createI18n({
           size: 'Wohnfläche (m2)',
           price: 'Miete (CHF)',
           floor: 'Etage',
-          frequency: {
+          price_unit: {
             title: 'Preiseinheit',
-            frequencies: {
+            price_units: {
               month: 'Pro Monat',
               week: 'Pro Woche',
               day: 'Pro Tag',
@@ -91,7 +93,7 @@ export default createI18n({
           publish: 'Vorschau anzeigen und veröffentlichen',
         },
         carShare: {
-          title: 'Car sharing',
+          typeTitle: 'Car sharing',
           types: {
             share: 'Car sharing',
           },

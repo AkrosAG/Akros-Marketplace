@@ -86,7 +86,7 @@ function submit (data) {
             :key="category.category_id"
             :value="category.key"
           >
-            {{ t(`categories.${category.key}.title`) }}
+            {{ t(`categories.${category.key}.typeTitle`) }}
           </option>
         </select>
       </p>
@@ -98,7 +98,7 @@ function submit (data) {
           value="offer"
           checked="checked"
           @change="updateFields"
-        /><label for="ad-offer" class="radio-label no-wrap uppercase">
+        /><label for="ad-offer" class="radio-label">
           {{ t('request') }}
         </label>
       </div>
@@ -111,9 +111,7 @@ function submit (data) {
           value="search"
           @change="updateFields"
         />
-        <label for="ad-search" class="radio-label no-wrap uppercase">{{
-          t('offer')
-        }}</label>
+        <label for="ad-search" class="radio-label">{{ t('offer') }}</label>
       </div>
       <CreateAdFields
         v-if="showAdFields"
@@ -296,7 +294,6 @@ textarea {
   -webkit-appearance: none;
   width: 100%;
   margin-bottom: 1em;
-  text-transform: capitalize;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -323,7 +320,9 @@ input[type='checkbox'] {
   margin: -2px 5px 2px 0;
   vertical-align: middle;
 }
-
+select {
+  cursor: pointer;
+}
 ::selection {
   background-color: #938c83;
   color: #fff;
@@ -352,10 +351,14 @@ input[type='checkbox'] {
 }
 
 .form-wrap {
-  margin: 0 auto;
+  margin: 20px auto;
   max-width: 420px;
   min-height: 70vh;
   font: 400 11pt/1.5 Inter, Helvetica, sans-serif;
+}
+
+.radio-label {
+  text-transform: capitalize;
 }
 
 .form-field {
@@ -392,8 +395,9 @@ input[type='checkbox'] {
     top: 6px;
     left: 8px;
   }
-  label {
-    text-transform: capitalize;
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.65;
   }
   textarea {
     max-width: 100%;

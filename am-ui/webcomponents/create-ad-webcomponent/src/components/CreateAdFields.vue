@@ -43,6 +43,7 @@
       v-bind:class="{
         half: field.field_type_definition_id === 6,
         third: field.field_type_definition_id === 7,
+        disabled: field.key === 'price_unit',
       }"
     >
       <select
