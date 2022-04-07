@@ -1,6 +1,7 @@
-<script lang="ts">
+<script>
 import {defineComponent, provide, watchEffect} from 'vue'
-import {createI18n, I18nInjectionKey} from 'vue-i18n'
+import {I18nInjectionKey} from 'vue-i18n'
+import i18n from '../locales/i18n'
 /**
  * Define the web components that host the i18n instance.
  *
@@ -16,10 +17,7 @@ import {createI18n, I18nInjectionKey} from 'vue-i18n'
  *  In web components only supports the composition API.
  *  It will not work in legacy API mode.
  */
-const i18n = createI18n<false>({
-  legacy: false, // must set to `false`
-  locale: 'de',
-})
+
 export default defineComponent({
   props: {
     locale: {
@@ -31,6 +29,7 @@ export default defineComponent({
     /**
      * provide i18n instance with `I18nInjectionKey` for other web components
      */
+    console.log(i18n)
     provide(I18nInjectionKey, i18n)
     watchEffect(() => {
       i18n.global.locale.value = props.locale

@@ -3,10 +3,9 @@ import ApiClient from '../api/src/ApiClient'
 import CategoriesApi from '../api/src/api/CategoriesApi'
 import TopicsApi from '../api/src/api/TopicsApi'
 import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO'
-import {onMounted, ref, computed} from 'vue'
+import {onMounted, ref, computed, watchEffect} from 'vue'
 import CreateAdFields from './CreateAdFields.vue'
 import {useI18n} from 'vue-i18n'
-import {i18n} from '../locales/i18n.ts';
 
 const apiClient = new ApiClient('/')
 const categoriesApi = new CategoriesApi(apiClient)
@@ -17,19 +16,16 @@ const requestOrOffer = ref('offer')
 const fieldsToShow = ref([])
 const showAdFields = ref(false)
 let currentCategoryId = 0
-const props = defineProps({ appLanguage: {
+const props = defineProps({
+  appLanguage: {
     default: 'de',
-    type: String
-  }})
-const {t} = useI18n({
-  inheritLocale: true,
-  useScope: 'local',
-  globalInjection: true,
+    type: String,
+  },
 })
+const {t} = useI18n({useScope: 'global'})
 
 onMounted(() => {
-  categoriesApi.categoriesCreateGet(true, getCategories);
-  i18n.global.locale = props.appLanguage;
+  categoriesApi.categoriesCreateGet(true, getCategories)
 })
 
 function getCategories (_error, data, _response) {
@@ -46,9 +42,9 @@ function updateFields () {
     category => category.key === selectedCategoryKey.value
   )
   if (selectedCategory && selectedCategory.fields.length > 0) {
-    currentCategoryId = selectedCategory.category_id
     fieldsToShow.value = selectedCategory.fields
     showAdFields.value = true
+    currentCategoryId = selectedCategory.category_id
   } else {
     showAdFields.value = false
   }
@@ -63,11 +59,6 @@ function submit (data) {
   )
   topicsApi.topicsPost(dto)
 }
-
-const element = computed(e => {
-  console.log(e)
-  return 'ul'
-})
 </script>
 
 <template>
@@ -89,13 +80,13 @@ const element = computed(e => {
           class="simple-field full-width uppercase"
           @change="updateFields"
         >
-          <option disabled value="">Ad Category</option>
+          <option disabled value="">{{ t(`categoriesPlaceholder`) }}</option>
           <option
             v-for="category in categories"
             :key="category.category_id"
             :value="category.key"
           >
-            {{ category.key }}
+            {{ t(`categories.${category.key}.title`) }}
           </option>
         </select>
       </p>
@@ -126,9 +117,8 @@ const element = computed(e => {
       </div>
       <CreateAdFields
         v-if="showAdFields"
+        :selected-category="selectedCategoryKey"
         :fields-to-show="fieldsToShow"
-        :app-language="appLanguage"
-        :current-category-key="selectedCategoryKey"
         @submit="submit"
       />
     </form>
@@ -440,16 +430,3 @@ input[type='checkbox'] {
 @media screen and (min-width: 1536px) {
 }
 </style>
-
-<i18n>
-{
-  "en": {
-    "offer": "I offer",
-    "request": "I'm looking for",
-  },
-  "de": {
-    "offer": "Ich biete",
-    "request": "Ich suche nach",
-  }
-}
-</i18n>

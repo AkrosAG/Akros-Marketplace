@@ -6,8 +6,8 @@
       class="form-field full"
       v-if="
         field.field_type_definition_id === 1 ||
-        field.field_type_definition_id === 2 ||
-        field.field_type_definition_id === 3
+          field.field_type_definition_id === 2 ||
+          field.field_type_definition_id === 3
       "
       v-bind:class="{
         half: field.field_type_definition_id === 2,
@@ -17,9 +17,7 @@
       <input
         v-bind:id="'create-add-field-' + field.field_id"
         type="text"
-        v-bind:placeholder="
-          translate('categories.' + currentCategoryKey + '.' + field.key)
-        "
+        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
         v-model="fieldValues[field.field_id]"
       />
     </div>
@@ -29,9 +27,7 @@
       <textarea
         v-bind:id="'create-add-field-' + field.field_id"
         type="text"
-        v-bind:placeholder="
-          translate('categories.' + currentCategoryKey + '.' + field.key)
-        "
+        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
         v-model="fieldValues[field.field_id]"
       />
     </div>
@@ -41,8 +37,8 @@
       class="form-field full"
       v-if="
         field.field_type_definition_id === 5 ||
-        field.field_type_definition_id === 6 ||
-        field.field_type_definition_id === 7
+          field.field_type_definition_id === 6 ||
+          field.field_type_definition_id === 7
       "
       v-bind:class="{
         half: field.field_type_definition_id === 6,
@@ -53,12 +49,16 @@
         v-bind:id="'create-add-field-' + field.field_id"
         v-model="fieldValues[field.field_id]"
       >
-        <option disabled value="">{{ field.key }}</option>
+        <option disabled value="">{{
+          t(`categories.${selectedCategory}.${field.key}.title`)
+        }}</option>
         <option
           v-for="option in field.field_options"
           v-bind:value="option.field_option_id"
         >
-          {{ option.key }}
+          {{
+            t(`categories.${selectedCategory}.${field.key}.types.${option.key}`)
+          }}
         </option>
       </select>
     </div>
@@ -68,16 +68,16 @@
       class="form-field checkbox half"
       v-if="
         field.field_type_definition_id === 8 ||
-        field.field_type_definition_id === 16
+          field.field_type_definition_id === 16
       "
     >
       <input
         v-bind:id="'create-add-field-' + field.field_id"
         type="checkbox"
-        v-bind:placeholder="field.key"
+        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
         v-model="fieldValues[field.key]"
       />
-      <label>{{ translate('categories.' + currentCategoryKey + '.' + field.key) }}</label>
+      <label>{{ t(`categories.${selectedCategory}.${field.key}`) }}</label>
     </div>
 
     <!-- Input type email(9) -->
@@ -85,7 +85,7 @@
       <input
         v-bind:id="'create-add-field-' + field.field_id"
         type="email"
-        v-bind:placeholder="translate('categories.' + currentCategoryKey + '.' + field.key)"
+        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
         v-model="fieldValues[field.field_id]"
         class="nocap"
       />
@@ -96,7 +96,7 @@
       <input
         v-bind:id="'create-add-field-' + field.field_id"
         type="tel"
-        v-bind:placeholder="translate('categories.' + currentCategoryKey + '.' + field.key)"
+        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
         v-model="fieldValues[field.field_id]"
       />
     </div>
@@ -117,7 +117,7 @@
       class="form-field half"
       v-if="
         field.field_type_definition_id === 12 ||
-        field.field_type_definition_id === 13
+          field.field_type_definition_id === 13
       "
       v-bind:class="{
         third: field.field_type_definition_id === 13,
@@ -126,7 +126,7 @@
       <input
         v-bind:id="'create-add-field-' + field.field_id"
         type="date"
-        v-bind:placeholder="translate('categories.' + currentCategoryKey + '.' + field.key)"
+        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
         v-model="fieldValues[field.field_id]"
       />
     </div>
@@ -136,7 +136,7 @@
       class="form-field half"
       v-if="
         field.field_type_definition_id === 14 ||
-        field.field_type_definition_id === 15
+          field.field_type_definition_id === 15
       "
       v-bind:class="{
         third: field.field_type_definition_id === 15,
@@ -146,7 +146,9 @@
         v-bind:id="'create-add-field-' + field.field_id"
         v-model="fieldValues[field.field_id]"
       >
-        <option disabled value="">{{ field.key }}</option>
+        <option disabled value="">{{
+          t(`categories.${selectedCategory}.${field.key}`)
+        }}</option>
         <option v-for="option in counterOptions" v-bind:value="option">
           {{ option }}
         </option>
@@ -154,46 +156,35 @@
     </div>
   </div>
   <p class="submit-row">
-    <a class="btn" v-on:click="submit">{{ translate('publish') }}</a>
+    <a class="btn" v-on:click="submit">{{
+      t('categories.accomodation.publish')
+    }}</a>
   </p>
 </template>
 
-<script>
-import {i18n, translate} from './../locales/i18n.ts';
+<script setup>
+import {onMounted, ref} from 'vue'
+import {useI18n} from './useI18n'
+import i18n from '../locales/i18n'
 
-export default {
-  props: ['fieldsToShow', 'appLanguage', 'currentCategoryKey'],
-  emits: ['submit'],
-  data() {
-    const fieldValues = {};
-    const counterOptions = [1, 2, 3, 4, 5, 6, 7, 8];
-    this.fieldsToShow.forEach(field => {
-      fieldValues[field.field_id] = '';
-    });
-    return {
-      fieldValues,
-      counterOptions,
-    };
-  },
-  methods: {
-    submit() {
-      //TODO DELETE before merge to MASTER, just to test that translations are working
-      console.log(this.appLanguage);
-      console.log(translate('request'));
-      ////////////////////
-      const fieldsVals = Object.values(this.fieldValues);
-      const fieldsKeys = Object.keys(this.fieldValues);
-      const fields = fieldsKeys.map((id, i) => {
-        return {field_type_id: id, value: fieldsVals[i]};
-      });
-      this.$emit('submit', fields);
-    },
-    translate(key) {
-      return translate(key);
-    },
-  },
-  // beforeMount() {
-  //   i18n.global.locale = this.appLanguage;
-  // },
-};
+const props = defineProps({fieldsToShow: Array, selectedCategory: String})
+const emit = defineEmits(['submit'])
+const fieldValues = ref([])
+const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8])
+const {t} = useI18n(i18n.global.messages.value)
+
+function submit () {
+  const fieldsVals = Object.values(this.fieldValues)
+  const fieldsKeys = Object.keys(this.fieldValues)
+  const fields = fieldsKeys.map((id, i) => {
+    return {field_type_id: id, value: fieldsVals[i]}
+  })
+  emit('submit', fields)
+}
+
+onMounted(() => {
+  props.fieldsToShow.forEach(field => {
+    fieldValues.value[field.field_id] = ''
+  })
+})
 </script>
