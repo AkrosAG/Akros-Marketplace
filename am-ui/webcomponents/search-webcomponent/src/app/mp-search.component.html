@@ -33,8 +33,8 @@
       [attr.aria-labelby]="'flush-heading-' + indexOfelement"
       data-bs-parent="#accordionParent"
     >
-      <div class="accordion-body">
-        <div class="flex w-full" *ngIf="currentSelected === indexOfelement">
+      <div class="accordion-body" *ngIf="currentSelected === indexOfelement">
+        <div class="flex w-full">
           <mp-search-form
             class="flex-1"
             [appLanguage]="appLanguage"
