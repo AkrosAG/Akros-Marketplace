@@ -21,7 +21,8 @@
    2. [Level 2](#level-2)
    3. [Level 3](#level-3)
 6. [Runtime View](#runtime-view)
-   1. [\<Runtime Scenario 1\>](#runtime-scenario-1)
+   1. [\<Use Case Diagram\>](#use-case-diagram)
+   2. [\<Runtime Scenario 1\>](#runtime-scenario-1)
    3. [\<Runtime Scenario 2\>](#runtime-scenario-2)
    4. [\<Runtime Scenario 3\>](#runtime-scenario-3)
    5. [Precondition:](#precondition)
@@ -270,9 +271,8 @@ _\<white box template\>_
 ![Context View of AM](https://user-images.githubusercontent.com/41478805/152165162-87954f1b-29e4-4670-8d77-fac106446ff7.png)
 
 ## \<Use Case Diagram\>
+
 ![image](https://user-images.githubusercontent.com/96523998/154435703-a64d2dee-2c99-4582-8b55-41b0a8d53b88.png) ![image](https://user-images.githubusercontent.com/96523998/154487230-3a51163f-5b49-416b-bfbe-a8712cc9dccd.png)
-
-
 
 ## \<Runtime Scenario 1\>
 
@@ -401,10 +401,8 @@ To be filled after MVP released.
 
 # Glossary
 
-+-----------------------+-----------------------------------------------+
-| Term | Definition |
-+=======================+===============================================+
-| _\<Term-1\>_ | _\<definition-1\>_ |
-+-----------------------+-----------------------------------------------+
-| _\<Term-2\>_ | _\<definition-2\>_ |
-+-----------------------+-----------------------------------------------+
+| Term          | Definition |
+| ------------- | ---------- |
+| Topic         |            |
+| Category      |            |
+| Advertisement |            |

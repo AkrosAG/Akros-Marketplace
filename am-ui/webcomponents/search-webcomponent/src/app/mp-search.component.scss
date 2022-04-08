@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 .accordion {
+  max-width: 360px;
   font: 400 11pt/1.5 Inter, Helvetica, sans-serif;
 
   .accordion-flush {
@@ -40,7 +41,7 @@
     font-size: 1.1em;
     font-weight: 500;
     background-color: #938c83;
-    border-radius: 1em;
+    border-radius: 1em !important;
     cursor: pointer;
     color: #fff;
 
@@ -54,6 +55,8 @@
       &.selected {
         background-color: #635c53;
         color: white;
+        border-bottom-right-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
       }
 
       &::after {

@@ -41,7 +41,7 @@
     width: 48%;
     display: inline-block;
 
-    &:nth-child(even) {
+    &:nth-child(odd) {
       float: right;
     }
   }
@@ -54,6 +54,7 @@
     font-size: 1.1em;
     text-transform: uppercase;
     transition: 0.3s;
+
     &.big {
       padding: 6px 24px;
       vertical-align: middle;

@@ -34,5 +34,8 @@
     "create": {
       "title": "Veröffentlichen Sie Ihre Anzeige kostenlos"
     }
+  },
+  "search-results": {
+    "title": "Suchergebnisse"
   }
 }

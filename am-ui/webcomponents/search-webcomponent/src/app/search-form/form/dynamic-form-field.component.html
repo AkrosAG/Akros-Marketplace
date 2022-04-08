@@ -1,5 +1,6 @@
 <div [formGroup]="form">
   <div [ngSwitch]="formField.type">
+    <!-- Textfields -->
     <input
       *mpSwitchCases="[2]"
       [formControlName]="formField.key"
@@ -12,7 +13,26 @@
           | translate
       }}"
     />
-    <!-- [multiple]="formField.type === 6" -->
+    <!-- Region -->
+    <input
+      *mpSwitchCases="[2, 4, 8, 9]"
+      [formControlName]="formField.key"
+      [id]="formField.key"
+      type="text"
+      class="bg-grey-lightest focus:border-orange shadow-inner w-full"
+      placeholder="{{
+        'searchForm.categories.' + currentCategoryKey + '.' + formField.key
+          | translate
+      }}"
+    />
+    <textarea
+      *ngSwitchCase="3"
+      [formControlName]="formField.key"
+      [id]="formField.key"
+      class="shadow-inner focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+      placeholder="--"
+    ></textarea>
+    <!-- Type -->
     <select
       [id]="formField.key"
       *mpSwitchCases="[6]"
@@ -31,6 +51,7 @@
         {{ opt.key }}
       </option>
     </select>
+    <!-- Amount of rooms -->
     <select
       [id]="formField.key"
       *mpSwitchCases="[14]"
@@ -47,6 +68,13 @@
         {{ opt }}
       </option>
     </select>
+    <input
+      *ngSwitchCase="7"
+      [formControlName]="formField.key"
+      [id]="formField.key"
+      type="checkbox"
+    />
+    <!-- Dates -->
     <input
       class="bg-grey-lightest focus:border-orange shadow-inner w-full"
       placeholder="{{

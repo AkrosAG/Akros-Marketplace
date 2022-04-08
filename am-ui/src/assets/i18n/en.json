@@ -34,5 +34,8 @@
     "create": {
       "title": "Post Your Advertisement for Free"
     }
+  },
+  "search-results": {
+    "title": "Search Results"
   }
 }

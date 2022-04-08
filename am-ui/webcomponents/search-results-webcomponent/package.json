@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:prod": "vite build",
     "preview": "vite preview",
     "prepackage": "npm run build",
     "package": "node package-script.js",

@@ -1,0 +1,405 @@
+openapi: 3.0.3
+info:
+  title: Akros Marketplace
+  version: 1.0.0-SNAPSHOT
+  description: YAML Swagger Configuration for the Akros Marketplace
+
+paths:
+  /listFieldTypeDefinition:
+    get:
+      summary: List the field type definitions
+      description: helper function only
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/FieldTypeDefinitionResponseDTO'
+
+  /categories:
+    get:
+      summary: List categories
+      description: used for primary search page
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/VWCategoryResponseDTO'
+
+  /categorySearchFields/{categoryId}:
+    get:
+      summary: List the search field types for one categorie
+      description: used for primary search page
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          description: Foreign Key ID to Category.
+          schema:
+            type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/FieldTypeResponseDTO'
+
+  /listTopicFieldTypes/{categoryId}/{search}:
+    get:
+      summary: List the field types to edit and add another search/offer topic 
+      description: used to get the fields to add a new topic
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          description: Foreign Key ID to Category.
+          schema:
+            type: integer
+            format: int64
+        - name: search
+          in: path
+          required: true
+          description: valid values are 'SEARCH' and 'OFFER' 
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/FieldTypeResponseDTO'
+
+  /saveTopic:
+    post:
+      summary: Save a topic 
+      description: Save a topic
+      requestBody:
+        description: All values to save a topic
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TopicStoreRequestDTO'
+        required: true
+      responses:
+        200:
+          description: OK
+
+  /loadTopic/{topicId}:
+    get:
+      summary: Load a topic 
+      description: Load a topic
+      parameters:
+        - name: topicId
+          in: path
+          required: true
+          description: Primary Key ID to Topic.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopicLoadResponseDTO'
+
+  /deleteTopic/{topicId}:
+    delete:
+      summary: Delete a topic 
+      description: Delete a topic
+      parameters:
+        - name: topicId
+          in: path
+          required: true
+          description: Primary Key ID to Topic.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: OK
+
+  /searchTopic:
+    get:
+      summary: Save a topic 
+      description: Save a topic
+      requestBody:
+        description: All values to save a topic
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TopicSearchRequestDTO'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TopicSearchListResponseDTO'
+
+components:
+  schemas:
+    FieldTypeDefinitionResponseDTO:
+      type: object
+      properties:
+        fieldTypeDefinitionId:
+          type: integer
+          format: int32
+        description:
+          type: string
+          example: Parkplatz
+
+    VWCategoryResponseDTO:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int32
+        key:
+          type: string
+
+    FieldTypeResponseDTO:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int64
+        fieldTypeId:
+          type: integer
+          format: int64
+        fieldTypeDefinitionId:
+          type: integer
+          format: int32
+        fieldTypeDefinitionDescription:
+          type: string
+          example: Number
+        description:
+          type: string
+          example: Beschreibung
+        shortDescription:
+          type: string
+          example: Beschreibung der Unterkunft
+        minValue:
+          type: integer
+          example: 5
+        maxValue:
+          type: integer
+          example: 5
+        search:
+          type: boolean
+          example: false
+        offer:
+          type: boolean
+          example: false
+        fieldTypeChooses:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldTypeChooseResponseDTO'
+
+    FieldTypeChooseResponseDTO:
+      type: object
+      properties:
+        fieldTypeChooseId:
+          type: integer
+          format: int64
+        description:
+          type: string
+        sortNumber:
+          type: integer
+
+    TopicStoreRequestDTO:
+      type: object
+      properties:
+        topicId:
+          type: integer
+          format: int64
+        categoryId:
+          type: integer
+          format: int64
+        searchOrOffer:
+          type: string
+          example: OFFER or SEARCH
+        topicValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicValueStoreRequestDTO'
+
+    TopicValueStoreRequestDTO:
+      type: object
+      properties:
+        fieldTypeId:
+          type: integer
+          format: int64
+        valueNum:
+          type: double
+          format: int64
+        valueVarchar:
+          type: string
+        valueDate:
+          type: date
+        valueBoolean:
+          type: boolean
+
+    TopicLoadResponseDTO:
+      type: object
+      properties:
+        topicId:
+          type: integer
+          format: int64
+        categoryId:
+          type: integer
+          format: int64
+        searchOrOffer:
+          type: string
+          example: OFFER or SEARCH
+        topicValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicValueLoadResponseDTO'
+
+    TopicValueLoadResponseDTO:
+      type: object
+      properties:
+        topicValueId:
+          type: integer
+          format: int64
+        fieldTypeId:
+          type: integer
+          format: int64
+        fieldTypeDescription:
+          type: string
+          example: Beschreibung
+        fieldTypeShortDescription:
+          type: string
+          example: Beschreibung
+        fieldTypeDefinitionId:
+          type: integer
+          format: int32
+        fieldTypeDefinitionDescription:
+          type: string
+          example: Number
+        minValue:
+          type: integer
+          example: 5
+        maxValue:
+          type: integer
+          example: 5
+        valueNum:
+          type: double
+          format: int64
+        valueVarchar:
+          type: string
+        valueDate:
+          type: date
+        valueBoolean:
+          type: boolean
+        fieldTypeChooses:
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldTypeChooseResponseDTO'
+
+    TopicSearchRequestDTO:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int64
+        searchOrOffer:
+          type: string
+          example: OFFER or SEARCH (may be null for both)
+        searchValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicSearchFieldTypeValuesRequestDTO'
+
+    TopicSearchFieldTypeValuesRequestDTO:
+      type: object
+      properties:
+        fieldTypeId:
+          type: integer
+          format: int64
+        valueNumFrom:
+          type: double
+          format: int64
+        valueNumTo:
+          type: double
+          format: int64
+        valueVarchar:
+          type: string
+        valueDate:
+          type: date
+        valueBoolean:
+          type: boolean
+
+    TopicSearchListResponseDTO:
+      type: object
+      properties:
+        columnHeader:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicSearchColumnHeaderResponseDTO'
+        topics:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicSearchResponseDTO'
+
+    TopicSearchColumnHeaderResponseDTO:
+      type: object
+      properties:
+        fieldTypeId:
+          type: integer
+          format: int64
+        description:
+          type: string
+          example: Beschreibung
+        shortDescription:
+          type: string
+          example: Beschreibung der Unterkunft
+
+    TopicSearchResponseDTO:
+      type: object
+      properties:
+        topicId:
+          type: integer
+          format: int64
+        topicValues:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicSearchValueResponseDTO'
+
+
+    TopicSearchValueResponseDTO:
+      type: object
+      properties:
+        topicId:
+          type: integer
+          format: int64
+        fieldTypeId:
+          type: integer
+          format: int64
+        valueNum:
+          type: double
+          format: int64
+        valueVarchar:
+          type: string
+        valueDate:
+          type: date
+        valueBoolean:
+          type: boolean
+        fieldTypeDefinitionId:
+          type: integer
+          format: int32
+        fieldTypeDefinitionDescription:
+          type: string
+          example: Number

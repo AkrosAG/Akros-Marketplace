@@ -1,6 +1,13 @@
-<div class="container">
-  <search-results-component
-    [language]="this.language"
-    [results]="this.results"
-  ></search-results-component>
+<div id="intro">
+  <div class="container intro-block">
+    <h1 class="text-white">{{ 'search-results.title' | translate }}</h1>
+  </div>
+</div>
+<div class="container-fluid simple">
+  <div class="container content-block">
+    <search-results-component
+      [language]="this.language"
+      [results]="this.results"
+    ></search-results-component>
+  </div>
 </div>
