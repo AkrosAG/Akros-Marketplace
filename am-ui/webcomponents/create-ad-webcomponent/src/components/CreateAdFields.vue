@@ -321,8 +321,6 @@ function submit() {
     // Temp exception for field price_unit as it is at this point not developed
     if (i !== 7) {
       if (!fieldValue) {
-        console.log(i);
-        console.log(fieldValue);
         errors.value[i] = true;
         containsErrors = true;
       } else if (fieldValue.toString().length < 1) {
@@ -331,7 +329,6 @@ function submit() {
       }
     }
   });
-  console.log(errors.value);
   if (containsErrors) {
     const fields = keys.map((id, i) => {
       return {field_type_id: id, value: fieldsVals[i]};
