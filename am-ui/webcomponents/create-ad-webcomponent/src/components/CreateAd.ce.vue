@@ -132,6 +132,7 @@ $light-grey: #868686;
 $akros-beige: #b0b0b0;
 $light-beige: #ece6df;
 $akros-red: #d60929;
+$akros-red-bg: #d6092812;
 $dark-red: #9c132c;
 /*                              RESET
 ***********************************************************************/
@@ -344,7 +345,13 @@ select {
   border-radius: 1.2em;
   cursor: pointer;
   padding: 6px 24px;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.65;
+  }
 }
+
 .btn:hover {
   color: #fff;
   background-color: $akros-red;
@@ -405,6 +412,12 @@ select {
   }
   .nocap {
     text-transform: none;
+  }
+  .error {
+    border-color: $dark-red;
+    color: $akros-red;
+    background-color: $akros-red-bg;
+    border-width: 0.1rem;
   }
 }
 

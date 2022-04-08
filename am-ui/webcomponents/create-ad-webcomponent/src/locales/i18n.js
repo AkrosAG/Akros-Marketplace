@@ -8,12 +8,13 @@ export default createI18n({
       offer: "I'm offering",
       request: "I'm looking for",
       categoriesPlaceholder: 'Ad category',
+      publish: 'Preview and publish',
       categories: {
         accomodation: {
           typeTitle: 'Accomodation',
           type: {
             title: 'Type of accomodation',
-            types: {
+            options: {
               room: 'Room',
               apartment: 'Apartment',
               house: 'House',
@@ -30,7 +31,7 @@ export default createI18n({
           floor: 'Floor',
           price_unit: {
             title: 'Price unit',
-            price_units: {
+            options: {
               month: 'Per month',
               week: 'Per Week',
               day: 'Per Day',
@@ -42,7 +43,7 @@ export default createI18n({
           about: 'Brief description about me',
           phone: 'Phone number',
           email: 'E-Mail',
-          publish: 'Preview and publish',
+          date: 'From date'
         },
         carShare: {
           typeTitle: 'Car sharing',
@@ -56,12 +57,13 @@ export default createI18n({
       offer: 'Ich biete',
       request: 'Ich suche nach',
       categoriesPlaceholder: 'Art des Angebots',
+      publish: 'Vorschau anzeigen und veröffentlichen',
       categories: {
         accomodation: {
           typeTitle: 'Unterkünfte',
           type: {
             title: 'Art der Unterkunft',
-            types: {
+            options: {
               room: 'Zimmer',
               apartment: 'Wohnung',
               house: 'Haus',
@@ -78,7 +80,7 @@ export default createI18n({
           floor: 'Etage',
           price_unit: {
             title: 'Preiseinheit',
-            price_units: {
+            options: {
               month: 'Pro Monat',
               week: 'Pro Woche',
               day: 'Pro Tag',
@@ -90,7 +92,7 @@ export default createI18n({
           about: 'Kurze Beschreibung über mich',
           phone: 'Telefonnummer',
           email: 'E-Mail',
-          publish: 'Vorschau anzeigen und veröffentlichen',
+          date: 'Ab Datum'
         },
         carShare: {
           typeTitle: 'Car sharing',
