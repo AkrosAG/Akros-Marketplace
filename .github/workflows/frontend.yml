@@ -59,6 +59,10 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "zulu" # See 'Supported distributions' for available options
+          java-version: "11"
       - uses: azure/docker-login@v1
         with:
           login-server: akrosmarketplace.azurecr.io
