@@ -2,6 +2,7 @@
 
 # Use official node image as the base image
 FROM node:latest as build
+RUN apt-get update && apt-get install -y openjdk-11-jdk
 
 # Set the working directory
 WORKDIR /usr/local/app/am-ui
