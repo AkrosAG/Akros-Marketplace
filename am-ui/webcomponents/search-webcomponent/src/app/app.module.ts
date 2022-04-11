@@ -6,7 +6,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {MpSearchComponent} from './mp-search.component';
 import {SearchFormComponent} from './search-form/search-form.component';
 import {DynamicFormFieldComponent} from './search-form/form/dynamic-form-field.component';
-import {SwitchCasesDirective} from './search-form/form/switch-cases.directive';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {SearchWebcomponentEffects} from './data/store/search-webcomponent.effects';
@@ -22,6 +21,8 @@ import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import {environment} from 'src/environments/environment';
 import {createCustomElement} from '@angular/elements';
 import {ApiModule} from './api/api.module';
+import {DateClickDirective} from './utils/directives/date-click.directive';
+import {SwitchCasesDirective} from './utils/directives/switch-cases.directive';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {ApiModule} from './api/api.module';
     SearchFormComponent,
     DynamicFormFieldComponent,
     SwitchCasesDirective,
+    DateClickDirective,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,10 @@ import {ApiModule} from './api/api.module';
       serverLogLevel: NgxLoggerLevel.OFF,
     }),
     StoreModule.forRoot({}),
-    StoreModule.forFeature(SearchWebcomponentStoreName, searchWebcomponentReducer),
+    StoreModule.forFeature(
+      SearchWebcomponentStoreName,
+      searchWebcomponentReducer
+    ),
     EffectsModule.forRoot([]),
     EffectsModule.forFeature([SearchWebcomponentEffects]),
     TranslateModule.forRoot({
