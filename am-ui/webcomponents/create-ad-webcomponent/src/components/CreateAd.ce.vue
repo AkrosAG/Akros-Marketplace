@@ -128,18 +128,6 @@ function submit (data) {
 @import "../styles/colors.scss";
 @import "../styles/reset.scss";
 
-html {
-  height: 100%;
-  -webkit-text-size-adjust: none;
-}
-body {
-  height: 100%;
-  min-height: 100%;
-  overflow-x: hidden;
-  color: $grey;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 a {
   font-weight: 500;
   text-decoration: none;
