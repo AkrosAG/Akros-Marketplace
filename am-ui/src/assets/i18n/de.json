@@ -13,6 +13,7 @@
     "register": "Jetzt registrieren"
   },
   "categories": {
+    "addCategory": "Categorie",
     "accomodation": {
       "title": "Unterkünfte",
       "types": {
@@ -22,11 +23,16 @@
         "parking": "Parkplatz"
       }
     },
-    "carSharing": {
+    "carShare": {
       "title": "Mitfahrgelegenheiten",
       "types": {
         "share": "Mitfahrgelegenheiten"
       }
+    }
+  },
+  "topics": {
+    "create": {
+      "title": "Veröffentlichen Sie Ihre Anzeige kostenlos"
     }
   },
   "search-results": {

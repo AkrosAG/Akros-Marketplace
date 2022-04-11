@@ -78,21 +78,21 @@ public class TopicService {
     return result;
   }
 
-  public void saveTopic(TopicSaveRequestDTO topicSaveResponseDTO) {
+  public void saveTopic(TopicSaveRequestDTO topicSaveRequestDTO) {
     Topic topic = new Topic();
 
-    topic.setTopicId(topicSaveResponseDTO.getTopicId());
-    final Category category = categoryRepository.getById(topicSaveResponseDTO.getCategoryId());
+    topic.setTopicId(topicSaveRequestDTO.getTopicId());
+    final Category category = categoryRepository.getById(topicSaveRequestDTO.getCategoryId());
     //TODO CHECK IF NEEDED
     topic.setCategory(category);
 
     topic.setValidFrom(LocalDate.now());
     topic.setValidTo(LocalDate.now().plusDays(365));
-    topic.setRequestOrOffer(topicSaveResponseDTO.getRequestOrOffer());
+    topic.setRequestOrOffer(topicSaveRequestDTO.getRequestOrOffer());
 
     topic.setAdvertiser(advertiserRepository.getById(1L));
 
-    topic.setTopicValues(topicSaveResponseDTO.getTopicValues()
+    topic.setTopicValues(topicSaveRequestDTO.getTopicValues()
                                               .stream()
                                               .map(e -> toTopicValue(category, topic, e))
                                               .collect(Collectors.toList()));

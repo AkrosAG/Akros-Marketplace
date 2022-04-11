@@ -15,7 +15,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(private translate: TranslateService, private router: Router) {}
 
   public navigateCreateAdd() {
-    this.router.navigate(['create']);
+    const navigationExtras = {
+      state: {
+        appLanguage: this.appLanguage,
+      },
+    };
+    this.router.navigate(['create'], navigationExtras);
   }
 
   ngOnInit(): void {
@@ -27,6 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
   showResults(event: Event) {
     const topics = (event as CustomEvent).detail.topics;
     const navigationExtras = {

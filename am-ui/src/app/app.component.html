@@ -1,7 +1,7 @@
 <ng-container *ngIf="appLoaded; else loader">
   <div id="container-wrapper">
     <mp-navbar></mp-navbar>
-    <div id="content-wrapper">
+    <div class="content-wrapper">
       <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
     </div>
     <mp-footer></mp-footer>
