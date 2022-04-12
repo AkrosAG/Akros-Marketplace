@@ -222,29 +222,29 @@ function checkField(fieldId) {
   const alphabeticPatternRegex = new RegExp('^((?![0-9]).)*$$');
 
   // Static specific validations based on AM categories (currently only accomodation), TODO improve
-  switch (this.fieldKeys[fieldId]) {
+  switch (fieldKeys.value[fieldId]) {
     // Title, Address: max length 50, min length 1 chars
     case 'title':
     case 'address':
       if (
-        this.fieldValues[fieldId].length > 50 ||
-        this.fieldValues[fieldId].length < 1
+        fieldValues.value[fieldId].length > 50 ||
+        fieldValues.value[fieldId].length < 1
       ) {
-        this.errors[fieldId] = true;
+        errors.value[fieldId] = true;
       } else {
-        this.errors[fieldId] = false;
+        errors.value[fieldId] = false;
       }
       break;
     // Region: max length 50, min length 1 chars and not numbers
     case 'region':
       if (
-        this.fieldValues[fieldId].length > 50 ||
-        this.fieldValues[fieldId].length < 1 ||
-        !alphabeticPatternRegex.test(this.fieldValues[fieldId])
+        fieldValues.value[fieldId].length > 50 ||
+        fieldValues.value[fieldId].length < 1 ||
+        !alphabeticPatternRegex.test(fieldValues.value[fieldId])
       ) {
-        this.errors[fieldId] = true;
+        errors.value[fieldId] = true;
       } else {
-        this.errors[fieldId] = false;
+        errors.value[fieldId] = false;
       }
       break;
     // Description, about and expectations: max length 1000, min length 1 chars
@@ -252,62 +252,62 @@ function checkField(fieldId) {
     case 'description':
     case 'about':
       if (
-        this.fieldValues[fieldId].length > 1000 ||
-        this.fieldValues[fieldId].length < 1
+        fieldValues.value[fieldId].length > 1000 ||
+        fieldValues.value[fieldId].length < 1
       ) {
-        this.errors[fieldId] = true;
+        errors.value[fieldId] = true;
       } else {
-        this.errors[fieldId] = false;
+        errors.value[fieldId] = false;
       }
       break;
     // Email: Email format regex
     case 'email':
-      if (!emailPatternRegex.test(this.fieldValues[fieldId])) {
-        this.errors[fieldId] = true;
+      if (!emailPatternRegex.test(fieldValues.value[fieldId])) {
+        errors.value[fieldId] = true;
       } else {
-        this.errors[fieldId] = false;
+        errors.value[fieldId] = false;
       }
       break;
     // Selectos: Ok if not empty
     case 'rooms':
     case 'type':
-      if (this.fieldValues[fieldId] !== null) {
-        this.errors[fieldId] = false;
+      if (fieldValues.value[fieldId] !== null) {
+        errors.value[fieldId] = false;
       } else {
-        this.errors[fieldId] = true;
+        errors.value[fieldId] = true;
       }
       break;
     // Phone number: Number only regex
     case 'phone':
-      if (!numberPatternRegex.test(this.fieldValues[fieldId])) {
-        this.errors[fieldId] = true;
+      if (!numberPatternRegex.test(fieldValues.value[fieldId])) {
+        errors.value[fieldId] = true;
       } else {
-        this.errors[fieldId] = false;
+        errors.value[fieldId] = false;
       }
       break;
     // Zipcode: Four digit only regex
     case 'postalCode':
-      if (!zipCodePatternRegex.test(this.fieldValues[fieldId])) {
-        this.errors[fieldId] = true;
+      if (!zipCodePatternRegex.test(fieldValues.value[fieldId])) {
+        errors.value[fieldId] = true;
       } else {
-        this.errors[fieldId] = false;
+        errors.value[fieldId] = false;
       }
       break;
     // Date: Selected date not prior to current date
     case 'date':
       const today = new Date();
-      const selectedDate = new Date(this.fieldValues[fieldId]);
+      const selectedDate = new Date(fieldValues.value[fieldId]);
       if (today.getTime() < selectedDate.getTime()) {
-        this.errors[fieldId] = false;
+        errors.value[fieldId] = false;
       } else {
-        this.errors[fieldId] = true;
+        errors.value[fieldId] = true;
       }
       break;
   }
-  this.formHasErrors = false;
-  this.errors.forEach((err) => {
+  formHasErrors.value = false;
+  errors.value.forEach((err) => {
     if (err) {
-      this.formHasErrors = true;
+      formHasErrors.value = true;
     }
   });
 }
