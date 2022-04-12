@@ -6,8 +6,8 @@
       class="form-field full"
       v-if="
         field.field_type_definition_id === 1 ||
-        field.field_type_definition_id === 2 ||
-        field.field_type_definition_id === 3
+          field.field_type_definition_id === 2 ||
+          field.field_type_definition_id === 3
       "
       v-bind:class="{
         half: field.field_type_definition_id === 2,
@@ -45,8 +45,8 @@
       class="form-field full"
       v-if="
         field.field_type_definition_id === 5 ||
-        field.field_type_definition_id === 6 ||
-        field.field_type_definition_id === 7
+          field.field_type_definition_id === 6 ||
+          field.field_type_definition_id === 7
       "
       v-bind:class="{
         half: field.field_type_definition_id === 6,
@@ -83,7 +83,7 @@
       class="form-field checkbox half"
       v-if="
         field.field_type_definition_id === 8 ||
-        field.field_type_definition_id === 16
+          field.field_type_definition_id === 16
       "
     >
       <input
@@ -140,7 +140,7 @@
       class="form-field half"
       v-if="
         field.field_type_definition_id === 12 ||
-        field.field_type_definition_id === 13
+          field.field_type_definition_id === 13
       "
       v-bind:class="{
         third: field.field_type_definition_id === 13,
@@ -163,7 +163,7 @@
       class="form-field half"
       v-if="
         field.field_type_definition_id === 14 ||
-        field.field_type_definition_id === 15
+          field.field_type_definition_id === 15
       "
       v-bind:class="{
         third: field.field_type_definition_id === 15,
@@ -212,9 +212,10 @@ const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8]);
 const {t} = useI18n(i18n.global.messages.value);
 const formHasErrors = ref([]);
 
+// Cover Each case
 function checkField(fieldId) {
   const emailPatternRegex = new RegExp(
-    '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
+      '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$',
   );
   const zipCodePatternRegex = new RegExp('[0-9]{4}');
   const numberPatternRegex = new RegExp('^[0-9]*$');
@@ -304,13 +305,16 @@ function checkField(fieldId) {
       break;
   }
   this.formHasErrors = false;
-  this.errors.forEach(err => {
+  this.errors.forEach((err) => {
     if (err) {
       this.formHasErrors = true;
     }
   });
 }
 
+// shouldSetErrorIfNoFieldValuePresent
+// shouldSetErrorIfFieldEmpty
+// shouldSubmitEventIfContainsErrors (Variable name correct?)
 function submit() {
   const fieldsVals = Object.values(fieldValues.value);
   const keys = Object.keys(fieldValues.value);
@@ -339,9 +343,10 @@ function submit() {
   }
 }
 
+// ignore
 onMounted(() => {
   formHasErrors.value = false;
-  props.fieldsToShow.forEach(field => {
+  props.fieldsToShow.forEach((field) => {
     fieldValues.value[field.field_id] = '';
     fieldKeys.value[field.field_id] = field.key;
     errors.value[field.field_id] = false;

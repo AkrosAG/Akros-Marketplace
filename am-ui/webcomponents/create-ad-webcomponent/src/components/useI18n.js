@@ -30,7 +30,7 @@ export function useI18n(options) {
   const messages = options ?? {};
   const locales = Object.keys(messages);
   if (locales.length > 0) {
-    locales.forEach(locale => {
+    locales.forEach((locale) => {
       global.mergeLocaleMessage(locale, messages[locale]);
     });
   }

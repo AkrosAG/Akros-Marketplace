@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ['plugin:vue/base'],
+  extends: ['plugin:vue/base', 'google'],
   parserOptions: {
     parser: '@babel/eslint-parser',
     sourceType: 'module',

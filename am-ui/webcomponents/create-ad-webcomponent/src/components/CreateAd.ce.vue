@@ -1,63 +1,68 @@
 <script setup>
-import ApiClient from '../api/src/ApiClient'
-import CategoriesApi from '../api/src/api/CategoriesApi'
-import TopicsApi from '../api/src/api/TopicsApi'
-import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO'
-import {onMounted, ref, computed, watchEffect} from 'vue'
-import CreateAdFields from './CreateAdFields.vue'
-import {useI18n} from 'vue-i18n'
+import ApiClient from '../api/src/ApiClient';
+import CategoriesApi from '../api/src/api/CategoriesApi';
+import TopicsApi from '../api/src/api/TopicsApi';
+import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
+import {onMounted, ref, computed, watchEffect} from 'vue';
+import CreateAdFields from './CreateAdFields.vue';
+import {useI18n} from 'vue-i18n';
 
-const apiClient = new ApiClient('/')
-const categoriesApi = new CategoriesApi(apiClient)
-const topicsApi = new TopicsApi(apiClient)
-const categories = ref([])
-const selectedCategoryKey = ref('')
-const requestOrOffer = ref('offer')
-const fieldsToShow = ref([])
-const showAdFields = ref(false)
-let currentCategoryId = 0
+const apiClient = new ApiClient('/');
+const categoriesApi = new CategoriesApi(apiClient);
+const topicsApi = new TopicsApi(apiClient);
+const categories = ref([]);
+const selectedCategoryKey = ref('');
+const requestOrOffer = ref('offer');
+const fieldsToShow = ref([]);
+const showAdFields = ref(false);
+let currentCategoryId = 0;
 const props = defineProps({
   appLanguage: {
     default: 'de',
     type: String,
   },
-})
-const {t} = useI18n({useScope: 'global'})
+});
+const {t} = useI18n({useScope: 'global'});
 
+// ignore
 onMounted(() => {
-  categoriesApi.categoriesCreateGet(true, getCategories)
-})
+  categoriesApi.categoriesCreateGet(true, getCategories);
+});
 
-function getCategories (_error, data, _response) {
+// shouldOnlyShowFieldsForCreationAndCallUpdateFields (updateFields can be mocked)
+function getCategories(_error, data, _response) {
   // Filter fields that are not for creation'
-  data.categories.forEach(category => {
-    category.fields = category.fields.filter(field => field.creation)
-  })
-  categories.value = data.categories
-  updateFields()
+  data.categories.forEach((category) => {
+    category.fields = category.fields.filter((field) => field.creation);
+  });
+  categories.value = data.categories;
+  updateFields();
 }
 
-function updateFields () {
+// shouldSetFieldsToShowAccordinglyAndShowThem
+// shouldNotShowAdFieldsWhenNoCategorySelected
+// shouldNotShowAdFieldsWhenNoFieldsPresent
+function updateFields() {
   const selectedCategory = categories.value.find(
-    category => category.key === selectedCategoryKey.value
-  )
+      (category) => category.key === selectedCategoryKey.value,
+  );
   if (selectedCategory && selectedCategory.fields.length > 0) {
-    fieldsToShow.value = selectedCategory.fields
-    showAdFields.value = true
-    currentCategoryId = selectedCategory.category_id
+    fieldsToShow.value = selectedCategory.fields;
+    showAdFields.value = true;
+    currentCategoryId = selectedCategory.category_id;
   } else {
-    showAdFields.value = false
+    showAdFields.value = false;
   }
 }
-
-function submit (data) {
+// ignore
+function submit(data) {
   const dto = new TopicSaveRequestDTO(
-    0,
-    currentCategoryId,
-    requestOrOffer.value.toUpperCase(),
-    data
-  )
-  topicsApi.topicsPost(dto)
+      0,
+      currentCategoryId,
+      requestOrOffer.value.toUpperCase(),
+      data,
+  );
+  topicsApi.topicsPost(dto);
 }
 </script>
 
@@ -125,8 +130,8 @@ function submit (data) {
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
-@import "../styles/colors.scss";
-@import "../styles/reset.scss";
+@import '../styles/colors.scss';
+@import '../styles/reset.scss';
 
 a {
   font-weight: 500;
