@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import ch.akros.marketplace.api.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -102,8 +104,7 @@ public class TopicService {
 
   private TopicValue toTopicValue(Category category,
                                   Topic topic,
-                                  TopicValueSaveRequestDTO topicValueSaveResponseDTO)
-  {
+                                  TopicValueSaveRequestDTO topicValueSaveResponseDTO) {
     TopicValue result = new TopicValue();
     result.setField(fieldRepository.getById(topicValueSaveResponseDTO.getFieldTypeId()));
     result.setCategory(category);
@@ -134,16 +135,6 @@ public class TopicService {
 
     result.setTopicValueId(topicValue.getTopicValueId());
 
-    // from FieldTypeDefinition
-    result.setFieldTypeDefinitionId(topicValue.getField().getFieldTypeDefinition().getFieldTypeDefinitionId());
-    result.setFieldTypeDefinitionDescription(topicValue.getField().getFieldTypeDefinition().getDescription());
-    result.setFieldTypeOptions(topicValue.getField()
-                                         .getFieldOptions()
-                                         .stream()
-                                         .sorted((e1, e2) -> e1.getSortNumber() - e2.getSortNumber())
-                                         .map(this::toFieldOptionsResponseDTO)
-                                         .collect(Collectors.toList()));
-
     // from Field
     result.setFieldId(topicValue.getField().getFieldId());
     result.setFieldDescription(topicValue.getField().getKey());
@@ -161,43 +152,22 @@ public class TopicService {
   }
 
   public TopicSearchListResponseDTO searchTopic(TopicSearchRequestDTO topicSearchRequestDTO) {
-    MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-    namedParameters.addValue("categoryId", topicSearchRequestDTO.getCategoryId());
-
-    StringBuilder sqlStringBuilder = null;
-
-    if (topicSearchRequestDTO.getRequestOrOffer() != null) {
-      sqlStringBuilder = new StringBuilder("select t.topic_id from topic t where t.category_id=:categoryId and t.request_or_offer=:requestOrOffer");
-      namedParameters.addValue("requestOrOffer", topicSearchRequestDTO.getRequestOrOffer());
-    }
-    else {
-      sqlStringBuilder = new StringBuilder("select t.topic_id from topic t where t.category_id=:categoryId");
-    }
-
-    if (Objects.nonNull(topicSearchRequestDTO.getSearchValues())) {
-      for (int i = 0; i < topicSearchRequestDTO.getSearchValues().size(); i++) {
-        addSqlSubselect(i, topicSearchRequestDTO.getSearchValues().get(i), sqlStringBuilder, namedParameters);
-      }
-    }
-
-    NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
-
-    List<Long> topicIds = namedParameterJdbcTemplate.queryForList(sqlStringBuilder.toString(),
-                                                                  namedParameters,
-                                                                  Long.class);
-
     TopicSearchListResponseDTO result = new TopicSearchListResponseDTO();
 
-    result.setColumnHeader(categoryService.listCategorySearchFieldTypes(topicSearchRequestDTO.getCategoryId())
-                                          .stream()
-                                          .map(this::toTopicSearchColumnHeaderResponseDTO)
-                                          .collect(Collectors.toList()));
+    Topic topic = new Topic();
+    Category category = categoryRepository.getById(topicSearchRequestDTO.getCategoryId());
+    topic.setCategory(category);
+    topic.setRequestOrOffer(topicSearchRequestDTO.getRequestOrOffer());
+    if(topicSearchRequestDTO.getSearchValues() != null) {
+      List<TopicValue> collect = topicSearchRequestDTO.getSearchValues().stream().map(value -> {
+        return TopicValue.builder().category(category).value(value.getValue()).build();
+      }).collect(Collectors.toList());
+    }
 
-    result.setTopics(topicRepository.findAllById(topicIds)
-                                    .stream()
-                                    .map(this::toTopicSearchResponseDTO)
-                                    .collect(Collectors.toList()));
-
+    Example<Topic> exampleTopic = Example.of(topic, ExampleMatcher.matchingAny());
+    List<TopicSearchResponseDTO> topicList = topicRepository.findAll(exampleTopic).stream().map(this::toTopicSearchResponseDTO)
+            .collect(Collectors.toList());
+    result.setTopics(topicList);
     return result;
   }
 
