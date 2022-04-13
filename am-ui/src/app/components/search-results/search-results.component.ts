@@ -1,6 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'mp-search-results',
@@ -11,7 +12,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   public language: String = '';
   public subscription: Subscription;
   public results: String[] = [];
-  constructor(private translate: TranslateService) {}
+  constructor(private translate: TranslateService, private router: Router) {}
 
   ngOnInit(): void {
     this.language = history.state.language;
@@ -24,5 +25,16 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+  @HostListener('document:openDetailsEvent', ['$event'])
+  directToDetails(event: Event) {
+    const topic = (event as CustomEvent).detail;
+    const navigationExtras = {
+      state: {
+        topic: topic,
+        language: this.language,
+      },
+    };
+    this.router.navigate(['search-result-details'], navigationExtras);
   }
 }

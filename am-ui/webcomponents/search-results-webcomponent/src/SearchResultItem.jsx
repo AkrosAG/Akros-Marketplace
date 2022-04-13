@@ -1,15 +1,16 @@
 /* eslint-disable */
 import { useTranslation } from 'react-i18next';
+
 function SearchResultListItem(props) {
   const { t, i18n } = useTranslation();
 
-  const results = props.results;
-  console.log(results);
-  const listElements = results.map((result) => {
+  console.log(props);
+
+  const listElements = props.results.map((result) => {
     return (
       <li key={result.topic_id} class="sr-ad-block">
         <a
-          href=""
+          onClick={() => props.handleClick(result)}
           class="sr-ad-link"
           title={result.topic_values.find((value) => value.key === 'title').value}>
           <div class="sr-ad-thumb-block">
@@ -20,16 +21,17 @@ function SearchResultListItem(props) {
             />
             <p class="sr-ad-info">
               <span class="sr-ad-type">
-                {result.topic_values.find((value) => value.key === 'type').value}
+                {result.topic_values.find((value) => value.key === 'title').value}
               </span>
               <span class="sr-ad-price">
                 {result.topic_values.find((value) => value.key === 'price').value}
               </span>
-              <span class="sr-ad-currency"> CHF</span> /<span class="sr-ad-per-time">Month</span>
+              <span class="sr-ad-currency"> CHF</span> / <span class="sr-ad-per-time">Month</span>
             </p>
           </div>
           <p class="sr-ad-rooms">
-            {result.topic_values.find((value) => value.key === 'rooms').value} rooms apartment
+            {result.topic_values.find((value) => value.key === 'rooms').value}{' '}
+            {t('rooms apartment')}
           </p>
           <p class="sr-ad-address">
             <span class="sr-ad-post-code">

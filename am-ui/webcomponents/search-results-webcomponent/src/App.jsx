@@ -6,6 +6,14 @@ import IndexStyles from './index.css';
 import AppStyles from './App.css';
 import ComponentStyles from './styles/styles.css';
 import React from 'react';
+
+const parentHandleClick = (topic) => {
+  const event = new CustomEvent('openDetailsEvent', {
+    detail: topic
+  });
+  document.dispatchEvent(event);
+};
+
 /**
  * This class wraps the React App into a Webcomponent
  */
@@ -32,9 +40,10 @@ class SearchResultsWebComponent extends HTMLElement {
   get language() {
     return this._language;
   }
+
   connectedCallback() {
     // Create a ShadowDOM
-    const root = this.attachShadow({mode: 'closed'});
+    const root = this.attachShadow({ mode: 'closed' });
     // Create a mount element
     this.mountPoint = document.createElement('div');
     // Adding custum style sheets for webcomponents to habe them
@@ -47,9 +56,9 @@ class SearchResultsWebComponent extends HTMLElement {
     if (this.results !== '' && this.language !== '') {
       const searchResultList = (
         <SearchResultList
+          handleEvent={parentHandleClick}
           results={this.results}
-          language={this.language}
-        ></SearchResultList>
+          language={this.language}></SearchResultList>
       );
 
       ReactDOM.render(searchResultList, this.mountPoint);
