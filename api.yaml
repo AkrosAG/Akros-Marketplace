@@ -357,10 +357,6 @@ components:
         - column_header
         - topics
       properties:
-        column_header:
-          type: array
-          items:
-            $ref: "#/components/schemas/TopicSearchColumnHeaderResponseDTO"
         topics:
           type: array
           items:
@@ -399,6 +395,7 @@ components:
       required:
         - topic_id
         - field_id
+        - key
         - value
       properties:
         topic_id:
@@ -407,14 +404,10 @@ components:
         field_id:
           type: integer
           format: int64
+        key:
+          type: string
         value:
           type: string
-        field_definition_id:
-          type: integer
-          format: int32
-        field_definition_description:
-          type: string
-          example: Number
 
     Problem:
       type: object

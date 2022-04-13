@@ -174,8 +174,7 @@ public class TopicService {
   private void addSqlSubselect(int i,
                                TopicSearchFieldValuesRequestDTO topicSearchFieldValuesRequestDTO,
                                StringBuilder sqlStringBuilder,
-                               MapSqlParameterSource namedParameters)
-  {
+                               MapSqlParameterSource namedParameters) {
     Integer fieldTypeDefinitionId = fieldRepository.getById(topicSearchFieldValuesRequestDTO.getFieldId())
                                                        .getFieldTypeDefinition()
                                                        .getFieldTypeDefinitionId();
@@ -279,11 +278,13 @@ public class TopicService {
                                                                     TopicValueLoadResponseDTO topicValueLoadResponseDTO)
   {
     TopicSearchValueResponseDTO result = new TopicSearchValueResponseDTO();
-    result.setFieldDefinitionDescription(topicValueLoadResponseDTO.getFieldTypeDefinitionDescription());
-    result.setFieldDefinitionId(topicValueLoadResponseDTO.getFieldTypeDefinitionId());
     result.setFieldId(topicValueLoadResponseDTO.getFieldId());
     result.setTopicId(topicId);
-    result.setValue(null);
+    fieldRepository.findAll().stream().filter(field -> field.getFieldId() == topicValueLoadResponseDTO.getFieldId()).findAny().ifPresent(field -> {
+      result.setKey(field.getKey());
+    });
+
+    result.setValue(topicValueLoadResponseDTO.getValue());
     return result;
   }
 }
