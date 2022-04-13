@@ -6,9 +6,10 @@ function SearchResultList(props) {
   const { t, i18n } = useTranslation();
   useState(props.language);
 
-  // useEffect(() => {
-  //   i18n.changeLanguage(props.language);
-  // });
+  useEffect(() => {
+    i18n.changeLanguage(props.language);
+  }, [props.language]);
+
   if (props.results.length === 0) {
     return <h1 className="no-results">{t('no-results')}</h1>;
   } else {
