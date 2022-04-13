@@ -29,23 +29,18 @@ onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
 });
 
-// shouldOnlyShowFieldsForCreationAndCallUpdateFields (updateFields can be mocked)
+// TODO test as well?
 function getCategories(_error, data, _response) {
-  // Filter fields that are not for creation'
-  data.categories.forEach((category) => {
-    category.fields = category.fields.filter((field) => field.creation);
-  });
   categories.value = data.categories;
   updateFields();
 }
 
-// shouldSetFieldsToShowAccordinglyAndShowThem
-// shouldNotShowAdFieldsWhenNoCategorySelected
-// shouldNotShowAdFieldsWhenNoFieldsPresent
 function updateFields() {
   const selectedCategory = categories.value.find(
-      (category) => category.key === selectedCategoryKey.value,
+    (category) => category.key === selectedCategoryKey.value,
   );
+    console.log(categories.value);
+    console.log(selectedCategoryKey.value);
   if (selectedCategory && selectedCategory.fields.length > 0) {
     fieldsToShow.value = selectedCategory.fields;
     showAdFields.value = true;
