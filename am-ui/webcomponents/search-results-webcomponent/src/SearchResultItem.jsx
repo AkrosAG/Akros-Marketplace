@@ -4,8 +4,6 @@ import { useTranslation } from 'react-i18next';
 function SearchResultListItem(props) {
   const { t, i18n } = useTranslation();
 
-  console.log(props);
-
   const listElements = props.results.map((result) => {
     return (
       <li key={result.topic_id} class="sr-ad-block">
