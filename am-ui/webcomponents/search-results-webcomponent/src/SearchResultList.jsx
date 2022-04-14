@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import SearchResultItem from './SearchResultItem.jsx';
+import PropTypes from 'prop-types';
 
 function SearchResultList(props) {
   const { t, i18n } = useTranslation();
@@ -17,8 +18,9 @@ function SearchResultList(props) {
   }
 }
 SearchResultList.propTypes = {
-  language: String,
-  results: Array
+  language: PropTypes.string.isRequired,
+  results: PropTypes.array,
+  handleEvent: PropTypes.func
 };
 
 export default SearchResultList;

@@ -58,7 +58,8 @@ class SearchResultsWebComponent extends HTMLElement {
         <SearchResultList
           handleEvent={parentHandleClick}
           results={this.results}
-          language={this.language}></SearchResultList>
+          language={this.language}
+        ></SearchResultList>
       );
 
       ReactDOM.render(searchResultList, this.mountPoint);
