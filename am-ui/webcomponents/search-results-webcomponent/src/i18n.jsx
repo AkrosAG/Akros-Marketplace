@@ -7,12 +7,22 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
   en: {
     translation: {
-      'no-results': 'Unfortunately your search criteria produced no result.'
+      'no-results': 'Unfortunately your search criteria produced no result.',
+      month: 'month',
+      room: 'Room',
+      apartment: 'Apartment',
+      house: 'House',
+      parking: 'Parking'
     }
   },
   de: {
     translation: {
-      'no-results': 'Die gesetzten Suchkriterien haben leider keinen Treffer ergeben.'
+      'no-results': 'Die gesetzten Suchkriterien haben leider keinen Treffer ergeben.',
+      month: 'Monat',
+      room: 'Zimmer',
+      apartment: 'Wohnung',
+      house: 'Haus',
+      parking: 'Parkplatz'
     }
   }
 };

@@ -354,28 +354,12 @@ components:
     TopicSearchListResponseDTO:
       type: object
       required:
-        - column_header
         - topics
       properties:
         topics:
           type: array
           items:
             $ref: "#/components/schemas/TopicSearchResponseDTO"
-
-    TopicSearchColumnHeaderResponseDTO:
-      type: object
-      required:
-        - field_id
-      properties:
-        field_id:
-          type: integer
-          format: int64
-        description:
-          type: string
-          example: Beschreibung
-        short_description:
-          type: string
-          example: Beschreibung der Unterkunft
 
     TopicSearchResponseDTO:
       type: object

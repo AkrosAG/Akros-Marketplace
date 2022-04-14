@@ -20,9 +20,6 @@ export class SearchFormComponent implements OnInit {
     request_or_offer: '',
   };
 
-  public readonly OFFER = 'OFFER';
-  public readonly REQUEST = 'REQUEST';
-
   @Input() selectedCategorySearchFields: FormFieldBase<string>[] | null = [];
   @Input() appLanguage: string;
   @Input() currentCategoryKey: string;

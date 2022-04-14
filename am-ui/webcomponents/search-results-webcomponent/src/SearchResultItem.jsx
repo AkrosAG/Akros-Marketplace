@@ -24,16 +24,16 @@ function SearchResultListItem(props) {
               <span class="sr-ad-price">
                 {result.topic_values.find((value) => value.key === 'price').value}
               </span>
-              <span class="sr-ad-currency"> CHF</span> / <span class="sr-ad-per-time">Month</span>
+              <span class="sr-ad-currency"> CHF</span>&nbsp;/&nbsp;
+              <span class="sr-ad-per-time">{t('month')}</span>
             </p>
           </div>
           <p class="sr-ad-rooms">
-            {result.topic_values.find((value) => value.key === 'rooms').value}{' '}
-            {t('rooms apartment')}
+            {t(result.topic_values.find((value) => value.key === 'type').value)}
           </p>
           <p class="sr-ad-address">
             <span class="sr-ad-post-code">
-              {result.topic_values.find((value) => value.key === 'postalCode').value}
+              {result.topic_values.find((value) => value.key === 'postalCode').value}&nbsp;
             </span>
             <span class="sr-ad-city">
               {result.topic_values.find((value) => value.key === 'region').value}

@@ -65,10 +65,7 @@
         <option disabled value="">
           {{ t(`categories.${selectedCategory}.${field.key}.title`) }}
         </option>
-        <option
-          v-for="option in field.field_options"
-          v-bind:value="option.field_option_id"
-        >
+        <option v-for="option in field.field_options" v-bind:value="option.key">
           {{
             t(
               `categories.${selectedCategory}.${field.key}.options.${option.key}`
