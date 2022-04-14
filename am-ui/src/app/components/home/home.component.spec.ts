@@ -6,10 +6,19 @@ import {
 } from '@ngx-translate/core';
 import {ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {HomeComponent} from './home.component';
+import {Component, Input} from '@angular/core';
 class MockRouter {
   navigate(url: string) {
     return url;
   }
+}
+@Component({
+  /*eslint-disable-next-line*/
+  selector: 'search-component',
+  template: '',
+})
+class MockSearchComponent {
+  @Input() language: string;
 }
 
 describe('HomeComponent', () => {
@@ -26,7 +35,7 @@ describe('HomeComponent', () => {
           },
         }),
       ],
-      declarations: [HomeComponent],
+      declarations: [HomeComponent, MockSearchComponent],
       providers: [{provide: Router, useClass: MockRouter}],
     }).compileComponents();
   });

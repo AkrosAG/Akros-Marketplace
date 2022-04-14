@@ -14,6 +14,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   public results: String[] = [];
   constructor(private translate: TranslateService, private router: Router) {}
 
+  /* istanbul ignore next */
   ngOnInit(): void {
     this.language = history.state.language;
     this.subscription = this.translate.onLangChange.subscribe(appLanguage => {
@@ -26,6 +27,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
+  /* istanbul ignore next */
   @HostListener('document:openDetailsEvent', ['$event'])
   directToDetails(event: Event) {
     const topic = (event as CustomEvent).detail;

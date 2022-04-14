@@ -13,6 +13,7 @@ export class AppComponent {
   public appLoaded: boolean = true;
   public subscription: Subscription;
   public appLng: string;
+  /* istanbul ignore next */
   constructor(private translate: TranslateService) {
     this.subscription = this.translate.onLangChange.subscribe(appLanguage => {
       translate.use(appLanguage.lang);
@@ -21,6 +22,7 @@ export class AppComponent {
     translate.setDefaultLang(appConfig.appLanguage);
     this.appLng = appConfig.appLanguage;
   }
+  /* istanbul ignore next */
   onOutletLoaded(component: any) {
     component.appLanguage = this.appLng;
   }

@@ -6,6 +6,25 @@ import {
   TranslateModule,
   TranslateLoader,
 } from '@ngx-translate/core';
+import {Component, Input} from '@angular/core';
+
+@Component({
+  /*eslint-disable-next-line*/
+  selector: 'i18n-host',
+  template: '',
+})
+/*eslint-disable-next-line*/
+class Mocki18nHost {
+  @Input() locale: string;
+}
+
+@Component({
+  /*eslint-disable-next-line*/
+  selector: 'create-ad-webcomponent',
+  template: '',
+})
+/*eslint-disable-next-line*/
+class MockCreateAdWebcomponent {}
 
 describe('CreateComponent', () => {
   let component: CreateComponent;
@@ -13,7 +32,7 @@ describe('CreateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreateComponent],
+      declarations: [CreateComponent, Mocki18nHost, MockCreateAdWebcomponent],
       imports: [
         TranslateModule.forRoot({
           loader: {
