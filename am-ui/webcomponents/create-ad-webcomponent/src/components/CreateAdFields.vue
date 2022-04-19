@@ -90,7 +90,7 @@
         v-bind:id="'create-add-field-' + field.field_id"
         type="checkbox"
         v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
-        v-model="fieldValues[field.key]"
+        v-model="fieldValues[field.field_id]"
       />
       <label>{{ t(`categories.${selectedCategory}.${field.key}`) }}</label>
     </div>
@@ -131,7 +131,7 @@
         v-bind:id="'create-add-field-' + field.field_id"
         type="file"
         @change="uploadFiles"
-        v-model="fieldValues[field.key]"
+        v-model="fieldValues[field.field_id]"
       />
     </div> -->
 
