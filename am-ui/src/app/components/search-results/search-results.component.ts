@@ -38,6 +38,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         language: this.language,
       },
     };
-    this.router.navigate(['search-result-details'], navigationExtras);
+    this.router.navigate(
+      ['search-result-details/' + topic.topic_id],
+      navigationExtras
+    );
   }
 }

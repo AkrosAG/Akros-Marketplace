@@ -14,7 +14,7 @@ const routes: Routes = [
   {path: 'myadds', component: AddsComponent},
   {path: 'create', component: CreateComponent},
   {path: 'search-results', component: SearchResultsComponent},
-  {path: 'search-result-details', component: SearchResultDetailsComponent},
+  {path: 'search-result-details/:id', component: SearchResultDetailsComponent},
 ];
 
 @NgModule({

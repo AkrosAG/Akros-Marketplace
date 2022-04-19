@@ -19,7 +19,7 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
       this.language = appLanguage.lang;
     });
     this.result = JSON.stringify(history.state.topic);
-    // TODO: If results is null, redirect to home
+    // TODO: If results is null, the webcomponent should send a request to the backend with the topic_id from the path parameter
   }
 
   ngOnDestroy() {
