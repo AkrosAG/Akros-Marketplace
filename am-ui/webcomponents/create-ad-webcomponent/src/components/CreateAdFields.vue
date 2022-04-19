@@ -277,8 +277,11 @@ function checkField(fieldId, fieldKey) {
         errors.value[fieldId] = true;
       }
       break;
-    // Phone number: Number only regex
+    // Phone, price, size, floor: Number only regex
     case 'phone':
+    case 'price':
+    case 'size':
+    case 'floor':
       if (!numberPatternRegex.test(fieldValues.value[fieldId])) {
         errors.value[fieldId] = true;
       } else {
@@ -305,6 +308,7 @@ function checkField(fieldId, fieldKey) {
       break;
   }
   formHasErrors.value = false;
+  console.log(errors);
   errors.value.forEach((err) => {
     if (err) {
       formHasErrors.value = true;
@@ -312,9 +316,6 @@ function checkField(fieldId, fieldKey) {
   });
 }
 
-// shouldSetErrorIfNoFieldValuePresent
-// shouldSetErrorIfFieldEmpty
-// shouldSubmitEventIfContainsErrors (Variable name correct?)
 function submit() {
   const fieldsVals = Object.values(fieldValues.value);
   const keys = Object.keys(fieldValues.value);
@@ -322,8 +323,9 @@ function submit() {
   let containsErrors = false;
 
   fieldValues.value.forEach((fieldValue, i) => {
-    // Temp exception for field price_unit as it is at this point not developed
-    if (i !== 7) {
+    // Temp exception for field price_unit(7) and attachments(18) as it is at this point not developed
+    // (14) furnished both false/null or true accepted
+    if (i !== 7 && i !== 18 && i !== 14) {
       if (!fieldValue) {
         errors.value[i] = true;
         containsErrors = true;
@@ -333,7 +335,7 @@ function submit() {
       }
     }
   });
-  if (containsErrors) {
+  if (!containsErrors) {
     const fields = keys.map((id, i) => {
       return {field_type_id: id, value: fieldsVals[i]};
     });

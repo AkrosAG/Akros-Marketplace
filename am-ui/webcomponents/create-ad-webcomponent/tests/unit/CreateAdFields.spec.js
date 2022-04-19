@@ -217,4 +217,27 @@ describe('CreateAdFields.vue', () => {
     wrapper.vm.checkField(0, 'postalCode');
     expect(wrapper.vm.formHasErrors).toBeFalsy();
   });
+
+  it('Sets form as invalid on submit if there is a field without value', () => {
+    const wrapper = shallowMount(CreateAdFields, {
+      propsData: {
+        fieldsToShow: [{field_id: 0, key: 'title'}],
+      },
+    });
+    wrapper.vm.fieldValues[0] = '';
+    wrapper.vm.submit();
+    expect(wrapper.vm.formHasErrors).toBeTruthy();
+  });
+
+  it('Emits on submit if no errors are found', () => {
+    const wrapper = shallowMount(CreateAdFields, {
+      propsData: {
+        fieldsToShow: [{field_id: 0, key: 'title'}],
+      },
+    });
+    wrapper.vm.fieldValues[0] = 'test';
+    wrapper.vm.submit();
+    expect(wrapper.emitted().submit).toBeTruthy()
+
+  });
 });
