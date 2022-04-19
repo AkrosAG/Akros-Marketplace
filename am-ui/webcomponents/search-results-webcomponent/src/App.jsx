@@ -1,11 +1,11 @@
-import './App.css';
 import SearchResultList from './SearchResultList';
 import ReactDOM from 'react-dom';
 import './i18n';
-import IndexStyles from './index.css';
-import AppStyles from './App.css';
+import IndexStyles from './styles/index.css';
+import AppStyles from './styles/App.css';
 import ComponentStyles from './styles/styles.css';
 import React from 'react';
+import ResetStyles from './styles/reset.css';
 
 const parentHandleClick = (topic) => {
   const event = new CustomEvent('openDetailsEvent', {
@@ -48,7 +48,7 @@ class SearchResultsWebComponent extends HTMLElement {
     this.mountPoint = document.createElement('div');
     // Adding custum style sheets for webcomponents to habe them
     const style = document.createElement('style');
-    style.textContent = AppStyles + IndexStyles + ComponentStyles;
+    style.textContent = ResetStyles + AppStyles + IndexStyles + ComponentStyles;
     root.appendChild(style);
     root.appendChild(this.mountPoint);
   }
