@@ -24,12 +24,10 @@ const props = defineProps({
 });
 const {t} = useI18n({useScope: 'global'});
 
-// ignore
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
 });
 
-// TODO test as well?
 function getCategories(_error, data, _response) {
   categories.value = data.categories;
   updateFields();
@@ -39,8 +37,6 @@ function updateFields() {
   const selectedCategory = categories.value.find(
     (category) => category.key === selectedCategoryKey.value,
   );
-    console.log(categories.value);
-    console.log(selectedCategoryKey.value);
   if (selectedCategory && selectedCategory.fields.length > 0) {
     fieldsToShow.value = selectedCategory.fields;
     showAdFields.value = true;
@@ -48,7 +44,8 @@ function updateFields() {
   } else {
     showAdFields.value = false;
   }
-}
+};
+
 // ignore
 function submit(data) {
   const dto = new TopicSaveRequestDTO(
@@ -59,6 +56,9 @@ function submit(data) {
   );
   topicsApi.topicsPost(dto);
 }
+
+defineExpose({ updateFields })
+
 </script>
 
 <template>

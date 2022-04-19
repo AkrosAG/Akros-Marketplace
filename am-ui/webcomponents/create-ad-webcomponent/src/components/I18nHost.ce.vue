@@ -29,7 +29,6 @@ export default defineComponent({
     /**
      * provide i18n instance with `I18nInjectionKey` for other web components
      */
-    console.log(i18n);
     provide(I18nInjectionKey, i18n);
     watchEffect(() => {
       i18n.global.locale.value = props.locale;

@@ -22,7 +22,7 @@
         v-bind:class="{
           error: errors[field.field_id],
         }"
-        v-on:change="event => checkField(field.field_id)"
+        v-on:change="event => checkField(field.field_id, field.key)"
       />
     </div>
 
@@ -33,7 +33,7 @@
         type="text"
         v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
         v-model="fieldValues[field.field_id]"
-        v-on:change="event => checkField(field.field_id)"
+        v-on:change="event => checkField(field.field_id, field.key)"
         v-bind:class="{
           error: errors[field.field_id],
         }"
@@ -60,7 +60,7 @@
         v-bind:class="{
           error: errors[field.field_id],
         }"
-        v-on:change="event => checkField(field.field_id)"
+        v-on:change="event => checkField(field.field_id, field.key)"
       >
         <option disabled value="">
           {{ t(`categories.${selectedCategory}.${field.key}.title`) }}
@@ -103,7 +103,7 @@
         v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
         v-model="fieldValues[field.field_id]"
         class="nocap"
-        v-on:change="event => checkField(field.field_id)"
+        v-on:change="event => checkField(field.field_id, field.key)"
         v-bind:class="{
           error: errors[field.field_id],
         }"
@@ -117,7 +117,7 @@
         type="tel"
         v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
         v-model="fieldValues[field.field_id]"
-        v-on:change="event => checkField(field.field_id)"
+        v-on:change="event => checkField(field.field_id, field.key)"
         v-bind:class="{
           error: errors[field.field_id],
         }"
@@ -151,7 +151,7 @@
         type="date"
         v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
         v-model="fieldValues[field.field_id]"
-        v-on:change="event => checkField(field.field_id)"
+        v-on:change="event => checkField(field.field_id, field.key)"
         v-bind:class="{
           error: errors[field.field_id],
         }"
@@ -175,7 +175,7 @@
         v-bind:class="{
           error: errors[field.field_id],
         }"
-        v-on:change="event => checkField(field.field_id)"
+        v-on:change="event => checkField(field.field_id, field.key)"
       >
         <option disabled value="">
           {{ t(`categories.${selectedCategory}.${field.key}`) }}
@@ -213,7 +213,7 @@ const {t} = useI18n(i18n.global.messages.value);
 const formHasErrors = ref([]);
 
 // Cover Each case
-function checkField(fieldId) {
+function checkField(fieldId, fieldKey) {
   const emailPatternRegex = new RegExp(
       '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$',
   );
@@ -222,7 +222,7 @@ function checkField(fieldId) {
   const alphabeticPatternRegex = new RegExp('^((?![0-9]).)*$$');
 
   // Static specific validations based on AM categories (currently only accomodation), TODO improve
-  switch (fieldKeys.value[fieldId]) {
+  switch (fieldKey) {
     // Title, Address: max length 50, min length 1 chars
     case 'title':
     case 'address':
@@ -268,7 +268,7 @@ function checkField(fieldId) {
         errors.value[fieldId] = false;
       }
       break;
-    // Selectos: Ok if not empty
+    // Selectors: Ok if not empty
     case 'rooms':
     case 'type':
       if (fieldValues.value[fieldId] !== null) {
