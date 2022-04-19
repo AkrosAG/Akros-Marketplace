@@ -1,9 +1,7 @@
-
 package ch.akros.marketplace.service.service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import ch.akros.marketplace.api.model.*;
@@ -11,11 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import ch.akros.marketplace.service.constants.EFieldTypeDefinition;
 import ch.akros.marketplace.service.entity.Category;
 import ch.akros.marketplace.service.entity.Field;
 import ch.akros.marketplace.service.entity.FieldOption;
@@ -168,13 +163,6 @@ public class TopicService {
     List<TopicSearchResponseDTO> topicList = topicRepository.findAll(exampleTopic).stream().map(this::toTopicSearchResponseDTO)
             .collect(Collectors.toList());
     result.setTopics(topicList);
-    return result;
-  }
-
-  private TopicSearchColumnHeaderResponseDTO toTopicSearchColumnHeaderResponseDTO(FieldResponseDTO fieldTypeResponseDTO) {
-    TopicSearchColumnHeaderResponseDTO result = new TopicSearchColumnHeaderResponseDTO();
-    result.setFieldId(fieldTypeResponseDTO.getFieldId());
-    result.setDescription(fieldTypeResponseDTO.getKey());
     return result;
   }
 
