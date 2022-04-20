@@ -6,13 +6,15 @@ export default {
     categories: {
       accomodation: {
         title: 'Accomodation',
-        types: {
-          room: 'Room',
-          apartment: 'Apartment',
-          house: 'House',
-          parking: 'Parking space',
+        type: {
+          placeholder: 'Type of accomodation',
+          options:  {
+            room: 'Room',
+            apartment: 'Apartment',
+            house: 'House',
+            parking: 'Parking space'
+          }
         },
-        type: 'Type of accomodation',
         region: 'Region, City or Canton',
         fromDate: 'From',
         toDate: 'To',

@@ -24,7 +24,11 @@
     >
       <option value="null" disabled>
         {{
-          'searchForm.categories.' + currentCategoryKey + '.type' | translate
+          'searchForm.categories.' +
+            currentCategoryKey +
+            '.' +
+            formField.key +
+            '.placeholder' | translate
         }}
       </option>
       <option
@@ -32,7 +36,14 @@
         [value]="opt.field_option_id"
         class="options"
       >
-        {{ opt.key }}
+        {{
+          'searchForm.categories.' +
+            currentCategoryKey +
+            '.' +
+            formField.key +
+            '.options.' +
+            opt.key | translate
+        }}
       </option>
     </select>
     <!-- Amount of rooms -->

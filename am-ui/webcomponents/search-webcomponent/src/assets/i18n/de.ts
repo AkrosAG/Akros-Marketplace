@@ -7,13 +7,15 @@ export default {
     categories: {
       accomodation: {
         title: 'Unterkünfte',
-        types: {
-          room: 'Zimmer',
-          apartment: 'Wohnung',
-          house: 'Haus',
-          parking: 'Parkplatz',
+        type: {
+          placeholder: 'Art der Unterkunft',
+          options:  {
+            room: 'Zimmer',
+            apartment: 'Wohnung',
+            house: 'Haus',
+            parking: 'Parkplatz'
+          }
         },
-        type: 'Art der Unterkunft',
         region: 'Region, Stadt oder Kanton',
         fromDate: 'Ab',
         toDate: 'Bis',
