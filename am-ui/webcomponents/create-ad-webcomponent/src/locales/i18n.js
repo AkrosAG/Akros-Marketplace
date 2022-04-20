@@ -5,8 +5,8 @@ export default createI18n({
   legacy: false,
   messages: {
     en: {
-      offer: "I'm offering",
-      request: "I'm looking for",
+      offer: 'I\'m offering',
+      request: 'I\'m looking for',
       categoriesPlaceholder: 'Ad category',
       publish: 'Preview and publish',
       categories: {
@@ -43,7 +43,7 @@ export default createI18n({
           about: 'Brief description about me',
           phone: 'Phone number',
           email: 'E-Mail',
-          date: 'From date'
+          date: 'From date',
         },
         carShare: {
           typeTitle: 'Car sharing',
@@ -92,7 +92,7 @@ export default createI18n({
           about: 'Kurze Beschreibung über mich',
           phone: 'Telefonnummer',
           email: 'E-Mail',
-          date: 'Ab Datum'
+          date: 'Ab Datum',
         },
         carShare: {
           typeTitle: 'Car sharing',
