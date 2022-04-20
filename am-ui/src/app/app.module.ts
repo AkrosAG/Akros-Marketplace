@@ -46,6 +46,7 @@ import {UserService} from './data/services/login/user.service';
 
 import {environment} from 'src/environments/environment';
 import {SearchResultsComponent} from './components/search-results/search-results.component';
+import {SearchResultDetailsComponent} from './components/search-result-details/search-result-details.component';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -83,6 +84,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     ProfileComponent,
     AddsComponent,
     SearchResultsComponent,
+    SearchResultDetailsComponent,
   ],
   imports: [
     BrowserModule,

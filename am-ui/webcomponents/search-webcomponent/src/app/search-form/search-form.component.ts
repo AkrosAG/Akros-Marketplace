@@ -43,6 +43,7 @@ export class SearchFormComponent implements OnInit {
   /* istanbul ignore next */
   async onSubmit() {
     const formData = JSON.parse(JSON.stringify(this.form.getRawValue()));
+    console.log(formData);
     this.payLoad.category_id = this.currentCategoryId;
     this.payLoad.request_or_offer = formData.requestOrOffer;
     // TODO: Map Fields in FormData to Fields in DTO

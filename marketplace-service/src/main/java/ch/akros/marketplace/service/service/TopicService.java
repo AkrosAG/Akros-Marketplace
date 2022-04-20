@@ -1,19 +1,16 @@
-
 package ch.akros.marketplace.service.service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import ch.akros.marketplace.api.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import ch.akros.marketplace.service.constants.EFieldTypeDefinition;
 import ch.akros.marketplace.service.entity.Category;
 import ch.akros.marketplace.service.entity.Field;
 import ch.akros.marketplace.service.entity.FieldOption;
@@ -102,8 +99,7 @@ public class TopicService {
 
   private TopicValue toTopicValue(Category category,
                                   Topic topic,
-                                  TopicValueSaveRequestDTO topicValueSaveResponseDTO)
-  {
+                                  TopicValueSaveRequestDTO topicValueSaveResponseDTO) {
     TopicValue result = new TopicValue();
     result.setField(fieldRepository.getById(topicValueSaveResponseDTO.getFieldTypeId()));
     result.setCategory(category);
@@ -134,16 +130,6 @@ public class TopicService {
 
     result.setTopicValueId(topicValue.getTopicValueId());
 
-    // from FieldTypeDefinition
-    result.setFieldTypeDefinitionId(topicValue.getField().getFieldTypeDefinition().getFieldTypeDefinitionId());
-    result.setFieldTypeDefinitionDescription(topicValue.getField().getFieldTypeDefinition().getDescription());
-    result.setFieldTypeOptions(topicValue.getField()
-                                         .getFieldOptions()
-                                         .stream()
-                                         .sorted((e1, e2) -> e1.getSortNumber() - e2.getSortNumber())
-                                         .map(this::toFieldOptionsResponseDTO)
-                                         .collect(Collectors.toList()));
-
     // from Field
     result.setFieldId(topicValue.getField().getFieldId());
     result.setFieldDescription(topicValue.getField().getKey());
@@ -161,135 +147,22 @@ public class TopicService {
   }
 
   public TopicSearchListResponseDTO searchTopic(TopicSearchRequestDTO topicSearchRequestDTO) {
-    MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-    namedParameters.addValue("categoryId", topicSearchRequestDTO.getCategoryId());
-
-    StringBuilder sqlStringBuilder = null;
-
-    if (topicSearchRequestDTO.getRequestOrOffer() != null) {
-      sqlStringBuilder = new StringBuilder("select t.topic_id from topic t where t.category_id=:categoryId and t.request_or_offer=:requestOrOffer");
-      namedParameters.addValue("requestOrOffer", topicSearchRequestDTO.getRequestOrOffer());
-    }
-    else {
-      sqlStringBuilder = new StringBuilder("select t.topic_id from topic t where t.category_id=:categoryId");
-    }
-
-    if (Objects.nonNull(topicSearchRequestDTO.getSearchValues())) {
-      for (int i = 0; i < topicSearchRequestDTO.getSearchValues().size(); i++) {
-        addSqlSubselect(i, topicSearchRequestDTO.getSearchValues().get(i), sqlStringBuilder, namedParameters);
-      }
-    }
-
-    NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
-
-    List<Long> topicIds = namedParameterJdbcTemplate.queryForList(sqlStringBuilder.toString(),
-                                                                  namedParameters,
-                                                                  Long.class);
-
     TopicSearchListResponseDTO result = new TopicSearchListResponseDTO();
 
-    result.setColumnHeader(categoryService.listCategorySearchFieldTypes(topicSearchRequestDTO.getCategoryId())
-                                          .stream()
-                                          .map(this::toTopicSearchColumnHeaderResponseDTO)
-                                          .collect(Collectors.toList()));
-
-    result.setTopics(topicRepository.findAllById(topicIds)
-                                    .stream()
-                                    .map(this::toTopicSearchResponseDTO)
-                                    .collect(Collectors.toList()));
-
-    return result;
-  }
-
-  private void addSqlSubselect(int i,
-                               TopicSearchFieldValuesRequestDTO topicSearchFieldValuesRequestDTO,
-                               StringBuilder sqlStringBuilder,
-                               MapSqlParameterSource namedParameters)
-  {
-    Integer fieldTypeDefinitionId = fieldRepository.getById(topicSearchFieldValuesRequestDTO.getFieldId())
-                                                       .getFieldTypeDefinition()
-                                                       .getFieldTypeDefinitionId();
-    EFieldTypeDefinition eFieldTypeDefinition = EFieldTypeDefinition.values()[fieldTypeDefinitionId];
-
-    switch (eFieldTypeDefinition) {
-      case PRICE:
-      case NUMBER: {
-        if (topicSearchFieldValuesRequestDTO.getValueNumFrom() != null
-            && topicSearchFieldValuesRequestDTO.getValueNumFrom() > 0)
-        {
-          if (topicSearchFieldValuesRequestDTO.getValueNumTo() != null
-              && topicSearchFieldValuesRequestDTO.getValueNumTo() > 0)
-          {
-            sqlStringBuilder.append(String.format(" and t.topic_id in (select tv.topic_id from topic_value tv where tv.category_id=:categoryId and tv.field_id=:fieldId%d and tv.value_num between :valueNumberFrom%d and :valueNumberTo%d)",
-                                                  i,
-                                                  i,
-                                                  i));
-            namedParameters.addValue(String.format("fieldId%d", i),
-                    topicSearchFieldValuesRequestDTO.getFieldId());
-            namedParameters.addValue(String.format("valueNumberFrom%d", i),
-                    topicSearchFieldValuesRequestDTO.getValueNumFrom());
-            namedParameters.addValue(String.format("valueNumberTo%d", i),
-                    topicSearchFieldValuesRequestDTO.getValueNumTo());
-          }
-          else {
-            sqlStringBuilder.append(String.format(" and t.topic_id in (select tv.topic_id from topic_value tv where tv.category_id=:categoryId and tv.field_id=:fieldId%d and tv.value_num >= :valueNumberFrom%d)",
-                                                  i,
-                                                  i));
-            namedParameters.addValue(String.format("fieldId%d", i),
-                    topicSearchFieldValuesRequestDTO.getFieldId());
-            namedParameters.addValue(String.format("valueNumberFrom%d", i),
-                    topicSearchFieldValuesRequestDTO.getValueNumFrom());
-          }
-        }
-        else if (topicSearchFieldValuesRequestDTO.getValueNumTo() != null
-                 && topicSearchFieldValuesRequestDTO.getValueNumTo() > 0)
-        {
-          sqlStringBuilder.append(String.format(" and t.topic_id in (select tv.topic_id from topic_value tv where tv.category_id=:categoryId and tv.field_id=:fieldId%d and tv.value_num <= :valueNumberTo%d)",
-                                                i,
-                                                i));
-          namedParameters.addValue(String.format("fieldId%d", i),
-                  topicSearchFieldValuesRequestDTO.getFieldId());
-          namedParameters.addValue(String.format("valueNumberTo%d", i),
-                  topicSearchFieldValuesRequestDTO.getValueNumTo());
-        }
-
-        break;
-      }
-
-      case BOOLEAN: {
-        sqlStringBuilder.append(String.format(" and t.topic_id in (select tv.topic_id from topic_value tv where tv.category_id=:categoryId and tv.field_id=:fieldId%d and tv.value_boolean=:valueBoolean%d)",
-                                              i,
-                                              i));
-        namedParameters.addValue(String.format("fieldId%d", i),
-                topicSearchFieldValuesRequestDTO.getFieldId());
-        namedParameters.addValue(String.format("valueBoolean%d", i),
-                topicSearchFieldValuesRequestDTO.getValue());
-        break;
-      }
-
-      case EMAIL:
-      case PHONE_NUMBER:
-      case TEXT_MULTI_LINE:
-      case TEXT_SINGLE_LINE: {
-        sqlStringBuilder.append(String.format(" and t.topic_id in (select tv.topic_id from topic_value tv where tv.category_id=:categoryId and tv.field_id=:fieldId%d and upper(tv.value_varchar) like upper('%%' || :valueVarchar%d || '%%'))",
-                                              i,
-                                              i));
-        namedParameters.addValue(String.format("fieldId%d", i),
-                topicSearchFieldValuesRequestDTO.getFieldId());
-        namedParameters.addValue(String.format("valueVarchar%d", i),
-                topicSearchFieldValuesRequestDTO.getValue());
-        break;
-      }
-
-      default:
-        break;
+    Topic topic = new Topic();
+    Category category = categoryRepository.getById(topicSearchRequestDTO.getCategoryId());
+    topic.setCategory(category);
+    topic.setRequestOrOffer(topicSearchRequestDTO.getRequestOrOffer());
+    if(topicSearchRequestDTO.getSearchValues() != null) {
+      List<TopicValue> collect = topicSearchRequestDTO.getSearchValues().stream().map(value -> {
+        return TopicValue.builder().category(category).value(value.getValue()).build();
+      }).collect(Collectors.toList());
     }
-  }
 
-  private TopicSearchColumnHeaderResponseDTO toTopicSearchColumnHeaderResponseDTO(FieldResponseDTO fieldTypeResponseDTO) {
-    TopicSearchColumnHeaderResponseDTO result = new TopicSearchColumnHeaderResponseDTO();
-    result.setFieldId(fieldTypeResponseDTO.getFieldId());
-    result.setDescription(fieldTypeResponseDTO.getKey());
+    Example<Topic> exampleTopic = Example.of(topic, ExampleMatcher.matchingAny());
+    List<TopicSearchResponseDTO> topicList = topicRepository.findAll(exampleTopic).stream().map(this::toTopicSearchResponseDTO)
+            .collect(Collectors.toList());
+    result.setTopics(topicList);
     return result;
   }
 
@@ -309,11 +182,13 @@ public class TopicService {
                                                                     TopicValueLoadResponseDTO topicValueLoadResponseDTO)
   {
     TopicSearchValueResponseDTO result = new TopicSearchValueResponseDTO();
-    result.setFieldDefinitionDescription(topicValueLoadResponseDTO.getFieldTypeDefinitionDescription());
-    result.setFieldDefinitionId(topicValueLoadResponseDTO.getFieldTypeDefinitionId());
     result.setFieldId(topicValueLoadResponseDTO.getFieldId());
     result.setTopicId(topicId);
-    result.setValue(null);
+    fieldRepository.findAll().stream().filter(field -> field.getFieldId() == topicValueLoadResponseDTO.getFieldId()).findAny().ifPresent(field -> {
+      result.setKey(field.getKey());
+    });
+
+    result.setValue(topicValueLoadResponseDTO.getValue());
     return result;
   }
 }

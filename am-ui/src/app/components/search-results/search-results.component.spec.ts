@@ -1,4 +1,6 @@
+import {Component, Input} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {Router} from '@angular/router';
 import {
   TranslateFakeLoader,
   TranslateLoader,
@@ -7,13 +9,29 @@ import {
 
 import {SearchResultsComponent} from './search-results.component';
 
+class MockRouter {
+  navigate(url: string) {
+    return url;
+  }
+}
+
+@Component({
+  /*eslint-disable-next-line*/
+  selector: 'search-results-component',
+  template: '',
+})
+class MockSearchResultsComponent {
+  @Input() language: string;
+  @Input() results: [];
+}
+
 describe('SearchResultsComponent', () => {
   let component: SearchResultsComponent;
   let fixture: ComponentFixture<SearchResultsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SearchResultsComponent],
+      declarations: [SearchResultsComponent, MockSearchResultsComponent],
       imports: [
         TranslateModule.forRoot({
           loader: {
@@ -22,6 +40,7 @@ describe('SearchResultsComponent', () => {
           },
         }),
       ],
+      providers: [{provide: Router, useClass: MockRouter}],
     }).compileComponents();
   });
 
