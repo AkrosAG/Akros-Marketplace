@@ -21,7 +21,7 @@ const props = defineProps({
     default: 'de',
     type: String,
   },
-});
+};
 const {t} = useI18n({useScope: 'global'});
 
 onMounted(() => {
@@ -58,7 +58,6 @@ function submit(data) {
 }
 
 defineExpose({ updateFields })
-
 </script>
 
 <template>
