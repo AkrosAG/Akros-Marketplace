@@ -1,63 +1,63 @@
 <script setup>
-import ApiClient from '../api/src/ApiClient';
-import CategoriesApi from '../api/src/api/CategoriesApi';
-import TopicsApi from '../api/src/api/TopicsApi';
-import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
-import {onMounted, ref, computed, watchEffect} from 'vue';
-import CreateAdFields from './CreateAdFields.vue';
-import {useI18n} from 'vue-i18n';
+import ApiClient from '../api/src/ApiClient'
+import CategoriesApi from '../api/src/api/CategoriesApi'
+import TopicsApi from '../api/src/api/TopicsApi'
+import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO'
+import {onMounted, ref, computed, watchEffect} from 'vue'
+import CreateAdFields from './CreateAdFields.vue'
+import {useI18n} from 'vue-i18n'
 
-const apiClient = new ApiClient('/');
-const categoriesApi = new CategoriesApi(apiClient);
-const topicsApi = new TopicsApi(apiClient);
-const categories = ref([]);
-const selectedCategoryKey = ref('');
-const requestOrOffer = ref('offer');
-const fieldsToShow = ref([]);
-const showAdFields = ref(false);
-let currentCategoryId = 0;
+const apiClient = new ApiClient('/')
+const categoriesApi = new CategoriesApi(apiClient)
+const topicsApi = new TopicsApi(apiClient)
+const categories = ref([])
+const selectedCategoryKey = ref('')
+const requestOrOffer = ref('offer')
+const fieldsToShow = ref([])
+const showAdFields = ref(false)
+let currentCategoryId = 0
 const props = defineProps({
   appLanguage: {
     default: 'de',
     type: String,
   },
-};
-const {t} = useI18n({useScope: 'global'});
+})
+const {t} = useI18n({useScope: 'global'})
 
 onMounted(() => {
-  categoriesApi.categoriesCreateGet(true, getCategories);
-});
+  categoriesApi.categoriesCreateGet(true, getCategories)
+})
 
-function getCategories(_error, data, _response) {
-  categories.value = data.categories;
-  updateFields();
+function getCategories (_error, data, _response) {
+  categories.value = data.categories
+  updateFields()
 }
 
-function updateFields() {
+function updateFields () {
   const selectedCategory = categories.value.find(
-    (category) => category.key === selectedCategoryKey.value,
-  );
+    category => category.key === selectedCategoryKey.value
+  )
   if (selectedCategory && selectedCategory.fields.length > 0) {
-    fieldsToShow.value = selectedCategory.fields;
-    showAdFields.value = true;
-    currentCategoryId = selectedCategory.category_id;
+    fieldsToShow.value = selectedCategory.fields
+    showAdFields.value = true
+    currentCategoryId = selectedCategory.category_id
   } else {
-    showAdFields.value = false;
+    showAdFields.value = false
   }
-};
+}
 
 // ignore
-function submit(data) {
+function submit (data) {
   const dto = new TopicSaveRequestDTO(
-      0,
-      currentCategoryId,
-      requestOrOffer.value.toUpperCase(),
-      data,
-  );
-  topicsApi.topicsPost(dto);
+    0,
+    currentCategoryId,
+    requestOrOffer.value.toUpperCase(),
+    data
+  )
+  topicsApi.topicsPost(dto)
 }
 
-defineExpose({ updateFields })
+defineExpose({updateFields})
 </script>
 
 <template>
