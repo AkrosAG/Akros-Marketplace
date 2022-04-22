@@ -1,0 +1,20 @@
+name: Liquibase DB migration
+
+on:
+  push:
+    paths:
+      - "marketplace-service/src/main/resources/liquibase"
+      - ".github/workflows/liquibase.yml"
+    branches:
+      - main
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: liquibase/liquibase-github-action@v4
+        with:
+          operation: "update"
+          changeLogFile: "marketplace-service/src/main/resources/liquibase/dbchangelog.yml"
+          url: ${{ secrets.POSTGRES_URL }}
