@@ -1,6 +1,9 @@
 spring:
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/am
+    url: jdbc:postgresql://localhost:5432/am?createDatabaseIfNotExist=true
     username: am
     password: am
+  liquibase:
+    enabled: true
+    change-log: liquibase/dbchangelog.yml
