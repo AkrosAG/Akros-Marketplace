@@ -65,10 +65,7 @@
         <option disabled value="">
           {{ t(`categories.${selectedCategory}.${field.key}.title`) }}
         </option>
-        <option
-          v-for="option in field.field_options"
-          v-bind:value="option.field_option_id"
-        >
+        <option v-for="option in field.field_options" v-bind:value="option.key">
           {{
             t(
               `categories.${selectedCategory}.${field.key}.options.${option.key}`
@@ -199,27 +196,27 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from 'vue';
-import {useI18n} from './useI18n';
-import i18n from '../locales/i18n';
+import {onMounted, ref} from 'vue'
+import {useI18n} from './useI18n'
+import i18n from '../locales/i18n'
 
-const props = defineProps({fieldsToShow: Array, selectedCategory: String});
-const emit = defineEmits(['submit']);
-const fieldValues = ref([]);
-const fieldKeys = ref([]);
-const errors = ref([]);
-const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8]);
-const {t} = useI18n(i18n.global.messages.value);
-const formHasErrors = ref([]);
+const props = defineProps({fieldsToShow: Array, selectedCategory: String})
+const emit = defineEmits(['submit'])
+const fieldValues = ref([])
+const fieldKeys = ref([])
+const errors = ref([])
+const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8])
+const {t} = useI18n(i18n.global.messages.value)
+const formHasErrors = ref([])
 
 // Cover Each case
-function checkField(fieldId, fieldKey) {
+function checkField (fieldId, fieldKey) {
   const emailPatternRegex = new RegExp(
-      '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$',
-  );
-  const zipCodePatternRegex = new RegExp('[0-9]{4}');
-  const numberPatternRegex = new RegExp('^[0-9]*$');
-  const alphabeticPatternRegex = new RegExp('^((?![0-9]).)*$$');
+    '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
+  )
+  const zipCodePatternRegex = new RegExp('[0-9]{4}')
+  const numberPatternRegex = new RegExp('^[0-9]*$')
+  const alphabeticPatternRegex = new RegExp('^((?![0-9]).)*$$')
 
   // Static specific validations based on AM categories (currently only accomodation), TODO improve
   switch (fieldKey) {
@@ -230,11 +227,11 @@ function checkField(fieldId, fieldKey) {
         fieldValues.value[fieldId].length > 50 ||
         fieldValues.value[fieldId].length < 1
       ) {
-        errors.value[fieldId] = true;
+        errors.value[fieldId] = true
       } else {
-        errors.value[fieldId] = false;
+        errors.value[fieldId] = false
       }
-      break;
+      break
     // Region: max length 50, min length 1 chars and not numbers
     case 'region':
       if (
@@ -242,11 +239,11 @@ function checkField(fieldId, fieldKey) {
         fieldValues.value[fieldId].length < 1 ||
         !alphabeticPatternRegex.test(fieldValues.value[fieldId])
       ) {
-        errors.value[fieldId] = true;
+        errors.value[fieldId] = true
       } else {
-        errors.value[fieldId] = false;
+        errors.value[fieldId] = false
       }
-      break;
+      break
     // Description, about and expectations: max length 1000, min length 1 chars
     case 'expectations':
     case 'description':
@@ -255,103 +252,103 @@ function checkField(fieldId, fieldKey) {
         fieldValues.value[fieldId].length > 1000 ||
         fieldValues.value[fieldId].length < 1
       ) {
-        errors.value[fieldId] = true;
+        errors.value[fieldId] = true
       } else {
-        errors.value[fieldId] = false;
+        errors.value[fieldId] = false
       }
-      break;
+      break
     // Email: Email format regex
     case 'email':
       if (!emailPatternRegex.test(fieldValues.value[fieldId])) {
-        errors.value[fieldId] = true;
+        errors.value[fieldId] = true
       } else {
-        errors.value[fieldId] = false;
+        errors.value[fieldId] = false
       }
-      break;
+      break
     // Selectors: Ok if not empty
     case 'rooms':
     case 'type':
       if (fieldValues.value[fieldId] !== null) {
-        errors.value[fieldId] = false;
+        errors.value[fieldId] = false
       } else {
-        errors.value[fieldId] = true;
+        errors.value[fieldId] = true
       }
-      break;
+      break
     // Phone, price, size, floor: Number only regex
     case 'phone':
     case 'price':
     case 'size':
     case 'floor':
       if (!numberPatternRegex.test(fieldValues.value[fieldId])) {
-        errors.value[fieldId] = true;
+        errors.value[fieldId] = true
       } else {
-        errors.value[fieldId] = false;
+        errors.value[fieldId] = false
       }
-      break;
+      break
     // Zipcode: Four digit only regex
     case 'postalCode':
       if (!zipCodePatternRegex.test(fieldValues.value[fieldId])) {
-        errors.value[fieldId] = true;
+        errors.value[fieldId] = true
       } else {
-        errors.value[fieldId] = false;
+        errors.value[fieldId] = false
       }
-      break;
+      break
     // Date: Selected date not prior to current date
     case 'date':
-      const today = new Date();
-      const selectedDate = new Date(fieldValues.value[fieldId]);
+      const today = new Date()
+      const selectedDate = new Date(fieldValues.value[fieldId])
       if (today.getTime() < selectedDate.getTime()) {
-        errors.value[fieldId] = false;
+        errors.value[fieldId] = false
       } else {
-        errors.value[fieldId] = true;
+        errors.value[fieldId] = true
       }
-      break;
+      break
   }
-  formHasErrors.value = false;
-  console.log(errors);
-  errors.value.forEach((err) => {
+  formHasErrors.value = false
+  console.log(errors)
+  errors.value.forEach(err => {
     if (err) {
-      formHasErrors.value = true;
+      formHasErrors.value = true
     }
-  });
+  })
 }
 
-function submit() {
-  const fieldsVals = Object.values(fieldValues.value);
-  const keys = Object.keys(fieldValues.value);
+function submit () {
+  const fieldsVals = Object.values(fieldValues.value)
+  const keys = Object.keys(fieldValues.value)
 
-  let containsErrors = false;
+  let containsErrors = false
 
   fieldValues.value.forEach((fieldValue, i) => {
     // Temp exception for field price_unit(7) and attachments(18) as it is at this point not developed
     // (14) furnished both false/null or true accepted
     if (i !== 7 && i !== 18 && i !== 14) {
       if (!fieldValue) {
-        errors.value[i] = true;
-        containsErrors = true;
+        errors.value[i] = true
+        containsErrors = true
       } else if (fieldValue.toString().length < 1) {
-        errors.value[i] = true;
-        containsErrors = true;
+        errors.value[i] = true
+        containsErrors = true
       }
     }
-  });
+  })
   if (!containsErrors) {
     const fields = keys.map((id, i) => {
-      return {field_type_id: id, value: fieldsVals[i]};
-    });
-    emit('submit', fields);
+      return {field_type_id: id, value: fieldsVals[i]}
+    })
+    emit('submit', fields)
   } else {
-    formHasErrors.value = true;
+    formHasErrors.value = true
   }
 }
 
 // ignore
 onMounted(() => {
-  formHasErrors.value = false;
-  props.fieldsToShow.forEach((field) => {
-    fieldValues.value[field.field_id] = '';
-    fieldKeys.value[field.field_id] = field.key;
-    errors.value[field.field_id] = false;
-  });
-});
+  formHasErrors.value = false
+  props.fieldsToShow.forEach(field => {
+    fieldValues.value[field.field_id] = ''
+    fieldKeys.value[field.field_id] = field.key
+    errors.value[field.field_id] = false
+  })
+})
 </script>
