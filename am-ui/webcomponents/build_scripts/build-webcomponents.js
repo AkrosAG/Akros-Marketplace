@@ -1,7 +1,7 @@
 const fs = require('fs');
 const resolve = require('path').resolve;
 const join = require('path').join;
-const cp = require('child_process');
+const spawn = require('child_process').spawn;
 const os = require('os');
 
 // get library path
@@ -18,18 +18,29 @@ fs.readdirSync(path).forEach(function (mod) {
   // npm binary based on OS
   const npmCmd = os.platform().startsWith('win') ? 'npm.cmd' : 'npm';
   const isProduction = process.argv[2] === '--prod';
+  let cp;
 
   if (isProduction) {
-    cp.spawn(npmCmd, ['run', 'build:prod'], {
+    cp = spawn(npmCmd, ['run', 'build:prod'], {
       env: process.env,
       cwd: modPath,
       stdio: 'inherit',
     });
   } else {
-    cp.spawn(npmCmd, ['run', 'build'], {
+    cp = spawn(npmCmd, ['run', 'build'], {
       env: process.env,
       cwd: modPath,
       stdio: 'inherit',
     });
   }
+  cp.on('exit', (code, signal) => {
+    if (code) {
+      console.error('Child exited with code', code);
+      throw new Error(code);
+    } else if (signal) {
+      console.error('Child was killed with signal', signal);
+    } else {
+      console.log('Child exited okay');
+    }
+  });
 });
