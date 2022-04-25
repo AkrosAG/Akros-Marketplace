@@ -5,28 +5,15 @@ It takes the search results, which are in an array, as a property from the main 
 
 ## Installation
 
-Use npm to install the webcomponent along with its dependencies.
+The installation of the webcomponents is carried out at higher level, starting the main application will also build and integrate the webcomponents. For further detail refer to the README in the webcomponents root or the README in the main am-ui root.
 
-```bash
-npm install
-```
+To run locally the command `npm run dev` can be used, which through Vite (https://vitejs.dev/) it will start a local server at http://localhost:3000/
 
-Use the respective commands to lint and run tests.
+## Running unit tests
 
-```bash
-npm run lint
-```
+Run `npm run test` to execute the unit tests via [Jest](https://jestjs.io).
 
-```bash
-npm run test
-```
+## Lint
 
-## Usage
+Run `npm run lint` to lint the project via [Angular-Eslint](https://github.com/angular-eslint/angular-eslint), [GTS](https://github.com/google/gts) and [Stylelint](https://stylelint.io).
 
-The following command will start the development server for the webcomponent.
-
-```bash
-npm run dev
-```
-
-If you want to start the webcomponent within the main application, just start the main application (in the folder _am-ui_) - The script will build the webcomponents and add them to the application accordingly.

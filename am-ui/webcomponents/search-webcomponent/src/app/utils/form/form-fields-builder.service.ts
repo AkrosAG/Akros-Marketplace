@@ -5,6 +5,11 @@ import {FieldResponseDto} from 'src/app/api/models';
 /* istanbul ignore next */
 @Injectable()
 export class FormFieldsBuilderService {
+    /**
+   * @description Service which transforms the category fields obtained into FormFieldBase
+   * objects to build the dynamic form
+   * @param {FieldResponseDto} searchFields - Category fields data
+   */
   public searchFieldsToFormFields(
     searchFields: FieldResponseDto[]
   ): FormFieldBase<string>[] {

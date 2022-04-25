@@ -305,7 +305,6 @@ function checkField (fieldId, fieldKey) {
       break
   }
   formHasErrors.value = false
-  console.log(errors)
   errors.value.forEach(err => {
     if (err) {
       formHasErrors.value = true

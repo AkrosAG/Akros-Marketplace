@@ -43,6 +43,16 @@ export class MpSearchComponent implements OnInit, OnChanges {
   @Input() language = 'de';
   @Output() submitToContainerEvent = new EventEmitter<any>();
 
+  /**
+   * @description Top level component of the search form module. Retrieves list of categories using the Store,
+   *  which makes use of the caterogies service, to get the list of categories and all their fields
+   * which belong to the search.
+   * @constructor
+   * @param {Store} store - Redux store.
+   * @param {LocalizationService} localization - Service for translation change detection
+   * @param {FormFieldsBuilderService} formFieldsBuilderService - Service which transforms the category
+   * fields obtained into FormFieldBase objects to build the dynamic form
+   */
   constructor(
     private store: Store<SearchWebcomponentState>,
     private localization: LocalizationService,
@@ -75,6 +85,11 @@ export class MpSearchComponent implements OnInit, OnChanges {
     this.store.dispatch(storeActions.loadCategories());
   }
 
+  /**
+   * @description Funtion to change current category upon selection and rebuild the form fields
+   * @param {number} index - Index of the selected category from the array of categories
+   * @param {CategoryDto} category - Category selected data
+   */
   public categorySelect(index: number, category: CategoryDto) {
     this.categorySelected[this.currentSelected] = false;
     this.currentSelected = index;
@@ -95,6 +110,11 @@ export class MpSearchComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * @description Opens detail view with search results data
+   * @param {Event} event - Search results data
+   *
+   */
   relayToContainer(event: Event) {
     this.submitToContainerEvent.emit(event);
   }

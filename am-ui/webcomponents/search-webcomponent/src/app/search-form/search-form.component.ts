@@ -26,6 +26,15 @@ export class SearchFormComponent implements OnInit {
   @Input() currentCategoryId: number;
   @Output() submitEvent = new EventEmitter<any>();
 
+  /**
+   * @description Component in charge of rendering the list of fields obtained from the chosen category, as well
+   * as performing the search API call with the values from the form as well as the value for "request"
+   * or "offer" and the category id.
+   * @constructor
+   * @param {TopicsService} topicsService - Service for making the Topics search
+   * @param {FormFieldControlService} formFieldControlService - Transforms the list of FormFieldBase fields into
+   * a form there then for each of its atributes created a dynamic-form-field instance.
+   */
   constructor(
     private formFieldControlService: FormFieldControlService,
     private topicsService: TopicsService
@@ -41,9 +50,11 @@ export class SearchFormComponent implements OnInit {
   }
 
   /* istanbul ignore next */
+  /**
+   * @description Performs the search and notifies parent with the result obtained
+   */
   async onSubmit() {
     const formData = JSON.parse(JSON.stringify(this.form.getRawValue()));
-    console.log(formData);
     this.payLoad.category_id = this.currentCategoryId;
     this.payLoad.request_or_offer = formData.requestOrOffer;
     // TODO: Map Fields in FormData to Fields in DTO

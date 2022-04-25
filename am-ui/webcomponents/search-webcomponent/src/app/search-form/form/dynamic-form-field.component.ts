@@ -5,6 +5,9 @@ import {FormGroup} from '@angular/forms';
 
 import {FormFieldBase} from './form-field-base';
 
+  /**
+   * @description Renders a formfield based on its type with a condition logic in the HTML file
+   */
 @Component({
   selector: 'mp-form-field',
   templateUrl: './dynamic-form-field.component.html',

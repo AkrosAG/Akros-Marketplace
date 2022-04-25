@@ -6,6 +6,12 @@ import {FormFieldBase} from './form-field-base';
 
 @Injectable()
 export class FormFieldControlService {
+
+  /**
+   * @description Transforms the list of FormFieldBase fields into a form, as well as includes validations
+   * and validation messages depending on the fiel (WIP)
+   * @constructor
+   */
   constructor() {}
 
   // private emailPatternRegex: string =
@@ -15,6 +21,11 @@ export class FormFieldControlService {
   // private urlPatternRegex: string = '^https?://(.*)|^www.(.*)';
   // private alphabeticPatternRegex: string = '^((?![0-9]).)*$';
 
+  /**
+   * @description Funtion to transform array of fields into a FormGroup
+   * @param {formFields} FormFieldBase[] - Array of category fields already transformed into FormFieldBase objects
+   * @return {FormGroup} form - The form with the data of the category fields
+   */
   toFormGroup(formFields: FormFieldBase<string>[]): FormGroup {
     const group: any = {};
 
@@ -44,6 +55,10 @@ export class FormFieldControlService {
     return new FormGroup(group);
   }
 
+    /**
+   * @description Funtion to obtain validation messages for category fields
+   * @param {formFields} FormFieldBase[] - Array of category fields already transformed into FormFieldBase objects
+   */
   getValidationMessages(
     formFields: FormFieldBase<string>[]
   ): ValidationMessages<any> {
