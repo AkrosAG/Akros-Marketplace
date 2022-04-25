@@ -6,4 +6,4 @@ spring:
     password: am
   liquibase:
     enabled: true
-    change-log: liquibase/dbchangelog.yml
+    change-log: liquibase/db.changelog-main.yml
