@@ -5,8 +5,8 @@ on:
     paths:
       - "marketplace-service/src/main/resources/liquibase/**"
       - ".github/workflows/liquibase.yml"
-    # branches:
-    #   - main
+    branches:
+      - main
 
 jobs:
   update:
