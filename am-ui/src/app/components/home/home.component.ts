@@ -12,6 +12,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   public appLanguage: string;
   public subscription: Subscription;
 
+  /**
+   * @description Component with the main screen of the appliction, which hosts the search webcomponent,
+   *  as well as further information and button link to access ads creation page.
+   * @constructor
+   * @param {TranslateService} translate - use of translate service to detect language change
+   */
   constructor(private translate: TranslateService, private router: Router) {}
 
   public navigateCreateAdd() {

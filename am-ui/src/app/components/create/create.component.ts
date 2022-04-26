@@ -11,6 +11,11 @@ export class CreateComponent implements OnInit, OnDestroy {
   public appLanguage: String;
   public subscription: Subscription;
 
+  /**
+   * @description Component which hosts the webcomponent for ads creation
+   * @constructor
+   * @param {TranslateService} translate - use of translate service to detect language change
+   */
   constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {

@@ -1,4 +1,4 @@
-import {AddsComponent} from './components/adds/adds.component';
+import {AdsComponent} from './components/ads/ads.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {CreateComponent} from './components/create/create.component';
 import {HomeComponent} from './components/home/home.component';
@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'home', component: HomeComponent},
   {path: 'profile', component: ProfileComponent},
-  {path: 'myadds', component: AddsComponent},
+  {path: 'myads', component: AdsComponent},
   {path: 'create', component: CreateComponent},
   {path: 'search-results', component: SearchResultsComponent},
   {path: 'search-result-details/:id', component: SearchResultDetailsComponent},

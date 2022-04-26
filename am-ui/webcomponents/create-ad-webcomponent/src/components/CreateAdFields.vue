@@ -196,6 +196,15 @@
 </template>
 
 <script setup>
+/**
+ * @description Component to render the form for the creation of a new Topic once a category
+ * has been selected.
+ * TODO
+ * Currently only with validation rules for accommodation category
+ * @param {Array} fieldsToShow - Array of the fields to be rendered as one input type or another
+ * based on the field_type_id and the HTML logic.
+ * @param {String} selectedCategory - Key string value of the selected category
+ */
 import {onMounted, ref} from 'vue'
 import {useI18n} from './useI18n'
 import i18n from '../locales/i18n'
@@ -209,7 +218,11 @@ const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8])
 const {t} = useI18n(i18n.global.messages.value)
 const formHasErrors = ref([])
 
-// Cover Each case
+/**
+ * @description Method to validate the input in the form fields, currently only implemented for accomodation
+ * @param {Number} fieldId - Id of the field to find its reference in the array of field values and erros
+ * @param {String} fieldKey - Key string value of the edited field
+ */
 function checkField (fieldId, fieldKey) {
   const emailPatternRegex = new RegExp(
     '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
@@ -312,10 +325,16 @@ function checkField (fieldId, fieldKey) {
   })
 }
 
+/**
+ * @description Method to emit the submit event to parent component with the values filled in the fields.
+ * Performs a second validation to not allow send POST event if some fields have not been filled.
+ * TODO improve this logic, currently only supporting accomodation
+ * @param {Number} fieldId - Id of the field to find its reference in the array of field values and erros
+ * @param {String} fieldKey - Key string value of the edited field
+ */
 function submit () {
   const fieldsVals = Object.values(fieldValues.value)
   const keys = Object.keys(fieldValues.value)
-
   let containsErrors = false
 
   fieldValues.value.forEach((fieldValue, i) => {
@@ -341,7 +360,6 @@ function submit () {
   }
 }
 
-// ignore
 onMounted(() => {
   formHasErrors.value = false
   props.fieldsToShow.forEach(field => {

@@ -11,6 +11,12 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
   public language: String = '';
   public subscription: Subscription;
   public result = {};
+
+  /**
+   * @description Component to display the detail view of a Topic
+   * @constructor
+   * @param {TranslateService} translate - use of translate service to detect language change
+   */
   constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {

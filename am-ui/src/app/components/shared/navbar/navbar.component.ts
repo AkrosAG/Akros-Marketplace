@@ -51,6 +51,9 @@ export class NavbarComponent {
     this.translate.use(lng);
   }
 
+  /**
+   * @description Method with logic to show and hide language/userOptions selector
+   */
   public showMenu(tag: string) {
     let element;
     switch (tag) {
@@ -75,6 +78,9 @@ export class NavbarComponent {
     element?.classList.toggle('active');
   }
 
+  /**
+   * @description Click envent listener to complement logic to show and hide language/userOptions selector
+   */
   @HostListener('document:click')
   clickout() {
     if (this.menuEvent) {

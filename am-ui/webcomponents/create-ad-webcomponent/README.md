@@ -11,13 +11,6 @@ Some basic validation logic can be found in the class CreateAdFields which preve
 The installation of the webcomponents is carried out at higher level, starting the main application will also build and integrate the webcomponents. For further detail refer to the README in the webcomponents root or the README in the main am-ui root.
 
 To run locally the command `npm run dev` can be used, which through Vite (https://vitejs.dev/) it will start a local server at http://localhost:3000/
+## Translations
 
-## Usage
-
-The following command will start the development server for the webcomponent.
-
-```bash
-npm run dev
-```
-
-If you want to start the webcomponent within the main application, just start the main application (in the folder _am-ui_) - The script will build the webcomponents and add them to the application accordingly.
+The translations for the create Ad module can be found under src/locales/i18n.js, having the resources for both english and german together, in an object as creation result of the use of Vue createI18n (https://vue-i18n.intlify.dev/)

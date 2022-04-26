@@ -34,7 +34,7 @@ import {marketplaceReducer} from './data/store/marketplace.reducer';
 import {HomeComponent} from './components/home/home.component';
 import {NavbarComponent} from './components/shared/navbar/navbar.component';
 import {FooterComponent} from './components/shared/footer/footer.component';
-import {AddsComponent} from './components/adds/adds.component';
+import {AdsComponent} from './components/ads/ads.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {CreateComponent} from './components/create/create.component';
 import {ErrorInterceptor} from './data/services/login/error.interceptor';
@@ -82,7 +82,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     CreateComponent,
     FooterComponent,
     ProfileComponent,
-    AddsComponent,
+    AdsComponent,
     SearchResultsComponent,
     SearchResultDetailsComponent,
   ],

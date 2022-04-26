@@ -1,23 +1,23 @@
-import {AddsComponent} from './adds.component';
+import {AdsComponent} from './ads.component';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-describe('AddsComponent', () => {
-  let component: AddsComponent;
-  let fixture: ComponentFixture<AddsComponent>;
+describe('AdsComponent', () => {
+  let component: AdsComponent;
+  let fixture: ComponentFixture<AdsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AddsComponent],
+      declarations: [AdsComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddsComponent);
+    fixture = TestBed.createComponent(AdsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  describe('AddsComponent', () => {
+  describe('AdsComponent', () => {
     it('should be created', () => {
       expect(component).toBeTruthy();
     });

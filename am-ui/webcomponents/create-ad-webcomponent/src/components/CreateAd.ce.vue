@@ -1,9 +1,16 @@
 <script setup>
+/**
+ * @description Main component of the Topics creation module acting as controller. Gets list of categories
+ * from API with the category fields corresponding to the creation(categories/true). Enables to show the
+ * creation form as long as a category has been selected and contains fields. Creates POST when receiving event
+ * from child component and form has been correctly filled.
+ * Contains the styles of the module.
+ */
 import ApiClient from '../api/src/ApiClient'
 import CategoriesApi from '../api/src/api/CategoriesApi'
 import TopicsApi from '../api/src/api/TopicsApi'
 import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO'
-import {onMounted, ref, computed, watchEffect} from 'vue'
+import {onMounted, ref} from 'vue'
 import CreateAdFields from './CreateAdFields.vue'
 import {useI18n} from 'vue-i18n'
 
@@ -46,7 +53,11 @@ function updateFields () {
   }
 }
 
-// ignore
+/**
+ * @description Method triggered from submit event in CreadAdFields component, builds the body for the
+ * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
+ * @param {[{}]} data - Form field values
+ */
 function submit (data) {
   const dto = new TopicSaveRequestDTO(
     0,

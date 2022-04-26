@@ -12,6 +12,12 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   public language: String = '';
   public subscription: Subscription;
   public results: String[] = [];
+
+  /**
+   * @description Component which hosts the webcomponent for displaying search results
+   * @constructor
+   * @param {TranslateService} translate - use of translate service to detect language change
+   */
   constructor(private translate: TranslateService, private router: Router) {}
 
   /* istanbul ignore next */
