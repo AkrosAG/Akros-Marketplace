@@ -3,7 +3,7 @@ name: Liquibase DB migration
 on:
   push:
     paths:
-      - "marketplace-service/src/main/resources/liquibase"
+      - "marketplace-service/src/main/resources/liquibase/**"
       - ".github/workflows/liquibase.yml"
     # branches:
     #   - main
