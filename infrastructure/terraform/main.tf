@@ -14,16 +14,36 @@ terraform {
 
 provider "azurerm" {
   features {}
-  use_msi = true
 }
 
 data "azurerm_client_config" "current" {
+}
+
+data "azurerm_subscription" "current" {}
+
+data "azurerm_role_definition" "contributor" {
+  name = "Contributor"
+}
+
+variable "AM_DB_LOGIN" {
+  type = string
+}
+
+variable "AM_DB_PASSWORD" {
+  type = string
 }
 
 resource "azurerm_resource_group" "rg" {
   name     = "amp-test"
   location = "Switzerland North"
 }
+
+resource "azurerm_user_assigned_identity" "amp-mi" {
+    resource_group_name = azurerm_resource_group.rg.name
+    name = "amp-mi"
+    location = azurerm_resource_group.rg.location
+}
+
 
 resource "azurerm_container_registry" "acr" {
   name                = "ampcrtest"
@@ -82,14 +102,13 @@ resource "azurerm_postgresql_flexible_server" "database" {
   resource_group_name    = azurerm_resource_group.rg.name
   location               = azurerm_resource_group.rg.location
   version                = "13"
-  administrator_login    = ""
-  administrator_password = ""
+  administrator_login    = var.AM_DB_LOGIN
+  administrator_password = var.AM_DB_PASSWORD
   zone                   = "1"
 
   storage_mb = 32768
 
   sku_name   = "B_Standard_B1ms"
-
 }
 
 resource "azurerm_service_plan" "amp-marketplace-service-plan" {
@@ -98,6 +117,7 @@ resource "azurerm_service_plan" "amp-marketplace-service-plan" {
   location            = azurerm_resource_group.rg.location
   os_type             = "Linux"
   sku_name            = "B1"
+  
 }
 
 resource "azurerm_linux_web_app" "amp-marketplace-service" {
@@ -105,7 +125,7 @@ resource "azurerm_linux_web_app" "amp-marketplace-service" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_service_plan.amp-marketplace-service-plan.location
   service_plan_id     = azurerm_service_plan.amp-marketplace-service-plan.id
-
+  
   site_config {}
 }
 
