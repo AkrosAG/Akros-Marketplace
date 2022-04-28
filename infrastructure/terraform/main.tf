@@ -39,9 +39,9 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_user_assigned_identity" "amp-mi" {
-    resource_group_name = azurerm_resource_group.rg.name
-    name = "amp-mi"
-    location = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  name                = "amp-mi"
+  location            = azurerm_resource_group.rg.location
 }
 
 
@@ -108,7 +108,7 @@ resource "azurerm_postgresql_flexible_server" "database" {
 
   storage_mb = 32768
 
-  sku_name   = "B_Standard_B1ms"
+  sku_name = "B_Standard_B1ms"
 }
 
 resource "azurerm_service_plan" "amp-marketplace-service-plan" {
@@ -117,7 +117,7 @@ resource "azurerm_service_plan" "amp-marketplace-service-plan" {
   location            = azurerm_resource_group.rg.location
   os_type             = "Linux"
   sku_name            = "B1"
-  
+
 }
 
 resource "azurerm_linux_web_app" "amp-marketplace-service" {
@@ -125,7 +125,7 @@ resource "azurerm_linux_web_app" "amp-marketplace-service" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_service_plan.amp-marketplace-service-plan.location
   service_plan_id     = azurerm_service_plan.amp-marketplace-service-plan.id
-  
+
   site_config {}
 }
 
