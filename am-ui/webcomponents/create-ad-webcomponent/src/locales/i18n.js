@@ -37,6 +37,16 @@ export default createI18n({
               day: 'Per Day',
             },
           },
+          availability: {
+            title: 'Available',
+            options: {
+              now: 'Specific date',
+              date: 'Immediately',
+              agreement: 'By agreement',
+            },
+          },
+          temporary: 'Temporary',
+          start_date: 'Moving Date',
           furnished: 'Furnished',
           description: 'Description',
           expectations: 'My expectation of the tenant',
@@ -86,6 +96,16 @@ export default createI18n({
               day: 'Pro Tag',
             },
           },
+          availability: {
+            title: 'Verfügbar',
+            options: {
+              now: 'Ab Datum',
+              date: 'Ab sofort',
+              agreement: 'Auf Anfrage',
+            },
+          },
+          temporary: 'Befristet',
+          start_date: 'Umzugsdatum',
           furnished: 'Möbiliert',
           description: 'Beschreibung',
           expectations: 'Meine Erwartung an den Mieter',
