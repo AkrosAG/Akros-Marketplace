@@ -274,7 +274,7 @@ _\<white box template\>_
 
 ![image](https://user-images.githubusercontent.com/96523998/154435703-a64d2dee-2c99-4582-8b55-41b0a8d53b88.png) ![image](https://user-images.githubusercontent.com/96523998/154487230-3a51163f-5b49-416b-bfbe-a8712cc9dccd.png)
 
-## \<Runtime Scenario 1\>
+## \<Scenario 1 "Create an ad"\>
 
 - Create an accommodation ad
 
