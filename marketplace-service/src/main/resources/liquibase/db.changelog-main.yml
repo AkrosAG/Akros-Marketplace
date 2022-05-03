@@ -30,8 +30,9 @@ databaseChangeLog:
       preConditions:
         - onFail: MARK_RAN
         - not:
-            - primaryKeyExists:
-                tableName: category
+            - sqlCheck:
+                expectedResult: 2
+                sql: SELECT COUNT(1) FROM category WHERE category_id in (1, 2)
       changes:
         - insert:
             columns:
@@ -133,8 +134,9 @@ databaseChangeLog:
       preConditions:
         - onFail: MARK_RAN
         - not:
-            - primaryKeyExists:
-                tableName: field
+            - sqlCheck:
+                expectedResult: 30
+                sql: SELECT COUNT(1) FROM field WHERE category_id in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30)
       changes:
         - insert:
             columns:
@@ -1333,8 +1335,9 @@ databaseChangeLog:
       preConditions:
         - onFail: MARK_RAN
         - not:
-            - primaryKeyExists:
-                tableName: field_option
+            - sqlCheck:
+                expectedResult: 11
+                sql: SELECT COUNT(1) FROM field_option WHERE field_option_id in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)
       changes:
         - insert:
             columns:
@@ -1547,8 +1550,9 @@ databaseChangeLog:
       preConditions:
         - onFail: MARK_RAN
         - not:
-            - primaryKeyExists:
-                tableName: advertiser
+            - sqlCheck:
+                expectedResult: 1
+                sql: SELECT COUNT(1) FROM advertiser WHERE advertiser_id = 1
       changes:
         - insert:
             columns:
@@ -1852,3 +1856,185 @@ databaseChangeLog:
                 sql: SELECT COUNT(1) FROM information_schema.check_constraints WHERE CONSTRAINT_NAME = 'check_request_or_offer';
       changes:
         - sql: ALTER TABLE topic ADD CONSTRAINT check_request_or_offer CHECK(request_or_offer in ('REQUEST', 'OFFER'));
+  - changeSet:
+      id: 2
+      author: lemist
+      changes:
+        - update:
+            columns:
+              - column:
+                  name: field_id
+                  value: 32
+            tableName: field
+            where: field_id='29'
+        - update:
+            columns:
+              - column:
+                  name: field_id
+                  value: 33
+            tableName: field
+            where: field_id='30'
+  - changeSet:
+      id: 3
+      author: lemist
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: field_id
+                  valueNumeric: 29
+              - column:
+                  name: field_type_definition_id
+                  valueNumeric: 6
+              - column:
+                  name: category_id
+                  valueNumeric: 1
+              - column:
+                  name: key
+                  value: availability
+              - column:
+                  name: min_value
+              - column:
+                  name: max_value
+              - column:
+                  name: sort_number
+                  valueNumeric: 15
+              - column:
+                  name: required
+                  valueBoolean: true
+              - column:
+                  name: searchable
+                  valueBoolean: false
+              - column:
+                  name: request
+                  valueBoolean: true
+              - column:
+                  name: offer
+                  valueBoolean: true
+              - column:
+                  name: creation
+                  valueBoolean: true
+            tableName: field
+        - insert:
+            columns:
+              - column:
+                  name: field_id
+                  valueNumeric: 30
+              - column:
+                  name: field_type_definition_id
+                  valueNumeric: 16
+              - column:
+                  name: category_id
+                  valueNumeric: 1
+              - column:
+                  name: key
+                  value: temporary
+              - column:
+                  name: min_value
+              - column:
+                  name: max_value
+              - column:
+                  name: sort_number
+                  valueNumeric: 16
+              - column:
+                  name: required
+                  valueBoolean: true
+              - column:
+                  name: searchable
+                  valueBoolean: false
+              - column:
+                  name: request
+                  valueBoolean: true
+              - column:
+                  name: offer
+                  valueBoolean: true
+              - column:
+                  name: creation
+                  valueBoolean: true
+            tableName: field
+        - insert:
+            columns:
+              - column:
+                  name: field_id
+                  valueNumeric: 31
+              - column:
+                  name: field_type_definition_id
+                  valueNumeric: 12
+              - column:
+                  name: category_id
+                  valueNumeric: 1
+              - column:
+                  name: key
+                  value: start_date
+              - column:
+                  name: min_value
+              - column:
+                  name: max_value
+              - column:
+                  name: sort_number
+                  valueNumeric: 17
+              - column:
+                  name: required
+                  valueBoolean: true
+              - column:
+                  name: searchable
+                  valueBoolean: false
+              - column:
+                  name: request
+                  valueBoolean: true
+              - column:
+                  name: offer
+                  valueBoolean: true
+              - column:
+                  name: creation
+                  valueBoolean: true
+            tableName: field
+  - changeSet:
+      id: 4
+      author: lemist
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: field_option_id
+                  valueNumeric: 12
+              - column:
+                  name: field_id
+                  valueNumeric: 29
+              - column:
+                  name: key
+                  value: date
+              - column:
+                  name: sort_number
+                  valueNumeric: 1
+            tableName: field_option
+        - insert:
+            columns:
+              - column:
+                  name: field_option_id
+                  valueNumeric: 13
+              - column:
+                  name: field_id
+                  valueNumeric: 29
+              - column:
+                  name: key
+                  value: now
+              - column:
+                  name: sort_number
+                  valueNumeric: 2
+            tableName: field_option
+        - insert:
+            columns:
+              - column:
+                  name: field_option_id
+                  valueNumeric: 14
+              - column:
+                  name: field_id
+                  valueNumeric: 29
+              - column:
+                  name: key
+                  value: agreement
+              - column:
+                  name: sort_number
+                  valueNumeric: 2
+            tableName: field_option
