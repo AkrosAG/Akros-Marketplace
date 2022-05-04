@@ -1,6 +1,6 @@
 <script>
-import {defineComponent, provide, watchEffect} from 'vue';
-import {I18nInjectionKey} from 'vue-i18n';
+import { defineComponent, provide, watchEffect } from 'vue';
+import { I18nInjectionKey } from 'vue-i18n';
 import i18n from '../locales/i18n';
 /**
  * Define the web components that host the i18n instance.
@@ -22,8 +22,8 @@ export default defineComponent({
   props: {
     locale: {
       type: String,
-      default: 'de',
-    },
+      default: 'de'
+    }
   },
   setup(props) {
     /**
@@ -34,7 +34,7 @@ export default defineComponent({
       i18n.global.locale.value = props.locale;
     });
     return {};
-  },
+  }
 });
 </script>
 
