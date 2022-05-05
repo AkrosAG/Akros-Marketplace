@@ -276,10 +276,26 @@ _\<white box template\>_
 
 ## \<Scenario 1 "Create an ad"\>
 
-- Create an accommodation ad
+*USC 1: Create an ad*
 
-- _\<insert description of the notable aspects of the interactions
-  between the building block instances depicted in this diagram.\>_
+*Precondition:*
+- The user is logged in the application
+- The user is on the Homepage of the application
+
+*Basic flow: Create an ad*
+1.	On the Homepage the user sees the possibility to create an ad.
+2.	The user selects [Create] Button.
+3.	The system shows the list of categories that can be selected.
+4.	The user selects the category and confirm.
+5.	The system shows the input criteria for selected category.
+6.	User fills required fields, upload related pictures, give his contact address and confirm.
+7.	The system validates the fields, ensures that the mandatory fields are filled and valid and shows the user his ad as a preview.
+8.	The user checks the detail view of his ad. He has the possibility to go back to the creation page and correct the date or publish the ad.
+9.	The user publish ad.
+
+*Postcondition:*
+- the ad is published and can be found by the search
+- the ad is visible in the user account
 
 ## \<Runtime Scenario 2\>
 
@@ -287,14 +303,14 @@ _\<white box template\>_
 
 ## \<Runtime Scenario 3\>
 
-USC 3: Search for accommodation
+*USC 3: Search for accommodation*
 
-## Precondition:
+*Precondition:*
 
 - user has Akros AD
 - user start APM ad and is on the Home page
 
-## Basic flow: default search
+*Basic flow: default search*
 
 1. On the Home page the user see the possibility to search for category accommodation incl. search criteria for this category. Search criteria have no default.
 2. The user select search, without providing the search criteria.
@@ -308,7 +324,7 @@ Alternative flow 2: search for a room
 
 Alternative flow 3: search for roommate
 
-Postcondition:
+*Postcondition:*
 
 - no
 
