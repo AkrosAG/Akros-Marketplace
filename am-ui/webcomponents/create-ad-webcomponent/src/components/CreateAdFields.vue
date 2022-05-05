@@ -142,7 +142,7 @@
         v-bind:class="{
           error: errors[field.field_id]
         }"
-        ref="dateRefs"
+        :disabled="hasSpecificDate"
       />
     </div>
 
@@ -205,7 +205,7 @@ const errors = ref([]);
 const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8]);
 const { t } = useI18n(i18n.global.messages.value);
 const formHasErrors = ref([]);
-const dateRefs = ref([]);
+const hasSpecificDate = ref(true);
 
 /**
  * @description Method to validate the input in the form fields, currently only implemented for accomodation
@@ -298,8 +298,8 @@ function checkField (fieldId, fieldKey) {
       }
       break;
     case 'availability':
-      dateRefs.value.find(ref => ref.id === 'create-add-field-31').disabled =
-        fieldValues.value[fieldId] !== 'date';
+      hasSpecificDate.value = fieldValues.value[fieldId] !== 'date';
+      console.log(hasSpecificDate.value);
       break;
   }
   formHasErrors.value = false;
@@ -352,8 +352,5 @@ onMounted(() => {
     fieldKeys.value[field.field_id] = field.key;
     errors.value[field.field_id] = false;
   });
-  if (dateRefs.value.find(ref => ref.id === 'create-add-field-31')) {
-    dateRefs.value.find(ref => ref.id === 'create-add-field-31').disabled = true;
-  }
 });
 </script>
