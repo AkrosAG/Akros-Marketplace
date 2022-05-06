@@ -143,7 +143,6 @@
           error: errors[field.field_id]
         }"
         :disabled="!hasSpecificDate"
-        ref="dateRef"
       />
     </div>
 
@@ -207,7 +206,6 @@ const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8]);
 const { t } = useI18n(i18n.global.messages.value);
 const formHasErrors = ref([]);
 const hasSpecificDate = ref(false);
-const dateRef = ref(null);
 
 /**
  * @description Method to validate the input in the form fields, currently only implemented for accomodation
