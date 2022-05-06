@@ -142,7 +142,8 @@
         v-bind:class="{
           error: errors[field.field_id]
         }"
-        :disabled="hasSpecificDate"
+        :disabled="!hasSpecificDate"
+        ref="dateRef"
       />
     </div>
 
@@ -205,7 +206,8 @@ const errors = ref([]);
 const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8]);
 const { t } = useI18n(i18n.global.messages.value);
 const formHasErrors = ref([]);
-const hasSpecificDate = ref(true);
+const hasSpecificDate = ref(false);
+const dateRef = ref(null);
 
 /**
  * @description Method to validate the input in the form fields, currently only implemented for accomodation
@@ -298,8 +300,13 @@ function checkField (fieldId, fieldKey) {
       }
       break;
     case 'availability':
-      hasSpecificDate.value = fieldValues.value[fieldId] !== 'date';
-      console.log(hasSpecificDate.value);
+      hasSpecificDate.value = fieldValues.value[fieldId] === 'date';
+      const dateFieldId = props.fieldsToShow.find(field => field.key === 'date').field_id;
+      if (fieldValues.value[fieldId] === 'now') {
+        fieldValues.value[dateFieldId] = new Date().toISOString().substring(0, 10);
+      } else {
+        fieldValues.value[dateFieldId] = '';
+      }
       break;
   }
   formHasErrors.value = false;
