@@ -136,7 +136,7 @@ databaseChangeLog:
         - not:
             - sqlCheck:
                 expectedResult: 30
-                sql: SELECT COUNT(1) FROM field WHERE category_id in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30)
+                sql: SELECT COUNT(1) FROM field WHERE field_id in (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30)
       changes:
         - insert:
             columns:
@@ -2038,3 +2038,46 @@ databaseChangeLog:
                   name: sort_number
                   valueNumeric: 2
             tableName: field_option
+  - changeSet:
+      id: 5
+      author: lemist
+      changes:
+        - delete:
+            tableName: field
+            where: field_id=31
+        - update:
+            tableName: field
+            columns:
+              - column:
+                  name: field_id
+                  value: 31
+            where: field_id=32
+        - update:
+            tableName: field
+            columns:
+              - column:
+                  name: field_id
+                  value: 32
+            where: field_id=33
+  - changeSet:
+      id: 6
+      author: lemist
+      changes:
+        - update:
+            tableName: field
+            columns:
+              - column:
+                  name: sort_number
+                  value: 11
+            where: field_id=30
+  - changeSet:
+      id: 7
+      author: lemist
+      changes:
+        - update:
+            tableName: field
+            columns:
+              - column:
+                  name: sort_number
+                  value: 12
+            where: field_id=29

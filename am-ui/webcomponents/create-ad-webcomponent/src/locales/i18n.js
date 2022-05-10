@@ -40,8 +40,8 @@ export default createI18n({
           availability: {
             title: 'Available',
             options: {
-              now: 'Specific date',
-              date: 'Immediately',
+              now: 'Immediately',
+              date: 'Specific date',
               agreement: 'By agreement',
             },
           },
@@ -99,8 +99,8 @@ export default createI18n({
           availability: {
             title: 'Verfügbar',
             options: {
-              now: 'Ab Datum',
-              date: 'Ab sofort',
+              now: 'Ab sofort',
+              date: 'Ab Datum',
               agreement: 'Auf Anfrage',
             },
           },
