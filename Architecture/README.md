@@ -22,7 +22,7 @@
    3. [Level 3](#level-3)
 6. [Runtime View](#runtime-view)
    1. [\<Use Case Diagram\>](#use-case-diagram)
-   2. [\<Runtime Scenario 1\>](#runtime-scenario-1)
+   2. [\<Scenario 1 "Create an ad"\>](#scenario-1-create-an-ad)
    3. [\<Runtime Scenario 2\>](#runtime-scenario-2)
    4. [\<Runtime Scenario 3\>](#runtime-scenario-3)
    5. [Precondition:](#precondition)
@@ -30,7 +30,6 @@
    7. [\<Runtime Scenario n\>](#runtime-scenario-n)
 7. [Deployment View](#deployment-view)
    1. [Infrastructure Level 1](#infrastructure-level-1)
-   2. [Infrastructure Level 2](#infrastructure-level-2)
 8. [Cross-cutting Concepts](#cross-cutting-concepts)
    1. [_\<Concept 1\>_](#_concept-1_)
    2. [_\<Testing Concept\>_](#_testing-concept_)
@@ -40,6 +39,8 @@
     1. [Quality Tree](#quality-tree)
     2. [Quality Scenarios](#quality-scenarios)
 11. [Risks and Technical Debts](#risks-and-technical-debts)
+    1. [Technical Debts](#technical-debts)
+    2. [Risks](#risks)
 12. [Glossary](#glossary)
 
 <!-- /code_chunk_output -->
@@ -318,36 +319,15 @@ Postcondition:
 
 ## Infrastructure Level 1
 
-![Infrastructure Diagram](images/distribution_layerAM.PNG)
-**_\<Overview Diagram\>_**
+![Infrastructure Diagram](images/Deployment_Diagram.png)
 
-Motivation
-
-: _\<explanation in text form\>_
-
-Quality and/or Performance Features
-
-: _\<explanation in text form\>_
-
-Mapping of Building Blocks to Infrastructure
-
-: _\<description of the mapping\>_
-
-## Infrastructure Level 2
-
-### _\<Infrastructure Element 1\>_
-
-_\<diagram + explanation\>_
-
-### _\<Infrastructure Element 2\>_
-
-_\<diagram + explanation\>_
-
-...
-
-### _\<Infrastructure Element n\>_
-
-_\<diagram + explanation\>_
+| Node / Artifact     | Description                                                                                               |
+| ------------------- | --------------------------------------------------------------------------------------------------------- |
+| akrosmarketplace    | Container Registry for the Project. Has webhooks for the Github Actions to deploy from the CI/CD pipeline |
+| am-ui               | App-Service for the Frontend, wrapped in a Service Plan                                                   |
+| marketplace-service | App-Service for the Marketplace-Service, wrapped in a Service Plan                                        |
+| am-db               | Postgres-Database                                                                                         |
+| am-kv               | Keyvault containing the database connection string for the backend                                        |
 
 # Cross-cutting Concepts
 
@@ -397,7 +377,17 @@ _\<explanation\>_
 
 # Risks and Technical Debts
 
-To be filled after MVP released.
+## Technical Debts
+
+A list of the technical debts can be found in the [Github Project](https://github.com/orgs/AkrosAG/projects/6/views/13).
+
+## Risks
+
+### Active Team
+
+The team composition's volatility makes this project a bit of a challenge - The composition can change at any given time and the priority to work on it is also set on the lowest. Thus it is harder to plan under these circumstances.
+Furthermore, as the team is not set, missing seniority in certain competences can be lacking.
+Nonetheless it isn't an urgent risk as this project also has no deadline or any other urgency to it. Any lack of competency can be compensated by being able to take the time to learn that skill.
 
 # Glossary
 
