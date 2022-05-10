@@ -1,11 +1,11 @@
-# Akros-Marketplace
+# AKROS-Marketplace
 
 <br />
 <p align="center">
   <a href="https://github.com/AkrosAG/Akros-Marketplace">
     <img src="Architecture/images/am_logo.svg" alt="Logo" width="80" height="80">
   </a>
-  <h3 align="center">Akros Marketplace</h3>
+  <h3 align="center">AKROS Marketplace</h3>
   <p align="center">
     <a href="https://github.com/AkrosAG/Akros-Marketplace/issues">Report Bug</a>
     ·
@@ -13,16 +13,28 @@
   </p>
 </p>
 
-## README
-
-Akros Marketplace, short AMP, is an application for companies internal advertising and is used for search and advertise an appartement, a room a roommate. The application is expandable and can include additional categories e.g. to search and advertise ride- or clothes-sharing, rent a car, et cetera.
+AKROS Marketplace, short AMP, is an application for companies internal advertising and is used for search and advertise an appartement, a room a roommate. The application is expandable and can include additional categories e.g. to search and advertise ride- or clothes-sharing, rent a car, et cetera.
 
 The project is hosted on Github public. It is licensed under the Apache License. Public means that the code is an AKROS business card. Quality and state of the art development is essential.
 
 The application should serve
 
-- to train and practice the Akros employee for current and future development processes, technologies and "best practices",
+- to train and practice the AKROS employee for current and future development processes, technologies and "best practices",
 - to assess the candidates in the hiring process.
+
+## Running the application
+
+### Docker-Compose
+
+The easiest way to just run the application is to start the docker-compose for the entire application. This requires a docker-installation.
+To do so, run the docker-compose file in `./infrastructure/start_all_local` or run the `clean_startup.sh`-script in the same folder.
+
+### Without Docker
+
+Alternatively you can run both the `am-ui` and `marketplace-service` without the docker-compose. This is probably preferred for development.
+
+- You can run the backend in IntelliJ with the provided `Backend`-run-config in the `./.run` directory.
+- Run `npm run start_ssl` in `./am-ui` to start the frontend, including all the webcomponents
 
 ## Folder Organisation
 
