@@ -19,15 +19,12 @@
 5. [Building Block View](#building-block-view)
    1. [Whitebox Overall System](#whitebox-overall-system)
    2. [Level 2](#level-2)
-   3. [Level 3](#level-3)
 6. [Runtime View](#runtime-view)
    1. [\<Use Case Diagram\>](#use-case-diagram)
    2. [\<Scenario 1 "Create an ad"\>](#scenario-1-create-an-ad)
    3. [\<Runtime Scenario 2\>](#runtime-scenario-2)
    4. [\<Runtime Scenario 3\>](#runtime-scenario-3)
-   5. [Precondition:](#precondition)
-   6. [Basic flow: default search](#basic-flow-default-search)
-   7. [\<Runtime Scenario n\>](#runtime-scenario-n)
+   5. [\<Runtime Scenario n\>](#runtime-scenario-n)
 7. [Deployment View](#deployment-view)
    1. [Infrastructure Level 1](#infrastructure-level-1)
 8. [Cross-cutting Concepts](#cross-cutting-concepts)
@@ -140,7 +137,7 @@ The following diagram shows the most important AMP functions as a business flow.
 
 ## Whitebox Overall System
 
-**_\<Overview Diagram\>_**
+**_Overview Diagram_**
 
 Motivation
 
@@ -161,25 +158,19 @@ Important Interfaces
 
 : _\<Description of important interfaces\>_
 
-### \<client-ui\>
+### client-ui
 
-_\<allows the user to interact with the marketplace App. He can search , add ads and also do a login.\>_
+The client-ui allows the user to interact with the marketplace App. He can search, add ads and also do a login. It resides in the _./am-ui_ directory.
 
-_\<Interface(s)\>_
+The client-ui consists of a "main"-frontend (written in Angular), which acts as the container for multiple webcomponents (Can be written in any technology).
+The main-frontend is responsible for the navigation and the layout of the entire application whereas the web-components are the ones implementing the actual business logic and have a fitting name. Therefore, the client-stubs generated from the OpenAPI-Spec for the marketplace service is also to be done **only in the webcomponents**.
 
-_\<(Optional) Quality/Performance Characteristics\>_
+### admin-ui
 
-_\<(Optional) Directory/File Location\>_
+This modules configures all dynamic parameters of the marketplace.
+_Its implementation has been started but has not been kept up with the rest of the project and will be properly implemented and documented at a later date._
 
-_\<(Optional) Fulfilled Requirements\>_
-
-_\<(optional) Open Issues/Problems/Risks\>_
-
-### \<admin-ui\>
-
-_\<This modules configures all dynamic parameters of the marketplace.\>_
-
-_\<Interface(s)\>_
+<!-- _\<Interface(s)\>_
 
 _\<(Optional) Quality/Performance Characteristics\>_
 
@@ -187,85 +178,64 @@ _\<(Optional) Directory/File Location\>_
 
 _\<(Optional) Fulfilled Requirements\>_
 
-_\<(optional) Open Issues/Problems/Risks\>_
+_\<(optional) Open Issues/Problems/Risks\>_ -->
 
-### \<marketplace-service\>
+### marketplace-service
 
-_\<serves the Rest-Services for the UI.\>_
+This module provides the rest services directly concerning the marketplace functionality for the UI. This includes things such as the creation and search of ads. It resides in _./marketplace-service_.
+Additionally, upon running `mvn clean install`, a plugin runs, that checks the `api.yaml` file, residing in the root directory, whether it conforms to the [Zalando REST API guidelines](https://opensource.zalando.com/restful-api-guidelines/).
 
-_\<(Optional) Quality/Performance Characteristics\>_
+<!-- _\<(Optional) Quality/Performance Characteristics\>_
+
+_\<(Optional) Fulfilled Requirements\>_
+
+_\<(optional) Open Issues/Problems/Risks\>_ -->
+
+### auth-service
+
+Serves the authentication of the users.
+_Its implementation has been started but has not been kept up with the rest of the project and will be properly implemented and documented at a later date._
+
+<!-- _\<(Optional) Quality/Performance Characteristics\>_
 
 _\<(Optional) Directory/File Location\>_
 
 _\<(Optional) Fulfilled Requirements\>_
 
-_\<(optional) Open Issues/Problems/Risks\>_
+_\<(optional) Open Issues/Problems/Risks\>_ -->
 
-### \<auth-service\>
+### postgres_user_db
 
-_\<serves the authentication of the users.\>_
+This module is used to store user and Accountdata.
+_Its implementation has been started but has not been kept up with the rest of the project and will be properly implemented and documented at a later date._
 
-_\<(Optional) Quality/Performance Characteristics\>_
-
-_\<(Optional) Directory/File Location\>_
-
-_\<(Optional) Fulfilled Requirements\>_
-
-_\<(optional) Open Issues/Problems/Risks\>_
-
-### \<postgres_user_db\>
-
-_\<is used to store user and Accountdata.\>_
-
-_\<(Optional) Quality/Performance Characteristics\>_
+<!-- _\<(Optional) Quality/Performance Characteristics\>_
 
 _\<(Optional) Directory/File Location\>_
 
 _\<(Optional) Fulfilled Requirements\>_
 
-_\<(optional) Open Issues/Problems/Risks\>_
+_\<(optional) Open Issues/Problems/Risks\>_ -->
 
-### \<postgres_am_db\>
+### postgres_am_db
 
-_\<is used to store marketplace ads and configdata\>_
-
-_\<(Optional) Quality/Performance Characteristics\>_
-
-_\<(Optional) Directory/File Location\>_
-
-_\<(Optional) Fulfilled Requirements\>_
-
-_\<(optional) Open Issues/Problems/Risks\>_
+This module is used to store marketplace ads and configdata. Its initialization is found in the `./infrastructure/db_init_am` directory and its changelog, powered by liquibase, can be found in `./marketplace-service/src/main/resources/liquibase`.
 
 ## Level 2
 
-### White Box _\<building block 1\>_
+### White Box client-ui
 
-_\<white box template\>_
+The current webcomponents, all residing in _./am-ui/webcomponents_, are:
 
-### White Box _\<building block 2\>_
-
-_\<white box template\>_
-
-...
-
-### White Box _\<building block m\>_
-
-_\<white box template\>_
-
-## Level 3
-
-### White Box \<\_building block x.1\_\>
-
-_\<white box template\>_
-
-### White Box \<\_building block x.2\_\>
-
-_\<white box template\>_
-
-### White Box \<\_building block y.1\_\>
-
-_\<white box template\>_
+- search-webcomponent
+  - Written with Angular and TailwindCSS
+  - Responsible for the search
+- search-results-webcomponent
+  - Written with ReactJS
+  - Responsible for displaying the search-results
+- create-ad-webcomponent
+  - Written with VueJS
+  - Responsible for the creation of ads
 
 # Runtime View
 
@@ -277,24 +247,27 @@ _\<white box template\>_
 
 ## \<Scenario 1 "Create an ad"\>
 
-*USC 1: Create an ad*
+_USC 1: Create an ad_
 
-*Precondition:*
+_Precondition:_
+
 - The user is logged in the application
 - The user is on the Homepage of the application
 
-*Basic flow: Create an ad*
-1.	On the Homepage the user sees the possibility to create an ad.
-2.	The user selects [Create] Button.
-3.	The system shows the list of categories that can be selected.
-4.	The user selects the category and confirm.
-5.	The system shows the input criteria for selected category.
-6.	User fills required fields, upload related pictures, give his contact address and confirm.
-7.	The system validates the fields, ensures that the mandatory fields are filled and valid and shows the user his ad as a preview.
-8.	The user checks the detail view of his ad. He has the possibility to go back to the creation page and correct the date or publish the ad.
-9.	The user publish ad.
+_Basic flow: Create an ad_
 
-*Postcondition:*
+1. On the Homepage the user sees the possibility to create an ad.
+2. The user selects [Create] Button.
+3. The system shows the list of categories that can be selected.
+4. The user selects the category and confirm.
+5. The system shows the input criteria for selected category.
+6. User fills required fields, upload related pictures, give his contact address and confirm.
+7. The system validates the fields, ensures that the mandatory fields are filled and valid and shows the user his ad as a preview.
+8. The user checks the detail view of his ad. He has the possibility to go back to the creation page and correct the date or publish the ad.
+9. The user publish ad.
+
+_Postcondition:_
+
 - the ad is published and can be found by the search
 - the ad is visible in the user account
 
@@ -304,14 +277,14 @@ _\<white box template\>_
 
 ## \<Runtime Scenario 3\>
 
-*USC 3: Search for accommodation*
+_USC 3: Search for accommodation_
 
-*Precondition:*
+_Precondition:_
 
 - user has Akros AD
 - user start APM ad and is on the Home page
 
-*Basic flow: default search*
+_Basic flow: default search_
 
 1. On the Home page the user see the possibility to search for category accommodation incl. search criteria for this category. Search criteria have no default.
 2. The user select search, without providing the search criteria.
@@ -325,7 +298,7 @@ Alternative flow 2: search for a room
 
 Alternative flow 3: search for roommate
 
-*Postcondition:*
+_Postcondition:_
 
 - no
 
@@ -403,6 +376,7 @@ A list of the technical debts can be found in the [Github Project](https://githu
 
 The team composition's volatility makes this project a bit of a challenge - The composition can change at any given time and the priority to work on it is also set on the lowest. Thus it is harder to plan under these circumstances.
 Furthermore, as the team is not set, missing seniority in certain competences can be lacking.
+As the team can change at any moment, it will be a challenge to keep the coding standards and guidelines uniform.
 Nonetheless it isn't an urgent risk as this project also has no deadline or any other urgency to it. Any lack of competency can be compensated by being able to take the time to learn that skill.
 
 # Glossary
