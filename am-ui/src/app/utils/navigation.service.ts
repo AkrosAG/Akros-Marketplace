@@ -5,7 +5,7 @@ import {Router, NavigationEnd} from '@angular/router';
 @Injectable({providedIn: 'root'})
 export class NavigationService {
   private history: string[] = [];
-
+  /* istanbul ignore next */
   constructor(private router: Router, private location: Location) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -13,7 +13,7 @@ export class NavigationService {
       }
     });
   }
-
+  /* istanbul ignore next */
   back(): void {
     this.history.pop();
     if (this.history.length > 0) {
