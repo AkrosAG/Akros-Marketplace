@@ -329,8 +329,8 @@ function submit () {
 
   fieldValues.value.forEach((fieldValue, i) => {
     // Temp exception for field price_unit(7) and attachments(18) as it is at this point not developed
-    // (14) furnished both false/null or true accepted
-    if (i !== 7 && i !== 18 && i !== 14) {
+    // (14) furnished both false/null or true accepted as well as (30)
+    if (i !== 7 && i !== 18 && i !== 14 && i !== 30) {
       if (!fieldValue) {
         errors.value[i] = true;
         containsErrors = true;

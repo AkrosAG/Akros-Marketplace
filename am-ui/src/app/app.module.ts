@@ -47,6 +47,8 @@ import {UserService} from './data/services/login/user.service';
 import {environment} from 'src/environments/environment';
 import {SearchResultsComponent} from './components/search-results/search-results.component';
 import {SearchResultDetailsComponent} from './components/search-result-details/search-result-details.component';
+import {BackButtonDirective} from './utils/back-button.directive';
+import {NavigationService} from './utils/navigation.service';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -85,6 +87,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     AdsComponent,
     SearchResultsComponent,
     SearchResultDetailsComponent,
+    BackButtonDirective,
   ],
   imports: [
     BrowserModule,
@@ -134,6 +137,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     },
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    NavigationService,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
