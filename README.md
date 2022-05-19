@@ -38,22 +38,18 @@ Alternatively you can run both the `am-ui` and `marketplace-service` without the
 
 ## Folder Organisation
 
-1. **datamodel**: Description of the data model for the market place of the database **postgres_am_db**.
-2. **infrastructure**: How to run this project in different container model configurations.
+1. **infrastructure**: How to run this project in different container model configurations.
    - **database_only**: Initializes and starts the database locally for Rest Service Backend developers.
    - **restservices**: Initializes and starts the database locally and run the Rest Service Backend for frontend developers.
-3. **marketplace-service**: Rest-Services for the frontend. Accesses the database schema **am** and saves configurationSaves
-4. **admin-ui**: Administration and configuration tool for the dynamic parameters of the marketplace (Currently out of date).
-5. **auth-service**: Service Backend for authorisation and authentification (Currently out of date).
-6. **am-ui**: Marketplace Frontend Site. Web Site for the marketplace. Accesses the Rest Services of **data-backend-services** to fetch data and configuration for the marketplace. Accesses the **ui-auth-backend** and **am-ui-login** for login of users.
+2. **marketplace-service**: Rest-Services for the frontend. Accesses the database schema **am** and saves configurationSaves
+3. **admin-ui**: Administration and configuration tool for the dynamic parameters of the marketplace (Currently out of date).
+4. **auth-service**: Service Backend for authorisation and authentification (Currently out of date).
+5. **am-ui**: Marketplace Frontend Site. Web Site for the marketplace. Accesses the Rest Services of **data-backend-services** to fetch data and configuration for the marketplace. Accesses the **ui-auth-backend** and **am-ui-login** for login of users.
    - **build_scripts**: Build scripts to be used for npm
    - **webcomponents**: Reusable webcomponents for the UI
      - **search-webcomponent**: Search-Module implemented in Angular
      - **search-results-webcomponent**: Search-Results-Module implemented in React
      - **create-ad-webcomponent**: Module implemented in Vue for Ad-Creation
-7. **documents**: Temporary documents of the project.
-8. **architecture**: Architecture documents of the project.
-9. **.github**: Workflows for Github Actions
-10. **organize project work**: Documentation on methodic workflow
-11. **.run**: IntelliJ Run-Configs
-12. **documents**: Various documentation about the application itself
+6. **architecture**: Architecture documents of the project.
+7. **.github**: Workflows for Github Actions
+8. **.run**: IntelliJ Run-Configs
