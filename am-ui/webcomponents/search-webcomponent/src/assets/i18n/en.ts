@@ -2,7 +2,7 @@ export default {
   searchForm: {
     search: 'Search',
     offers: 'Offers',
-    searches: 'Searches',
+    searches: 'Requests',
     categories: {
       accomodation: {
         title: 'Accomodation',
