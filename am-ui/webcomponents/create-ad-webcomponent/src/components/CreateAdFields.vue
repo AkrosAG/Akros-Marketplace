@@ -212,7 +212,7 @@ const hasSpecificDate = ref(false);
  * @param {Number} fieldId - Id of the field to find its reference in the array of field values and erros
  * @param {String} fieldKey - Key string value of the edited field
  */
-function checkField (fieldId, fieldKey) {
+function checkField(fieldId, fieldKey) {
   const emailPatternRegex = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
   const zipCodePatternRegex = new RegExp('[0-9]{4}');
   const numberPatternRegex = new RegExp('^[0-9]*$');
@@ -299,7 +299,7 @@ function checkField (fieldId, fieldKey) {
       break;
     case 'availability':
       hasSpecificDate.value = fieldValues.value[fieldId] === 'date';
-      const dateFieldId = props.fieldsToShow.find(field => field.key === 'date').field_id;
+      const dateFieldId = props.fieldsToShow.find((field) => field.key === 'date').field_id;
       if (fieldValues.value[fieldId] === 'now') {
         fieldValues.value[dateFieldId] = new Date().toISOString().substring(0, 10);
       } else {
@@ -308,7 +308,7 @@ function checkField (fieldId, fieldKey) {
       break;
   }
   formHasErrors.value = false;
-  errors.value.forEach(err => {
+  errors.value.forEach((err) => {
     if (err) {
       formHasErrors.value = true;
     }
@@ -322,7 +322,7 @@ function checkField (fieldId, fieldKey) {
  * @param {Number} fieldId - Id of the field to find its reference in the array of field values and erros
  * @param {String} fieldKey - Key string value of the edited field
  */
-function submit () {
+function submit() {
   const fieldsVals = Object.values(fieldValues.value);
   const keys = Object.keys(fieldValues.value);
   let containsErrors = false;
@@ -352,7 +352,7 @@ function submit () {
 
 onMounted(() => {
   formHasErrors.value = false;
-  props.fieldsToShow.forEach(field => {
+  props.fieldsToShow.forEach((field) => {
     fieldValues.value[field.field_id] = '';
     fieldKeys.value[field.field_id] = field.key;
     errors.value[field.field_id] = false;
