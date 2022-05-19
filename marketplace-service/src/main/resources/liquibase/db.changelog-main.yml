@@ -2081,3 +2081,16 @@ databaseChangeLog:
                   name: sort_number
                   value: 12
             where: field_id=29
+  - changeSet:
+      id: 8
+      author: yordyo
+      preConditions:
+        - onFail: MARK_RAN
+        - columnExists:
+            tableName: topic
+            columnName: request_or_offer
+      changes:
+        - modifyDataType:
+            columnName: request_or_offer
+            newDataType: VARCHAR(7)
+            tableName: topic

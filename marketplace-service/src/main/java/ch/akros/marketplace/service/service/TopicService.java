@@ -159,7 +159,7 @@ public class TopicService {
       }).collect(Collectors.toList());
     }
 
-    Example<Topic> exampleTopic = Example.of(topic, ExampleMatcher.matchingAny());
+    Example<Topic> exampleTopic = Example.of(topic, ExampleMatcher.matchingAll());
     List<TopicSearchResponseDTO> topicList = topicRepository.findAll(exampleTopic).stream().map(this::toTopicSearchResponseDTO)
             .collect(Collectors.toList());
     result.setTopics(topicList);
