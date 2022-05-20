@@ -3,6 +3,7 @@ package ch.akros.marketplace.administration;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -19,7 +20,16 @@ import com.vaadin.flow.component.dependency.NpmPackage;
 @NpmPackage(value = "lumo-css-framework", version = "^4.0.10")
 @NpmPackage(value = "line-awesome", version = "1.3.0")
 public class AdminUIApplication extends SpringBootServletInitializer {
-  private static final String POSTGRES_DB_URL_ENV = "POSTGRES_AM_DB_URL";
+  private static final String DRIVER_CLASS_NAME = "org.postgresql.Driver";
+
+  @Value("${POSTGRES_AM_DB_URL:${spring.datasource.url}}")
+  private String dbUrl;
+
+  @Value("${POSTGRES_AM_DB_USERNAME:${spring.datasource.username}}")
+  private String dbUsername;
+
+  @Value("${POSTGRES_AM_DB_PASSWORD:${spring.datasource.password}}")
+  private String dbPassword;
 
   public static void main(String[] args) {
     System.setProperty("server.port", "9090");
@@ -29,19 +39,11 @@ public class AdminUIApplication extends SpringBootServletInitializer {
   @Bean
   public DataSource getPostgresDataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    dataSource.setDriverClassName("org.postgresql.Driver");
+    dataSource.setDriverClassName(DRIVER_CLASS_NAME);
+    dataSource.setUrl(dbUrl);
+    dataSource.setUsername(dbUsername);
+    dataSource.setPassword(dbPassword);
 
-    if (System.getenv(POSTGRES_DB_URL_ENV) != null && System.getenv(POSTGRES_DB_URL_ENV).length() > 0) {
-      // using container orchestration
-      dataSource.setUrl(System.getenv(POSTGRES_DB_URL_ENV));
-    }
-    else {
-      // localhost for local development and unit tests
-      dataSource.setUrl("jdbc:postgresql://localhost:5432/am");
-    }
-
-    dataSource.setUsername("am");
-    dataSource.setPassword("am");
     return dataSource;
   }
 }

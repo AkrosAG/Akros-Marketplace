@@ -20,6 +20,10 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: none
+  datasource:
+    url: jdbc:postgresql://localhost:5432/am
+    username: am
+    password: am
 
 # Ensure application is run in Vaadin 14/npm mode
 vaadin:

@@ -23,6 +23,8 @@ services:
       - 8443:8443
     environment:
       - POSTGRES_AM_DB_URL=jdbc:postgresql://postgres_am_db:5432/am
+      - POSTGRES_AM_DB_USERNAME=am
+      - POSTGRES_AM_DB_PASSWORD=am
     networks:
       marketplacenet:
     depends_on:
@@ -37,7 +39,9 @@ services:
     ports:
       - 8080:8080
     environment:
-      - POSTGRES_USER_DB_URL=jdbc:postgresql://postgres_am_db:5432/am
+      - POSTGRES_USER_DB_URL=jdbc:postgresql://postgres_user_db:5432/userdb
+      - POSTGRES_USER_DB_USERNAME=userdb
+      - POSTGRES_USER_DB_PASSWORD=userdb
     networks:
       marketplacenet:
     depends_on:
@@ -52,6 +56,8 @@ services:
       - 9090:9090
     environment:
       - POSTGRES_AM_DB_URL=jdbc:postgresql://postgres_am_db:5432/am
+      - POSTGRES_AM_DB_USERNAME=am
+      - POSTGRES_AM_DB_PASSWORD=am
     networks:
       marketplacenet:
     depends_on:

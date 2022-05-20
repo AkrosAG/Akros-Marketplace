@@ -4,5 +4,10 @@ azure:
     enabled: true
     uri: https://am-kv.vault.azure.net/
 spring:
+  # placeholder values for datasource, otherwise spring blows up
+  datasource:
+    url: jdbc:postgresql://localhost:5432/am
+    username: am
+    password: am
   liquibase:
     enabled: false
