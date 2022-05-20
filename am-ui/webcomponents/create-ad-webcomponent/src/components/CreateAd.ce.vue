@@ -19,7 +19,7 @@ const categoriesApi = new CategoriesApi(apiClient);
 const topicsApi = new TopicsApi(apiClient);
 const categories = ref([]);
 const selectedCategoryKey = ref('');
-const requestOrOffer = ref('REQUEST');
+const requestOrOffer = ref('OFFER');
 const fieldsToShow = ref([]);
 const showAdFields = ref(false);
 let currentCategoryId = 0;
@@ -41,7 +41,7 @@ onMounted(() => {
  * @param {[{}]} data - contains response data(if any)
  * @param {String} _response - contains the whole response
  */
-function getCategories(_error, data, _response) {
+function getCategories (_error, data, _response) {
   categories.value = data.categories;
   updateFields();
 }
@@ -49,9 +49,9 @@ function getCategories(_error, data, _response) {
 /**
  * Selects which fields to show based on the selected category.
  */
-function updateFields() {
+function updateFields () {
   const selectedCategory = categories.value.find(
-    (category) => category.key === selectedCategoryKey.value
+    category => category.key === selectedCategoryKey.value
   );
   if (selectedCategory && selectedCategory.fields.length > 0) {
     fieldsToShow.value = selectedCategory.fields;
@@ -67,7 +67,7 @@ function updateFields() {
  * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
  * @param {[{}]} data - Form field values
  */
-function submit(data) {
+function submit (data) {
   const dto = new TopicSaveRequestDTO(
     0,
     currentCategoryId,
@@ -107,26 +107,26 @@ defineExpose({ updateFields });
       </p>
       <div class="form-field half">
         <input
-          v-model="requestOrOffer"
-          type="radio"
-          name="type-ad"
-          value="REQUEST"
-          checked="checked"
-          @change="updateFields"
-        /><label for="ad-offer" class="radio-label">
-          {{ t('request') }}
-        </label>
-      </div>
-      <div class="form-field half">
-        <input
           id="ad-search"
           v-model="requestOrOffer"
           type="radio"
           name="type-ad"
           value="OFFER"
+          checked="checked"
           @change="updateFields"
         />
         <label for="ad-search" class="radio-label">{{ t('offer') }}</label>
+      </div>
+      <div class="form-field half">
+        <input
+          v-model="requestOrOffer"
+          type="radio"
+          name="type-ad"
+          value="REQUEST"
+          @change="updateFields"
+        /><label for="ad-offer" class="radio-label">
+          {{ t('request') }}
+        </label>
       </div>
       <CreateAdFields
         v-if="showAdFields"
