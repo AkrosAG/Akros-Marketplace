@@ -19,7 +19,7 @@ const categoriesApi = new CategoriesApi(apiClient);
 const topicsApi = new TopicsApi(apiClient);
 const categories = ref([]);
 const selectedCategoryKey = ref('');
-const requestOrOffer = ref('REQUEST');
+const requestOrOffer = ref('OFFER');
 const fieldsToShow = ref([]);
 const showAdFields = ref(false);
 let currentCategoryId = 0;
@@ -107,26 +107,26 @@ defineExpose({ updateFields });
       </p>
       <div class="form-field half">
         <input
-          v-model="requestOrOffer"
-          type="radio"
-          name="type-ad"
-          value="REQUEST"
-          checked="checked"
-          @change="updateFields"
-        /><label for="ad-offer" class="radio-label">
-          {{ t('request') }}
-        </label>
-      </div>
-      <div class="form-field half">
-        <input
           id="ad-search"
           v-model="requestOrOffer"
           type="radio"
           name="type-ad"
           value="OFFER"
+          checked="checked"
           @change="updateFields"
         />
         <label for="ad-search" class="radio-label">{{ t('offer') }}</label>
+      </div>
+      <div class="form-field half">
+        <input
+          v-model="requestOrOffer"
+          type="radio"
+          name="type-ad"
+          value="REQUEST"
+          @change="updateFields"
+        /><label for="ad-offer" class="radio-label">
+          {{ t('request') }}
+        </label>
       </div>
       <CreateAdFields
         v-if="showAdFields"
