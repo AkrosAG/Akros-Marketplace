@@ -54,7 +54,13 @@ function updateFields() {
     (category) => category.key === selectedCategoryKey.value
   );
   if (selectedCategory && selectedCategory.fields.length > 0) {
-    fieldsToShow.value = selectedCategory.fields;
+    fieldsToShow.value = selectedCategory.fields.filter((field) => {
+      if (requestOrOffer.value === 'REQUEST') {
+        return field.request;
+      } else {
+        return field.offer;
+      }
+    });
     showAdFields.value = true;
     currentCategoryId = selectedCategory.category_id;
   } else {
