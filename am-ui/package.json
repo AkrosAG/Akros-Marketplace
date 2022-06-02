@@ -26,7 +26,8 @@
     "e2e": "ng e2e",
     "e2e:headless": "ng run marketplace-ui:cypress-run",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "preinstall": "node build_scripts/install-webcomponents.js"
   },
   "private": true,
   "dependencies": {

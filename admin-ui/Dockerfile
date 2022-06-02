@@ -1,12 +1,16 @@
 FROM maven:3.6.3-jdk-11 AS builder
+RUN apt-get update && apt-get install -y
 WORKDIR /workdir/server
-COPY pom.xml /workdir/server/pom.xml
-RUN mvn dependency:go-offline
 
-COPY src /workdir/server/src
-COPY frontend /workdir/server/frontend
+COPY ./admin-ui/pom.xml ./
+RUN mvn dependency:go-offline
+RUN mvn vaadin:prepare-frontend
+
+COPY ./admin-ui/src ./src/
+COPY ./admin-ui/frontend ./frontend/
 RUN mvn install -DskipTests -Pproduction
 RUN mkdir  -p target/dependency
+
 WORKDIR /workdir/server/target/dependency
 RUN jar -xf ../*.jar
 

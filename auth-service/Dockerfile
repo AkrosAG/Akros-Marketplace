@@ -1,8 +1,11 @@
 FROM maven:3.6.3-jdk-11 AS builder
 WORKDIR /usr/local/app/auth-service
 
-COPY ./auth-service /usr/local/app/auth-service
 COPY ./pom.xml /usr/local/app
+COPY ./auth-service/pom.xml ./
+RUN mvn dependency:go-offline
+
+COPY ./auth-service ./
 RUN mvn clean package -DskipTests
 
 FROM openjdk:11-jre-slim
