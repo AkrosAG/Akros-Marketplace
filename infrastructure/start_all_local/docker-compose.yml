@@ -52,7 +52,7 @@ services:
     container_name: admin-ui
     build:
       context: ../..
-      dockerfile: ./auth-service/Dockerfile
+      dockerfile: ./admin-ui/Dockerfile
     ports:
       - 9090:9090
     environment:
