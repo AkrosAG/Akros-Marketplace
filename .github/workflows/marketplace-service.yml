@@ -43,6 +43,12 @@ jobs:
           cache-from: type=local,src=/tmp/.ms-cache
           cache-to: type=local,mode=max,dest=/tmp/.ms-cache-new
 
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: "am-marketplace-service"
+          publish-profile: ${{ secrets.MARKETPLACE_SERVICE_PUBLISH_PROFILE }}
+          images: "akrosmarketplace.azurecr.io/am-marketplace-service:${{ github.sha }}"
+
       - name: Move cache
         run: |
           rm -rf /tmp/.ms-cache
