@@ -1,15 +1,29 @@
 
 package ch.akros.marketplace.service;
 
+import org.apache.catalina.Context;
+import org.apache.catalina.connector.Connector;
+import org.apache.tomcat.util.descriptor.web.SecurityCollection;
+import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
+import org.keycloak.adapters.KeycloakConfigResolver;
+import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
+import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import javax.sql.DataSource;
 
 @SpringBootApplication
+@EnableWebSecurity
+@Import(SecurityConfig.class)
 public class MarketplaceServiceApplication {
   private static final String DRIVER_CLASS_NAME = "org.postgresql.Driver";
 
@@ -29,6 +43,11 @@ public class MarketplaceServiceApplication {
   }
 
   @Bean
+  public KeycloakConfigResolver keycloakConfigResolver() {
+    return new KeycloakSpringBootConfigResolver();
+  }
+
+  @Bean
   public DataSource getPostgresDataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
     dataSource.setDriverClassName(DRIVER_CLASS_NAME);
@@ -37,5 +56,31 @@ public class MarketplaceServiceApplication {
     dataSource.setPassword(dbPassword);
 
     return dataSource;
+  }
+
+  @Bean
+  public ServletWebServerFactory servletContainer() {
+    TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+      @Override
+      protected void postProcessContext(Context context) {
+        var securityConstraint = new SecurityConstraint();
+        securityConstraint.setUserConstraint("CONFIDENTIAL");
+        var collection = new SecurityCollection();
+        collection.addPattern("/*");
+        securityConstraint.addCollection(collection);
+        context.addConstraint(securityConstraint);
+      }
+    };
+    tomcat.addAdditionalTomcatConnectors(getHttpConnector());
+    return tomcat;
+  }
+
+  private Connector getHttpConnector() {
+    var connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+    connector.setScheme("http");
+    connector.setPort(8080);
+    connector.setSecure(false);
+    connector.setRedirectPort(8443);
+    return connector;
   }
 }

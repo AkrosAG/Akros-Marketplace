@@ -49,6 +49,7 @@ import {SearchResultsComponent} from './components/search-results/search-results
 import {SearchResultDetailsComponent} from './components/search-result-details/search-result-details.component';
 import {BackButtonDirective} from './utils/back-button.directive';
 import {NavigationService} from './utils/navigation.service';
+import {OAuthModule, OAuthService, OAuthStorage} from 'angular-oauth2-oidc';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -95,6 +96,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
+    OAuthModule.forRoot(),
     StoreModule.forRoot({}),
     StoreModule.forFeature(marketplaceStoreName, marketplaceReducer),
     EffectsModule.forRoot([]),
@@ -138,6 +140,8 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     NavigationService,
+    OAuthService,
+    {provide: OAuthStorage, useValue: localStorage},
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],

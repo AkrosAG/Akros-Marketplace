@@ -38,7 +38,7 @@ public class Userdata implements Serializable {
 
     private String email;
 
-    @Column(name = "enabled", columnDefinition = "BIT", length = 1)
+    @Column(name = "enabled")
     private boolean enabled;
 
     @Column(name = "DISPLAY_NAME")

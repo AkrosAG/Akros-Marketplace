@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
     return new Promise((resolve, reject) => {
       this.auth.isLoggedIn$.subscribe(res => {
         if (!res) {
-          this.router.navigate(['/login']);
+          this.router.navigate(['']);
           console.log(
             'user not logged in and trying to access ...' + state.url
           );

@@ -7,7 +7,8 @@
   <div class="container content-block">
     <div class="text-block">
       <i18n-host [locale]="appLanguage">
-        <create-ad-webcomponent></create-ad-webcomponent>
+        <create-ad-webcomponent
+            [bearerToken]="getOauthToken()"></create-ad-webcomponent>
       </i18n-host>
     </div>
   </div>

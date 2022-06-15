@@ -7,3 +7,12 @@ spring:
   liquibase:
     enabled: true
     change-log: liquibase/db.changelog-main.yml
+
+keycloak:
+  realm: akros-marketplace
+  bearer-only: true
+  auth-server-url: http://auth-service:9090
+  resource: marketplace
+  ssl-required: none
+  use-resource-role-mappings: false
+  principal-attribute: preferred_username

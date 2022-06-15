@@ -1,0 +1,102 @@
+databaseChangeLog:
+  - changeSet:
+      id: V1.001
+      author: yordyo
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: role
+      changes:
+        - createTable:
+            tableName: role
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: role_role_pk
+                  name: role_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+  - changeSet:
+      id: V1.002
+      author: yordyo
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: userdata
+      changes:
+        - createTable:
+            tableName: userdata
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: userdata_user_pk
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_date
+                  type: DATETIME
+              - column:
+                  name: display_name
+                  type: VARCHAR(255)
+              - column:
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: enabled
+                  type: BOOLEAN
+              - column:
+                  name: modified_date
+                  type: DATETIME
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  name: provider
+                  type: VARCHAR(255)
+              - column:
+                  name: provider_user_id
+                  type: VARCHAR(255)
+  - changeSet:
+      id: V1.003
+      author: yordyo
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: user_role
+      changes:
+        - createTable:
+            tableName: user_role
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: user_role_pk
+                    foreignKeyName: fk_userdata_user_id
+                    references: userdata(user_id)
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: user_role_pk
+                    foreignKeyName: fk_role_role_id
+                    references: role(role_id)
+                  name: role_id
+                  type: BIGINT

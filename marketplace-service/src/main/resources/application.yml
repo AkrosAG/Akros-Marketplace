@@ -12,7 +12,6 @@ logging:
           core:
             JdbcTemplate: DEBUG
             StatementCreatorUtils: DEBUG
-    root: INFO
 spring:
   profiles:
     active: @profileActive@

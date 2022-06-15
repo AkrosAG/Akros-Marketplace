@@ -4,14 +4,16 @@
     "information": "Erstellen Sie einen kostenloses Inserat",
     "find": "Finde was Du suchst",
     "about": "Über Akros Marketplace",
-    "create": "Eine Anzeige erstellen"
+    "create": "Eine Anzeige erstellen",
+    "login": "Sie müssen angemeldet sein, um eine Anzeige zu erstellen"
   },
   "navbar": {
     "signin": "anmelden",
     "profile": "Mein Profil",
     "ads": "Meine Anzeigen",
     "login": "Login",
-    "register": "Jetzt registrieren"
+    "register": "Jetzt registrieren",
+    "logout": "Ausloggen"
   },
   "categories": {
     "addCategory": "Categorie",

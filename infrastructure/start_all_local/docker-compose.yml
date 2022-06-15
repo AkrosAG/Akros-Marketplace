@@ -11,8 +11,10 @@ services:
     networks:
       marketplacenet:
     depends_on:
-      - marketplace-service
-      - auth-service
+      marketplace-service:
+        condition: service_started
+      auth-service:
+        condition: service_healthy
 
   marketplace-service:
     container_name: marketplace-service
@@ -28,6 +30,8 @@ services:
     networks:
       marketplacenet:
     depends_on:
+      auth-service:
+        condition: service_healthy
       postgres_am_db:
         condition: service_healthy
 
@@ -35,35 +39,25 @@ services:
     container_name: auth-service
     build:
       context: ../..
-      dockerfile: ./auth-service/Dockerfile
+      dockerfile: ./infrastructure/keycloak/Dockerfile.local
     ports:
-      - 8080:8080
+      - '9090:9090'
     environment:
-      - POSTGRES_USER_DB_URL=jdbc:postgresql://postgres_user_db:5432/userdb
-      - POSTGRES_USER_DB_USERNAME=userdb
-      - POSTGRES_USER_DB_PASSWORD=userdb
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB_URL=jdbc:postgresql://keycloak_db:5432/keycloakdb
+      - KC_DB_USERNAME=keycloakdb
+      - KC_DB_PASSWORD=keycloakdb
     networks:
       marketplacenet:
     depends_on:
-      postgres_user_db:
+      keycloak_db:
         condition: service_healthy
-
-  admin-ui:
-    container_name: admin-ui
-    build:
-      context: ../..
-      dockerfile: ./admin-ui/Dockerfile
-    ports:
-      - 9090:9090
-    environment:
-      - POSTGRES_AM_DB_URL=jdbc:postgresql://postgres_am_db:5432/am
-      - POSTGRES_AM_DB_USERNAME=am
-      - POSTGRES_AM_DB_PASSWORD=am
-    networks:
-      marketplacenet:
-    depends_on:
-      postgres_am_db:
-        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://127.0.0.1:9090/realms/akros-marketplace" ]
+      interval: 10s
+      timeout: 30s
+      retries: 20
 
   postgres_am_db:
     image: postgres:14.1
@@ -90,30 +84,89 @@ services:
       timeout: 5s
       retries: 5
 
-  postgres_user_db:
+  keycloak_db:
     image: postgres:14.1
-    container_name: postgres_user_db
-    hostname: postgres_user_db
+    container_name: keycloak_db
+    hostname: keycloak_db
     deploy:
       mode: global
     environment:
-      - POSTGRES_USER=userdb
-      - POSTGRES_PASSWORD=userdb
-      - POSTGRES_DB=userdb
+      - POSTGRES_USER=keycloakdb
+      - POSTGRES_PASSWORD=keycloakdb
+      - POSTGRES_DB=keycloakdb
     volumes:
-      - "../pg_data_userdb:/var/lib/postgresql/data"
-      - "../db_init_userdb:/docker-entrypoint-initdb.d/"
+      - "../pg_data_keycloakdb:/var/lib/postgresql/data"
+      - "../db_init_keycloakdb:/docker-entrypoint-initdb.d/"
     ports:
-      - 5433:5432
+      - 5434:5432
     networks:
       marketplacenet:
         aliases:
-          - postgres_user_db
+          - keycloak_db
     healthcheck:
-      test: ["CMD", "pg_isready", "-q", "-d", "userdb", "-U", "userdb"]
+      test: ["CMD", "pg_isready", "-q", "-d", "keycloakdb", "-U", "keycloakdb"]
       interval: 10s
       timeout: 5s
       retries: 5
+
+#  auth-service:
+#    container_name: auth-service
+#    build:
+#      context: ../..
+#      dockerfile: ./auth-service/Dockerfile
+#    ports:
+#      - 9443:9443
+#    environment:
+#      - POSTGRES_USER_DB_URL=jdbc:postgresql://postgres_user_db:5432/userdb
+#      - POSTGRES_USER_DB_USERNAME=userdb
+#      - POSTGRES_USER_DB_PASSWORD=userdb
+#    networks:
+#      marketplacenet:
+#    depends_on:
+#      postgres_user_db:
+#        condition: service_healthy
+
+#  admin-ui:
+#    container_name: admin-ui
+#    build:
+#      context: ../..
+#      dockerfile: ./admin-ui/Dockerfile
+#    ports:
+#      - 9090:9090
+#    environment:
+#      - POSTGRES_AM_DB_URL=jdbc:postgresql://postgres_am_db:5432/am
+#      - POSTGRES_AM_DB_USERNAME=am
+#      - POSTGRES_AM_DB_PASSWORD=am
+#    networks:
+#      marketplacenet:
+#    depends_on:
+#      postgres_am_db:
+#        condition: service_healthy
+
+#  postgres_user_db:
+#    image: postgres:14.1
+#    container_name: postgres_user_db
+#    hostname: postgres_user_db
+#    deploy:
+#      mode: global
+#    environment:
+#      - POSTGRES_USER=userdb
+#      - POSTGRES_PASSWORD=userdb
+#      - POSTGRES_DB=userdb
+#    volumes:
+#      - "../pg_data_userdb:/var/lib/postgresql/data"
+#      - "../db_init_userdb:/docker-entrypoint-initdb.d/"
+#    ports:
+#      - 5433:5432
+#    networks:
+#      marketplacenet:
+#        aliases:
+#          - postgres_user_db
+#    healthcheck:
+#      test: ["CMD", "pg_isready", "-q", "-d", "userdb", "-U", "userdb"]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
 
 networks:
   marketplacenet:

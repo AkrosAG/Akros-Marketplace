@@ -1,19 +1,15 @@
 /* istanbul ignore file */
-
-import {Role} from '../../models/Role';
-import {OAuthProviderEnum} from './OAuthProviderEnum';
 import {UserLocalStorageService} from './user.localStorage.service';
 import {AuthAPIService} from './auth.api.service';
 import {LocalAccountType} from './LocalAccountType';
 import {Injectable} from '@angular/core';
-// import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser } from "angularx-social-login";
-import {MsalService as AuthService} from '@azure/msal-angular';
-import {AuthenticationResult} from '@azure/msal-common';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {map, shareReplay, tap} from 'rxjs/operators';
-
-// const AUTH_DATA = 'auth_name';
-// const LOGIN_PROVIDER = 'login_provider';
+import {map} from 'rxjs/operators';
+import {Router} from '@angular/router';
+import {OAuthUser} from '../../../shared/types/oauthuser.type';
+import {AuthConfig, OAuthService} from 'angular-oauth2-oidc';
+import {OAuthUserInfo} from '../../../shared/types/oauthuserinfo.type';
+import {environment} from '../../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class AuthStore {
@@ -23,13 +19,13 @@ export class AuthStore {
   isLoggedIn$: Observable<boolean>;
   isLoggedOut$: Observable<boolean>;
   loggedInUserName$: Observable<String>;
+  private keycloakConfig: AuthConfig = environment.keycloakConfig;
 
   constructor(
-    // private http: HttpClient,
-    // private auth: SocialAuthService,
     private authApiService: AuthAPIService,
     private userLocalStorageService: UserLocalStorageService,
-    private azureADAuthService: AuthService
+    private router: Router,
+    private oAuthService: OAuthService
   ) {
     this.isLoggedIn$ = this.user$.pipe(map(user => !!user));
 
@@ -43,6 +39,9 @@ export class AuthStore {
     if (user) {
       this.userSubject$.next(user);
     }
+
+    this.oAuthService.configure(this.keycloakConfig);
+    setTimeout(() => this.initOAuth(), 0);
   }
 
   public get userValue(): LocalAccountType {
@@ -57,110 +56,57 @@ export class AuthStore {
     return this.userLocalStorageService.idToken;
   }
 
+  private initOAuth() {
+    this.oAuthService.loadDiscoveryDocument().then(() => {
+      this.oAuthService.tryLoginImplicitFlow().then(() => {
+        if (!this.oAuthService.hasValidIdToken()) {
+          this.userLocalStorageService.logOut();
+          this.userSubject$.next(null);
+          this.router.navigate(['']);
+        } else {
+          this.oAuthService.loadUserProfile().then(userProfile => {
+            const user = this.buildPostUserFromOauth(
+              (userProfile as OAuthUser).info
+            );
+            this.postLogin(
+              this.oAuthService.getAccessToken(),
+              this.oAuthService.getIdToken(),
+              user
+            );
+          });
+        }
+      });
+    });
+  }
+
   public reconnectUser(user: any) {
     this.userSubject$.next(user);
     this.userLocalStorageService.storeData(user);
   }
 
-  login_sso(socialProvider: OAuthProviderEnum) {
-    if (socialProvider === OAuthProviderEnum.AKROSAD) {
-      this.loginWithAkrosAD(socialProvider);
-      return;
-    }
-
-    // let socialPlatformProvider;
-    // if (socialProvider === OAuthProviderEnum.FACEBOOK) {
-    //   socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
-    // } else if (socialProvider === OAuthProviderEnum.GOOGLE) {
-    //   socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
-    // }
-
-    // return this.auth.signIn(socialPlatformProvider).then(socialusers => {
-    //   this.postLogin(
-    //     socialProvider,
-    //     socialusers.authToken,
-    //     socialusers.idToken,
-    //     {...socialusers, role: Role.Admin}
-    //   );
-    // });
+  login_sso() {
+    this.oAuthService.initLoginFlow();
   }
 
-  private loginWithAkrosAD(socialProvider: OAuthProviderEnum): void {
-    this.azureADAuthService
-      .loginPopup()
-      .pipe(
-        tap(authenticationResult => {
-          console.log(JSON.stringify(authenticationResult));
-          this.postLogin(
-            socialProvider,
-            authenticationResult.accessToken,
-            authenticationResult.idToken,
-            this.buildPostUser(authenticationResult, socialProvider)
-          );
-        }),
-        shareReplay()
-      )
-      .subscribe(() => {});
-  }
-
-  private postLogin(
-    socialProvider: OAuthProviderEnum,
-    accessToken: any,
-    idToken: any,
-    postUser: any
-  ) {
+  private postLogin(accessToken: any, idToken: any, postUser: any) {
     this.userLocalStorageService.accessToken = accessToken;
     this.userLocalStorageService.idToken = idToken;
-    this.userLocalStorageService.socialProvider =
-      OAuthProviderEnum[socialProvider];
-
-    this.authApiService
-      .postData(postUser, 'signup') // save user to backend service
-      .then((result: any) => {
-        if (result.payload) {
-          this.userLocalStorageService.storeData(
-            result.payload
-            // socialProvider
-          ); // save user to local storage
-          this.userSubject$.next(postUser);
-        }
-      })
-      .catch(err => {
-        console.error(JSON.stringify(err?.error?.message));
-      });
+    this.userSubject$.next(postUser);
   }
 
-  private buildPostUser(
-    ssoUser: AuthenticationResult,
-    socialProvider: OAuthProviderEnum
-  ): any {
-    const user = {
-      ...ssoUser.account,
-      role: Role.Admin,
-      id: ssoUser.account!.homeAccountId,
-      email: ssoUser.account!.username,
-      socialProvider: OAuthProviderEnum[socialProvider],
+  private buildPostUserFromOauth(oauthUser: OAuthUserInfo): any {
+    return {
+      id: oauthUser.sub,
+      email: oauthUser.email,
+      name: oauthUser.name,
     };
-
-    return user;
   }
 
   logout() {
-    // this.auth.authState.subscribe(user => {
-    //   console.log(LOGIN_PROVIDER, user);
-    // });
+    this.oAuthService.logOut();
 
-    // this.userSubject$.next(null);
-    // this.auth
-    //   .signOut()
-    //   .then(data => {
-    //     console.log(LOGIN_PROVIDER, data);
-    //   })
-    //   .catch(err => {
-    //     console.log('Logged out : ' + err);
-    //   });
-
-    // this.userLocalStorageService.logOut(); // clear user from local storage
-    console.log('Not yet implemented');
+    this.userLocalStorageService.logOut();
+    this.userSubject$.next(null);
+    this.router.navigate(['']);
   }
 }

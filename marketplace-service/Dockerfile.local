@@ -13,6 +13,7 @@ RUN mvn clean package -DskipTests -Pdev
 FROM openjdk:11-jre-slim AS deploy
 
 EXPOSE 8080 8443
+EXPOSE 5005 5005
 
 COPY --from=builder /usr/local/app/marketplace-service/target/marketplace-service-1.0.0-SNAPSHOT.jar /app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]

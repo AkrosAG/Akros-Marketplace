@@ -17,6 +17,7 @@
 		<java.version>11</java.version>
 
 		<kotlin.version>1.6.10</kotlin.version>
+		<liquibase.version>4.11.0</liquibase.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -111,6 +112,11 @@
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-stdlib-jdk8</artifactId>
 			<version>${kotlin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>${liquibase.version}</version>
 		</dependency>
 	</dependencies>
 

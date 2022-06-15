@@ -4,7 +4,6 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 
 const AUTH_DATA = 'auth_data';
-const LOGIN_PROVIDER = 'login_provider';
 const TOKEN = 'accesstoken';
 const IDTOKEN = 'idtoken';
 
@@ -28,14 +27,6 @@ export class UserLocalStorageService {
       A = this.router.navigate(['home'], this.getData());
     }
     return A;
-  }
-
-  public set socialProvider(socialProvider) {
-    localStorage.setItem(LOGIN_PROVIDER, JSON.stringify(socialProvider));
-  }
-
-  public get socialProvider(): string {
-    return localStorage.getItem(LOGIN_PROVIDER)!;
   }
 
   public set accessToken(token) {
@@ -64,9 +55,7 @@ export class UserLocalStorageService {
 
   logOut() {
     localStorage.removeItem(AUTH_DATA);
-    localStorage.removeItem(LOGIN_PROVIDER);
     localStorage.removeItem(TOKEN);
     localStorage.removeItem(IDTOKEN);
-    // return this.router.navigate(['login']);
   }
 }

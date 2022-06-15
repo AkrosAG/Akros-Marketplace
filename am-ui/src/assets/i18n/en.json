@@ -1,17 +1,19 @@
 {
   "back": "Back",
   "home": {
-    "information": "Post Your Adverticement for Free",
+    "information": "Post Your Advertisement for Free",
     "find": "Find what You are looking for",
     "about": "About Akros Marketplace",
-    "create": "Create an Add"
+    "create": "Create an Add",
+    "login": "You must be logged in to create an ad"
   },
   "navbar": {
     "signin": "sign in",
     "profile": "My Profile",
     "ads": "My Ads",
     "login": "Login",
-    "register": "Register Now"
+    "register": "Register Now",
+    "logout": "Logout"
   },
   "categories": {
     "addCategory": "Category",

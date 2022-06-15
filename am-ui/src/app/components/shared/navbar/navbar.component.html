@@ -26,21 +26,25 @@
         <svg class="icon-header" viewBox="0 0 24 24">
           <use xlink:href="#symbol-signin"></use>
         </svg>
-        <span class="signin-label">{{ 'navbar.signin' | translate }}</span>
+        <span *ngIf="(this.auth.isLoggedIn$ | async) === false" class="signin-label">{{ 'navbar.signin' | translate }}</span>
+        <span *ngIf="(this.auth.isLoggedIn$ | async)" class="signin-label">{{ this.auth.loggedInUserName$ | async }}</span>
         &dtrif;
       </a>
       <ul id="user-menu" class="header-menu">
-        <li>
+        <li *ngIf="(this.auth.isLoggedIn$ | async) === false">
+          <a (click)="login()">{{ 'navbar.login' | translate }}</a>
+        </li>
+        <li *ngIf="(this.auth.isLoggedIn$ | async) === false">
+          <a (click)="showModal('register')">{{ 'navbar.register' | translate }}</a>
+        </li>
+        <li *ngIf="(this.auth.isLoggedIn$ | async)">
           <a (click)="navigate('profile')">{{ 'navbar.profile' | translate }}</a>
         </li>
-        <li>
+        <li *ngIf="(this.auth.isLoggedIn$ | async)">
           <a (click)="navigate('myads')">{{ 'navbar.ads' | translate }}</a>
         </li>
-        <li>
-          <a (click)="showModal('login')">{{ 'navbar.login' | translate }}</a>
-        </li>
-        <li>
-          <a (click)="showModal('register')">{{ 'navbar.register' | translate }}</a>
+        <li *ngIf="(this.auth.isLoggedIn$ | async)">
+          <a (click)="this.auth.logout()">{{ 'navbar.logout' | translate }}</a>
         </li>
       </ul>
     </nav>
