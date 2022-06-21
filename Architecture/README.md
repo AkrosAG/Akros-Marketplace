@@ -271,11 +271,11 @@ _Postcondition:_
 - the ad is published and can be found by the search
 - the ad is visible in the user account
 
-## \<Runtime Scenario 2\>
+## \<Scenario 2 "Delete an ad"\>
 
 - Delete an accommodation ad
 
-## \<Runtime Scenario 3\>
+## \<Scenario 3 "Search for ads\>
 
 _USC 3: Search for accommodation_
 
