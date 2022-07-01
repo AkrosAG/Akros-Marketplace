@@ -1,4 +1,4 @@
-name: Marketplace-Service
+name: Keycloak-Service
 
 on:
   push:
