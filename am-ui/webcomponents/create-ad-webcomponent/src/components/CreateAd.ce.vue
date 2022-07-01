@@ -10,7 +10,7 @@ import ApiClient from '../api/src/ApiClient';
 import CategoriesApi from '../api/src/api/CategoriesApi';
 import TopicsApi from '../api/src/api/TopicsApi';
 import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, toRefs } from 'vue';
 import CreateAdFields from './CreateAdFields.vue';
 import { useI18n } from 'vue-i18n';
 
@@ -23,13 +23,16 @@ const requestOrOffer = ref('OFFER');
 const fieldsToShow = ref([]);
 const showAdFields = ref(false);
 let currentCategoryId = 0;
-defineProps({
+const props = defineProps({
   appLanguage: {
     default: 'de',
     type: String
-  }
+  },
+  bearerToken: String
 });
+
 const { t } = useI18n({ useScope: 'global' });
+const { bearerToken } = toRefs(props);
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
@@ -68,6 +71,12 @@ function updateFields() {
  * @param {[{}]} data - Form field values
  */
 function submit(data) {
+  if (bearerToken.value) {
+    apiClient.authentications['bearerAuth'].accessToken = bearerToken.value;
+  } else {
+    delete apiClient.authentications['bearerAuth'].accessToken;
+  }
+
   const dto = new TopicSaveRequestDTO(
     0,
     currentCategoryId,

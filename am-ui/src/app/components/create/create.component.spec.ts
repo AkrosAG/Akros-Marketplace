@@ -7,6 +7,7 @@ import {
   TranslateLoader,
 } from '@ngx-translate/core';
 import {Component, Input} from '@angular/core';
+import {AuthStore} from '../../data/services/login/auth.service';
 
 @Component({
   /*eslint-disable-next-line*/
@@ -24,7 +25,19 @@ class Mocki18nHost {
   template: '',
 })
 /*eslint-disable-next-line*/
-class MockCreateAdWebcomponent {}
+class MockCreateAdWebcomponent {
+  @Input() bearerToken: string;
+}
+
+class MockStore {
+  get userValue() {
+    return {};
+  }
+
+  get accessToken() {
+    return 'abc';
+  }
+}
 
 describe('CreateComponent', () => {
   let component: CreateComponent;
@@ -41,7 +54,7 @@ describe('CreateComponent', () => {
           },
         }),
       ],
-      providers: [TranslateService],
+      providers: [TranslateService, {provide: AuthStore, useClass: MockStore}],
     }).compileComponents();
   });
 
@@ -55,6 +68,12 @@ describe('CreateComponent', () => {
   describe('CreateComponent', () => {
     it('should be created', () => {
       expect(component).toBeTruthy();
+    });
+  });
+
+  describe('CreateComponent', () => {
+    it('should getToken', () => {
+      expect(component.getOauthToken()).toEqual('abc');
     });
   });
 });

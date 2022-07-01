@@ -1,10 +1,9 @@
 /* istanbul ignore file */
-
-import {environment} from './../../../../environments/environment';
+import {environment} from '../../../../environments/environment';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-const authUrl = `${environment.authUrl}/api/auth/`;
+const authUrl = `${environment.ownUrl}/api/auth/`;
 
 @Injectable({providedIn: 'root'})
 export class AuthAPIService {

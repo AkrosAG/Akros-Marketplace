@@ -114,6 +114,28 @@
   margin-left: 4px;
 }
 
+.social-holder {
+  display: flex;
+  justify-content: space-around;
+
+  .social-button {
+    display: flex;
+    width: 3em;
+    height: 3em;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 2px;
+    border: 2px solid $dark-grey;
+    border-radius: 5px;
+
+    &:hover {
+      background-color: $light-grey;
+      cursor: pointer;
+    }
+  }
+}
+
 /*                               600px
 --------------------------------------------------------------------- */
 @media screen and (min-width: 600px) {

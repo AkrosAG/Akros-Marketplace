@@ -1,50 +1,63 @@
 
 package ch.akros.marketplace.service;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.connector.Connector;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
+import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
-public class SecurityConfig {
+public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
+    private static final String TOPICS_URI = "/topics";
+    private static final String ANY_TOPICS_SEARCHES = "/topics/searches/**";
+    private static final String ANY_CATEGORIES_URI = "/categories/**";
 
-  @Bean
-  SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    return http.requiresChannel(channel -> channel.anyRequest().requiresSecure())
-      .authorizeRequests(authorize -> authorize.anyRequest().permitAll()).csrf().disable()
-      .build();  
-  }
+    @Bean
+    public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+        return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
+    }
 
-  @Bean
-  public ServletWebServerFactory servletContainer() {
-    TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
-      @Override
-      protected void postProcessContext(Context context) {
-        var securityConstraint = new SecurityConstraint();
-        securityConstraint.setUserConstraint("CONFIDENTIAL");
-        var collection = new SecurityCollection();
-        collection.addPattern("/*");
-        securityConstraint.addCollection(collection);
-        context.addConstraint(securityConstraint);
-      }
-    };
-    tomcat.addAdditionalTomcatConnectors(getHttpConnector());
-    return tomcat;
-  }
+    /**
+     * Registers the KeycloakAuthenticationProvider with the authentication manager.
+     */
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(keycloakAuthenticationProvider());
+    }
 
-  private Connector getHttpConnector() {
-    var connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
-    connector.setScheme("http");
-    connector.setPort(8080);
-    connector.setSecure(false);
-    connector.setRedirectPort(8443);
-    return connector;
-  }
+    /**
+     * Defines the session authentication strategy.
+     */
+    @Bean
+    @Override
+    protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
+        return new RegisterSessionAuthenticationStrategy(buildSessionRegistry());
+    }
+
+    @Bean
+    protected SessionRegistry buildSessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        super.configure(http);
+        http
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, TOPICS_URI, ANY_CATEGORIES_URI, ANY_TOPICS_SEARCHES).permitAll()
+                .antMatchers(HttpMethod.POST, TOPICS_URI).hasAnyAuthority("ADMIN","USER")
+                .antMatchers(HttpMethod.DELETE, TOPICS_URI).hasAnyAuthority("ADMIN","USER")
+                .anyRequest().permitAll()
+                .and().csrf().disable();
+    }
 }

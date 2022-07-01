@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@SpringBootApplication(scanBasePackages = "ch.akros.am.userservice")
+@SpringBootApplication(scanBasePackages = "ch.akros.am.authservice")
 @EnableJpaRepositories
 @EnableTransactionManagement
 public class AuthServiceApplication extends SpringBootServletInitializer {

@@ -14,7 +14,7 @@ export default defineConfig({
         secure: false,
       },
       '/api/auth': {
-        target: 'https://localhost:8080',
+        target: 'https://localhost:9443',
         secure: false,
       },
       '/topics': {

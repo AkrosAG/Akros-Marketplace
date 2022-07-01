@@ -35,8 +35,8 @@ export class NavbarComponent {
   }
 
   /* istanbul ignore next */
-  public login(socialProvider: OAuthProviderEnum): void {
-    this.auth.login_sso(socialProvider);
+  public login(): void {
+    this.auth.login_sso();
   }
 
   /* istanbul ignore next */

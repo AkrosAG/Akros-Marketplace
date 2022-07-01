@@ -11,3 +11,11 @@ spring:
     password: am
   liquibase:
     enabled: false
+keycloak:
+  realm: akros-marketplace
+  bearer-only: true
+  auth-server-url: https://am-keycloak.azurewebsites.net
+  resource: marketplace
+  ssl-required: none
+  use-resource-role-mappings: false
+  principal-attribute: preferred_username

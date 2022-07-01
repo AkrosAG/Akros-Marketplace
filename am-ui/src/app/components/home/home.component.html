@@ -21,6 +21,7 @@
           </svg>
           {{ 'home.create' | translate }}</a
         >
+        <p *ngIf="showLoginMessage" class="err-text">{{ 'home.login' | translate }}</p>
       </div>
     </div>
   </div>

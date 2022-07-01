@@ -7,6 +7,7 @@ import {
 import {ComponentFixture, TestBed, inject} from '@angular/core/testing';
 import {HomeComponent} from './home.component';
 import {Component, Input} from '@angular/core';
+import {AuthStore} from '../../data/services/login/auth.service';
 class MockRouter {
   navigate(url: string) {
     return url;
@@ -19,6 +20,19 @@ class MockRouter {
 })
 class MockSearchComponent {
   @Input() language: string;
+}
+
+class MockStore {
+  public user: any = {};
+  token = 'abc';
+
+  get userValue() {
+    return this.user;
+  }
+
+  get accessToken() {
+    return this.token;
+  }
 }
 
 describe('HomeComponent', () => {
@@ -36,7 +50,10 @@ describe('HomeComponent', () => {
         }),
       ],
       declarations: [HomeComponent, MockSearchComponent],
-      providers: [{provide: Router, useClass: MockRouter}],
+      providers: [
+        {provide: Router, useClass: MockRouter},
+        {provide: AuthStore, useClass: MockStore},
+      ],
     }).compileComponents();
   });
 
@@ -66,6 +83,14 @@ describe('HomeComponent', () => {
         expect(url).toStrictEqual(['create']);
       }
     ));
+
+    it('should show login message', inject([AuthStore], (store: AuthStore) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      jest.spyOn(store, 'userValue', 'get').mockReturnValue(null);
+      component.navigateCreateAdd();
+      expect(component.showLoginMessage).toBeTruthy();
+    }));
 
     it('should attempt call router with search-results value', inject(
       [Router],
