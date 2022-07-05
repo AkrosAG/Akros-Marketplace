@@ -30,13 +30,13 @@ public class FieldOption {
   @Id
   @Column(name = "FIELD_OPTION_ID", nullable = false, unique = true)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long      fieldOptionId;
+  private Long fieldOptionId;
 
   @Column(name = "KEY")
-  private String    key;
+  private String key;
 
   @Column(name = "SORT_NUMBER")
-  private int       sortNumber;
+  private int sortNumber;
 
   @ManyToOne
   @ToString.Exclude

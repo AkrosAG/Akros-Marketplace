@@ -7,7 +7,7 @@ export default {
     categories: {
       accomodation: {
         title: 'Unterkünfte',
-        type: {
+        subType: {
           placeholder: 'Art der Unterkunft',
           options:  {
             room: 'Zimmer',
@@ -28,9 +28,12 @@ export default {
       },
       carShare: {
         title: 'Mitfahrgelegenheiten',
-        types: {
-          share: 'Mitfahrgelegenheiten',
+        subType: {
+          options: {
+            share: 'Mitfahrgelegenheiten',
+          }
         },
+        region: 'Region, Stadt oder Kanton',
       },
     },
   },

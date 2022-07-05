@@ -161,9 +161,26 @@ components:
       required:
         - category_id
         - key
-        - fields
+        - sub_categories
       properties:
         category_id:
+          type: integer
+          format: int64
+        key:
+          type: string
+        sub_categories:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubCategoryDTO"
+
+    SubCategoryDTO:
+      type: object
+      required:
+        - subcategory_id
+        - key
+        - fields
+      properties:
+        subcategory_id:
           type: integer
           format: int64
         key:
@@ -230,14 +247,14 @@ components:
       type: object
       required:
         - topic_id
-        - category_id
+        - subcategory_id
         - request_or_offer
         - topic_values
       properties:
         topic_id:
           type: integer
           format: int64
-        category_id:
+        subcategory_id:
           type: integer
           format: int64
         request_or_offer:
@@ -264,6 +281,7 @@ components:
       required:
         - topic_id
         - category_id
+        - subcategory_id
         - request_or_offer
         - topic_values
       properties:
@@ -271,6 +289,9 @@ components:
           type: integer
           format: int64
         category_id:
+          type: integer
+          format: int64
+        subcategory_id:
           type: integer
           format: int64
         request_or_offer:
@@ -326,6 +347,9 @@ components:
         category_id:
           type: integer
           format: int64
+        subcategory_id:
+          type: integer
+          format: int64
         request_or_offer:
           type: string
         search_values:
@@ -369,6 +393,11 @@ components:
         topic_id:
           type: integer
           format: int64
+        subcategory_id:
+          type: integer
+          format: int64
+        subcategory_key:
+          type: string
         topic_values:
           type: array
           items:

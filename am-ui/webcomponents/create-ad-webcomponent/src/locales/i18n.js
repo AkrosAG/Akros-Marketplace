@@ -11,16 +11,13 @@ export default createI18n({
       publish: 'Preview and publish',
       categories: {
         accomodation: {
-          typeTitle: 'Accomodation',
-          type: {
-            title: 'Type of accomodation',
-            options: {
-              room: 'Room',
-              apartment: 'Apartment',
-              house: 'House',
-              parking: 'Parking space',
-            },
+          subCategories: {
+            room: 'Room',
+            apartment: 'Apartment',
+            house: 'House',
+            parking: 'Parking space',
           },
+          typeTitle: 'Accomodation',
           title: 'Title',
           region: 'Location',
           postalCode: 'Zipcode',
@@ -57,7 +54,7 @@ export default createI18n({
         },
         carShare: {
           typeTitle: 'Car sharing',
-          types: {
+          subCategories: {
             share: 'Car sharing',
           },
         },
@@ -70,16 +67,13 @@ export default createI18n({
       publish: 'Vorschau anzeigen und veröffentlichen',
       categories: {
         accomodation: {
-          typeTitle: 'Unterkünfte',
-          type: {
-            title: 'Art der Unterkunft',
-            options: {
-              room: 'Zimmer',
-              apartment: 'Wohnung',
-              house: 'Haus',
-              parking: 'Parkplatz',
-            },
+          subCategories: {
+            room: 'Zimmer',
+            apartment: 'Wohnung',
+            house: 'Haus',
+            parking: 'Parkplatz',
           },
+          typeTitle: 'Unterkünfte',
           title: 'Titel',
           region: 'Ort',
           postalCode: 'PLZ',
@@ -116,7 +110,7 @@ export default createI18n({
         },
         carShare: {
           typeTitle: 'Car sharing',
-          types: {
+          subCategories: {
             share: 'Car sharing',
           },
         },

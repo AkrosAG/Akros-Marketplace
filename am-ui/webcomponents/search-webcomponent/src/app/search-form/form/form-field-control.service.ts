@@ -52,6 +52,7 @@ export class FormFieldControlService {
       }
     });
     group['requestOrOffer'] = new FormControl('OFFER', [Validators.required]);
+    group['subCategoryDropdown'] = new FormControl(0);
     return new FormGroup(group);
   }
 

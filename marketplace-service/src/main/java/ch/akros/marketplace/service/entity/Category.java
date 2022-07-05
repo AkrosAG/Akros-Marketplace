@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,11 +26,12 @@ public class Category {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "CATEGORY_ID")
-  private Long            categoryId;
+  private Long categoryId;
 
   @Column(name = "KEY")
-  private String          key;
+  private String key;
 
-  @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-  private List<Field> fields;
+  @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @ToString.Exclude
+  private List<SubCategory> subCategories;
 }

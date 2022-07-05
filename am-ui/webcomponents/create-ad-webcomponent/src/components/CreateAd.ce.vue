@@ -18,9 +18,12 @@ const apiClient = new ApiClient('/');
 const categoriesApi = new CategoriesApi(apiClient);
 const topicsApi = new TopicsApi(apiClient);
 const categories = ref([]);
+const subCategories = ref([]);
 const selectedCategoryKey = ref('');
+const selectedSubCategoryKey = ref('');
 const requestOrOffer = ref('OFFER');
 const fieldsToShow = ref([]);
+const showSubDropdown = ref(false);
 const showAdFields = ref(false);
 let currentCategoryId = 0;
 const props = defineProps({
@@ -46,20 +49,36 @@ onMounted(() => {
  */
 function getCategories(_error, data, _response) {
   categories.value = data.categories;
-  updateFields();
+  updateSubCategories();
 }
 
 /**
  * Selects which fields to show based on the selected category.
  */
-function updateFields() {
+function updateSubCategories() {
   const selectedCategory = categories.value.find(
     (category) => category.key === selectedCategoryKey.value
   );
-  if (selectedCategory && selectedCategory.fields.length > 0) {
-    fieldsToShow.value = selectedCategory.fields;
+  showAdFields.value = false;
+
+  if (selectedCategory && selectedCategory.sub_categories.length > 0) {
+    showSubDropdown.value = true;
+    subCategories.value = selectedCategory.sub_categories;
+    selectedSubCategoryKey.value = selectedCategory.sub_categories[0].key;
+    updateFields();
+  } else {
+    showSubDropdown.value = false;
+  }
+}
+
+function updateFields() {
+  const selectedSubCategory = subCategories.value.find(
+    (subCategory) => subCategory.key === selectedSubCategoryKey.value
+  );
+
+  if (selectedSubCategory && selectedSubCategory.fields.length > 0) {
+    fieldsToShow.value = selectedSubCategory.fields;
     showAdFields.value = true;
-    currentCategoryId = selectedCategory.category_id;
   } else {
     showAdFields.value = false;
   }
@@ -77,16 +96,20 @@ function submit(data) {
     delete apiClient.authentications['bearerAuth'].accessToken;
   }
 
+  const selectedSubCategory = subCategories.value.find(
+    (subcategory) => subcategory.key === selectedSubCategoryKey.value
+  );
+
   const dto = new TopicSaveRequestDTO(
     0,
-    currentCategoryId,
+    selectedSubCategory.subcategory_id,
     requestOrOffer.value.toUpperCase(),
     data
   );
   topicsApi.topicsPost(dto);
 }
 
-defineExpose({ updateFields });
+defineExpose({ updateFields, updateSubCategories });
 </script>
 
 <template>
@@ -106,7 +129,7 @@ defineExpose({ updateFields });
           v-model="selectedCategoryKey"
           name="ad-category"
           class="simple-field full-width uppercase"
-          @change="updateFields"
+          @change="updateSubCategories"
         >
           <option disabled value="">{{ t(`categoriesPlaceholder`) }}</option>
           <option v-for="category in categories" :key="category.category_id" :value="category.key">
@@ -114,7 +137,24 @@ defineExpose({ updateFields });
           </option>
         </select>
       </p>
-      <div class="form-field half">
+      <p v-if="showSubDropdown">
+        <select
+          id="ad-sub-category"
+          v-model="selectedSubCategoryKey"
+          name="ad-category"
+          class="simple-field full-width uppercase"
+          @change="updateFields"
+        >
+          <option
+            v-for="subCategory in subCategories"
+            :key="subCategory.subcategory_id"
+            :value="subCategory.key"
+            :selected="subCategory.key === selectedSubCategoryKey">
+                {{ t(`categories.${selectedCategoryKey}.subCategories.${subCategory.key}`) }}
+          </option>
+        </select>
+      </p>
+      <div class="form-field half" v-if="showAdFields">
         <input
           id="ad-search"
           v-model="requestOrOffer"
@@ -126,7 +166,7 @@ defineExpose({ updateFields });
         />
         <label for="ad-search" class="radio-label">{{ t('offer') }}</label>
       </div>
-      <div class="form-field half">
+      <div class="form-field half" v-if="showAdFields">
         <input
           v-model="requestOrOffer"
           type="radio"
@@ -138,6 +178,7 @@ defineExpose({ updateFields });
         </label>
       </div>
       <CreateAdFields
+        :key="selectedSubCategoryKey"
         v-if="showAdFields"
         :selected-category="selectedCategoryKey"
         :fields-to-show="fieldsToShow"

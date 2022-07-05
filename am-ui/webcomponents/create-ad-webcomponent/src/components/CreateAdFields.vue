@@ -302,9 +302,11 @@ function checkField(fieldId, fieldKey) {
       const dateFieldId = props.fieldsToShow.find((field) => field.key === 'date').field_id;
       if (fieldValues.value[fieldId] === 'now') {
         fieldValues.value[dateFieldId] = new Date().toISOString().substring(0, 10);
+        errors.value[dateFieldId] = false;
       } else {
         fieldValues.value[dateFieldId] = '';
       }
+      errors.value[fieldId] = false;
       break;
   }
   formHasErrors.value = false;
@@ -323,26 +325,27 @@ function checkField(fieldId, fieldKey) {
  * @param {String} fieldKey - Key string value of the edited field
  */
 function submit() {
-  const fieldsVals = Object.values(fieldValues.value);
-  const keys = Object.keys(fieldValues.value);
   let containsErrors = false;
 
-  fieldValues.value.forEach((fieldValue, i) => {
+  // fieldValues.value.forEach((fieldValue, i) => {
+  props.fieldsToShow.forEach((field) => {
     // Temp exception for field price_unit(7) and attachments(18) as it is at this point not developed
     // (14) furnished both false/null or true accepted as well as (30)
-    if (i !== 7 && i !== 18 && i !== 14 && i !== 30) {
-      if (!fieldValue) {
-        errors.value[i] = true;
+    if (field.field_id !== 7 && field.field_id !== 18 && field.field_id !== 14 && field.field_id !== 30) {
+      if (!fieldValues.value[field.field_id]) {
+        errors.value[field.field_id] = true;
         containsErrors = true;
-      } else if (fieldValue.toString().length < 1) {
-        errors.value[i] = true;
+      } else if (fieldValues.value[field.field_id].toString().length < 1) {
+        errors.value[field.field_id] = true;
         containsErrors = true;
       }
     }
   });
+
   if (!containsErrors) {
-    const fields = keys.map((id, i) => {
-      return { field_type_id: id, value: fieldsVals[i] };
+    const fields = [];
+    props.fieldsToShow.forEach((field) => {
+      fields.push({ field_type_id: field.field_id, value: fieldValues.value[field.field_id] });
     });
     emit('submit', fields);
   } else {

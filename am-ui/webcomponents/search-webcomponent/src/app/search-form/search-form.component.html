@@ -33,17 +33,42 @@
     </div>
   </div>
 
-  <div
-    *ngFor="let formField of selectedCategorySearchFields"
-    class="mb-2 form-field"
-  >
-    <mp-form-field
-      [formField]="formField"
-      [form]="form"
-      [errorMessages]="errorMessages[formField.key]"
-      [appLanguage]="appLanguage"
-      [currentCategoryKey]="currentCategoryKey"
-    ></mp-form-field>
+  <div class="mb-2 flex">
+    <select
+      id="subCategoryDropdown"
+      class="block w-full cursor-pointer"
+      formControlName="subCategoryDropdown"
+      (ngModelChange)="renderSearchFields($event)"
+    >
+      <option
+        *ngFor="let sub of subCategories"
+        [value]="sub.subcategory_id"
+        class="options"
+        [selected]="sub.key === currentSubCategoryKey"
+      >
+        {{
+            'searchForm.categories.' +
+            currentCategoryKey +
+            '.subType.options.' +
+            sub.key | translate
+        }}
+      </option>
+    </select>
+  </div>
+
+  <div class="field-container">
+    <div
+      *ngFor="let formField of selectedCategorySearchFields"
+      class="mb-2 form-field"
+    >
+      <mp-form-field
+        [formField]="formField"
+        [form]="form"
+        [errorMessages]="errorMessages[formField.key]"
+        [appLanguage]="appLanguage"
+        [currentCategoryKey]="currentCategoryKey"
+      ></mp-form-field>
+    </div>
   </div>
   <div class="error-message mt-1" *ngIf="!form.valid">
     <!-- TODO a logic to receive event from mp-form-field upon error and construct error message based on the sum of active
