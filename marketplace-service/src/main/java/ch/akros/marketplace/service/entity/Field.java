@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -31,10 +32,9 @@ public class Field {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long fieldId;
 
-	@ManyToOne
+	@ManyToMany(mappedBy = "fields")
 	@ToString.Exclude
-	@JoinColumn(referencedColumnName = "CATEGORY_ID", name = "CATEGORY_ID", foreignKey = @ForeignKey(name = "FIELD_CATEGORY_FK"))
-	private Category category;
+	private List<SubCategory> subCategories;
 
 	@Column(name = "KEY")
 	private String key;
@@ -64,6 +64,7 @@ public class Field {
 	private boolean creation;
 
 	@OneToMany(mappedBy = "field", cascade = CascadeType.ALL)
+	@ToString.Exclude
 	private List<FieldOption> fieldOptions;
 
 	@ManyToOne(fetch = FetchType.LAZY)

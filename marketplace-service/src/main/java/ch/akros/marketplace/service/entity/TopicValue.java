@@ -32,19 +32,13 @@ public class TopicValue {
   @Id
   @Column(name = "TOPIC_VALUE_ID", unique = true)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long      topicValueId;
+  private Long topicValueId;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(referencedColumnName = "TOPIC_ID", name = "TOPIC_ID",
       foreignKey = @ForeignKey(name = "TOPIC_VALUE_TOPIC_FK"))
   @ToString.Exclude
-  private Topic     topic;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(referencedColumnName = "CATEGORY_ID", name = "CATEGORY_ID",
-      foreignKey = @ForeignKey(name = "TOPIC_VALUE_CATEGORY_FK"))
-  @ToString.Exclude
-  private Category  category;
+  private Topic topic;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(referencedColumnName = "FIELD_ID", name = "FIELD_ID",

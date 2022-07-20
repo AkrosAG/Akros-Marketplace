@@ -31,7 +31,7 @@ function SearchResultListItem(props) {
             </p>
           </div>
           <p class="sr-ad-rooms">
-            {t(result.topic_values.find((value) => value.key === 'type').value)}
+            {t(result.subcategory_key)}
           </p>
           <p class="sr-ad-address">
             <span class="sr-ad-post-code">

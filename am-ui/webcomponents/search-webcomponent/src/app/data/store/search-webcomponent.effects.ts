@@ -28,9 +28,11 @@ export class SearchWebcomponentEffects {
               categories: categories.categories,
               currentCategoryKey: categories.categories[0].key,
               currentCategoryId: categories.categories[0].category_id,
+              currentSubCategoryKey: categories.categories[0].sub_categories[0].key,
+              currentSubCategoryId: categories.categories[0].sub_categories[0].subcategory_id,
               searchFields:
                 this.formFieldsBuilderService.searchFieldsToFormFields(
-                  categories.categories[0].fields
+                  categories.categories[0].sub_categories[0].fields
                 ),
             });
           }),

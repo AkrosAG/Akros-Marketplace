@@ -28,10 +28,7 @@ import {Output} from '@angular/core';
 })
 export class MpSearchComponent implements OnInit, OnChanges {
   public categories$: Observable<CategoryDto[]>;
-  public selectedCategorySearchFields$: Observable<FormFieldBase<string>[]>;
   public categorySelected$ = new Observable<boolean>();
-  public currentCategoryKey$: Observable<string>;
-  public currentCategoryId$: Observable<number>;
   public form: FormGroup;
   public categorySelected: boolean[] = [];
   public currentSelected: number = 0;
@@ -50,13 +47,11 @@ export class MpSearchComponent implements OnInit, OnChanges {
    * @constructor
    * @param {Store} store - Redux store.
    * @param {LocalizationService} localization - Service for translation change detection
-   * @param {FormFieldsBuilderService} formFieldsBuilderService - Service which transforms the category
    * fields obtained into FormFieldBase objects to build the dynamic form
    */
   constructor(
     private store: Store<SearchWebcomponentState>,
     private localization: LocalizationService,
-    private formFieldsBuilderService: FormFieldsBuilderService
   ) {}
   /* istanbul ignore next */
   ngOnChanges(changes: SimpleChanges) {
@@ -70,17 +65,8 @@ export class MpSearchComponent implements OnInit, OnChanges {
     this.appLanguage = this.language;
     this.localization.use(this.appLanguage);
     this.categories$ = this.store.select(storeSelector.getCategories);
-    this.selectedCategorySearchFields$ = this.store.select(
-      storeSelector.getCategorySearchFields
-    );
     this.categorySelected$ = this.store.select(
       storeSelector.getIfCategorySelected
-    );
-    this.currentCategoryKey$ = this.store.select(
-      storeSelector.getCurrentCategoryKey
-    );
-    this.currentCategoryId$ = this.store.select(
-      storeSelector.getCurrentCategoryId
     );
     this.store.dispatch(storeActions.loadCategories());
   }
@@ -97,12 +83,8 @@ export class MpSearchComponent implements OnInit, OnChanges {
     if (this.currentCategoryId !== category.category_id) {
       this.currentCategoryId = category.category_id;
       this.store.dispatch(storeActions.resetCategorySelected());
-      const formFields = this.formFieldsBuilderService.searchFieldsToFormFields(
-        category.fields
-      );
       this.store.dispatch(
-        storeActions.setCategorySearchFields({
-          selectedCategorySearchFields: formFields,
+        storeActions.setCategory({
           currentCategoryKey: category.key,
           currentCategoryId: category.category_id,
         })

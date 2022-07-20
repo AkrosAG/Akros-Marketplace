@@ -11,12 +11,6 @@ export const getCategories = createSelector(
 );
 
 /* istanbul ignore next */
-export const getCategorySearchFields = createSelector(
-  getSearchWebcomponentState,
-  state => state.selectedCategorySearchFields
-);
-
-/* istanbul ignore next */
 export const getIfCategorySelected = createSelector(
   getSearchWebcomponentState,
   state => state.categorySelected
@@ -32,4 +26,12 @@ export const getCurrentCategoryKey = createSelector(
 export const getCurrentCategoryId = createSelector(
   getSearchWebcomponentState,
   state => state.currentCategoryId
+);
+
+/* istanbul ignore next */
+export const getCurrentSubCategories = createSelector(
+  getSearchWebcomponentState,
+  state => {
+    return state.categories.find(category => category.category_id === state.currentCategoryId)?.sub_categories;
+  }
 );

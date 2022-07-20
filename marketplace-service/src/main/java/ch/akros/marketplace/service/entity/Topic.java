@@ -37,31 +37,32 @@ public class Topic {
   @Id
   @Column(name = "TOPIC_ID", unique = true)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long             topicId;
+  private Long topicId;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(referencedColumnName = "ADVERTISER_ID", name = "ADVERTISER_ID",
       foreignKey = @ForeignKey(name = "TOPIC_ADVERTISER_FK"))
   @ToString.Exclude
-  private Advertiser       advertiser;
+  private Advertiser advertiser;
 
 
 //  TODO CHECK IF ENTIRE CATEGORY IS NEEDED
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(referencedColumnName = "CATEGORY_ID", name = "CATEGORY_ID",
-      foreignKey = @ForeignKey(name = "TOPIC_CATEGORY_FK"))
+  @JoinColumn(referencedColumnName = "SUBCATEGORY_ID", name = "SUBCATEGORY_ID",
+      foreignKey = @ForeignKey(name = "TOPIC_SUBCATEGORY_FK"))
   @ToString.Exclude
-  private Category         category;
+  private SubCategory subCategory;
 
   @Column(name = "VALID_FROM")
-  private LocalDate        validFrom;
+  private LocalDate validFrom;
 
   @Column(name = "VALID_TO")
-  private LocalDate        validTo;
+  private LocalDate validTo;
 
   @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
+  @ToString.Exclude
   private List<TopicValue> topicValues;
 
   @Column(name = "REQUEST_OR_OFFER")
-  private String           requestOrOffer;
+  private String requestOrOffer;
 }

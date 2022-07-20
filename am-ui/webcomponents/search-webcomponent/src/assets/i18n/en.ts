@@ -6,8 +6,7 @@ export default {
     categories: {
       accomodation: {
         title: 'Accomodation',
-        type: {
-          placeholder: 'Type of accomodation',
+        subType: {
           options:  {
             room: 'Room',
             apartment: 'Apartment',
@@ -27,9 +26,12 @@ export default {
       },
       carShare: {
         title: 'Car sharing',
-        types: {
-          share: 'Car sharing',
+        subType: {
+          options: {
+            share: 'Car sharing',
+          }
         },
+        region: 'Region, City or Canton',
       },
     },
   },

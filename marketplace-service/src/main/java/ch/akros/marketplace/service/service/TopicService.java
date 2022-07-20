@@ -1,45 +1,49 @@
 package ch.akros.marketplace.service.service;
 
+import ch.akros.marketplace.api.model.FieldOptionResponseDTO;
+import ch.akros.marketplace.api.model.FieldResponseDTO;
+import ch.akros.marketplace.api.model.TopicLoadResponseDTO;
+import ch.akros.marketplace.api.model.TopicSaveRequestDTO;
+import ch.akros.marketplace.api.model.TopicSearchListResponseDTO;
+import ch.akros.marketplace.api.model.TopicSearchRequestDTO;
+import ch.akros.marketplace.api.model.TopicSearchResponseDTO;
+import ch.akros.marketplace.api.model.TopicSearchValueResponseDTO;
+import ch.akros.marketplace.api.model.TopicValueLoadResponseDTO;
+import ch.akros.marketplace.api.model.TopicValueSaveRequestDTO;
+import ch.akros.marketplace.service.entity.Field;
+import ch.akros.marketplace.service.entity.FieldOption;
+import ch.akros.marketplace.service.entity.SubCategory;
+import ch.akros.marketplace.service.entity.Topic;
+import ch.akros.marketplace.service.entity.TopicValue;
+import ch.akros.marketplace.service.repository.AdvertiserRepository;
+import ch.akros.marketplace.service.repository.FieldRepository;
+import ch.akros.marketplace.service.repository.SubCategoryRepository;
+import ch.akros.marketplace.service.repository.TopicRepository;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ch.akros.marketplace.api.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Service;
-
-import ch.akros.marketplace.service.entity.Category;
-import ch.akros.marketplace.service.entity.Field;
-import ch.akros.marketplace.service.entity.FieldOption;
-import ch.akros.marketplace.service.entity.Topic;
-import ch.akros.marketplace.service.entity.TopicValue;
-import ch.akros.marketplace.service.repository.AdvertiserRepository;
-import ch.akros.marketplace.service.repository.CategoryRepository;
-import ch.akros.marketplace.service.repository.FieldRepository;
-import ch.akros.marketplace.service.repository.TopicRepository;
-
 @Service
 public class TopicService {
-  @Autowired
-  private FieldRepository fieldRepository;
+  private final FieldRepository fieldRepository;
+  private final AdvertiserRepository advertiserRepository;
+  private final TopicRepository topicRepository;
+  private final SubCategoryRepository subCategoryRepository;
 
-  @Autowired
-  private CategoryRepository   categoryRepository;
-
-  @Autowired
-  private AdvertiserRepository advertiserRepository;
-
-  @Autowired
-  private TopicRepository      topicRepository;
-
-  @Autowired
-  private JdbcTemplate         jdbcTemplate;
-
-  @Autowired
-  private CategoryService      categoryService;
+  public TopicService(
+          FieldRepository fieldRepository,
+          AdvertiserRepository advertiserRepository,
+          TopicRepository topicRepository,
+          SubCategoryRepository subCategoryRepository) {
+    this.fieldRepository = fieldRepository;
+    this.advertiserRepository = advertiserRepository;
+    this.topicRepository = topicRepository;
+    this.subCategoryRepository = subCategoryRepository;
+  }
 
   public List<FieldResponseDTO> listTopicFieldTypes(Long categoryId, String requestOrOffer) {
     return fieldRepository.listTopicSearchFields(categoryId, "REQUEST".equals(requestOrOffer))
@@ -79,9 +83,9 @@ public class TopicService {
     Topic topic = new Topic();
 
     topic.setTopicId(topicSaveRequestDTO.getTopicId());
-    final Category category = categoryRepository.getById(topicSaveRequestDTO.getCategoryId());
+    final SubCategory subCategory = subCategoryRepository.getById(topicSaveRequestDTO.getSubcategoryId());
     //TODO CHECK IF NEEDED
-    topic.setCategory(category);
+    topic.setSubCategory(subCategory);
 
     topic.setValidFrom(LocalDate.now());
     topic.setValidTo(LocalDate.now().plusDays(365));
@@ -91,18 +95,17 @@ public class TopicService {
 
     topic.setTopicValues(topicSaveRequestDTO.getTopicValues()
                                               .stream()
-                                              .map(e -> toTopicValue(category, topic, e))
+                                              .map(e -> toTopicValue(topic, e))
                                               .collect(Collectors.toList()));
 
     topicRepository.save(topic);
   }
 
-  private TopicValue toTopicValue(Category category,
-                                  Topic topic,
-                                  TopicValueSaveRequestDTO topicValueSaveResponseDTO) {
+  private TopicValue toTopicValue(
+          Topic topic,
+          TopicValueSaveRequestDTO topicValueSaveResponseDTO) {
     TopicValue result = new TopicValue();
     result.setField(fieldRepository.getById(topicValueSaveResponseDTO.getFieldTypeId()));
-    result.setCategory(category);
     result.setTopic(topic);
     result.setValue(topicValueSaveResponseDTO.getValue());
     return result;
@@ -113,7 +116,8 @@ public class TopicService {
 
     TopicLoadResponseDTO result = new TopicLoadResponseDTO();
     result.setRequestOrOffer(topic.getRequestOrOffer());
-    result.setCategoryId(topic.getCategory().getCategoryId());
+    result.setSubcategoryId(topic.getSubCategory().getSubCategoryId());
+    result.setCategoryId(topic.getSubCategory().getCategory().getCategoryId());
     result.setTopicId(topicId);
 
     result.setTopicValues(topic.getTopicValues()
@@ -150,12 +154,10 @@ public class TopicService {
     TopicSearchListResponseDTO result = new TopicSearchListResponseDTO();
 
     Topic topic = new Topic();
-    Category category = categoryRepository.getById(topicSearchRequestDTO.getCategoryId());
-    topic.setCategory(category);
     topic.setRequestOrOffer(topicSearchRequestDTO.getRequestOrOffer());
     if(topicSearchRequestDTO.getSearchValues() != null) {
       List<TopicValue> collect = topicSearchRequestDTO.getSearchValues().stream().map(value -> {
-        return TopicValue.builder().category(category).value(value.getValue()).build();
+        return TopicValue.builder().value(value.getValue()).build();
       }).collect(Collectors.toList());
     }
 
@@ -169,6 +171,8 @@ public class TopicService {
   private TopicSearchResponseDTO toTopicSearchResponseDTO(Topic topic) {
     TopicSearchResponseDTO result = new TopicSearchResponseDTO();
     result.setTopicId(topic.getTopicId());
+    result.setSubcategoryId(topic.getSubCategory().getSubCategoryId());
+    result.setSubcategoryKey(topic.getSubCategory().getKey());
 
     result.setTopicValues(loadTopic(topic.getTopicId()).getTopicValues()
                                                        .stream()
@@ -178,9 +182,9 @@ public class TopicService {
     return result;
   }
 
-  private TopicSearchValueResponseDTO toTopicSearchValueResponseDTO(Long topicId,
-                                                                    TopicValueLoadResponseDTO topicValueLoadResponseDTO)
-  {
+  private TopicSearchValueResponseDTO toTopicSearchValueResponseDTO(
+          Long topicId,
+          TopicValueLoadResponseDTO topicValueLoadResponseDTO) {
     TopicSearchValueResponseDTO result = new TopicSearchValueResponseDTO();
     result.setFieldId(topicValueLoadResponseDTO.getFieldId());
     result.setTopicId(topicId);

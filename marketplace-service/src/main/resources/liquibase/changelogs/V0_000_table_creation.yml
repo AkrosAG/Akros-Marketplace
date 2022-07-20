@@ -1,0 +1,444 @@
+databaseChangeLog:
+  - changeSet:
+      id: V0.000/1
+      author: lemist
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: category
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: category_pk
+                  name: category_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: key
+                  type: VARCHAR(50)
+            tableName: category
+  - changeSet:
+      id: V0.000/2
+      author: yordyo
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: subcategory
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: subcategory_pk
+                  name: subcategory_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: key
+                  type: VARCHAR(50)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: category_id
+                  type: BIGINT
+            tableName: subcategory
+        - addForeignKeyConstraint:
+            baseColumnNames: category_id
+            baseTableName: subcategory
+            constraintName: subcategory_category_fk
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: category_id
+            referencedTableName: category
+            validate: true
+  - changeSet:
+      id: V0.000/3
+      author: lemist
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: field
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: field_pk
+                  name: field_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: field_type_definition_id
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: key
+                  type: VARCHAR(50)
+              - column:
+                  name: min_value
+                  type: INTEGER
+              - column:
+                  name: max_value
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: sort_number
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+                  name: required
+                  type: BOOLEAN
+              - column:
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+                  name: searchable
+                  type: BOOLEAN
+              - column:
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+                  name: request
+                  type: BOOLEAN
+              - column:
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+                  name: offer
+                  type: BOOLEAN
+              - column:
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+                  name: creation
+                  type: BOOLEAN
+            tableName: field
+  - changeSet:
+      id: V0.000/4
+      author: yordyo
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: subcategory_field
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: subcategory_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: field_id
+                  type: BIGINT
+            tableName: subcategory_field
+        - addForeignKeyConstraint:
+            baseColumnNames: subcategory_id
+            baseTableName: subcategory_field
+            constraintName: subcategory_field_category_fk
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: subcategory_id
+            referencedTableName: subcategory
+            validate: true
+        - addForeignKeyConstraint:
+            baseColumnNames: field_id
+            baseTableName: subcategory_field
+            constraintName: subcategory_field_field_fk
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: field_id
+            referencedTableName: field
+            validate: true
+  - changeSet:
+      id: V0.000/5
+      author: lemist
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: field_option
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: field_option_pk
+                  name: field_option_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: field_id
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: key
+                  type: VARCHAR(50)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: sort_number
+                  type: INTEGER
+            tableName: field_option
+        - addForeignKeyConstraint:
+            baseColumnNames: field_id
+            baseTableName: field_option
+            constraintName: field_option_field_fk
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: field_id
+            referencedTableName: field
+            validate: true
+  - changeSet:
+      id: V0.000/6
+      author: lemist
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: advertiser
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: advertiser_pk
+                  name: advertiser_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: first_name
+                  type: VARCHAR(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: last_name
+                  type: VARCHAR(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: email
+                  type: VARCHAR(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: phone_number
+                  type: VARCHAR(50)
+            tableName: advertiser
+  - changeSet:
+      id: V0.000/7
+      author: lemist
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: topic
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: topic_pk
+                  name: topic_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: advertiser_id
+                  type: INTEGER
+              - column:
+                  constraints:
+                    nullable: false
+                  name: subcategory_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: valid_from
+                  type: date
+              - column:
+                  constraints:
+                    nullable: false
+                  name: valid_to
+                  type: date
+              - column:
+                  constraints:
+                    nullable: false
+                  name: request_or_offer
+                  type: VARCHAR(7)
+            tableName: topic
+        - addForeignKeyConstraint:
+            baseColumnNames: advertiser_id
+            baseTableName: topic
+            constraintName: topic_advertiser_fk
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: advertiser_id
+            referencedTableName: advertiser
+            validate: true
+        - addForeignKeyConstraint:
+            baseColumnNames: subcategory_id
+            baseTableName: topic
+            constraintName: topic_subcategory_fk
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: subcategory_id
+            referencedTableName: subcategory
+            validate: true
+  - changeSet:
+      id: V0.000/8
+      author: lemist
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: topic_value
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: topic_value_pk
+                  name: topic_value_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: topic_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: field_id
+                  type: BIGINT
+              - column:
+                  name: value
+                  type: VARCHAR(4000)
+            tableName: topic_value
+        - addForeignKeyConstraint:
+            baseColumnNames: field_id
+            baseTableName: topic_value
+            constraintName: topic_value_field_fk
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: field_id
+            referencedTableName: field
+            validate: true
+        - addForeignKeyConstraint:
+            baseColumnNames: topic_id
+            baseTableName: topic_value
+            constraintName: topic_value_topic_fk
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: topic_id
+            referencedTableName: topic
+            validate: true
+  - changeSet:
+      id: V0.000/9
+      author: lemist
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: address
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: address_pk
+                  name: address_id
+                  type: BIGINT
+              - column:
+                  name: region
+                  type: VARCHAR(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: street_name
+                  type: VARCHAR(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: street_number
+                  type: VARCHAR(20)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: postal_code
+                  type: VARCHAR(20)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: city
+                  type: VARCHAR(100)
+            tableName: address
+  - changeSet:
+      id: V0.000/10
+      author: lemist
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - sqlCheck:
+                expectedResult: 1
+                sql: SELECT COUNT(1) FROM information_schema.check_constraints WHERE CONSTRAINT_NAME = 'check_request_or_offer';
+      changes:
+        - sql: ALTER TABLE topic ADD CONSTRAINT check_request_or_offer CHECK(request_or_offer in ('REQUEST', 'OFFER'));

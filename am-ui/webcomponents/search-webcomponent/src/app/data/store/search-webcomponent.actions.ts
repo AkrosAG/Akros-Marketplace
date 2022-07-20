@@ -1,6 +1,6 @@
 import {FormFieldBase} from '../../search-form/form/form-field-base';
 import {createAction, props} from '@ngrx/store';
-import {CategoryDto} from 'src/app/api/models';
+import {CategoryDto, SubCategoryDto} from 'src/app/api/models';
 
 // Categories related actions
 
@@ -12,9 +12,11 @@ export const loadCategoriesSuccess = createAction(
   '[Categories] Get list of categories success',
   props<{
     categories: CategoryDto[];
-    searchFields: FormFieldBase<string>[];
     currentCategoryKey: string;
     currentCategoryId: number;
+    currentSubCategoryKey: string;
+    currentSubCategoryId: number;
+    searchFields: FormFieldBase<string>[];
   }>()
 );
 
@@ -23,12 +25,20 @@ export const loadCategoriesFailure = createAction(
   props<{error: string}>()
 );
 
-export const setCategorySearchFields = createAction(
+export const setCategory = createAction(
   '[Categories] Set search fields of a category',
   props<{
-    selectedCategorySearchFields: FormFieldBase<string>[];
     currentCategoryKey: string;
     currentCategoryId: number;
+  }>()
+);
+
+export const setSubCategorySearchFields = createAction(
+  '[Categories] Set search fields of a category',
+  props<{
+    currentSubCategoryKey: string;
+    currentSubCategoryId: number;
+    searchFields: FormFieldBase<string>[];
   }>()
 );
 

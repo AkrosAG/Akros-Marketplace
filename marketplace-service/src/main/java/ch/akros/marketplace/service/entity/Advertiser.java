@@ -32,20 +32,21 @@ public class Advertiser {
   @Id
   @Column(name = "ADVERTISER_ID", nullable = false, unique = true)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long        advertiserId;
+  private Long advertiserId;
 
   @Column(name = "FIRST_NAME")
-  private String      firstName;
+  private String firstName;
 
   @Column(name = "SURENAME")
-  private String      lastName;
+  private String lastName;
 
   @Column(name = "EMAIL")
-  private String      email;
+  private String email;
 
   @Column(name = "PHONE_NUMBER")
-  private String      phoneNumber;
+  private String phoneNumber;
 
   @OneToMany(mappedBy = "topicId", cascade = CascadeType.ALL)
+  @ToString.Exclude
   private List<Topic> topics;
 }

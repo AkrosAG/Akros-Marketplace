@@ -23,6 +23,7 @@ services:
       dockerfile: ./marketplace-service/Dockerfile.local
     ports:
       - 8443:8443
+      - 5005:5005
     environment:
       - POSTGRES_AM_DB_URL=jdbc:postgresql://postgres_am_db:5432/am
       - POSTGRES_AM_DB_USERNAME=am
