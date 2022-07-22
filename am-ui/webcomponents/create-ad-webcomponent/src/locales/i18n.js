@@ -23,10 +23,10 @@ export default createI18n({
           postalCode: 'Zipcode',
           address: 'Address, No.',
           rooms: 'Rooms',
-          size: 'Living space (m2)',
+          size: 'Living space (M²)',
           price: 'Rent (CHF)',
           floor: 'Floor',
-          price_unit: {
+          priceUnit: {
             title: 'Price unit',
             options: {
               month: 'Per month',
@@ -51,6 +51,11 @@ export default createI18n({
           phone: 'Phone number',
           email: 'E-Mail',
           date: 'From date',
+          radius: 'Radius (KM)',
+          toPrice: 'Max Rent',
+          fromSize: 'Min Living space (M²)',
+          propertySize: 'Property size (M²)',
+          fromRooms: 'Min rooms'
         },
         carShare: {
           typeTitle: 'Car sharing',
@@ -79,10 +84,10 @@ export default createI18n({
           postalCode: 'PLZ',
           address: 'Strasse, Nr.',
           rooms: 'Zimmer',
-          size: 'Wohnfläche (m2)',
+          size: 'Wohnfläche (M²)',
           price: 'Miete (CHF)',
           floor: 'Etage',
-          price_unit: {
+          priceUnit: {
             title: 'Preiseinheit',
             options: {
               month: 'Pro Monat',
@@ -107,6 +112,11 @@ export default createI18n({
           phone: 'Telefonnummer',
           email: 'E-Mail',
           date: 'Ab Datum',
+          radius: 'Radius (KM)',
+          toPrice: 'Maximale Miete',
+          fromSize: 'Mindestwohnfläche (M²)',
+          propertySize: 'Grundstücksgröße (M²)',
+          fromRooms: 'Mindestzimmer'
         },
         carShare: {
           typeTitle: 'Car sharing',

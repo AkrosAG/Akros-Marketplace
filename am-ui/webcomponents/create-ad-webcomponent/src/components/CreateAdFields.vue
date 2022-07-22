@@ -261,7 +261,9 @@ function checkField(fieldId, fieldKey) {
       break;
     // Selectors: Ok if not empty
     case 'rooms':
+    case 'priceUnit':
     case 'type':
+    case 'fromRooms':
       if (fieldValues.value[fieldId] !== null) {
         errors.value[fieldId] = false;
       } else {
@@ -273,6 +275,10 @@ function checkField(fieldId, fieldKey) {
     case 'price':
     case 'size':
     case 'floor':
+    case 'radius':
+    case 'toPrice':
+    case 'fromSize':
+    case 'propertySize':
       if (!numberPatternRegex.test(fieldValues.value[fieldId])) {
         errors.value[fieldId] = true;
       } else {
@@ -327,15 +333,13 @@ function checkField(fieldId, fieldKey) {
 function submit() {
   let containsErrors = false;
 
-  // fieldValues.value.forEach((fieldValue, i) => {
   props.fieldsToShow.forEach((field) => {
-    // Temp exception for field price_unit(7) and attachments(18) as it is at this point not developed
-    // (14) furnished both false/null or true accepted as well as (30)
-    if (field.field_id !== 7 && field.field_id !== 18 && field.field_id !== 14 && field.field_id !== 30) {
-      if (!fieldValues.value[field.field_id]) {
-        errors.value[field.field_id] = true;
-        containsErrors = true;
-      } else if (fieldValues.value[field.field_id].toString().length < 1) {
+    // Temp exception attachments(18) as it is at this point not developed
+    if (field.required && field.field_id !== 18) {
+      if (
+        !fieldValues.value[field.field_id] ||
+        fieldValues.value[field.field_id].toString().length < 1
+      ) {
         errors.value[field.field_id] = true;
         containsErrors = true;
       }
@@ -356,7 +360,13 @@ function submit() {
 onMounted(() => {
   formHasErrors.value = false;
   props.fieldsToShow.forEach((field) => {
-    fieldValues.value[field.field_id] = '';
+    // checkbox default value shoud be false
+    if (field.field_type_definition_id === 8 || field.field_type_definition_id === 16) {
+      fieldValues.value[field.field_id] = false;
+    } else {
+      fieldValues.value[field.field_id] = '';
+    }
+
     fieldKeys.value[field.field_id] = field.key;
     errors.value[field.field_id] = false;
   });

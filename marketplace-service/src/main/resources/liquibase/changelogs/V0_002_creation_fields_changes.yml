@@ -1,0 +1,564 @@
+databaseChangeLog:
+  - changeSet:
+      id: V0.002/1
+      author: yordyo
+      comment: Update existing fields
+      changes:
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 1
+            tableName: field
+            where: field_id=1
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 2
+            tableName: field
+            where: field_id=12
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 3
+            tableName: field
+            where: field_id=11
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 4
+              - column:
+                  name: request
+                  value: false
+            tableName: field
+            where: field_id=13
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 6
+            tableName: field
+            where: field_id=5
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 7
+              - column:
+                  name: field_type_definition_id
+                  value: 15
+              - column:
+                  name: creation
+                  value: true
+              - column:
+                  name: request
+                  value: true
+              - column:
+                  name: offer
+                  value: false
+              - column:
+                  name: required
+                  value: false
+              - column:
+                  name: searchable
+                  value: false
+            tableName: field
+            where: field_id=21
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 8
+            tableName: field
+            where: field_id=8
+        - update:
+            columns:
+              - column:
+                  name: field_type_definition_id
+                  value: 3
+              - column:
+                  name: sort_number
+                  value: 9
+              - column:
+                  name: required
+                  value: false
+              - column:
+                  name: creation
+                  value: true
+              - column:
+                  name: request
+                  value: true
+              - column:
+                  name: offer
+                  value: false
+            tableName: field
+            where: field_id=25
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 10
+              - column:
+                  name: required
+                  value: true
+            tableName: field
+            where: field_id=9
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 12
+            tableName: field
+            where: field_id=6
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 13
+              - column:
+                  name: creation
+                  value: true
+              - column:
+                  name: offer
+                  value: false
+              - column:
+                  name: request
+                  value: true
+              - column:
+                  name: required
+                  value: false
+            tableName: field
+            where: field_id=24
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 14
+              - column:
+                  name: key
+                  value: priceUnit
+              - column:
+                  name: request
+                  value: true
+            tableName: field
+            where: field_id=7
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 15
+            tableName: field
+            where: field_id=29
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 16
+              - column:
+                  name: required
+                  value: false
+            tableName: field
+            where: field_id=15
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 17
+            tableName: field
+            where: field_id=14
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 18
+              - column:
+                  name: required
+                  value: false
+            tableName: field
+            where: field_id=30
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 19
+            tableName: field
+            where: field_id=2
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 20
+              - column:
+                  name: required
+                  value: true
+              - column:
+                  name: request
+                  value: false
+            tableName: field
+            where: field_id=3
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 21
+              - column:
+                  name: offer
+                  value: false
+            tableName: field
+            where: field_id=4
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 22
+            tableName: field
+            where: field_id=17
+        - update:
+            columns:
+              - column:
+                  name: sort_number
+                  value: 23
+            tableName: field
+            where: field_id=16
+  - changeSet:
+      id: V0.002/2
+      author: yordyo
+      comment: Insert new fields
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: field_id
+                  valueNumeric: 33
+              - column:
+                  name: field_type_definition_id
+                  valueNumeric: 4
+              - column:
+                  name: key
+                  value: about
+              - column:
+                  name: min_value
+                  valueNumeric: 1
+              - column:
+                  name: max_value
+                  valueNumeric: 1000
+              - column:
+                  name: sort_number
+                  valueNumeric: 21
+              - column:
+                  name: required
+                  valueBoolean: false
+              - column:
+                  name: searchable
+                  valueBoolean: false
+              - column:
+                  name: request
+                  valueBoolean: true
+              - column:
+                  name: offer
+                  valueBoolean: true
+              - column:
+                  name: creation
+                  valueBoolean: true
+            tableName: field
+        - insert:
+            columns:
+              - column:
+                  name: field_id
+                  valueNumeric: 34
+              - column:
+                  name: field_type_definition_id
+                  valueNumeric: 3
+              - column:
+                  name: key
+                  value: radius
+              - column:
+                  name: min_value
+                  valueNumeric: 1
+              - column:
+                  name: max_value
+                  valueNumeric: 1000
+              - column:
+                  name: sort_number
+                  valueNumeric: 5
+              - column:
+                  name: required
+                  valueBoolean: false
+              - column:
+                  name: searchable
+                  valueBoolean: true
+              - column:
+                  name: request
+                  valueBoolean: true
+              - column:
+                  name: offer
+                  valueBoolean: false
+              - column:
+                  name: creation
+                  valueBoolean: true
+            tableName: field
+        - insert:
+            columns:
+              - column:
+                  name: field_id
+                  valueNumeric: 35
+              - column:
+                  name: field_type_definition_id
+                  valueNumeric: 1
+              - column:
+                  name: key
+                  value: propertySize
+              - column:
+                  name: min_value
+                  valueNumeric: 1
+              - column:
+                  name: max_value
+                  valueNumeric: 1000
+              - column:
+                  name: sort_number
+                  valueNumeric: 11
+              - column:
+                  name: required
+                  valueBoolean: true
+              - column:
+                  name: searchable
+                  valueBoolean: false
+              - column:
+                  name: request
+                  valueBoolean: false
+              - column:
+                  name: offer
+                  valueBoolean: true
+              - column:
+                  name: creation
+                  valueBoolean: true
+            tableName: field
+  - changeSet:
+      id: V0.002/3
+      author: yordyo
+      comment: Remove fields for room
+      changes:
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=1 AND field_id=4
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=1 AND field_id=5
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=1 AND field_id=18
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=1 AND field_id=19
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=1 AND field_id=20
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=1 AND field_id=21
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=1 AND field_id=22
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=1 AND field_id=23
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=1 AND field_id=26
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=1 AND field_id=27
+  - changeSet:
+      id: V0.002/4
+      author: yordyo
+      comment: Add fields for room
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 1
+              - column:
+                  name: field_id
+                  valueNumeric: 33
+            tableName: subcategory_field
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 1
+              - column:
+                  name: field_id
+                  valueNumeric: 34
+            tableName: subcategory_field
+  - changeSet:
+      id: V0.002/5
+      author: yordyo
+      comment: Remove fields for apartment
+      changes:
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=2 AND field_id=18
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=2 AND field_id=19
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=2 AND field_id=20
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=2 AND field_id=22
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=2 AND field_id=23
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=2 AND field_id=26
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=2 AND field_id=27
+  - changeSet:
+      id: V0.002/6
+      author: yordyo
+      comment: Add fields for apartment
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 2
+              - column:
+                  name: field_id
+                  valueNumeric: 4
+            tableName: subcategory_field
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 2
+              - column:
+                  name: field_id
+                  valueNumeric: 34
+            tableName: subcategory_field
+  - changeSet:
+      id: V0.002/7
+      author: yordyo
+      comment: Remove fields for house
+      changes:
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=3 AND field_id=3
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=3 AND field_id=9
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=3 AND field_id=18
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=3 AND field_id=19
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=3 AND field_id=20
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=3 AND field_id=22
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=3 AND field_id=23
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=3 AND field_id=26
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=3 AND field_id=27
+  - changeSet:
+      id: V0.002/8
+      author: yordyo
+      comment: Add fields for house
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 3
+              - column:
+                  name: field_id
+                  valueNumeric: 34
+            tableName: subcategory_field
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 3
+              - column:
+                  name: field_id
+                  valueNumeric: 35
+            tableName: subcategory_field
+  - changeSet:
+      id: V0.002/9
+      author: yordyo
+      comment: Remove fields for parking
+      changes:
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=3
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=4
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=5
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=8
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=9
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=14
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=18
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=19
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=20
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=21
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=22
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=23
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=25
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=26
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=27
+  - changeSet:
+      id: V0.002/10
+      author: yordyo
+      comment: Add fields for parking
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 4
+              - column:
+                  name: field_id
+                  valueNumeric: 34
+            tableName: subcategory_field

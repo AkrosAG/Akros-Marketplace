@@ -20,14 +20,23 @@ function SearchResultListItem(props) {
               alt="2 ½ rooms apartment"
             />
             <p class="sr-ad-info">
-              <span class="sr-ad-type">
+              <span className="sr-ad-type">
                 {result.topic_values.find((value) => value.key === 'title').value}
               </span>
-              <span class="sr-ad-price">
-                {result.topic_values.find((value) => value.key === 'price').value}
-              </span>
+              {
+                result.topic_values.find((value) => value.key === 'price') &&
+                    <span className="sr-ad-price">
+                      {result.topic_values.find((value) => value.key === 'price').value}
+                    </span>
+              }
+              {
+                result.topic_values.find((value) => value.key === 'toPrice') &&
+                    <span className="sr-ad-price">
+                      {result.topic_values.find((value) => value.key === 'toPrice').value}
+                    </span>
+              }
               <span class="sr-ad-currency"> CHF</span>&nbsp;/&nbsp;
-              <span class="sr-ad-per-time">{t('month')}</span>
+              <span class="sr-ad-per-time">{t(result.topic_values.find((value) => value.key === 'priceUnit').value)}</span>
             </p>
           </div>
           <p class="sr-ad-rooms">

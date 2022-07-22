@@ -62,7 +62,13 @@ describe('MpSearchComponent', () => {
     const cat = {
       category_id: 0,
       key: '',
-      fields: [],
+      sub_categories: [
+        {
+          subcategory_id: 0,
+          key: '',
+          fields: []
+        }
+      ]
     };
     store.dispatch = jest.fn();
     app.categorySelect(2, cat);

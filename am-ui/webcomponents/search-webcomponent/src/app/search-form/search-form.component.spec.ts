@@ -1,4 +1,4 @@
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
   TranslateModule,
   TranslateLoader,
@@ -8,18 +8,29 @@ import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormFieldControlService} from './form/form-field-control.service';
 import {SearchFormComponent} from './search-form.component';
+import {StoreModule} from '@ngrx/store';
+import {FormFieldsBuilderService} from '../utils/form/form-fields-builder.service';
+import {TopicsService} from '../api/services/topics.service';
 
 describe('SearchFormComponent', () => {
+  const formBuilder: FormBuilder = new FormBuilder();
   let component: SearchFormComponent;
   let fixture: ComponentFixture<SearchFormComponent>;
-  let service: FormFieldControlService;
+  let formFieldControlService: FormFieldControlService;
+  let formFieldsBuilderService: FormFieldsBuilderService;
+  let topicsService: TopicsService;
 
   beforeEach(async () => {
-    service = new FormFieldControlService();
+    formFieldControlService = new FormFieldControlService();
     fixture = await TestBed.configureTestingModule({
       declarations: [SearchFormComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [{provide: FormFieldControlService}],
+      providers: [
+        {provide: FormFieldControlService, useValue: formFieldControlService},
+        {provide: FormFieldsBuilderService, useValue: formFieldsBuilderService},
+        {provide: TopicsService, useValue: topicsService},
+        {provide: FormBuilder, useValue: formBuilder}
+      ],
       imports: [
         FormsModule,
         ReactiveFormsModule,
@@ -29,6 +40,7 @@ describe('SearchFormComponent', () => {
             useClass: TranslateFakeLoader,
           },
         }),
+        StoreModule.forRoot({}),
       ],
     }).compileComponents();
   });
@@ -36,6 +48,10 @@ describe('SearchFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SearchFormComponent);
     component = fixture.componentInstance;
+    component.form = formBuilder.group({
+      requestOrOffer: [],
+      subCategoryDropdown: []
+    })
     fixture.detectChanges();
   });
 

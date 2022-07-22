@@ -23,6 +23,7 @@ export default {
         toPrice: 'Maximum price',
         fromSize: 'Minimum size',
         toSize: 'Maximum size',
+        radius: 'Radius (KM)',
       },
       carShare: {
         title: 'Car sharing',

@@ -36,12 +36,12 @@ describe('FormFieldControlService', () => {
 
     const formField4 = {
       key: 'test2',
-      required: false,
+      required: false
     } as FormFieldBase<string>;
 
     const formFields = [formField1, formField2, formField3, formField4];
     const formGroup = service.toFormGroup(formFields);
-    expect(Object.keys(formGroup.value).length).toEqual(3);
+    expect(Object.keys(formGroup.value).length).toEqual(4);
     expect(formGroup).toBeInstanceOf(FormGroup);
   });
 
