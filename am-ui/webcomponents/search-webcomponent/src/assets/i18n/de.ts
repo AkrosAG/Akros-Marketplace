@@ -25,6 +25,7 @@ export default {
         toPrice: 'Bis Preis',
         fromSize: 'Von Grösse',
         toSize: 'Bis Grösse',
+        radius: 'Radius (KM)',
       },
       carShare: {
         title: 'Mitfahrgelegenheiten',

@@ -217,10 +217,10 @@ describe('CreateAdFields.vue', () => {
     expect(wrapper.vm.formHasErrors).toBeFalsy();
   });
 
-  it('should set form as invalid on submit when there is a field without value', () => {
+  it('should set form as invalid on submit when there is a required field without value', () => {
     const wrapper = shallowMount(CreateAdFields, {
       propsData: {
-        fieldsToShow: [{ field_id: 0, key: 'title' }]
+        fieldsToShow: [{ field_id: 0, key: 'title', required: true }]
       }
     });
     wrapper.vm.fieldValues[0] = '';

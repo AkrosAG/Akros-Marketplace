@@ -25,7 +25,8 @@ const requestOrOffer = ref('OFFER');
 const fieldsToShow = ref([]);
 const showSubDropdown = ref(false);
 const showAdFields = ref(false);
-let currentCategoryId = 0;
+const currentRequestFields = ref([]);
+const currentOfferFields = ref([]);
 const props = defineProps({
   appLanguage: {
     default: 'de',
@@ -65,22 +66,40 @@ function updateSubCategories() {
     showSubDropdown.value = true;
     subCategories.value = selectedCategory.sub_categories;
     selectedSubCategoryKey.value = selectedCategory.sub_categories[0].key;
-    updateFields();
+    updateSubCategoryFields();
   } else {
     showSubDropdown.value = false;
   }
 }
 
-function updateFields() {
+/**
+ * Updates lists of fields for request and offer based on the selected subcategory.
+ */
+function updateSubCategoryFields() {
   const selectedSubCategory = subCategories.value.find(
     (subCategory) => subCategory.key === selectedSubCategoryKey.value
   );
 
   if (selectedSubCategory && selectedSubCategory.fields.length > 0) {
-    fieldsToShow.value = selectedSubCategory.fields;
+    currentRequestFields.value = selectedSubCategory.fields.filter((field) => field.request);
+    currentOfferFields.value = selectedSubCategory.fields.filter((field) => field.offer);
+
+    fieldsToShow.value = currentOfferFields.value;
+    requestOrOffer.value = 'OFFER';
     showAdFields.value = true;
   } else {
     showAdFields.value = false;
+  }
+}
+
+/**
+ * Changes fields to show based of request or offer radio buttons.
+ */
+function updateRequestOfferFields() {
+  if (requestOrOffer.value === 'OFFER') {
+    fieldsToShow.value = currentOfferFields.value;
+  } else {
+    fieldsToShow.value = currentRequestFields.value;
   }
 }
 
@@ -109,7 +128,7 @@ function submit(data) {
   topicsApi.topicsPost(dto);
 }
 
-defineExpose({ updateFields, updateSubCategories });
+defineExpose({ updateSubCategoryFields, updateRequestOfferFields, updateSubCategories });
 </script>
 
 <template>
@@ -143,7 +162,7 @@ defineExpose({ updateFields, updateSubCategories });
           v-model="selectedSubCategoryKey"
           name="ad-category"
           class="simple-field full-width uppercase"
-          @change="updateFields"
+          @change="updateSubCategoryFields"
         >
           <option
             v-for="subCategory in subCategories"
@@ -162,7 +181,7 @@ defineExpose({ updateFields, updateSubCategories });
           name="type-ad"
           value="OFFER"
           checked="checked"
-          @change="updateFields"
+          @change="updateRequestOfferFields"
         />
         <label for="ad-search" class="radio-label">{{ t('offer') }}</label>
       </div>
@@ -172,13 +191,13 @@ defineExpose({ updateFields, updateSubCategories });
           type="radio"
           name="type-ad"
           value="REQUEST"
-          @change="updateFields"
+          @change="updateRequestOfferFields"
         /><label for="ad-offer" class="radio-label">
           {{ t('request') }}
         </label>
       </div>
       <CreateAdFields
-        :key="selectedSubCategoryKey"
+        :key="selectedSubCategoryKey-requestOrOffer"
         v-if="showAdFields"
         :selected-category="selectedCategoryKey"
         :fields-to-show="fieldsToShow"

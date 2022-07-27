@@ -119,6 +119,12 @@ describe('SearchResultItem', () => {
             field_id: 16,
             key: 'email',
             value: 'asdf@asd.de'
+          },
+          {
+            topic_id: 8,
+            field_id: 7,
+            key: 'priceUnit',
+            value: 'month'
           }
         ]
       }

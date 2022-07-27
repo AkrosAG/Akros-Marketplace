@@ -196,7 +196,11 @@ components:
         - field_id
         - field_type_definition_id
         - key
+        - searchable
         - creation
+        - request
+        - offer
+        - required
       properties:
         field_id:
           type: integer
@@ -222,6 +226,8 @@ components:
         offer:
           type: boolean
         creation:
+          type: boolean
+        required:
           type: boolean
         field_options:
           type: array

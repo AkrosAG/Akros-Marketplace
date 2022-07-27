@@ -7,7 +7,7 @@ import {shallowMount} from '@vue/test-utils';
 // }));
 
 describe('CreateAd.vue', () => {
-  it('Shows ad fields when category has been selected and it contains fields', () => {
+  it('Shows ad fields when category and subcategory has been selected and subcategory contains fields', () => {
     const i18n = createI18n({legacy: false});
     const wrapper = shallowMount(CreateAd, {
       global: {
@@ -15,18 +15,25 @@ describe('CreateAd.vue', () => {
       },
     });
     wrapper.vm.selectedCategoryKey = 'accomodation';
+    wrapper.vm.selectedSubCategoryKey = 'room';
     wrapper.vm.categories = [
       {
         category_id: '1',
         key: 'accomodation',
-        fields: [{field_option_id: 6, key: 'house', sort_number: 3}],
+        sub_categories: [
+          {
+            subcategory_id: 1,
+            key: "room",
+            fields: [{field_option_id: 6, key: 'house', sort_number: 3}],
+          }
+        ]
       },
     ];
-    wrapper.vm.updateFields();
+    wrapper.vm.updateSubCategories();
     expect(wrapper.vm.showAdFields).toBeTruthy();
   });
 
-  it('Does not show ad fields when category has been selected but doesnt contains fields', () => {
+  it('Does not show ad fields when category and subcategory has been selected and subcategory but doesnt contains fields', () => {
     const i18n = createI18n({legacy: false});
     const wrapper = shallowMount(CreateAd, {
       global: {
@@ -34,14 +41,21 @@ describe('CreateAd.vue', () => {
       },
     });
     wrapper.vm.selectedCategoryKey = 'accomodation';
+    wrapper.vm.selectedSubCategoryKey = 'room';
     wrapper.vm.categories = [
       {
         category_id: '1',
         key: 'accomodation',
-        fields: [],
+        sub_categories: [
+          {
+            subcategory_id: 1,
+            key: "room",
+            fields: [],
+          }
+        ]
       },
     ];
-    wrapper.vm.updateFields();
+    wrapper.vm.updateSubCategories();
     expect(wrapper.vm.showAdFields).toBeFalsy();
   });
 
@@ -57,11 +71,17 @@ describe('CreateAd.vue', () => {
       {
         category_id: '1',
         key: 'accomodation',
-        fields: [{field_option_id: 6, key: 'house', sort_number: 3}],
+        sub_categories: [
+          {
+            subcategory_id: 1,
+            key: "room",
+            fields: [],
+          }
+        ]
       },
     ];
 
-    wrapper.vm.updateFields();
+    wrapper.vm.updateSubCategories();
     expect(wrapper.vm.showAdFields).toBeFalsy();
   });
 

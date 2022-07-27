@@ -8,7 +8,9 @@ const resources = {
   en: {
     translation: {
       'no-results': 'Unfortunately your search criteria produced no result.',
-      month: 'month',
+      month: 'Month',
+      week: 'Week',
+      day: 'Day',
       room: 'Room',
       apartment: 'Apartment',
       house: 'House',
@@ -19,6 +21,8 @@ const resources = {
     translation: {
       'no-results': 'Die gesetzten Suchkriterien haben leider keinen Treffer ergeben.',
       month: 'Monat',
+      week: 'Woche',
+      day: 'Tag',
       room: 'Zimmer',
       apartment: 'Wohnung',
       house: 'Haus',

@@ -11,7 +11,6 @@ import ch.akros.marketplace.service.entity.FieldOption;
 import ch.akros.marketplace.service.entity.SubCategory;
 import ch.akros.marketplace.service.repository.CategoryRepository;
 import ch.akros.marketplace.service.repository.FieldRepository;
-import ch.akros.marketplace.service.repository.SubCategoryRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -85,6 +84,7 @@ public class CategoryService {
     result.setOffer(field.isOffer());
     result.setCreation(field.isCreation());
     result.setSortNumber(field.getSortNumber());
+    result.setRequired(field.isRequired());
     result.setFieldTypeDefinitionId(field.getFieldTypeDefinition().getFieldTypeDefinitionId());
     result.setFieldOptions(field.getFieldOptions()
             .stream()
