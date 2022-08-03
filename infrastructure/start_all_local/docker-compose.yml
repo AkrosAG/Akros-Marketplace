@@ -71,7 +71,7 @@ services:
       - POSTGRES_PASSWORD=am
       - POSTGRES_DB=am
     volumes:
-      - "../pg_data_am:/var/lib/postgresql/data"
+      - "am_db:/var/lib/postgresql/data"
       - "../db_init_am:/docker-entrypoint-initdb.d/"
     ports:
       - 5432:5432
@@ -96,7 +96,7 @@ services:
       - POSTGRES_PASSWORD=keycloakdb
       - POSTGRES_DB=keycloakdb
     volumes:
-      - "../pg_data_keycloakdb:/var/lib/postgresql/data"
+      - "keycloak_db:/var/lib/postgresql/data"
       - "../db_init_keycloakdb:/docker-entrypoint-initdb.d/"
     ports:
       - 5434:5432
@@ -171,3 +171,8 @@ services:
 
 networks:
   marketplacenet:
+volumes:
+  keycloak_db:
+    name: keycloak_db
+  am_db:
+    name: am_db
