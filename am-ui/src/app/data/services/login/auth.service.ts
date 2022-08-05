@@ -57,23 +57,27 @@ export class AuthStore {
   }
 
   private initOAuth() {
+    this.userLocalStorageService.logOut();
+    this.userSubject$.next(null);
+
     this.oAuthService.loadDiscoveryDocument().then(() => {
-      this.oAuthService.tryLoginImplicitFlow().then(() => {
+      this.oAuthService.tryLoginCodeFlow().then(() => {
         if (!this.oAuthService.hasValidIdToken()) {
-          this.userLocalStorageService.logOut();
-          this.userSubject$.next(null);
           this.router.navigate(['']);
         } else {
-          this.oAuthService.loadUserProfile().then(userProfile => {
-            const user = this.buildPostUserFromOauth(
-              (userProfile as OAuthUser).info
-            );
-            this.postLogin(
-              this.oAuthService.getAccessToken(),
-              this.oAuthService.getIdToken(),
-              user
-            );
-          });
+          this.oAuthService.refreshToken().then(() =>
+            this.oAuthService.loadUserProfile().then(userProfile => {
+              const user = this.buildPostUserFromOauth(
+                (userProfile as OAuthUser).info
+              );
+              this.postLogin(
+                this.oAuthService.getAccessToken(),
+                this.oAuthService.getIdToken(),
+                user
+              );
+              this.oAuthService.setupAutomaticSilentRefresh();
+            })
+          );
         }
       });
     });
@@ -85,7 +89,7 @@ export class AuthStore {
   }
 
   login_sso() {
-    this.oAuthService.initLoginFlow();
+    this.oAuthService.initCodeFlow();
   }
 
   private postLogin(accessToken: any, idToken: any, postUser: any) {

@@ -20,12 +20,14 @@ export const environment = {
   keycloakConfig: {
     issuer: 'http://127.0.0.1:9090/realms/akros-marketplace',
     redirectUri: window.location.origin,
-    strictDiscoveryDocumentValidation: false,
+    silentRefreshRedirectUri:
+      'https://localhost:4200/assets/silent-refresh.html',
+    useSilentRefresh: true,
     clientId: 'marketplace',
-    scope: 'openid profile email',
-    sessionChecksEnabled: true,
-    clearHashAfterLogin: false,
+    scope: 'openid profile email offline_access',
     requireHttps: false,
+    responseType: 'code',
+    dummyClientSecret: 'XP0knCLKLhJK8uaEZQg8RRqsENzlywe1',
   },
 };
 

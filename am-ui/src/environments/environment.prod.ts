@@ -11,11 +11,13 @@ export const environment = {
   keycloakConfig: {
     issuer: 'https://am-keycloak.azurewebsites.net/realms/akros-marketplace',
     redirectUri: window.location.origin,
-    strictDiscoveryDocumentValidation: false,
+    silentRefreshRedirectUri:
+      'https://am-keycloak.azurewebsites.net/assets/silent-refresh.html',
+    useSilentRefresh: true,
     clientId: 'marketplace',
-    scope: 'openid profile email',
-    sessionChecksEnabled: true,
-    clearHashAfterLogin: false,
+    scope: 'openid profile email offline_access',
     requireHttps: false,
+    responseType: 'code',
+    dummyClientSecret: 'dIaYUsn6MrNIaHhGuciT6bgplIE2vlOi',
   },
 };
