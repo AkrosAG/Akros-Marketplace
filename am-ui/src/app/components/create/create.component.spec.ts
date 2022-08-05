@@ -8,6 +8,7 @@ import {
 } from '@ngx-translate/core';
 import {Component, Input} from '@angular/core';
 import {AuthStore} from '../../data/services/login/auth.service';
+import {OAuthService} from 'angular-oauth2-oidc';
 
 @Component({
   /*eslint-disable-next-line*/
@@ -39,6 +40,20 @@ class MockStore {
   }
 }
 
+class MockOAuth {
+  refreshToken() {
+    return;
+  }
+
+  getRefreshToken() {
+    return 'testRefreshToken';
+  }
+
+  getAccessToken() {
+    return 'testAccessToken';
+  }
+}
+
 describe('CreateComponent', () => {
   let component: CreateComponent;
   let fixture: ComponentFixture<CreateComponent>;
@@ -54,7 +69,11 @@ describe('CreateComponent', () => {
           },
         }),
       ],
-      providers: [TranslateService, {provide: AuthStore, useClass: MockStore}],
+      providers: [
+        TranslateService,
+        {provide: AuthStore, useClass: MockStore},
+        {provide: OAuthService, useClass: MockOAuth},
+      ],
     }).compileComponents();
   });
 
@@ -73,7 +92,7 @@ describe('CreateComponent', () => {
 
   describe('CreateComponent', () => {
     it('should getToken', () => {
-      expect(component.getOauthToken()).toEqual('abc');
+      expect(component.getOauthToken()).toEqual('testAccessToken');
     });
   });
 });
