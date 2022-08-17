@@ -7,9 +7,9 @@
     "build": "vite build",
     "build:prod": "vite build",
     "preview": "vite preview",
-    "prepackage": "npm run build",
+    "prepackage": "pnpm build",
     "package": "node package-script.js",
-    "export": "npm run build && npm run package",
+    "export": "pnpm build && pnpm package",
     "lint": "eslint . --ext .jsx",
     "fix": "eslint . --ext .jsx --fix",
     "test": "jest"
