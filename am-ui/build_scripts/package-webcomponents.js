@@ -15,11 +15,8 @@ fs.readdirSync(path).forEach(function (mod) {
     return;
   }
 
-  // npm binary based on OS
-  const npmCmd = os.platform().startsWith('win') ? 'npm.cmd' : 'npm';
-
   // install folder
-  const cp = spawn(npmCmd, ['run', 'package', '--ignore-scripts'], {
+  const cp = spawn("pnpm", ['package', '--ignore-scripts'], {
     env: process.env,
     cwd: modPath,
     stdio: 'inherit',
