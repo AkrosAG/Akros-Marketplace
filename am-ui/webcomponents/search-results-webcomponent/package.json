@@ -8,7 +8,7 @@
     "build:prod": "vite build",
     "preview": "vite preview",
     "prepackage": "pnpm build",
-    "package": "node package-script.js",
+    "package": "pnpm package && node package-script.js",
     "export": "pnpm build && pnpm package",
     "lint": "eslint . --ext .jsx",
     "fix": "eslint . --ext .jsx --fix",

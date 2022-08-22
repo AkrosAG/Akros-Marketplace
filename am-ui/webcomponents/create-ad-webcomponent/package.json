@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:prod": "vite build",
+    "build": "pnpm prebuild && vite build",
+    "build:prod": "pnpm prebuild:prod && vite build",
     "prebuild": "pnpm openapi-gen",
     "prebuild:prod": "pnpm openapi-gen",
     "preview": "vite preview",

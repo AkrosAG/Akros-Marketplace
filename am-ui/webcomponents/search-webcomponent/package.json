@@ -10,7 +10,7 @@
     "watch": "pnpm openapi-gen && ng build --watch --configuration development",
     "test": "jest --coverage",
     "prepackage": "pnpm build",
-    "package": "node package-script.js",
+    "package": "pnpm build && node package-script.js",
     "export": "pnpm build && pnpm package",
     "lint": "pnpm lint:angular && pnpm lint:typescript && pnpm lint:style",
     "lint:angular": "ng lint",
