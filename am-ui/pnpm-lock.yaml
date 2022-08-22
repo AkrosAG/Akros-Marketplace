@@ -37,6 +37,7 @@ specifiers:
   eslint: ^8.6.0
   fs-extra: ^10.1.0
   gts: ^3.1.0
+  husky: ^8.0.1
   jest: ^27.4.7
   jest-preset-angular: ^11.0.1
   ngrx: 0.0.1-security
@@ -93,6 +94,7 @@ devDependencies:
   '@typescript-eslint/parser': 5.3.0_5drzsg24huoxcdjjyxzx62d5lu
   cypress: 10.6.0
   gts: 3.1.0_typescript@4.5.5
+  husky: 8.0.1
   jest: 27.5.1_ts-node@9.0.0
   jest-preset-angular: 11.1.1_ppzrmjjvq7woa2vam7aa7teqqu
   stylelint: 14.6.0
@@ -6530,6 +6532,12 @@ packages:
     resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}
     dependencies:
       ms: 2.1.3
+    dev: true
+
+  /husky/8.0.1:
+    resolution: {integrity: sha512-xs7/chUH/CKdOCs7Zy0Aev9e/dKOMZf3K1Az1nar3tzlv0jfqnYtu235bstsWTmXOR0EfINrPa97yy4Lz6RiKw==}
+    engines: {node: '>=14'}
+    hasBin: true
     dev: true
 
   /iconv-lite/0.4.24:
