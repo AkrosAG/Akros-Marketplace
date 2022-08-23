@@ -8,7 +8,7 @@
     {
       "files": ["*.ts"],
       "parserOptions": {
-        "project": ["tsconfig.json", "e2e/tsconfig.json"],
+        "project": ["tsconfig.json", "cypress/tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -31,6 +31,12 @@
             "type": "element",
             "prefix": "mp",
             "style": "kebab-case"
+          }
+        ],
+        "node/no-unpublished-import": [
+          "error", 
+          {
+            "allowModules": ["cypress"]
           }
         ]
       }

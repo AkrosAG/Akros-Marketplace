@@ -34,7 +34,7 @@ To do so, run the docker-compose file in `./infrastructure/start_all_local` or r
 Alternatively you can run both the `am-ui` and `marketplace-service` without the docker-compose. This is probably preferred for development.
 
 - You can run the backend in IntelliJ with the provided `Backend`-run-config in the `./.run` directory.
-- Run `npm run start_ssl` in `./am-ui` to start the frontend, including all the webcomponents
+- Run `pnpm start_ssl` in `./am-ui` to start the frontend, including all the webcomponents
 
 ## Folder Organisation
 

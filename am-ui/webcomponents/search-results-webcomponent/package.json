@@ -7,9 +7,9 @@
     "build": "vite build",
     "build:prod": "vite build",
     "preview": "vite preview",
-    "prepackage": "npm run build",
-    "package": "node package-script.js",
-    "export": "npm run build && npm run package",
+    "prepackage": "pnpm build",
+    "package": "pnpm build && node package-script.js",
+    "export": "pnpm build && pnpm package",
     "lint": "eslint . --ext .jsx",
     "fix": "eslint . --ext .jsx --fix",
     "test": "jest"
@@ -17,6 +17,7 @@
   "dependencies": {
     "concat": "^1.0.3",
     "i18next": "^21.6.14",
+    "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.16.1"
