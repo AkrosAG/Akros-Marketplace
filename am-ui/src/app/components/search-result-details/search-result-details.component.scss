@@ -1,1 +1,53 @@
 /* stylelint-disable */
+
+.detail-container {
+  margin-top: 1em;
+
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .title-container {
+    margin-top: 2em;
+    h2 {
+      text-align: left;
+    }
+  }
+
+  .rent-container {
+    margin-top: 2em;
+  }
+
+  h3 {
+    text-align: left;
+    margin-bottom: 1em;
+  }
+
+  table {
+    width: 100%;
+
+
+    tr {
+      border-bottom: 1px solid lightgray;
+
+      th {
+        text-align: left;
+        width: 50%;
+      }
+
+      td {
+        width: 50%;
+      }
+
+      td, th {
+        padding: .8em 0;
+      }
+    }
+  }
+
+}
+
+
+
