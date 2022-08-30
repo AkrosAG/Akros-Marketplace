@@ -35,10 +35,9 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
     if (this.id !== null) {
       /*eslint-disable-next-line*/
       this.searchResultDetailSubscription = this.searchDetailResultService.getById(+this.id)
-        .subscribe(
-          res => {
-            this.resultJson = res.topic_values;
-          });
+        .subscribe(res => {
+          this.resultJson = res.topic_values;
+        });
     }
   }
 
