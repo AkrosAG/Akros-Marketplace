@@ -22,9 +22,11 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
    * @constructor
    * @param {TranslateService} translate - use of translate service to detect language change
    */
-  constructor(private translate: TranslateService,
-              private route: ActivatedRoute,
-              private searchDetailResultService: SearchResultDetailsService) {
+  constructor(
+    private translate: TranslateService,
+    private route: ActivatedRoute,
+    private searchDetailResultService: SearchResultDetailsService
+  ) {
     this.getDefaultSearchResultDetails();
   }
 
@@ -32,9 +34,10 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id !== null) {
       this.searchResultDetailSubscription = this.searchDetailResultService.getById(+this.id)
-        .subscribe(res => {
-          this.resultJson = res.topic_values;
-        });
+        .subscribe(
+          res => {
+            this.resultJson = res.topic_values;
+          });
     }
   }
 
