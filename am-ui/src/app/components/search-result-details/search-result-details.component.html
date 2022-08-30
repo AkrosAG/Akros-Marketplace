@@ -5,7 +5,7 @@
 </div>
 <div class="container-fluid simple">
   <div class="container content-block" *ngIf="resultJson.length !== 0; else noDetailsFound">
-    <a mpBackButton>{{ 'back' | translate }}</a>
+    <a mpBackButton class="back-button">{{ 'back' | translate }}</a>
     <div class="detail-container">
       <div class="image-container">
         <img src="../../../assets/images/placeholder-ad-image.jpg" [alt]="getValueByKey('title')"/>
