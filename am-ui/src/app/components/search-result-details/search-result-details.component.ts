@@ -7,7 +7,7 @@ import {SearchResultDetailsService} from './search-result-details.service';
 @Component({
   selector: 'mp-search-result-details',
   templateUrl: './search-result-details.component.html',
-  styleUrls: ['./search-result-details.component.scss']
+  styleUrls: ['./search-result-details.component.scss'],
 })
 export class SearchResultDetailsComponent implements OnInit, OnDestroy {
   public language: String = '';
@@ -22,16 +22,19 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
    * @constructor
    * @param {TranslateService} translate - use of translate service to detect language change
    */
-  constructor(private translate: TranslateService, private route: ActivatedRoute, private searchDetailResultService: SearchResultDetailsService) {
+  constructor(private translate: TranslateService,
+              private route: ActivatedRoute,
+              private searchDetailResultService: SearchResultDetailsService) {
     this.getDefaultSearchResultDetails();
   }
 
   getDefaultSearchResultDetails() {
     this.id = this.route.snapshot.paramMap.get('id');
-    if (this.id != null) {
-      this.searchResultDetailSubscription = this.searchDetailResultService.getById(+this.id).subscribe(res => {
-        this.resultJson = res.topic_values;
-      });
+    if (this.id !== null) {
+      this.searchResultDetailSubscription = this.searchDetailResultService.getById(+this.id)
+        .subscribe(res => {
+          this.resultJson = res.topic_values;
+        });
     }
   }
 
@@ -43,6 +46,7 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
   }
 
   getValueByKey(key: String): string {
+    /*eslint-disable-next-line*/
     return this.resultJson.find((element: any) => element.field_description === key)?.value;
   }
 

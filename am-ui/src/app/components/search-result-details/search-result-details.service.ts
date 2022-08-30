@@ -3,7 +3,6 @@ import {Injectable} from '@angular/core';
 
 @Injectable({providedIn: 'root'})
 export class SearchResultDetailsService {
-
   constructor(private http: HttpClient) {}
 
   getById(id: number) {
