@@ -1,20 +1,20 @@
 version: "3.9"
 
 services:
-  client-ui:
-    container_name: client-ui
-    build:
-      context: ../..
-      dockerfile: ./am-ui/Dockerfile.local
-    ports:
-      - 4200:443
-    networks:
-      marketplacenet:
-    depends_on:
-      marketplace-service:
-        condition: service_started
-      auth-service:
-        condition: service_healthy
+#  client-ui:
+#    container_name: client-ui
+#    build:
+#      context: ../..
+#      dockerfile: ./am-ui/Dockerfile.local
+#    ports:
+#      - 4200:443
+#    networks:
+#      marketplacenet:
+#    depends_on:
+#      marketplace-service:
+#        condition: service_started
+#      auth-service:
+#        condition: service_healthy
 
   marketplace-service:
     container_name: marketplace-service

@@ -50,7 +50,7 @@ import {SearchResultDetailsComponent} from './components/search-result-details/s
 import {BackButtonDirective} from './utils/back-button.directive';
 import {NavigationService} from './utils/navigation.service';
 import {OAuthModule, OAuthService, OAuthStorage} from 'angular-oauth2-oidc';
-import {SearchResultDetailsService} from "./components/search-result-details/search-result-details.service";
+import {SearchResultDetailsService} from './components/search-result-details/search-result-details.service';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);

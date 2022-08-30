@@ -2,14 +2,12 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {SearchResultDetailsService} from "./search-result-details.service";
-import {DatePipe} from '@angular/common'
+import {SearchResultDetailsService} from './search-result-details.service';
 
 @Component({
   selector: 'mp-search-result-details',
   templateUrl: './search-result-details.component.html',
-  styleUrls: ['./search-result-details.component.scss'],
-  providers: [DatePipe]
+  styleUrls: ['./search-result-details.component.scss']
 })
 export class SearchResultDetailsComponent implements OnInit, OnDestroy {
   public language: String = '';
@@ -24,7 +22,7 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
    * @constructor
    * @param {TranslateService} translate - use of translate service to detect language change
    */
-  constructor(private translate: TranslateService, private route: ActivatedRoute, private searchDetailResultService: SearchResultDetailsService, public datepipe: DatePipe) {
+  constructor(private translate: TranslateService, private route: ActivatedRoute, private searchDetailResultService: SearchResultDetailsService) {
     this.getDefaultSearchResultDetails();
   }
 
