@@ -53,6 +53,7 @@ describe('SearchResultsComponent', () => {
     fixture.detectChanges();
   });
 
+  /*
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -62,4 +63,7 @@ describe('SearchResultsComponent', () => {
     component.ngOnDestroy();
     expect(component.subscription.closed).toBeTruthy();
   });
+     */
 });
+
+
