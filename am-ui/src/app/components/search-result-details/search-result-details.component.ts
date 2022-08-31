@@ -58,9 +58,9 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.searchResultDetailSubscription && this.subscription) {
+    this.subscription.unsubscribe();
+    if (this.searchResultDetailSubscription) {
       this.searchResultDetailSubscription.unsubscribe();
-      this.subscription.unsubscribe();
     }
   }
 }
