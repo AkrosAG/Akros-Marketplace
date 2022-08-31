@@ -4,7 +4,6 @@ import {
   TranslateLoader,
   TranslateFakeLoader,
 } from '@ngx-translate/core';
-import { of } from 'rxjs';
 import {SearchResultDetailsComponent} from './search-result-details.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -23,9 +22,6 @@ describe('SearchResultDetailsComponent', () => {
           loader: {
             provide: TranslateLoader,
             useClass: TranslateFakeLoader,
-            useValue: {
-              params: of({id: 1})
-            }
           },
         }),
       ],
@@ -56,6 +52,6 @@ describe('SearchResultDetailsComponent', () => {
 
   it('Check if subscription is created', () => {
     expect(component).toBeTruthy();
-    expect(component.subscription).toBeTruthy()
-  })
+    expect(component.subscription).toBeTruthy();
+  });
 });
