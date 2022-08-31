@@ -68,7 +68,7 @@ describe('SearchResultDetailsComponent', () => {
     expect(component.language === 'de');
   });
 
-  it('should find correct value in resultJson', function () {
+  it('should find correct value in resultJson', () => {
     const resultJsonValue = 'Test title';
     expect(component).toBeTruthy();
     /*eslint-disable-next-line*/
