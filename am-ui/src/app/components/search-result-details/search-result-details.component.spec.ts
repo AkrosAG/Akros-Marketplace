@@ -42,6 +42,7 @@ describe('SearchResultDetailsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SearchResultDetailsComponent);
     component = fixture.componentInstance;
+    /*eslint-disable-next-line*/
     window.history.pushState({resultJson: [{field_description: 'title', value: 'Test title'}], language: 'de'}, '', '');
     fixture.detectChanges();
   });
@@ -68,9 +69,10 @@ describe('SearchResultDetailsComponent', () => {
   });
 
   it('should find correct value in resultJson', function () {
-    const resultJsonValue = 'Test title'
+    const resultJsonValue = 'Test title';
     expect(component).toBeTruthy();
-    component.resultJson = [{field_description: 'title', value: resultJsonValue}];
-    expect(component.getValueByKey('title') === resultJsonValue)
+    /*eslint-disable-next-line*/
+    component.resultJson = [ {field_description: 'title', value: resultJsonValue } ];
+    expect(component.getValueByKey('title') === resultJsonValue);
   });
 });
