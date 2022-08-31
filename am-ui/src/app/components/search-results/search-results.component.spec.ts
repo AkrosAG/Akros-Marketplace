@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {Router} from '@angular/router';
-import {RouterTestingModule} from '@angular/router/testing';
 import {
   TranslateFakeLoader,
   TranslateLoader,
@@ -34,7 +33,6 @@ describe('SearchResultsComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [SearchResultsComponent, MockSearchResultsComponent],
       imports: [
-        RouterTestingModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
@@ -53,7 +51,6 @@ describe('SearchResultsComponent', () => {
     fixture.detectChanges();
   });
 
-  /*
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -63,5 +60,4 @@ describe('SearchResultsComponent', () => {
     component.ngOnDestroy();
     expect(component.subscription.closed).toBeTruthy();
   });
-     */
 });
