@@ -39,4 +39,9 @@ describe('SearchResultDetailsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('resultJson should have data in ngOnInit', () => {
+    expect(component).toBeTruthy();
+    expect(component.resultJson.level !== 0);
+  });
 });
