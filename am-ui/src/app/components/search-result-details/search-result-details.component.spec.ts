@@ -6,6 +6,8 @@ import {
 } from '@ngx-translate/core';
 
 import {SearchResultDetailsComponent} from './search-result-details.component';
+import {RouterTestingModule} from "@angular/router/testing";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('SearchResultDetailsComponent', () => {
   let component: SearchResultDetailsComponent;
@@ -14,6 +16,8 @@ describe('SearchResultDetailsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
