@@ -8,6 +8,7 @@
 
   .title-container {
     margin-top: 2em;
+
     h2 {
       text-align: left;
     }
@@ -37,12 +38,10 @@
         width: 50%;
       }
 
-      td, th {
-        padding: .8em 0;
+      td,
+      th {
+        padding: .8em 0 .8em 0;
       }
     }
   }
 }
-
-
-

@@ -56,7 +56,7 @@
           <table>
             <tbody>
             <tr></tr>
-            <tr>
+            <tr *ngIf="getValueByKey('size') === 'true'">
               <th scope="col">{{ 'search-results-detail.living-space' | translate }}</th>
               <td>CHF {{ getValueByKey('size')}}  (m²)</td>
             </tr>
