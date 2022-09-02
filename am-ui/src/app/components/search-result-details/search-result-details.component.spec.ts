@@ -60,14 +60,20 @@ describe('SearchResultDetailsComponent', () => {
 
   it('Check if subscription is undefined when no data is there', () => {
     expect(component).toBeTruthy();
-    component.ngOnDestroy();
     expect(component.searchResultDetailSubscription).toBeUndefined();
+  });
+
+  it('Check if subscription is not undefined when id is set', () => {
+    expect(component).toBeTruthy();
+    component.id = "1";
+    component.getDefaultSearchResultDetails();
+    expect(component.searchResultDetailSubscription).toBeDefined();
   });
 
   it('Check if language is set', () => {
     expect(component).toBeTruthy();
     component.ngOnInit();
-    expect(component.language === 'de');
+    expect(component.language).toBe('de');
   });
 
   it('should find correct value in resultJson', () => {
@@ -77,7 +83,29 @@ describe('SearchResultDetailsComponent', () => {
     const topicValue = createTopicValue('title', resultJsonValue);
 
     component.resultJson = [topicValue];
-    expect(component.getValueByKey('title') === resultJsonValue);
+    expect(component.getValueByKey('title')).toBe(resultJsonValue);
+  });
+
+  it('Check if price is correct formatted', () => {
+    const topicValue = createTopicValue('price', '1500');
+    component.resultJson = [topicValue];
+    const value = component.getValueNumberByKey('price');
+    expect(value).toBe("CHF 1’500.00");
+  });
+
+  it('Check if date is correct formatted', () => {
+    const topicValue = createTopicValue('date', '2022-10-10');
+    component.resultJson = [topicValue];
+    const value = component.getValueByDate();
+    expect(value).toBe("10.10.2022");
+  });
+
+  it('Check if getById is called', () => {
+    expect(component).toBeTruthy();
+    component.id = "1";
+    const getDefaultSearchResultDetails = jest.fn();
+    getDefaultSearchResultDetails.call(component.getDefaultSearchResultDetails());
+    expect(getDefaultSearchResultDetails).toBeCalled();
   });
 
   function createTopicValue(key: string, value: string): TopicValue {

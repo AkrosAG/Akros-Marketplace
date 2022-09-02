@@ -32,8 +32,10 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
   }
 
   getDefaultSearchResultDetails() {
-    this.id = this.route.snapshot.paramMap.get('id');
-    if (this.id !== null) {
+    if (this.id === undefined && this.route.snapshot.paramMap.get('id')) {
+      this.id = this.route.snapshot.paramMap.get('id');
+    }
+    if (this.id) {
       this.searchResultDetailSubscription = this.searchDetailResultService
         .getById(+this.id)
         .subscribe(res => {
@@ -62,7 +64,7 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
 
   formatCurrency(x: number | string) {
     /*eslint-disable-next-line*/
-    return Number(x).toLocaleString("de-CH", {style:"currency", currency:"CHF"});
+    return Number(x).toLocaleString("de-CH", {style: "currency", currency: "CHF"});
   }
 
   getValueByDate(): string {
