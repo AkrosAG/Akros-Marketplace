@@ -56,23 +56,23 @@
           <table>
             <tbody>
             <tr></tr>
-            <tr *ngIf="getValueByKey('size') === 'true'">
+            <tr *ngIf="getValueByKey('size') !== ''">
               <th scope="col">{{ 'search-results-detail.living-space' | translate }}</th>
               <td>CHF {{ getValueByKey('size')}}  (m²)</td>
             </tr>
-            <tr *ngIf="getValueByKey('floor') !== undefined">
+            <tr *ngIf="getValueByKey('floor') !== ''">
               <th scope="col">{{ 'search-results-detail.floor' | translate }}</th>
               <td>{{getValueByKey('floor')}}</td>
             </tr>
             <tr>
               <th scope="col">{{ 'search-results-detail.furnished' | translate }}</th>
-              <td *ngIf="getValueByKey('furnished') === 'true'">{{ 'search-results-detail.yes' | translate }}</td>
-              <td *ngIf="getValueByKey('furnished') !== 'true'">{{ 'search-results-detail.no' | translate }}</td>
+              <td *ngIf="getValueByKey('furnished') !== ''">{{ 'search-results-detail.yes' | translate }}</td>
+              <td *ngIf="getValueByKey('furnished') === ''">{{ 'search-results-detail.no' | translate }}</td>
             </tr>
             <tr>
               <th scope="col">{{ 'search-results-detail.temporary' | translate }}</th>
-              <td *ngIf="getValueByKey('temporary') === 'true'">{{ 'search-results-detail.yes' | translate }}</td>
-              <td *ngIf="getValueByKey('temporary') !== 'true'">{{ 'search-results-detail.no' | translate }}</td>
+              <td *ngIf="getValueByKey('temporary') !== ''">{{ 'search-results-detail.yes' | translate }}</td>
+              <td *ngIf="getValueByKey('temporary') === ''">{{ 'search-results-detail.no' | translate }}</td>
             </tr>
             <tr>
               <th scope="col">{{ 'search-results-detail.available' | translate }}</th>
@@ -87,7 +87,7 @@
               <th scope="col">{{ 'search-results-detail.description' | translate }}</th>
               <td>{{getValueByKey('description') }}</td>
             </tr>
-            <tr *ngIf="getValueByKey('floor') !== undefined">
+            <tr *ngIf="getValueByKey('floor') !== ''">
               <th scope="col">{{ 'search-results-detail.expectations' | translate }}</th>
               <td>{{getValueByKey('expectations') }}</td>
             </tr>
