@@ -50,6 +50,7 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
   }
 
   getValueByKey(key: string): string {
+    /*eslint-disable-next-line*/
     return this.resultJson.find((element: TopicValue) => element.field_description === key)?.value || '';
   }
 
