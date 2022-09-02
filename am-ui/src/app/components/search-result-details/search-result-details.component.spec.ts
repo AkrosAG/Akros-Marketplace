@@ -65,7 +65,7 @@ describe('SearchResultDetailsComponent', () => {
 
   it('Check if subscription is not undefined when id is set', () => {
     expect(component).toBeTruthy();
-    component.id = "1";
+    component.id = '1';
     component.getDefaultSearchResultDetails();
     expect(component.searchResultDetailSubscription).toBeDefined();
   });
@@ -90,20 +90,22 @@ describe('SearchResultDetailsComponent', () => {
     const topicValue = createTopicValue('price', '1500');
     component.resultJson = [topicValue];
     const value = component.getValueNumberByKey('price');
-    expect(value).toBe("CHF 1’500.00");
+    /*eslint-disable-next-line*/
+    expect(value).toBe(`CHF 1’500.00`);
   });
 
   it('Check if date is correct formatted', () => {
     const topicValue = createTopicValue('date', '2022-10-10');
     component.resultJson = [topicValue];
     const value = component.getValueByDate();
-    expect(value).toBe("10.10.2022");
+    expect(value).toBe('10.10.2022');
   });
 
   it('Check if getById is called', () => {
     expect(component).toBeTruthy();
-    component.id = "1";
+    component.id = '1';
     const getDefaultSearchResultDetails = jest.fn();
+    /*eslint-disable-next-line*/
     getDefaultSearchResultDetails.call(component.getDefaultSearchResultDetails());
     expect(getDefaultSearchResultDetails).toBeCalled();
   });
