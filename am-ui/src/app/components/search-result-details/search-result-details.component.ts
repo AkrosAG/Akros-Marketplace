@@ -34,7 +34,8 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id !== null) {
       this.searchResultDetailSubscription = this.searchDetailResultService
-        .getById(+this.id).subscribe(res => {
+        .getById(+this.id)
+        .subscribe(res => {
           this.resultJson = res.topic_values;
         });
     }
