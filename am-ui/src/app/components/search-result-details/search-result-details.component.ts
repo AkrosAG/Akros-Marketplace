@@ -29,7 +29,6 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
     private searchDetailResultService: SearchResultDetailsService
   ) {
     this.getDefaultSearchResultDetails();
-
   }
 
   getDefaultSearchResultDetails() {
@@ -61,7 +60,8 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
     return this.formatCurrency(value);
   }
 
-  formatCurrency(x: number | string){
+  formatCurrency(x: number | string) {
+    /*eslint-disable-next-line*/
     return Number(x).toLocaleString("de-CH", {style:"currency", currency:"CHF"});
   }
 
