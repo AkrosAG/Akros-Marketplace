@@ -1,11 +1,114 @@
 <div id="intro">
   <div class="container intro-block">
-    <h1 class="text-white">search-result-details works!</h1>
+    <h1 class="text-white">{{ getValueByKey('title') }}</h1>
   </div>
 </div>
 <div class="container-fluid simple">
-  <div class="container content-block">
+  <div class="container content-block" *ngIf="resultJson.length !== 0; else noDetailsFound">
     <a mpBackButton class="back-button">{{ 'back' | translate }}</a>
-    {{ result }}
+    <div class="detail-container">
+      <div class="image-container">
+        <img src="../../../assets/images/placeholder-ad-image.jpg" [alt]="getValueByKey('title')"/>
+      </div>
+      <div class="title-container">
+        <h2>{{ 'search-results-detail.rent' | translate }}  {{ getValueByKey('description')}}</h2>
+        <span>{{ getValueByKey('address')}}, {{getValueByKey('postalCode')}} {{getValueByKey('region')}} - </span>
+        <span>CHF {{getValueByKey('price')}}
+          <span *ngIf="getValueByKey('priceUnit') === 'month'">
+            {{ 'search-results-detail.price-unit-month' | translate }}
+          </span>
+          <span *ngIf="getValueByKey('priceUnit') === 'day'">
+            {{ 'search-results-detail.price-unit-day' | translate }}
+          </span>
+          <span *ngIf="getValueByKey('priceUnit') === 'week'">
+            {{ 'search-results-detail.price-unit-week' | translate }}
+          </span>
+        </span>
+
+        <div class="rent-container">
+          <h3>{{ 'search-results-detail.rent-simple' | translate }}</h3>
+          <table>
+            <tbody>
+            <tr></tr>
+            <tr>
+              <th scope="col">{{ 'search-results-detail.rent-simple' | translate }}</th>
+              <td>CHF {{ getValueByKey('price')}}</td>
+            </tr>
+            <tr>
+              <th scope="col">{{ 'search-results-detail.price-unit' | translate }}</th>
+              <td>
+                    <span *ngIf="getValueByKey('priceUnit') === 'month'">
+                {{ 'search-results-detail.price-unit-month' | translate }}
+              </span>
+                <span *ngIf="getValueByKey('priceUnit') === 'day'">
+                {{ 'search-results-detail.price-unit-day' | translate }}
+              </span>
+                <span *ngIf="getValueByKey('priceUnit') === 'week'">
+                {{ 'search-results-detail.price-unit-week' | translate }}
+              </span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="rent-container">
+          <h3>{{ 'search-results-detail.details' | translate }}</h3>
+          <table>
+            <tbody>
+            <tr></tr>
+            <tr *ngIf="getValueByKey('size') !== ''">
+              <th scope="col">{{ 'search-results-detail.living-space' | translate }}</th>
+              <td>CHF {{ getValueByKey('size')}}  (m²)</td>
+            </tr>
+            <tr *ngIf="getValueByKey('floor') !== ''">
+              <th scope="col">{{ 'search-results-detail.floor' | translate }}</th>
+              <td>{{getValueByKey('floor')}}</td>
+            </tr>
+            <tr>
+              <th scope="col">{{ 'search-results-detail.furnished' | translate }}</th>
+              <td *ngIf="getValueByKey('furnished') !== ''">{{ 'search-results-detail.yes' | translate }}</td>
+              <td *ngIf="getValueByKey('furnished') === ''">{{ 'search-results-detail.no' | translate }}</td>
+            </tr>
+            <tr>
+              <th scope="col">{{ 'search-results-detail.temporary' | translate }}</th>
+              <td *ngIf="getValueByKey('temporary') !== ''">{{ 'search-results-detail.yes' | translate }}</td>
+              <td *ngIf="getValueByKey('temporary') === ''">{{ 'search-results-detail.no' | translate }}</td>
+            </tr>
+            <tr>
+              <th scope="col">{{ 'search-results-detail.available' | translate }}</th>
+              <td
+                *ngIf="getValueByKey('availability') === 'now'">{{ 'search-results-detail.available-now' | translate }}</td>
+              <td
+                *ngIf="getValueByKey('date') !== '' && getValueByKey('availability') !== 'now'">{{getValueByDate()}}</td>
+              <td *ngIf="getValueByKey('availability') !== '' &&
+                getValueByKey('availability') !== 'date' && getValueByKey('availability') !== 'now'">{{ 'search-results-detail.availability-agreement' | translate }}</td>
+            </tr>
+            <tr>
+              <th scope="col">{{ 'search-results-detail.description' | translate }}</th>
+              <td>{{getValueByKey('description') }}</td>
+            </tr>
+            <tr *ngIf="getValueByKey('floor') !== ''">
+              <th scope="col">{{ 'search-results-detail.expectations' | translate }}</th>
+              <td>{{getValueByKey('expectations') }}</td>
+            </tr>
+            <tr>
+              <th scope="col">{{ 'search-results-detail.contact-phone' | translate }}</th>
+              <td><a href="tel:{{getValueByKey('phone')}}">{{getValueByKey('phone') }}</a></td>
+            </tr>
+            <tr>
+              <th scope="col">{{ 'search-results-detail.contact-mail' | translate }}</th>
+              <td><a href="mailto:{{getValueByKey('email')}}">{{getValueByKey('email') }}</a></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
+  <ng-template #noDetailsFound>
+    <div class="container content-block">
+      <a mpBackButton>{{ 'back' | translate }}</a>
+      <h2>{{'search-results-detail.no-details-found' | translate }}</h2>
+    </div>
+  </ng-template>
 </div>

@@ -40,5 +40,29 @@
   },
   "search-results": {
     "title": "Suchergebnisse"
+  },
+  "search-results-detail": {
+    "incl-utilities": "inkl. Möbiliar per",
+    "rent": "Miete ein(e)",
+    "rent-simple": "Miete",
+    "price-unit": "Zahlbar:",
+    "price-unit-month": "Monatlich",
+    "price-unit-day": "Täglich",
+    "price-unit-week": "Wöchentlich",
+    "details": "Details:",
+    "living-space": "Wohnfläche:",
+    "floor": "Etage:",
+    "furnished": "Möbiliert:",
+    "temporary": "Temporär:",
+    "available": "Verfügbar ab:",
+    "available-now": "Ab Sofort",
+    "description": "Beschreibung:",
+    "expectations": "Anforderungen:",
+    "contact-phone": "Telefon:",
+    "contact-mail": "E-Mail:",
+    "yes": "Ja",
+    "no": "Nein",
+    "no-details-found": "Es konnte keine Anzeige gefunden werden",
+    "availability-agreement": "Auf Anfrage"
   }
 }

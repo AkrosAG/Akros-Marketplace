@@ -15,7 +15,6 @@ services:
         condition: service_started
       auth-service:
         condition: service_healthy
-
   marketplace-service:
     container_name: marketplace-service
     build:
