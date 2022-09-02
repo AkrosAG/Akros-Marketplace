@@ -3,6 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {SearchResultDetailsService} from './search-result-details.service';
+import {TopicValue} from '../../data/models/TopicValue';
 
 @Component({
   selector: 'mp-search-result-details',
@@ -14,7 +15,7 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
   public subscription: Subscription;
   public searchResultDetailSubscription: Subscription;
   public result = {};
-  public resultJson: any = [];
+  public resultJson: TopicValue[] = [];
   public id: string | null;
 
   /**
@@ -48,9 +49,8 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  getValueByKey(key: String): string {
-    /*eslint-disable-next-line*/
-    return this.resultJson.find((element: any) => element.field_description === key)?.value;
+  getValueByKey(key: string): string {
+    return this.resultJson.find((element: TopicValue) => element.field_description === key)?.value || '';
   }
 
   getValueByDate(): string {
