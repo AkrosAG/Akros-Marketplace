@@ -13,7 +13,7 @@
       <div class="title-container">
         <h2>{{ 'search-results-detail.rent' | translate }}  {{ getValueByKey('description')}}</h2>
         <span>{{ getValueByKey('address')}}, {{getValueByKey('postalCode')}} {{getValueByKey('region')}} - </span>
-        <span>CHF {{getValueByKey('price')}}
+        <span>{{getValueNumberByKey('price')}}
           <span *ngIf="getValueByKey('priceUnit') === 'month'">
             {{ 'search-results-detail.price-unit-month' | translate }}
           </span>
@@ -32,7 +32,7 @@
             <tr></tr>
             <tr>
               <th scope="col">{{ 'search-results-detail.rent-simple' | translate }}</th>
-              <td>CHF {{ getValueByKey('price')}}</td>
+              <td> {{ getValueNumberByKey('price')}}</td>
             </tr>
             <tr>
               <th scope="col">{{ 'search-results-detail.price-unit' | translate }}</th>
@@ -58,7 +58,7 @@
             <tr></tr>
             <tr *ngIf="getValueByKey('size') !== ''">
               <th scope="col">{{ 'search-results-detail.living-space' | translate }}</th>
-              <td>CHF {{ getValueByKey('size')}}  (m²)</td>
+              <td>{{ getValueByKey('size')}}  (m²)</td>
             </tr>
             <tr *ngIf="getValueByKey('floor') !== ''">
               <th scope="col">{{ 'search-results-detail.floor' | translate }}</th>
@@ -87,7 +87,7 @@
               <th scope="col">{{ 'search-results-detail.description' | translate }}</th>
               <td>{{getValueByKey('description') }}</td>
             </tr>
-            <tr *ngIf="getValueByKey('floor') !== ''">
+            <tr *ngIf="getValueByKey('expectations') !== ''">
               <th scope="col">{{ 'search-results-detail.expectations' | translate }}</th>
               <td>{{getValueByKey('expectations') }}</td>
             </tr>

@@ -29,6 +29,7 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
     private searchDetailResultService: SearchResultDetailsService
   ) {
     this.getDefaultSearchResultDetails();
+
   }
 
   getDefaultSearchResultDetails() {
@@ -52,6 +53,16 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
   getValueByKey(key: string): string {
     /*eslint-disable-next-line*/
     return this.resultJson.find((element: TopicValue) => element.field_description === key)?.value || '';
+  }
+
+  getValueNumberByKey(key: string) {
+    /*eslint-disable-next-line*/
+    const value = this.resultJson.find((element: TopicValue) => element.field_description === key)?.value || '';
+    return this.formatCurrency(value);
+  }
+
+  formatCurrency(x: number | string){
+    return Number(x).toLocaleString("de-CH", {style:"currency", currency:"CHF"});
   }
 
   getValueByDate(): string {
