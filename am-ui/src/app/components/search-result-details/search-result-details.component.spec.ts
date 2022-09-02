@@ -98,7 +98,7 @@ describe('SearchResultDetailsComponent', () => {
     const topicValue = createTopicValue('date', '2022-10-10');
     component.resultJson = [topicValue];
     const value = component.getValueByDate();
-    expect(value).toBe('10.10.2022');
+    expect(value).toBe('10.10.2022' || '10/10/2022');
   });
 
   it('Check if getById is called', () => {
