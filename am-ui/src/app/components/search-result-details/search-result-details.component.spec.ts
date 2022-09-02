@@ -8,6 +8,9 @@ import {SearchResultDetailsComponent} from './search-result-details.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {Component, Input} from '@angular/core';
+import {Topic} from "../../data/models/Topic";
+import {TopicValue} from "../../data/models/TopicValue";
+import {FieldOption} from "../../data/models/FieldOption";
 
 @Component({
   /*eslint-disable-next-line*/
@@ -72,7 +75,36 @@ describe('SearchResultDetailsComponent', () => {
     const resultJsonValue = 'Test title';
     expect(component).toBeTruthy();
     /*eslint-disable-next-line*/
-    component.resultJson = [ {field_description: 'title', value: resultJsonValue } ];
+    const topic = createTopic('title', resultJsonValue);
+    // @ts-ignore
+    component.resultJson = [ topic ];
     expect(component.getValueByKey('title') === resultJsonValue);
   });
+
+  function createTopic(key: string, value: string): Topic {
+    const topic = new Topic();
+    const topicValue = new TopicValue();
+    const fieldOption = new FieldOption();
+    fieldOption.key = key;
+    fieldOption.field_option_id = 1;
+    fieldOption.sort_number = 1;
+
+    topicValue.value = value;
+    topicValue.field_description = key;
+    topicValue.topic_value_id = 1;
+    topicValue.field_id = 1;
+    topicValue.field_short_description = key;
+    topicValue.field_type_definition_id = 1;
+    topicValue.field_type_definition_description = 'test description';
+    topicValue.min_value = 1;
+    topicValue.max_value = 2;
+    topicValue.field_type_options = [fieldOption];
+
+    topic.topic_values = [topicValue];
+    topic.topic_id = 1;
+    topic.category_id = 1;
+    topic.request_or_offer = 'OFFER';
+    topic.subcategory_id = 1;
+    return topic;
+  }
 });
