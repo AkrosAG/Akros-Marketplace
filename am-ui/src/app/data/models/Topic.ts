@@ -1,4 +1,4 @@
-import {TopicValue} from './TopicValue'
+import {TopicValue} from './TopicValue';
 
 export class Topic {
   topic_id: number;
