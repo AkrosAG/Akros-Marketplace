@@ -76,7 +76,7 @@ describe('SearchResultDetailsComponent', () => {
     /*eslint-disable-next-line*/
     const topicValue = createTopicValue('title', resultJsonValue);
 
-    component.resultJson = [ topicValue ];
+    component.resultJson = [topicValue];
     expect(component.getValueByKey('title') === resultJsonValue);
   });
 
