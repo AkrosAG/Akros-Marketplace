@@ -10,9 +10,9 @@ import ApiClient from '../api/src/ApiClient';
 import CategoriesApi from '../api/src/api/CategoriesApi';
 import TopicsApi from '../api/src/api/TopicsApi';
 import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
-import { onMounted, ref, toRefs } from 'vue';
+import {onMounted, ref, toRefs} from 'vue';
 import CreateAdFields from './CreateAdFields.vue';
-import { useI18n } from 'vue-i18n';
+import {useI18n} from 'vue-i18n';
 
 const apiClient = new ApiClient('/');
 const categoriesApi = new CategoriesApi(apiClient);
@@ -35,8 +35,8 @@ const props = defineProps({
   bearerToken: String
 });
 
-const { t } = useI18n({ useScope: 'global' });
-const { bearerToken } = toRefs(props);
+const {t} = useI18n({useScope: 'global'});
+const {bearerToken} = toRefs(props);
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
@@ -84,6 +84,7 @@ function updateSubCategoryFields() {
     currentRequestFields.value = selectedSubCategory.fields.filter((field) => field.request);
     currentOfferFields.value = selectedSubCategory.fields.filter((field) => field.offer);
 
+    // fieldsToShow.value = getFieldsToShoWithoutLonLats(currentOfferFields.value);
     fieldsToShow.value = currentOfferFields.value;
     requestOrOffer.value = 'OFFER';
     showAdFields.value = true;
@@ -128,7 +129,7 @@ function submit(data) {
   topicsApi.topicsPost(dto);
 }
 
-defineExpose({ updateSubCategoryFields, updateRequestOfferFields, updateSubCategories });
+defineExpose({updateSubCategoryFields, updateRequestOfferFields, updateSubCategories});
 </script>
 
 <template>
@@ -169,7 +170,7 @@ defineExpose({ updateSubCategoryFields, updateRequestOfferFields, updateSubCateg
             :key="subCategory.subcategory_id"
             :value="subCategory.key"
             :selected="subCategory.key === selectedSubCategoryKey">
-                {{ t(`categories.${selectedCategoryKey}.subCategories.${subCategory.key}`) }}
+            {{ t(`categories.${selectedCategoryKey}.subCategories.${subCategory.key}`) }}
           </option>
         </select>
       </p>
@@ -193,8 +194,8 @@ defineExpose({ updateSubCategoryFields, updateRequestOfferFields, updateSubCateg
           value="REQUEST"
           @change="updateRequestOfferFields"
         /><label for="ad-offer" class="radio-label">
-          {{ t('request') }}
-        </label>
+        {{ t('request') }}
+      </label>
       </div>
       <CreateAdFields
         :key="selectedSubCategoryKey-requestOrOffer"
@@ -220,9 +221,11 @@ a {
   -webkit-transition: all 0.3s ease-in 0s;
   transition: all 0.3s ease-in 0s;
 }
+
 a:hover {
   color: $akros-red;
 }
+
 input[type='text'],
 input[type='email'],
 input[type='password'],
@@ -244,6 +247,7 @@ textarea {
   width: 100%;
   margin-bottom: 1em;
 }
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -252,15 +256,18 @@ input:-webkit-autofill:active {
   -webkit-background-clip: text;
   border: 1px solid #f6f6f6;
 }
+
 input:-webkit-autofill {
   -webkit-text-fill-color: #5c5c5c !important;
 }
+
 input:focus,
 select:focus,
 textarea:focus {
   background-color: #fff;
   outline: none;
 }
+
 input[type='radio'],
 input[type='checkbox'] {
   display: inline-block;
@@ -269,13 +276,16 @@ input[type='checkbox'] {
   margin: -2px 5px 2px 0;
   vertical-align: middle;
 }
+
 select {
   cursor: pointer;
 }
+
 ::selection {
   background-color: #938c83;
   color: #fff;
 }
+
 ::-moz-selection {
   background-color: #938c83;
   color: #fff;
@@ -322,45 +332,55 @@ select {
   height: 30px;
   margin-bottom: 1em;
   display: inline-block;
+
   &.full {
     width: 100%;
   }
+
   &.half {
     width: 48%;
     width: calc(50% - 2px);
     float: left;
   }
+
   &.third {
     width: 31%;
     width: calc(33.33% - 2px);
     float: left;
   }
+
   &.two-thirds {
     width: 64%;
     width: calc(66.67% - 2px);
     float: left;
   }
+
   &.file-upload {
     width: 86%;
     width: calc(100% - 42px);
     float: left;
   }
+
   &.checkbox {
     position: relative;
     top: 6px;
     left: 8px;
   }
+
   &.disabled {
     pointer-events: none;
     opacity: 0.65;
   }
+
   textarea {
     max-width: 100%;
     min-width: 100%;
   }
+
   .nocap {
     text-transform: none;
   }
+
   .error {
     border-color: $dark-red;
     color: $akros-red;

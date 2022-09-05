@@ -19,6 +19,7 @@ import ch.akros.marketplace.service.repository.AdvertiserRepository;
 import ch.akros.marketplace.service.repository.FieldRepository;
 import ch.akros.marketplace.service.repository.SubCategoryRepository;
 import ch.akros.marketplace.service.repository.TopicRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class TopicService {
   private final FieldRepository fieldRepository;
   private final AdvertiserRepository advertiserRepository;
@@ -93,13 +95,70 @@ public class TopicService {
 
     topic.setAdvertiser(advertiserRepository.getById(1L));
 
-    topic.setTopicValues(topicSaveRequestDTO.getTopicValues()
-                                              .stream()
-                                              .map(e -> toTopicValue(topic, e))
-                                              .collect(Collectors.toList()));
+        List<TopicValue> topicValues = topicSaveRequestDTO.getTopicValues()
+                .stream()
+                .map(e -> toTopicValue(topic, e))
+                .collect(Collectors.toList());
+        List<TopicValue> finalTopicValues = getFinalTopicValuesList(topicValues);
+        topic.setTopicValues(finalTopicValues);
 
-    topicRepository.save(topic);
-  }
+        topicRepository.save(topic);
+    }
+
+    private List<TopicValue> getFinalTopicValuesList(List<TopicValue> topicValues) {
+
+        String address = topicValues.stream().filter(topicValue -> topicValue.getField().getKey().equals("address")).findFirst().orElseThrow().getValue();
+        String postalCode = topicValues.stream().filter(topicValue -> topicValue.getField().getKey().equals("postalCode")).findFirst().orElseThrow().getValue();
+        String region = topicValues.stream().filter(topicValue -> topicValue.getField().getKey().equals("region")).findFirst().orElseThrow().getValue();
+
+        getLonLatValues(address, postalCode, region);
+
+        return topicValues;
+    }
+
+
+    private void getLonLatValues(String address, String postalCode, String region) {
+        String concatenated = address + " " + postalCode + region;
+
+
+        // create a client
+        var client = HttpClient.newHttpClient();
+
+        // create a request
+        var request = HttpRequest.newBuilder(
+                        URI.create("https://nominatim.openstreetmap.org/search?format=json&limit=3&q=" + concatenated))
+                        .header("accept", "application/json")
+                        .build();
+
+        // use the client to send the request
+        var response = client.send(request, new JsonBodyHandler<>(APOD.class));
+
+        // the response:
+        System.out.println(response.body().get().title);
+
+
+        //var url = `https://nominatim.openstreetmap.org/search?format=json&limit=3&q=${concatenated}`;
+
+//        xmlhttp.onreadystatechange = function () {
+//            if (this.readyState == 4 && this.status == 200) {
+//                var myArr = JSON.parse(this.responseText);
+//                lonLats.push({"topic_id": result.topic_id, "lon": myArr[0].lon, "lat": myArr[0].lat});
+//            }
+//        };
+//
+//
+//
+//
+//
+//
+//
+//        xmlhttp.open("GET", url, true);
+//        xmlhttp.send();
+//
+//  });
+
+    }
+
 
   private TopicValue toTopicValue(
           Topic topic,

@@ -133,18 +133,36 @@
         third: field.field_type_definition_id === 13
       }"
     >
-      <input
-        v-bind:id="'create-add-field-' + field.field_id"
-        type="date"
-        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
-        v-model="fieldValues[field.field_id]"
-        v-on:change="event => checkField(field.field_id, field.key)"
-        v-bind:class="{
+      <div v-if="field.key === 'lat' && field.key === 'lon'">
+        <input
+          hidden
+          value="0"
+          v-bind:id="'create-add-field-' + field.field_id"
+          type="date"
+          v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
+          v-model="fieldValues[field.field_id]"
+          v-on:change="event => checkField(field.field_id, field.key)"
+          v-bind:class="{
           error: errors[field.field_id]
         }"
-        :disabled="!hasSpecificDate"
-      />
-    </div>
+          :disabled="!hasSpecificDate"
+        />
+      </div>
+        <div v-else-if="field.key !== 'lat' && field.key !== 'lon'">
+          <input
+            v-bind:id="'create-add-field-' + field.field_id"
+            type="date"
+            v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
+            v-model="fieldValues[field.field_id]"
+            v-on:change="event => checkField(field.field_id, field.key)"
+            v-bind:class="{
+            error: errors[field.field_id]
+          }"
+            :disabled="!hasSpecificDate"
+          />
+        </div>
+      </div>
+
 
     <!-- Selector counter half(14), full(15) -->
     <div
@@ -178,7 +196,7 @@
       v-bind:class="{
         disabled: formHasErrors
       }"
-      >{{ t('publish') }}</a
+    >{{ t('publish') }}</a
     >
   </p>
 </template>
@@ -193,17 +211,17 @@
  * based on the field_type_id and the HTML logic.
  * @param {String} selectedCategory - Key string value of the selected category
  */
-import { onMounted, ref } from 'vue';
-import { useI18n } from './useI18n';
+import {onMounted, ref} from 'vue';
+import {useI18n} from './useI18n';
 import i18n from '../locales/i18n';
 
-const props = defineProps({ fieldsToShow: Array, selectedCategory: String });
+const props = defineProps({fieldsToShow: Array, selectedCategory: String});
 const emit = defineEmits(['submit']);
 const fieldValues = ref([]);
 const fieldKeys = ref([]);
 const errors = ref([]);
 const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8]);
-const { t } = useI18n(i18n.global.messages.value);
+const {t} = useI18n(i18n.global.messages.value);
 const formHasErrors = ref([]);
 const hasSpecificDate = ref(false);
 
@@ -273,6 +291,8 @@ function checkField(fieldId, fieldKey) {
     // Phone, price, size, floor: Number only regex
     case 'phone':
     case 'price':
+    case 'lat':
+    case 'lon':
     case 'size':
     case 'floor':
     case 'radius':
@@ -349,7 +369,7 @@ function submit() {
   if (!containsErrors) {
     const fields = [];
     props.fieldsToShow.forEach((field) => {
-      fields.push({ field_type_id: field.field_id, value: fieldValues.value[field.field_id] });
+      fields.push({field_type_id: field.field_id, value: fieldValues.value[field.field_id]});
     });
     emit('submit', fields);
   } else {
