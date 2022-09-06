@@ -21,9 +21,7 @@ import ch.akros.marketplace.service.repository.FieldRepository;
 import ch.akros.marketplace.service.repository.SubCategoryRepository;
 import ch.akros.marketplace.service.repository.TopicRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
@@ -120,7 +118,6 @@ public class TopicService {
             topicValues.stream().filter(topicValue -> topicValue.getField().getKey().equals("lon")).findFirst().orElseThrow().setValue(latLon[0].getLon());
             topicValues.stream().filter(topicValue -> topicValue.getField().getKey().equals("lat")).findFirst().orElseThrow().setValue(latLon[0].getLat());
         }
-
         return topicValues;
     }
 
@@ -134,6 +131,7 @@ public class TopicService {
             con.setRequestProperty("accept", "application/json");
             InputStream responseStream = con.getInputStream();
             ObjectMapper mapper = new ObjectMapper();
+
             return mapper.readValue(responseStream, LatLon[].class);
 
         } catch (IOException e) {
