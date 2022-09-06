@@ -84,22 +84,12 @@ function updateSubCategoryFields() {
     currentRequestFields.value = selectedSubCategory.fields.filter((field) => field.request);
     currentOfferFields.value = selectedSubCategory.fields.filter((field) => field.offer);
 
-    fieldsToShow.value = getFieldsToShoWithoutLonLats(currentOfferFields.value);
+    fieldsToShow.value = currentOfferFields.value;
     requestOrOffer.value = 'OFFER';
     showAdFields.value = true;
   } else {
     showAdFields.value = false;
   }
-}
-
-function getFieldsToShoWithoutLonLats(currentOfferFields) {
-  const fields = [];
-  currentOfferFields.forEach(field => {
-    if (field.key !== 'lat' && field.key !== 'lon') {
-      fields.push(field);
-    }
-  });
-  return fields;
 }
 
 /**
