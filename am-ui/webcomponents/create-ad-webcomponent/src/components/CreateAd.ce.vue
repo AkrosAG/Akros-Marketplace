@@ -84,7 +84,6 @@ function updateSubCategoryFields() {
     currentRequestFields.value = selectedSubCategory.fields.filter((field) => field.request);
     currentOfferFields.value = selectedSubCategory.fields.filter((field) => field.offer);
 
-    // fieldsToShow.value = getFieldsToShoWithoutLonLats(currentOfferFields.value);
     fieldsToShow.value = currentOfferFields.value;
     requestOrOffer.value = 'OFFER';
     showAdFields.value = true;

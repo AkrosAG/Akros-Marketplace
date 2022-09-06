@@ -100,6 +100,18 @@
       />
     </div>
 
+    <!-- Input type lan lon(17) -->
+      <input
+        v-if="field.field_type_definition_id === 17"
+        v-bind:id="'create-add-field-' + field.field_id"
+        hidden
+        v-model="fieldValues[field.field_id]"
+        v-on:change="event => checkField(field.field_id, field.key)"
+        v-bind:class="{
+          error: errors[field.field_id]
+        }"
+      />
+
     <!-- Input type phone(10) -->
     <div class="form-field full" v-if="field.field_type_definition_id === 10">
       <input
@@ -133,36 +145,18 @@
         third: field.field_type_definition_id === 13
       }"
     >
-      <div v-if="field.key === 'lat' && field.key === 'lon'">
-        <input
-          hidden
-          value="0"
-          v-bind:id="'create-add-field-' + field.field_id"
-          type="date"
-          v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
-          v-model="fieldValues[field.field_id]"
-          v-on:change="event => checkField(field.field_id, field.key)"
-          v-bind:class="{
+   <input
+        v-bind:id="'create-add-field-' + field.field_id"
+        type="date"
+        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
+        v-model="fieldValues[field.field_id]"
+        v-on:change="event => checkField(field.field_id, field.key)"
+        v-bind:class="{
           error: errors[field.field_id]
         }"
-          :disabled="!hasSpecificDate"
-        />
-      </div>
-        <div v-else-if="field.key !== 'lat' && field.key !== 'lon'">
-          <input
-            v-bind:id="'create-add-field-' + field.field_id"
-            type="date"
-            v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
-            v-model="fieldValues[field.field_id]"
-            v-on:change="event => checkField(field.field_id, field.key)"
-            v-bind:class="{
-            error: errors[field.field_id]
-          }"
-            :disabled="!hasSpecificDate"
-          />
-        </div>
-      </div>
-
+        :disabled="!hasSpecificDate"
+      />
+    </div>
 
     <!-- Selector counter half(14), full(15) -->
     <div
@@ -378,6 +372,7 @@ function submit() {
 }
 
 onMounted(() => {
+
   formHasErrors.value = false;
   props.fieldsToShow.forEach((field) => {
     // checkbox default value shoud be false

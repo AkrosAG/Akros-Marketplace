@@ -15,11 +15,15 @@ import ch.akros.marketplace.service.entity.FieldOption;
 import ch.akros.marketplace.service.entity.SubCategory;
 import ch.akros.marketplace.service.entity.Topic;
 import ch.akros.marketplace.service.entity.TopicValue;
+import ch.akros.marketplace.service.model.LatLon;
 import ch.akros.marketplace.service.repository.AdvertiserRepository;
 import ch.akros.marketplace.service.repository.FieldRepository;
 import ch.akros.marketplace.service.repository.SubCategoryRepository;
 import ch.akros.marketplace.service.repository.TopicRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
@@ -111,54 +115,31 @@ public class TopicService {
         String postalCode = topicValues.stream().filter(topicValue -> topicValue.getField().getKey().equals("postalCode")).findFirst().orElseThrow().getValue();
         String region = topicValues.stream().filter(topicValue -> topicValue.getField().getKey().equals("region")).findFirst().orElseThrow().getValue();
 
-        getLonLatValues(address, postalCode, region);
+        LatLon[] latLon = getLonLatValues(address, postalCode, region);
+        if (latLon.length != 0) {
+            topicValues.stream().filter(topicValue -> topicValue.getField().getKey().equals("lon")).findFirst().orElseThrow().setValue(latLon[0].getLon());
+            topicValues.stream().filter(topicValue -> topicValue.getField().getKey().equals("lat")).findFirst().orElseThrow().setValue(latLon[0].getLat());
+        }
 
         return topicValues;
     }
 
+    private LatLon[] getLonLatValues(String address, String postalCode, String region) {
+        String formattedAddress = address.replace(" " , "%20");
+        String concatenated = formattedAddress + "%20" + postalCode + "%20+" + region;
+        try {
+            URL url = new URL("https://nominatim.openstreetmap.org/search?format=json&limit=3&q=" + concatenated);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("accept", "application/json");
+            InputStream responseStream = con.getInputStream();
+            ObjectMapper mapper = new ObjectMapper();
+            return mapper.readValue(responseStream, LatLon[].class);
 
-    private void getLonLatValues(String address, String postalCode, String region) {
-        String concatenated = address + " " + postalCode + region;
-
-
-        // create a client
-        var client = HttpClient.newHttpClient();
-
-        // create a request
-        var request = HttpRequest.newBuilder(
-                        URI.create("https://nominatim.openstreetmap.org/search?format=json&limit=3&q=" + concatenated))
-                        .header("accept", "application/json")
-                        .build();
-
-        // use the client to send the request
-        var response = client.send(request, new JsonBodyHandler<>(APOD.class));
-
-        // the response:
-        System.out.println(response.body().get().title);
-
-
-        //var url = `https://nominatim.openstreetmap.org/search?format=json&limit=3&q=${concatenated}`;
-
-//        xmlhttp.onreadystatechange = function () {
-//            if (this.readyState == 4 && this.status == 200) {
-//                var myArr = JSON.parse(this.responseText);
-//                lonLats.push({"topic_id": result.topic_id, "lon": myArr[0].lon, "lat": myArr[0].lat});
-//            }
-//        };
-//
-//
-//
-//
-//
-//
-//
-//        xmlhttp.open("GET", url, true);
-//        xmlhttp.send();
-//
-//  });
-
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
-
 
   private TopicValue toTopicValue(
           Topic topic,
