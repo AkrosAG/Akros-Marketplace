@@ -26,6 +26,8 @@ export default createI18n({
           size: 'Living space (M²)',
           price: 'Rent (CHF)',
           floor: 'Floor',
+          lat: 'Latitude (x-coordinate)',
+          lon: 'Longitude (y-coordinate)',
           priceUnit: {
             title: 'Price unit',
             options: {
@@ -87,6 +89,8 @@ export default createI18n({
           size: 'Wohnfläche (M²)',
           price: 'Miete (CHF)',
           floor: 'Etage',
+          lat: 'Breitengrad (x-Koordinate)',
+          lon: 'Längengrade (y-Koordinate)',
           priceUnit: {
             title: 'Preiseinheit',
             options: {

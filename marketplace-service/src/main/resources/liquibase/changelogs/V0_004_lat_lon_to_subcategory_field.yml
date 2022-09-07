@@ -1,0 +1,79 @@
+databaseChangeLog:
+  - changeSet:
+      id: V0.004/1
+      author: Filipe-Inacio
+      comment: Add lat lon to subcategory_field table
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 1
+              - column:
+                  name: field_id
+                  valueNumeric: 36
+            tableName: subcategory_field
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 2
+              - column:
+                  name: field_id
+                  valueNumeric: 36
+            tableName: subcategory_field
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 3
+              - column:
+                  name: field_id
+                  valueNumeric: 36
+            tableName: subcategory_field
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 4
+              - column:
+                  name: field_id
+                  valueNumeric: 36
+            tableName: subcategory_field
+        # ---------------------------------------------------------
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 1
+              - column:
+                  name: field_id
+                  valueNumeric: 37
+            tableName: subcategory_field
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 2
+              - column:
+                  name: field_id
+                  valueNumeric: 37
+            tableName: subcategory_field
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 3
+              - column:
+                  name: field_id
+                  valueNumeric: 37
+            tableName: subcategory_field
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 4
+              - column:
+                  name: field_id
+                  valueNumeric: 37
+            tableName: subcategory_field
