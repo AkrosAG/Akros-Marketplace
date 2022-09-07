@@ -21,7 +21,6 @@ import ch.akros.marketplace.service.repository.FieldRepository;
 import ch.akros.marketplace.service.repository.SubCategoryRepository;
 import ch.akros.marketplace.service.repository.TopicRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import liquibase.pro.packaged.L;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -39,7 +38,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TopicService {
 
-    private static final String LAN_LOT_API_SEARCH_URL = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=";
+    private static final String LAT_LON_API_SEARCH_URL = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=";
     private final FieldRepository fieldRepository;
     private final AdvertiserRepository advertiserRepository;
     private final TopicRepository topicRepository;
@@ -130,23 +129,31 @@ public class TopicService {
     private LatLon[] getLonLatValues(String address, String postalCode, String region) {
         String formattedAddress = address.replace(" ", "%20");
         String concatenated = formattedAddress + "%20" + postalCode + "%20+" + region;
+        URL url;
+        HttpURLConnection con = null;
         try {
-            URL url = new URL(LAN_LOT_API_SEARCH_URL + concatenated);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            url =  new URL(LAT_LON_API_SEARCH_URL + concatenated);
+            con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("accept", "application/json");
             if (con.getResponseCode() != 200) {
-                LatLon latLon = new LatLon("0", "0");
-                return new LatLon[]{latLon};
+                return getDefaultLonLatValues();
             }
             InputStream responseStream = con.getInputStream();
             ObjectMapper mapper = new ObjectMapper();
-
             return mapper.readValue(responseStream, LatLon[].class);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException uhe) {
+            return getDefaultLonLatValues();
+        } finally {
+            if (con != null) {
+                con.disconnect();
+            }
         }
+    }
+
+    private LatLon[] getDefaultLonLatValues() {
+        LatLon latLon = new LatLon("0", "0");
+        return new LatLon[]{latLon};
     }
 
     private TopicValue toTopicValue(
