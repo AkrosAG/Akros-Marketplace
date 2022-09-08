@@ -40,5 +40,29 @@
   },
   "search-results": {
     "title": "Search Results"
+  },
+  "search-results-detail": {
+    "incl-utilities": "inkl. utilities per:",
+    "rent": "Rent a",
+    "rent-simple": "Rent:",
+    "price-unit": "Price unit:",
+    "price-unit-month": "Monthly",
+    "price-unit-day": "Daily",
+    "price-unit-week": "Weekly",
+    "details": "Details:",
+    "living-space": "Living space:",
+    "floor": "Floor:",
+    "furnished": "Furnished:",
+    "temporary": "Temporary:",
+    "available": "Available from:",
+    "available-now": "Now",
+    "description": "Description:",
+    "expectations": "Expectations:",
+    "contact-phone": "Phone:",
+    "contact-mail": "E-Mail:",
+    "yes": "Yes",
+    "no": "No",
+    "no-details-found": "No advertisement could be found",
+    "availability-agreement": "By agreement"
   }
 }
