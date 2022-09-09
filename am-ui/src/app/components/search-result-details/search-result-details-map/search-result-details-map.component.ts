@@ -32,6 +32,14 @@ export class SearchResultDetailsMapComponent implements AfterViewInit {
   }
 
   private initMap(): void {
+    if (
+      this.lat === '0' ||
+      this.lon === '0' ||
+      this.lat === '' ||
+      this.lon === ''
+    ) {
+      return;
+    }
     this.map = L.map('map', {
       center: [+this.lat, +this.lon],
       attributionControl: false,
