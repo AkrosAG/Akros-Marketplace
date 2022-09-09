@@ -13,14 +13,14 @@ const iconDefault = L.icon({
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   tooltipAnchor: [16, -28],
-  shadowSize: [41, 41]
+  shadowSize: [41, 41],
 });
 L.Marker.prototype.options.icon = iconDefault;
 
 @Component({
   selector: 'mp-search-result-details-map',
   templateUrl: './search-result-details-map.component.html',
-  styleUrls: ['./search-result-details-map.component.scss']
+  styleUrls: ['./search-result-details-map.component.scss'],
 })
 export class SearchResultDetailsMapComponent implements AfterViewInit {
   private map: any;
@@ -35,13 +35,15 @@ export class SearchResultDetailsMapComponent implements AfterViewInit {
     this.map = L.map('map', {
       center: [+this.lat, +this.lon],
       attributionControl: false,
-      zoom: 18
+      zoom: 18,
     });
 
+    /*eslint-disable-next-line*/
     const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 100,
       minZoom: 3,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     });
 
     tiles.addTo(this.map);

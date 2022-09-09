@@ -29,7 +29,6 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
     private searchDetailResultService: SearchResultDetailsService
   ) {
     this.getDefaultSearchResultDetails();
-
   }
 
   getDefaultSearchResultDetails() {
