@@ -32,10 +32,16 @@
                 "glob": "silent-refresh.html",
                 "input": "src/assets/static-pages/",
                 "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images/",
+                "output": "./assets"
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [
               "src/assets/scripts/webcomponents/create-ad-webcomponent.js",

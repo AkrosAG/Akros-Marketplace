@@ -47,6 +47,7 @@ import {UserService} from './data/services/login/user.service';
 import {environment} from 'src/environments/environment';
 import {SearchResultsComponent} from './components/search-results/search-results.component';
 import {SearchResultDetailsComponent} from './components/search-result-details/search-result-details.component';
+import {SearchResultDetailsMapComponent} from './components/search-result-details/search-result-details-map/search-result-details-map.component';
 import {BackButtonDirective} from './utils/back-button.directive';
 import {NavigationService} from './utils/navigation.service';
 import {OAuthModule, OAuthService, OAuthStorage} from 'angular-oauth2-oidc';
@@ -89,6 +90,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     AdsComponent,
     SearchResultsComponent,
     SearchResultDetailsComponent,
+    SearchResultDetailsMapComponent,
     BackButtonDirective,
   ],
   imports: [
