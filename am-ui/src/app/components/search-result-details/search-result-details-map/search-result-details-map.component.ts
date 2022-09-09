@@ -38,12 +38,15 @@ export class SearchResultDetailsMapComponent implements AfterViewInit {
       zoom: 18,
     });
 
-    /* eslint-disable no-eval */
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-       maxZoom: 100,
-       minZoom: 3,
-       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      });
+    const tiles = L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {
+        maxZoom: 100,
+        minZoom: 3,
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }
+    );
 
     tiles.addTo(this.map);
     const marker = L.marker([+this.lat, +this.lon]);
