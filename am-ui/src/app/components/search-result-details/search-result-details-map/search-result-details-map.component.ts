@@ -26,6 +26,9 @@ export class SearchResultDetailsMapComponent implements AfterViewInit {
   private map: any;
   @Input() lat: string;
   @Input() lon: string;
+  @Input() address: string;
+  @Input() postalCode: string;
+  @Input() region: string;
 
   ngAfterViewInit(): void {
     this.initMap();
@@ -59,6 +62,15 @@ export class SearchResultDetailsMapComponent implements AfterViewInit {
 
     tiles.addTo(this.map);
     const marker = L.marker([+this.lat, +this.lon]);
+    marker.bindPopup(this.createMarkerPopup(), {
+      closeButton: false,
+    });
     marker.addTo(this.map);
+  }
+
+  createMarkerPopup() {
+    return `` +
+      `<div>${ this.address }</div>` +
+      `<div>${ this.postalCode } ${this.region}</div>`
   }
 }
