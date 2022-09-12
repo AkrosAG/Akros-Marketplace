@@ -1,6 +1,6 @@
-
 package ch.akros.marketplace.service;
 
+import javax.sql.DataSource;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -11,15 +11,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.web.session.HttpSessionEventPublisher;
-
-import javax.sql.DataSource;
 
 @SpringBootApplication
 @EnableWebSecurity
@@ -36,7 +32,11 @@ public class MarketplaceServiceApplication {
   @Value("${POSTGRES_AM_DB_PASSWORD:${spring.datasource.password}}")
   private String dbPassword;
 
-  public static void main(String[] args) {
+  private static final int HTTP_PORT = 8080;
+
+  private static final int HTTPS_PORT = 8443;
+
+  public static void main(final String[] args) {
     SpringApplication application = new SpringApplication(MarketplaceServiceApplication.class);
 
     application.run(args);
@@ -62,7 +62,7 @@ public class MarketplaceServiceApplication {
   public ServletWebServerFactory servletContainer() {
     TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
       @Override
-      protected void postProcessContext(Context context) {
+      protected void postProcessContext(final Context context) {
         var securityConstraint = new SecurityConstraint();
         securityConstraint.setUserConstraint("CONFIDENTIAL");
         var collection = new SecurityCollection();
@@ -78,9 +78,9 @@ public class MarketplaceServiceApplication {
   private Connector getHttpConnector() {
     var connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
     connector.setScheme("http");
-    connector.setPort(8080);
+    connector.setPort(HTTP_PORT);
     connector.setSecure(false);
-    connector.setRedirectPort(8443);
+    connector.setRedirectPort(HTTPS_PORT);
     return connector;
   }
 }
