@@ -71,7 +71,10 @@ class SearchResultsWebComponent extends HTMLElement {
     }
     return (
       <Marker key={topic.topic_id} position={[latValue, lonValue]}>
-        <Popup closeButton={false}>{addressValue}<br />{postalCodeValue} {regionValue}</Popup>
+        <Popup closeButton={false}>
+          <div>{addressValue}</div>
+          <div>{postalCodeValue} {regionValue}</div>
+        </Popup>
       </Marker>
     )
   }
