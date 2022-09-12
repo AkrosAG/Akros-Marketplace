@@ -8,14 +8,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonIgnoreProperties(value = {"field_id", "licence", "osm_type", "osm_id", "boundingbox", "display_name", "class", "type", "importance", "place_id"})
+@JsonIgnoreProperties(value = {"field_id", "licence", "osm_type", "osm_id", "boundingbox", "display_name", "class",
+    "type", "importance", "place_id"})
 public class LatLon {
-    private String lat;
-    private String lon;
+  private String lat;
+  private String lon;
 
-    @JsonCreator
-    public LatLon(@JsonProperty("lat") String lat, @JsonProperty("lon") String lon) {
-        this.lat = lat;
-        this.lon = lon;
-    }
+  @JsonCreator
+  public LatLon(@JsonProperty("lat") String lat, @JsonProperty("lon") String lon) {
+    this.lat = lat;
+    this.lon = lon;
+  }
 }
