@@ -67,7 +67,7 @@ class SearchResultsWebComponent extends HTMLElement {
 
     // In case of garbage address input we do not create a marker
     if (latValue === "" || lonValue === "" || (latValue == 0 && lonValue == 0)) {
-      return
+      return;
     }
     return (
       <Marker key={topic.topic_id} position={[latValue, lonValue]}>
@@ -77,19 +77,19 @@ class SearchResultsWebComponent extends HTMLElement {
   }
 
   getAllMarkers() {
-    return (this.results && this.results.length > 0) ? this.results.map(this.createMarkerFromTopic) : null
+    return (this.results && this.results.length > 0) ? this.results.map(this.createMarkerFromTopic) : null;
   }
 
   getCenter() {
     const markers = this.getAllMarkers();
     if (markers && markers.length > 0) {
       markers.forEach(marker => {
-        const position = marker?.props?.position
+        const position = marker?.props?.position;
         if (position && position.length == 2) {
-          this.boundaries.push([Number(position[0]), Number(position[1])])
+          this.boundaries.push([Number(position[0]), Number(position[1])]);
         }
       });
-      return L.latLngBounds(this.boundaries).getCenter()
+      return L.latLngBounds(this.boundaries).getCenter();
     }
   }
 
