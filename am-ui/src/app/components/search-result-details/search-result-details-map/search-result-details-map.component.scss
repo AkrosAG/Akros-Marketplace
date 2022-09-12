@@ -1,0 +1,16 @@
+.map-container {
+  bottom: 0;
+  margin: 30px 0;
+}
+
+.map-frame {
+  height: 100%;
+}
+
+#map {
+  height: 500px;
+}
+
+.leaflet-popup-close-button {
+  display: none;
+}

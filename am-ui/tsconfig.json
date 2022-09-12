@@ -20,13 +20,16 @@
     "lib": ["es2018", "dom"],
     "strictPropertyInitialization": false,
     "strictNullChecks": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowJs": true,
+    "noImplicitAny": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "allowJs": true
   },
   "include": ["src/**/*.ts", "test/**/*.ts", "setup-jest.ts"]
 }
