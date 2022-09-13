@@ -127,21 +127,24 @@ public class TopicService {
     }
 
     private LatLon[] getLonLatValues(String address, String postalCode, String region) {
-        String formattedAddress = address.replace(" ", "%20");
-        String concatenated = formattedAddress + "%20" + postalCode + "%20+" + region;
+        String concatenated = address + "%20" + postalCode + "%20" + region;
+        String formattedAddress = concatenated.replace(" ", "%20");
         URL url;
         HttpURLConnection con = null;
         try {
-            url =  new URL(LAT_LON_API_SEARCH_URL + concatenated);
+            url =  new URL(LAT_LON_API_SEARCH_URL + formattedAddress);
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("accept", "application/json");
-            if (con.getResponseCode() != 200) {
+            con.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+            int responseCode = con.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                InputStream responseStream = con.getInputStream();
+                ObjectMapper mapper = new ObjectMapper();
+                return mapper.readValue(responseStream, LatLon[].class);
+            } else {
                 return getDefaultLonLatValues();
             }
-            InputStream responseStream = con.getInputStream();
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(responseStream, LatLon[].class);
         } catch (IOException uhe) {
             return getDefaultLonLatValues();
         } finally {
