@@ -80,6 +80,41 @@
   }
 }
 
+.search-all-container {
+  width: 100%;
+  border-radius: 1.2em;
+  color: white;
+  text-align: center;
+  background-color: #9c132c;
+  margin-top: .2em;
+  padding: 6px 24px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 1.1em;
+  text-transform: uppercase;
+  max-width: 360px;
+
+  svg {
+    display: inline-block;
+    width: 18px;
+    height: auto;
+    margin: -2px 6px 2px;
+    vertical-align: middle;
+    fill: #e9d3d6;
+    transition: fill 0.3s ease-in 0s;
+  }
+
+  &:hover {
+    background-color: #d60929;
+  }
+;
+
+  .search-all-button {
+    width: 100%;
+    vertical-align: middle;
+  }
+}
+
 *,
 ::before,
 ::after {

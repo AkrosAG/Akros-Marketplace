@@ -1,10 +1,7 @@
 package ch.akros.marketplace.service.controller;
 
 import ch.akros.marketplace.api.TopicsApi;
-import ch.akros.marketplace.api.model.TopicLoadResponseDTO;
-import ch.akros.marketplace.api.model.TopicSaveRequestDTO;
-import ch.akros.marketplace.api.model.TopicSearchListResponseDTO;
-import ch.akros.marketplace.api.model.TopicSearchRequestDTO;
+import ch.akros.marketplace.api.model.*;
 import ch.akros.marketplace.service.service.TopicService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +21,7 @@ public class TopicController implements TopicsApi {
             log.debug("TopicController.TopicTopicIdGet() called");
             TopicLoadResponseDTO topic = topicService.loadTopic(topicId);
             return ResponseEntity.status(HttpStatus.OK).body(topic);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -37,8 +33,7 @@ public class TopicController implements TopicsApi {
             log.debug("TopicController.topicsPost() called");
             topicService.saveTopic(topicSaveRequestDTO);
             return ResponseEntity.status(HttpStatus.OK).build();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -50,8 +45,7 @@ public class TopicController implements TopicsApi {
             log.debug("TopicController.topicsDelete() called");
             topicService.deleteTopic(topicId);
             return ResponseEntity.status(HttpStatus.OK).build();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -63,9 +57,20 @@ public class TopicController implements TopicsApi {
             log.debug("TopicController.topicsSearchPost() called");
             TopicSearchListResponseDTO topicSearchListResponseDTO = topicService.searchTopic(topicSearchRequestDTO);
             return ResponseEntity.status(HttpStatus.OK).body(topicSearchListResponseDTO);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<TopicSearchListResponseDTO> topicsSearchesGet() {
+        try {
+            log.debug("TopicController.topicsSearchesGet() called");
+            TopicSearchListResponseDTO topics = topicService.findAllTopics();
+            return ResponseEntity.status(HttpStatus.OK).body(topics);
+        } catch(Exception e) {
+            log.error(e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

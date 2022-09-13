@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -252,5 +253,32 @@ public class TopicService {
 
         result.setValue(topicValueLoadResponseDTO.getValue());
         return result;
+    }
+
+    public TopicSearchListResponseDTO findAllTopics() {
+        TopicSearchListResponseDTO topicSearchListResponseDTO = new TopicSearchListResponseDTO();
+        List<Topic> topics = topicRepository.findAll();
+        for (Topic topic : topics) {
+            TopicSearchResponseDTO result = new TopicSearchResponseDTO();
+            result.setTopicId(topic.getTopicId());
+            result.setSubcategoryId(topic.getSubCategory().getSubCategoryId());
+            result.setSubcategoryKey(topic.getSubCategory().getKey());
+            result.setTopicValues(generateTopicValues(topic.getTopicValues()));
+            topicSearchListResponseDTO.addTopicsItem(result);
+        }
+        return topicSearchListResponseDTO;
+    }
+
+    private List<TopicSearchValueResponseDTO> generateTopicValues(List<TopicValue> topicValues) {
+        List<TopicSearchValueResponseDTO> topicSearchValueResponseDTOList = new ArrayList<>();
+        for (TopicValue value : topicValues) {
+            TopicSearchValueResponseDTO topicSearchValueResponseDTO = new TopicSearchValueResponseDTO();
+            topicSearchValueResponseDTO.setTopicId(value.getTopic().getTopicId());
+            topicSearchValueResponseDTO.setFieldId(value.getField().getFieldId());
+            topicSearchValueResponseDTO.setKey(value.getField().getKey());
+            topicSearchValueResponseDTO.setValue(value.getValue());
+            topicSearchValueResponseDTOList.add(topicSearchValueResponseDTO);
+        }
+        return topicSearchValueResponseDTOList;
     }
 }
