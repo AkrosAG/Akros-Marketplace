@@ -66,7 +66,7 @@ class SearchResultsWebComponent extends HTMLElement {
     let regionValue = topic.topic_values.find(v => v.key === 'region')?.value;
 
     // In case of garbage address input we do not create a marker
-    if (latValue === "" || lonValue === "" || (latValue == 0 && lonValue == 0)) {
+    if (latValue === undefined || lonValue === undefined || latValue === "" || lonValue === "" || (latValue == 0 && lonValue == 0)) {
       return;
     }
     return (
