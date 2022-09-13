@@ -10,7 +10,8 @@ import {
   Input,
   SimpleChanges,
   OnChanges,
-  EventEmitter, OnDestroy,
+  EventEmitter,
+  OnDestroy,
 } from '@angular/core';
 
 import * as storeSelector from './data/store/search-webcomponent.selector';
