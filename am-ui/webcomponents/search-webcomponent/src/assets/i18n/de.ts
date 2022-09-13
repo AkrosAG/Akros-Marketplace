@@ -6,7 +6,7 @@ export default {
     select: 'Art der Unterkunft',
     categories: {
       all: {
-        title: 'Alle Anzeigen anzeigen'
+        title: 'Alle Anzeigen'
       },
       accomodation: {
         title: 'Unterkünfte',
