@@ -138,6 +138,24 @@ paths:
             "application/problem+json":
               schema:
                 $ref: "#/components/schemas/Problem"
+    get:
+      tags:
+        - Topics
+      summary: Search for all topics
+      description: Search for all topics
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TopicSearchListResponseDTO"
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: "#/components/schemas/Problem"
 
 components:
   securitySchemes:
@@ -476,4 +494,4 @@ components:
           example: "/problem/connection-error#token-info-read-timed-out"
 
 security:
-  - bearerAuth: []
+  - bearerAuth: [ ]

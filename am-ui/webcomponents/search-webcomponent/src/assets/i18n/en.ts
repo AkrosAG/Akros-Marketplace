@@ -4,6 +4,9 @@ export default {
     offers: 'Offers',
     searches: 'Requests',
     categories: {
+      all: {
+        title: 'Search over all'
+      },
       accomodation: {
         title: 'Accomodation',
         subType: {

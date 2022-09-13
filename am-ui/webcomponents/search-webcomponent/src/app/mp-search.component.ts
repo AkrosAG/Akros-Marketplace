@@ -1,10 +1,8 @@
-import {FormFieldsBuilderService} from './utils/form/form-fields-builder.service';
-import {LocalizationService} from './data/services/localization.service';
-import {Store} from '@ngrx/store';
-import {SearchWebcomponentState} from './data/store/search-webcomponent.state';
-import {FormFieldBase} from 'src/app/search-form/form/form-field-base';
-import {Observable} from 'rxjs';
-import {FormGroup} from '@angular/forms';
+import { LocalizationService } from './data/services/localization.service';
+import { Store } from '@ngrx/store';
+import { SearchWebcomponentState } from './data/store/search-webcomponent.state';
+import { Observable, Subscription } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 import {
   Component,
   OnInit,
@@ -13,12 +11,14 @@ import {
   SimpleChanges,
   OnChanges,
   EventEmitter,
+  OnDestroy,
 } from '@angular/core';
 
 import * as storeSelector from './data/store/search-webcomponent.selector';
 import * as storeActions from './data/store/search-webcomponent.actions';
-import {CategoryDto} from './api/models';
-import {Output} from '@angular/core';
+import { CategoryDto } from './api/models';
+import { Output } from '@angular/core';
+import { MpSearchService } from './mp-search.service';
 
 @Component({
   selector: 'mp-search',
@@ -26,7 +26,7 @@ import {Output} from '@angular/core';
   styleUrls: ['./mp-search.component.scss'],
   encapsulation: ViewEncapsulation.ShadowDom,
 })
-export class MpSearchComponent implements OnInit, OnChanges {
+export class MpSearchComponent implements OnInit, OnChanges, OnDestroy {
   public categories$: Observable<CategoryDto[]>;
   public categorySelected$ = new Observable<boolean>();
   public form: FormGroup;
@@ -39,6 +39,7 @@ export class MpSearchComponent implements OnInit, OnChanges {
   public appLanguage: string;
   @Input() language = 'de';
   @Output() submitToContainerEvent = new EventEmitter<any>();
+  public searchResultSubscription: Subscription;
 
   /**
    * @description Top level component of the search form module. Retrieves list of categories using the Store,
@@ -52,7 +53,10 @@ export class MpSearchComponent implements OnInit, OnChanges {
   constructor(
     private store: Store<SearchWebcomponentState>,
     private localization: LocalizationService,
-  ) {}
+    private mpSearchService: MpSearchService
+  ) {
+  }
+
   /* istanbul ignore next */
   ngOnChanges(changes: SimpleChanges) {
     if (changes && changes.language) {
@@ -60,6 +64,7 @@ export class MpSearchComponent implements OnInit, OnChanges {
       this.localization.use(this.appLanguage);
     }
   }
+
   /* istanbul ignore next */
   async ngOnInit() {
     this.appLanguage = this.language;
@@ -99,5 +104,17 @@ export class MpSearchComponent implements OnInit, OnChanges {
    */
   relayToContainer(event: Event) {
     this.submitToContainerEvent.emit(event);
+  }
+
+  onSubmitSearchAllAds() {
+    this.searchResultSubscription = this.mpSearchService.getAllTopics().subscribe(res => {
+      this.submitToContainerEvent.emit(res);
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.searchResultSubscription) {
+      this.searchResultSubscription.unsubscribe();
+    }
   }
 }
