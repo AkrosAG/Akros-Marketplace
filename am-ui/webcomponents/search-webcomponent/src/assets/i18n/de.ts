@@ -5,6 +5,9 @@ export default {
     searches: 'Anfragen',
     select: 'Art der Unterkunft',
     categories: {
+      all: {
+        title: 'Alle Anzeigen anzeigen'
+      },
       accomodation: {
         title: 'Unterkünfte',
         subType: {

@@ -44,4 +44,23 @@
       </div>
     </div>
   </div>
+  <div clasS="search-all-container">
+    <a class="search-all-button" style="color: white" (click)="onSubmitSearchAllAds()">
+      <svg viewBox="0 0 24 24">
+        <rect
+          x="-0.55"
+          y="17.34"
+          width="10.09"
+          height="4.33"
+          rx="1.44"
+          ry="1.44"
+          transform="translate(-12.47 8.89) rotate(-45)"
+        />
+        <path
+          d="M15,0a9,9,0,1,0,9,9A9,9,0,0,0,15,0Zm0,16a7,7,0,1,1,7-7A7,7,0,0,1,15,16Z"
+        />
+      </svg>
+      {{'searchForm.categories.all.title' | translate}}
+    </a>
+  </div>
 </div>
