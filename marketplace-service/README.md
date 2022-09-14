@@ -28,6 +28,7 @@ This module serves the Rest-Services for the UI.
 
 - **build-only**: mvn clean package
 - **run**: mvn
+- **test**: mvn test
 
 ## Lint
 
