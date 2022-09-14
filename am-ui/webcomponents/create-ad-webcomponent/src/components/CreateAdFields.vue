@@ -101,16 +101,16 @@
     </div>
 
     <!-- Input type lan lon(17) -->
-      <input
-        v-if="field.field_type_definition_id === 17"
-        v-bind:id="'create-add-field-' + field.field_id"
-        hidden
-        v-model="fieldValues[field.field_id]"
-        v-on:change="event => checkField(field.field_id, field.key)"
-        v-bind:class="{
+    <input
+      v-if="field.field_type_definition_id === 17"
+      v-bind:id="'create-add-field-' + field.field_id"
+      hidden
+      v-model="fieldValues[field.field_id]"
+      v-on:change="event => checkField(field.field_id, field.key)"
+      v-bind:class="{
           error: errors[field.field_id]
         }"
-      />
+    />
 
     <!-- Input type phone(10) -->
     <div class="form-field full" v-if="field.field_type_definition_id === 10">
@@ -145,7 +145,7 @@
         third: field.field_type_definition_id === 13
       }"
     >
-   <input
+      <input
         v-bind:id="'create-add-field-' + field.field_id"
         type="date"
         v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
@@ -183,6 +183,9 @@
       </select>
     </div>
   </div>
+  <div class="upload-section">
+    <UploadImages></UploadImages>
+  </div>
   <p class="submit-row">
     <a
       class="btn"
@@ -208,6 +211,7 @@
 import {onMounted, ref} from 'vue';
 import {useI18n} from './useI18n';
 import i18n from '../locales/i18n';
+import UploadImages from './UploadImages.vue';
 
 const props = defineProps({fieldsToShow: Array, selectedCategory: String});
 const emit = defineEmits(['submit']);

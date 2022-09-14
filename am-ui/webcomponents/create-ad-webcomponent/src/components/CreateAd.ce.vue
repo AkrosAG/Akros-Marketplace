@@ -388,6 +388,74 @@ select {
   }
 }
 
+// Styles for UploadImages.vue
+// TODO: Check why styles can't be applied directly in the UploadImages.vue file
+
+.upload-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .upload-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed grey;
+    border-radius: 5px;
+    width: 90%;
+    padding: 0.5em;
+
+    .file-upload {
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      .file-upload-input {
+        display: none;
+      }
+    }
+  }
+
+  .image-preview-list-container {
+    margin: 1em 0;
+    width: 90%;
+    li {
+      padding: .5em;
+      width: 100%;
+      margin-bottom: 0.5em;
+
+      .list-container {
+        display: grid;
+        grid-template-columns: [first] 60% [line2] 40%;
+        align-items: center;
+
+        img {
+          max-height: 150px;
+          object-fit: contain;
+        }
+
+        .list-button {
+          border-radius: 50px;
+          background-color: #9c132c;
+          color: white;
+          border: none;
+          padding: 6px 24px;
+          cursor: pointer;
+          font-size: 11.5pt;
+        }
+
+        .list-button:hover {
+          color: #fff;
+          background-color: $akros-red;
+        }
+      }
+    }
+  }
+}
+
+
 /*                           MEDIA QUERIES
 ***********************************************************************/
 

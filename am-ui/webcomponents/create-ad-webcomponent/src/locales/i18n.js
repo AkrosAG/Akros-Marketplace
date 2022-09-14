@@ -9,6 +9,8 @@ export default createI18n({
       request: 'I\'m looking for',
       categoriesPlaceholder: 'Ad category',
       publish: 'Preview and publish',
+      delete: 'Delete',
+      upload: 'Upload images',
       categories: {
         accomodation: {
           subCategories: {
@@ -72,6 +74,8 @@ export default createI18n({
       request: 'Ich suche nach',
       categoriesPlaceholder: 'Art des Angebots',
       publish: 'Vorschau anzeigen und veröffentlichen',
+      delete: 'Löschen',
+      upload: 'Bilder hochladen',
       categories: {
         accomodation: {
           subCategories: {

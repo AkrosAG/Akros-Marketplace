@@ -52,6 +52,8 @@ import {BackButtonDirective} from './utils/back-button.directive';
 import {NavigationService} from './utils/navigation.service';
 import {OAuthModule, OAuthService, OAuthStorage} from 'angular-oauth2-oidc';
 import {SearchResultDetailsService} from './components/search-result-details/search-result-details.service';
+import {SwiperComponent} from './components/swiper/swiper.component';
+import {SwiperModule} from "swiper/angular";
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -92,6 +94,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     SearchResultDetailsComponent,
     SearchResultDetailsMapComponent,
     BackButtonDirective,
+    SwiperComponent,
   ],
   imports: [
     BrowserModule,
@@ -117,6 +120,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
         deps: [HttpClient],
       },
     }),
+    SwiperModule,
   ],
   providers: [
     RestHelperService,

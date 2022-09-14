@@ -7,8 +7,8 @@
   <div class="container content-block" *ngIf="resultJson.length !== 0; else noDetailsFound">
     <a mpBackButton class="back-button">{{ 'back' | translate }}</a>
     <div class="detail-container">
-      <div class="image-container">
-        <img src="../../../assets/images/placeholder-ad-image.jpg" [alt]="getValueByKey('title')"/>
+      <div style="max-height: 500px">
+        <mp-swiper></mp-swiper>
       </div>
       <div class="title-container">
         <h2>{{ 'search-results-detail.rent' | translate }}  {{ getValueByKey('description')}}</h2>
