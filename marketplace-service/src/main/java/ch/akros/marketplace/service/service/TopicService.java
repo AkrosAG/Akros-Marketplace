@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -128,29 +129,32 @@ public class TopicService {
           .orElseThrow().setValue(latLon[0].getLat());
     }
     return topicValues;
-  }
+  } 
 
   private LatLon[] getLonLatValues(String address, String postalCode, String region) {
-    String formattedAddress = address.replace(" ", "%20");
-    String concatenated = formattedAddress + "%20" + postalCode + "%20+" + region;
+    String concatenated = address + "%20" + postalCode + "%20" + region;
+    String formattedAddress = concatenated.replace(" ", "%20");
     URL url;
     HttpURLConnection con = null;
     try {
-      url =  new URL(LAT_LON_API_SEARCH_URL + concatenated);
+      url =  new URL(LAT_LON_API_SEARCH_URL + formattedAddress);
       con = (HttpURLConnection) url.openConnection();
       con.setRequestMethod("GET");
-      con.setRequestProperty("accept", "application/json");
-      if (con.getResponseCode() != 200) {
+      con.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+      int responseCode = con.getResponseCode();
+
+      if (responseCode == HttpURLConnection.HTTP_OK) {
+        InputStream responseStream = con.getInputStream();
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(responseStream, LatLon[].class);
+      } else {
         return getDefaultLonLatValues();
       }
-      InputStream responseStream = con.getInputStream();
-      ObjectMapper mapper = new ObjectMapper();
-      return mapper.readValue(responseStream, LatLon[].class);
     } catch (IOException uhe) {
       return getDefaultLonLatValues();
     } finally {
       if (con != null) {
-        con.disconnect();
+          con.disconnect();
       }
     }
   }
@@ -251,8 +255,34 @@ public class TopicService {
         .findAny().ifPresent(field -> {
           result.setKey(field.getKey());
         });
-
     result.setValue(topicValueLoadResponseDTO.getValue());
     return result;
+  }
+
+  public TopicSearchListResponseDTO findAllTopics() {
+    TopicSearchListResponseDTO topicSearchListResponseDTO = new TopicSearchListResponseDTO();
+    List<Topic> topics = topicRepository.findAll();
+    for (Topic topic : topics) {
+      TopicSearchResponseDTO result = new TopicSearchResponseDTO();
+      result.setTopicId(topic.getTopicId());
+      result.setSubcategoryId(topic.getSubCategory().getSubCategoryId());
+      result.setSubcategoryKey(topic.getSubCategory().getKey());
+      result.setTopicValues(generateTopicValues(topic.getTopicValues()));
+      topicSearchListResponseDTO.addTopicsItem(result);
+    }
+    return topicSearchListResponseDTO;
+  }
+
+  private List<TopicSearchValueResponseDTO> generateTopicValues(List<TopicValue> topicValues) {
+    List<TopicSearchValueResponseDTO> topicSearchValueResponseDTOList = new ArrayList<>();
+    for (TopicValue value : topicValues) {
+      TopicSearchValueResponseDTO topicSearchValueResponseDTO = new TopicSearchValueResponseDTO();
+      topicSearchValueResponseDTO.setTopicId(value.getTopic().getTopicId());
+      topicSearchValueResponseDTO.setFieldId(value.getField().getFieldId());
+      topicSearchValueResponseDTO.setKey(value.getField().getKey());
+      topicSearchValueResponseDTO.setValue(value.getValue());
+      topicSearchValueResponseDTOList.add(topicSearchValueResponseDTO);
+    }
+    return topicSearchValueResponseDTOList;
   }
 }

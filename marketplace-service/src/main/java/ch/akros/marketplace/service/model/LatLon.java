@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonIgnoreProperties(value = {"field_id", "licence", "osm_type", "osm_id", "boundingbox", "display_name", "class",
-    "type", "importance", "place_id"})
+    "type", "importance", "icon"})
 public class LatLon {
   private String lat;
   private String lon;
