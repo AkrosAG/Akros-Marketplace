@@ -2,7 +2,6 @@
 package ch.akros.marketplace.service.entity;
 
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,48 +25,50 @@ import lombok.ToString;
 @Table(name = "FIELD")
 @Entity(name = "field")
 public class Field {
-	@Id
-	@Column(name = "FIELD_ID", unique = true)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long fieldId;
+  @Id
+  @Column(name = "FIELD_ID", unique = true)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long fieldId;
 
-	@ManyToMany(mappedBy = "fields")
-	@ToString.Exclude
-	private List<SubCategory> subCategories;
+  @ManyToMany(mappedBy = "fields")
+  @ToString.Exclude
+  private List<SubCategory> subCategories;
 
-	@Column(name = "KEY")
-	private String key;
+  @Column(name = "KEY")
+  private String key;
 
-	@Column(name = "MIN_VALUE")
-	private Integer minValue;
+  @Column(name = "MIN_VALUE")
+  private Integer minValue;
 
-	@Column(name = "MAX_VALUE")
-	private Integer maxValue;
+  @Column(name = "MAX_VALUE")
+  private Integer maxValue;
 
-	@Column(name = "SORT_NUMBER")
-	private int sortNumber;
+  @Column(name = "SORT_NUMBER")
+  private int sortNumber;
 
-	@Column(name = "REQUIRED")
-	private boolean required;
+  @Column(name = "REQUIRED")
+  private boolean required;
 
-	@Column(name = "SEARCHABLE")
-	private boolean searchable;
+  @Column(name = "SEARCHABLE")
+  private boolean searchable;
 
-	@Column(name = "REQUEST")
-	private boolean request;
+  @Column(name = "REQUEST")
+  private boolean request;
 
-	@Column(name = "OFFER")
-	private boolean offer;
+  @Column(name = "OFFER")
+  private boolean offer;
 
-	@Column(name = "CREATION")
-	private boolean creation;
+  @Column(name = "CREATION")
+  private boolean creation;
 
-	@OneToMany(mappedBy = "field", cascade = CascadeType.ALL)
-	@ToString.Exclude
-	private List<FieldOption> fieldOptions;
+  @OneToMany(mappedBy = "field", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  private List<FieldOption> fieldOptions;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(referencedColumnName = "FIELD_TYPE_DEFINITION_ID", name = "FIELD_TYPE_DEFINITION_ID", foreignKey = @ForeignKey(name = "FIELD_FIELD_TYPE_DEFINITION_FK"))
-	@ToString.Exclude
-	private FieldTypeDefinition fieldTypeDefinition;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(referencedColumnName = "FIELD_TYPE_DEFINITION_ID",
+      name = "FIELD_TYPE_DEFINITION_ID",
+      foreignKey = @ForeignKey(name = "FIELD_FIELD_TYPE_DEFINITION_FK"))
+  @ToString.Exclude
+  private FieldTypeDefinition fieldTypeDefinition;
 }
