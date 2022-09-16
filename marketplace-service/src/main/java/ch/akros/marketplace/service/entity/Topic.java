@@ -4,6 +4,7 @@ package ch.akros.marketplace.service.entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -62,6 +63,10 @@ public class Topic {
   @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
   @ToString.Exclude
   private List<TopicValue> topicValues;
+
+  @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  private List<TopicImage> topicImages;
 
   @Column(name = "REQUEST_OR_OFFER")
   private String requestOrOffer;

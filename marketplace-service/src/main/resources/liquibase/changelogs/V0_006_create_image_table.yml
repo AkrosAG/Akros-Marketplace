@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: V0.006/1
+      author: filipe-inacio
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: topic_image
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: topic_image_pk
+                  name: topic_image_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: topic_id
+                  type: BIGINT
+              - column:
+                  name: value
+                  type: BLOB
+            tableName: topic_image
+        - addForeignKeyConstraint:
+            baseColumnNames: topic_id
+            baseTableName: topic_image
+            constraintName: topic_image_topic_fk
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: topic_id
+            referencedTableName: topic
+            validate: true

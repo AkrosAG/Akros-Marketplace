@@ -184,7 +184,7 @@
     </div>
   </div>
   <div class="upload-section">
-    <UploadImages></UploadImages>
+    <UploadImages :images="images"></UploadImages>
   </div>
   <p class="submit-row">
     <a
@@ -212,8 +212,9 @@ import {onMounted, ref} from 'vue';
 import {useI18n} from './useI18n';
 import i18n from '../locales/i18n';
 import UploadImages from './UploadImages.vue';
+import {TopicImageDTO, TopicImageSaveRequestDTO} from "../api/src";
 
-const props = defineProps({fieldsToShow: Array, selectedCategory: String});
+const props = defineProps({fieldsToShow: Array, selectedCategory: String, images: []});
 const emit = defineEmits(['submit']);
 const fieldValues = ref([]);
 const fieldKeys = ref([]);

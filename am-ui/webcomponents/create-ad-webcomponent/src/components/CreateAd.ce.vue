@@ -13,6 +13,7 @@ import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
 import {onMounted, ref, toRefs} from 'vue';
 import CreateAdFields from './CreateAdFields.vue';
 import {useI18n} from 'vue-i18n';
+import {TopicImageDTO, TopicImageSaveRequestDTO} from "../api/src";
 
 const apiClient = new ApiClient('/');
 const categoriesApi = new CategoriesApi(apiClient);
@@ -27,6 +28,7 @@ const showSubDropdown = ref(false);
 const showAdFields = ref(false);
 const currentRequestFields = ref([]);
 const currentOfferFields = ref([]);
+const images = ref([]);
 const props = defineProps({
   appLanguage: {
     default: 'de',
@@ -34,6 +36,9 @@ const props = defineProps({
   },
   bearerToken: String
 });
+
+
+console.log("ssssssssssssssssssssssssss",images)
 
 const {t} = useI18n({useScope: 'global'});
 const {bearerToken} = toRefs(props);
@@ -103,6 +108,10 @@ function updateRequestOfferFields() {
   }
 }
 
+function convertImageArrayToTopicImageDTO() {
+  //TODO: convert const image to dto
+}
+
 /**
  * @description Method triggered from submit event in CreadAdFields component, builds the body for the
  * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
@@ -120,12 +129,13 @@ function submit(data) {
   );
 
   const dto = new TopicSaveRequestDTO(
-    0,
+  0,
     selectedSubCategory.subcategory_id,
     requestOrOffer.value.toUpperCase(),
     data
   );
-  topicsApi.topicsPost(dto);
+  console.log("images", images);
+//  topicsApi.topicsPost(dto);
 }
 
 defineExpose({updateSubCategoryFields, updateRequestOfferFields, updateSubCategories});
@@ -201,6 +211,7 @@ defineExpose({updateSubCategoryFields, updateRequestOfferFields, updateSubCatego
         v-if="showAdFields"
         :selected-category="selectedCategoryKey"
         :fields-to-show="fieldsToShow"
+        :images="images"
         @submit="submit"
       />
     </form>
@@ -421,6 +432,7 @@ select {
   .image-preview-list-container {
     margin: 1em 0;
     width: 90%;
+
     li {
       padding: .5em;
       width: 100%;
