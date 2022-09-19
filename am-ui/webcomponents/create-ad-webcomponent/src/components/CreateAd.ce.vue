@@ -13,7 +13,6 @@ import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
 import {onMounted, ref, toRefs} from 'vue';
 import CreateAdFields from './CreateAdFields.vue';
 import {useI18n} from 'vue-i18n';
-import {TopicImageDTO, TopicImageSaveRequestDTO} from "../api/src";
 
 const apiClient = new ApiClient('/');
 const categoriesApi = new CategoriesApi(apiClient);
@@ -28,7 +27,6 @@ const showSubDropdown = ref(false);
 const showAdFields = ref(false);
 const currentRequestFields = ref([]);
 const currentOfferFields = ref([]);
-const images = ref([]);
 const props = defineProps({
   appLanguage: {
     default: 'de',
@@ -36,9 +34,6 @@ const props = defineProps({
   },
   bearerToken: String
 });
-
-
-console.log("ssssssssssssssssssssssssss",images)
 
 const {t} = useI18n({useScope: 'global'});
 const {bearerToken} = toRefs(props);
@@ -117,7 +112,7 @@ function convertImageArrayToTopicImageDTO() {
  * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
  * @param {[{}]} data - Form field values
  */
-function submit(data) {
+function submit(data, images) {
   if (bearerToken.value) {
     apiClient.authentications['bearerAuth'].accessToken = bearerToken.value;
   } else {
@@ -128,14 +123,54 @@ function submit(data) {
     (subcategory) => subcategory.key === selectedSubCategoryKey.value
   );
 
+  const convertedImages = createTopicImageSaveRequestDTO(images);
+
   const dto = new TopicSaveRequestDTO(
-  0,
+    0,
     selectedSubCategory.subcategory_id,
     requestOrOffer.value.toUpperCase(),
-    data
+    data,
+    convertedImages
   );
-  console.log("images", images);
-//  topicsApi.topicsPost(dto);
+  const response = topicsApi.topicsPost(dto);
+  console.log(response);
+}
+
+function createTopicImageSaveRequestDTO(images) {
+  const proxy = new Proxy(images, {})
+  const files = proxy[0];
+  const convertedImages = [];
+  for (let i = 0; i <= images.length; i++) {
+    convertedImages.push(files[i]);
+    //convertedImages.push(convertFileToByte(files[i]));
+  }
+  return convertedImages;
+}
+
+/*
+function createBlob(file) {
+  //return new Blob(file);
+  const formData = new FormData();
+  const blob = new Blob([file], {type: "text/json;charset=utf-8"});
+  formData.append("webmasterfile", blob);
+  return formData;
+}
+ */
+function convertFileToByte(file) {
+  const reader = new FileReader();
+  let fileByteArray = [];
+  reader.readAsArrayBuffer(file);
+  reader.onloadend = (evt) => {
+    if (evt.target.readyState === FileReader.DONE) {
+      const arrayBuffer = evt.target.result,
+        array = new Uint8Array(arrayBuffer);
+      for (const a of array) {
+        fileByteArray.push(a);
+      }
+      return fileByteArray;
+    }
+  }
+  return fileByteArray;
 }
 
 defineExpose({updateSubCategoryFields, updateRequestOfferFields, updateSubCategories});
@@ -211,7 +246,6 @@ defineExpose({updateSubCategoryFields, updateRequestOfferFields, updateSubCatego
         v-if="showAdFields"
         :selected-category="selectedCategoryKey"
         :fields-to-show="fieldsToShow"
-        :images="images"
         @submit="submit"
       />
     </form>

@@ -184,7 +184,7 @@
     </div>
   </div>
   <div class="upload-section">
-    <UploadImages :images="images"></UploadImages>
+    <UploadImages @update-parent="updateParent"></UploadImages>
   </div>
   <p class="submit-row">
     <a
@@ -212,9 +212,8 @@ import {onMounted, ref} from 'vue';
 import {useI18n} from './useI18n';
 import i18n from '../locales/i18n';
 import UploadImages from './UploadImages.vue';
-import {TopicImageDTO, TopicImageSaveRequestDTO} from "../api/src";
 
-const props = defineProps({fieldsToShow: Array, selectedCategory: String, images: []});
+const props = defineProps({fieldsToShow: Array, selectedCategory: String});
 const emit = defineEmits(['submit']);
 const fieldValues = ref([]);
 const fieldKeys = ref([]);
@@ -223,6 +222,11 @@ const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8]);
 const {t} = useI18n(i18n.global.messages.value);
 const formHasErrors = ref([]);
 const hasSpecificDate = ref(false);
+const images = [];
+
+function updateParent(variable) {
+  images.push(variable);
+}
 
 /**
  * @description Method to validate the input in the form fields, currently only implemented for accomodation
@@ -370,7 +374,7 @@ function submit() {
     props.fieldsToShow.forEach((field) => {
       fields.push({field_type_id: field.field_id, value: fieldValues.value[field.field_id]});
     });
-    emit('submit', fields);
+    emit('submit', fields, images);
   } else {
     formHasErrors.value = true;
   }

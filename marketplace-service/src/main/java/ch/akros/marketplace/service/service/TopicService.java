@@ -98,11 +98,15 @@ public class TopicService {
         List<TopicValue> finalTopicValues = getFinalTopicValuesList(topicValues);
         topic.setTopicValues(finalTopicValues);
 
+/*
         List<TopicImage> topicImages = topicSaveRequestDTO.getTopicImages()
                 .stream()
                 .map(e -> toTopicImage(topic, e))
                 .collect(Collectors.toList());
         topic.setTopicImages(topicImages);
+
+ */
+
         topicRepository.save(topic);
     }
 
@@ -163,15 +167,18 @@ public class TopicService {
         return result;
     }
 
+    /*
     private TopicImage toTopicImage(
             Topic topic,
             TopicImageSaveRequestDTO topicImageSaveRequestDTO
     ) {
         TopicImage result = new TopicImage();
         result.setTopic(topic);
-        result.setValue((BlobType) topicImageSaveRequestDTO.getTopicImage().getValue());
+      //  result.setValue((BlobType) topicImageSaveRequestDTO.getValue());
         return result;
     }
+
+     */
     public TopicLoadResponseDTO loadTopic(Long topicId) {
         Topic topic = topicRepository.getById(topicId);
 

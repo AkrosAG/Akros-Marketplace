@@ -74,9 +74,17 @@ paths:
       requestBody:
         description: All values to save a topic
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: "#/components/schemas/TopicSaveRequestDTO"
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                topics:
+                  $ref: "#/components/schemas/TopicSaveRequestDTO"
         required: true
       responses:
         200:
@@ -291,7 +299,6 @@ components:
         - subcategory_id
         - request_or_offer
         - topic_values
-        - topic_images
       properties:
         topic_id:
           type: integer
@@ -305,10 +312,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TopicValueSaveRequestDTO"
-        topic_images:
-          type: array
-          items:
-            $ref: "#/components/schemas/TopicImageSaveRequestDTO"
 
     TopicValueSaveRequestDTO:
       type: object
@@ -321,14 +324,6 @@ components:
           format: int64
         value:
           type: string
-
-    TopicImageSaveRequestDTO:
-      type: object
-      required:
-        - topic_image
-      properties:
-        topic_image:
-          $ref: "#/components/schemas/TopicImageDTO"
 
     TopicLoadResponseDTO:
       type: object

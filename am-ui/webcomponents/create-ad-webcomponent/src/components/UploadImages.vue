@@ -1,10 +1,9 @@
 <script setup>
-const props = defineProps({images: []});
-
 import {useI18n} from "./useI18n";
 import i18n from "../locales/i18n";
 
 const {t} = useI18n(i18n.global.messages.value);
+const emit = defineEmits(['change']);
 </script>
 
 <script>
@@ -14,25 +13,24 @@ export default {
 
   data() {
     return {
-      selectedFiles: []
+      selectedFiles: [],
     }
   },
   methods: {
     onFileChanged(event) {
       const files = event.target.files;
       for (let i = 0; i < files.length; i++) {
-        // this.selectedFiles.push(files[i]);
-        props.images.push(files[i]);
+        this.selectedFiles.push(files[i]);
       }
+      this.$emit("update-parent", this.selectedFiles);
     },
     getImage(index) {
-      //const file = this.selectedFiles[index];
-      const file = props.images[index];
+      const file = this.selectedFiles[index];
       return URL.createObjectURL(file);
     },
     deleteImage(index) {
-      // this.selectedFiles.splice(index, 1);
-      props.images.splice(index, 1);
+      this.selectedFiles.splice(index, 1);
+      this.$emit("update-parent", this.selectedFiles);
     }
   }
 }
@@ -48,7 +46,7 @@ export default {
   </div>
   <div class="image-preview-list-container">
     <ul>
-      <li v-if="selectedFiles.length !== 0" v-for="(image, index) in props.images">
+      <li v-if="selectedFiles.length !== 0" v-for="(image, index) in selectedFiles">
         <div class="list-container">
           <img :src="getImage(index)" :alt="image.name">
           <button class="list-button" @click.stop.prevent="deleteImage(index)">

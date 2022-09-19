@@ -3,11 +3,16 @@ package ch.akros.marketplace.service.controller;
 import ch.akros.marketplace.api.TopicsApi;
 import ch.akros.marketplace.api.model.*;
 import ch.akros.marketplace.service.service.TopicService;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -27,8 +32,9 @@ public class TopicController implements TopicsApi {
         }
     }
 
+    /*
     @Override
-    public ResponseEntity<Void> topicsPost(TopicSaveRequestDTO topicSaveRequestDTO) {
+    public ResponseEntity<Void> _topicsPost(TopicSaveRequestDTO topicSaveRequestDTO) {
         try {
             log.debug("TopicController.topicsPost() called");
             topicService.saveTopic(topicSaveRequestDTO);
@@ -38,6 +44,8 @@ public class TopicController implements TopicsApi {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+     */
 
     @Override
     public ResponseEntity<Void> topicsDelete(Long topicId) {
