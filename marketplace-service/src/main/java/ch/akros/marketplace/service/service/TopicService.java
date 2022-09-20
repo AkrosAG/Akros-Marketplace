@@ -154,7 +154,7 @@ public class TopicService {
       return getDefaultLonLatValues();
     } finally {
       if (con != null) {
-          con.disconnect();
+        con.disconnect();
       }
     }
   }
