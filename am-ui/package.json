@@ -50,6 +50,7 @@
     "@types/google.accounts": "^0.0.2",
     "@xkeshi/image-compressor": "^0.5.3",
     "angular-oauth2-oidc": "^13.0.1",
+    "axios": "^0.27.2",
     "bootstrap": "^5.1.3",
     "cropperjs": "^1.5.12",
     "eslint": "^8.6.0",

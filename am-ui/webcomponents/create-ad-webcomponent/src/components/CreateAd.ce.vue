@@ -13,10 +13,12 @@ import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
 import {onMounted, ref, toRefs} from 'vue';
 import CreateAdFields from './CreateAdFields.vue';
 import {useI18n} from 'vue-i18n';
+import CreateTopic from "./CreateTopic";
 
 const apiClient = new ApiClient('/');
 const categoriesApi = new CategoriesApi(apiClient);
 const topicsApi = new TopicsApi(apiClient);
+const createTopic = new CreateTopic(apiClient);
 const categories = ref([]);
 const subCategories = ref([]);
 const selectedCategoryKey = ref('');
@@ -123,26 +125,33 @@ function submit(data, images) {
     (subcategory) => subcategory.key === selectedSubCategoryKey.value
   );
 
-  const convertedImages = createTopicImageSaveRequestDTO(images);
+  const files = createTopicImageSaveRequestDTO(images);
+  console.log("asdfjworuwoqieru", files);
 
-  const dto = new TopicSaveRequestDTO(
+  const topics = new TopicSaveRequestDTO(
     0,
     selectedSubCategory.subcategory_id,
     requestOrOffer.value.toUpperCase(),
-    data,
-    convertedImages
+    data
   );
-  const response = topicsApi.topicsPost(dto);
-  console.log(response);
+  const opts = {
+    topics,
+    files
+  }
+  createTopic.topicsPost(files, topics);
 }
 
 function createTopicImageSaveRequestDTO(images) {
+  console.log(images);
   const proxy = new Proxy(images, {})
   const files = proxy[0];
   const convertedImages = [];
-  for (let i = 0; i <= images.length; i++) {
-    convertedImages.push(files[i]);
+  let image = null;
+  for (let i = 0; i < images.length; i++) {
+    console.log("siuuuuuuuuuuuuuuuuuuuuu")
+    //convertedImages.push(files[i]);
     //convertedImages.push(convertFileToByte(files[i]));
+    convertedImages.push(convertFileToByte(files[i]));
   }
   return convertedImages;
 }

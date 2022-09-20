@@ -65,37 +65,6 @@ paths:
             "application/problem+json":
               schema:
                 $ref: "#/components/schemas/Problem"
-  /topics:
-    post:
-      tags:
-        - Topics
-      summary: Save a topic
-      description: Save a topic
-      requestBody:
-        description: All values to save a topic
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                files:
-                  type: array
-                  items:
-                    type: string
-                    format: binary
-                topics:
-                  $ref: "#/components/schemas/TopicSaveRequestDTO"
-        required: true
-      responses:
-        200:
-          description: OK
-        default:
-          description: Unexpected error
-          content:
-            "application/problem+json":
-              schema:
-                $ref: "#/components/schemas/Problem"
-
     delete:
       tags:
         - Topics
