@@ -10,9 +10,11 @@ import ApiClient from '../api/src/ApiClient';
 import CategoriesApi from '../api/src/api/CategoriesApi';
 import TopicsApi from '../api/src/api/TopicsApi';
 import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
-import {onMounted, ref, toRefs} from 'vue';
+import { onMounted, ref, toRefs } from 'vue';
 import CreateAdFields from './CreateAdFields.vue';
-import {useI18n} from 'vue-i18n';
+import PreviewAd from './PreviewAd.vue';
+import { useI18n } from 'vue-i18n';
+import ConfirmAd from './ConfirmAd.vue';
 
 const apiClient = new ApiClient('/');
 const categoriesApi = new CategoriesApi(apiClient);
@@ -23,8 +25,12 @@ const selectedCategoryKey = ref('');
 const selectedSubCategoryKey = ref('');
 const requestOrOffer = ref('OFFER');
 const fieldsToShow = ref([]);
+const fieldsToPreview = ref([]);
+const showDropdown = ref(true);
 const showSubDropdown = ref(false);
 const showAdFields = ref(false);
+const previewAd = ref(false);
+const confirmAd = ref(false);
 const currentRequestFields = ref([]);
 const currentOfferFields = ref([]);
 const props = defineProps({
@@ -35,8 +41,8 @@ const props = defineProps({
   bearerToken: String
 });
 
-const {t} = useI18n({useScope: 'global'});
-const {bearerToken} = toRefs(props);
+const { t } = useI18n({ useScope: 'global' });
+const { bearerToken } = toRefs(props);
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
@@ -104,11 +110,11 @@ function updateRequestOfferFields() {
 }
 
 /**
- * @description Method triggered from submit event in CreadAdFields component, builds the body for the
+ * @description Method triggered from submit event in PreviewAd component, builds the body for the
  * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
  * @param {[{}]} data - Form field values
  */
-function submit(data) {
+function submit() {
   if (bearerToken.value) {
     apiClient.authentications['bearerAuth'].accessToken = bearerToken.value;
   } else {
@@ -123,12 +129,37 @@ function submit(data) {
     0,
     selectedSubCategory.subcategory_id,
     requestOrOffer.value.toUpperCase(),
-    data
+    fieldsToPreview
   );
   topicsApi.topicsPost(dto);
+  previewAd.value = false;
+  confirmAd.value = true;
 }
 
-defineExpose({updateSubCategoryFields, updateRequestOfferFields, updateSubCategories});
+/**
+ * @description Method triggered from submit event in CreadAdFields component, builds the body for the
+ * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
+ * @param {[{}]} data - Form field values
+ */
+function preview(data) {
+  showAdFields.value = false;
+  showSubDropdown.value = false;
+  showDropdown.value = false;
+  previewAd.value = true;
+  fieldsToPreview.value = data;
+}
+
+/**
+ * @description
+ */
+function back() {
+  showAdFields.value = true;
+  showSubDropdown.value = true;
+  showDropdown.value = true;
+  previewAd.value = false;
+}
+
+defineExpose({ updateSubCategoryFields, updateRequestOfferFields, updateSubCategories, preview, back });
 </script>
 
 <template>
@@ -142,7 +173,7 @@ defineExpose({updateSubCategoryFields, updateRequestOfferFields, updateSubCatego
       name="create-ad-form"
       class="simple-form"
     >
-      <p>
+      <p v-if="showDropdown">
         <select
           id="ad-category"
           v-model="selectedCategoryKey"
@@ -201,7 +232,22 @@ defineExpose({updateSubCategoryFields, updateRequestOfferFields, updateSubCatego
         v-if="showAdFields"
         :selected-category="selectedCategoryKey"
         :fields-to-show="fieldsToShow"
+        :fields-to-modify = "fieldsToPreview"
+        @preview="preview"
+      />
+      <PreviewAd
+        :key="selectedSubCategoryKey-requestOrOffer"
+        v-if="previewAd"
+        :selected-category="selectedCategoryKey"
+        :fieldsToPreview="fieldsToPreview"
+        @back="back"
         @submit="submit"
+      />
+      <ConfirmAd
+        :key="selectedSubCategoryKey-requestOrOffer"
+        v-if="confirmAd"
+        :selected-category="selectedCategoryKey"
+        :fields-to-show="fieldsToShow"
       />
     </form>
   </div>
@@ -211,6 +257,28 @@ defineExpose({updateSubCategoryFields, updateRequestOfferFields, updateSubCatego
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 @import '../styles/colors.scss';
 @import '../styles/reset.scss';
+
+table {
+  margin: auto;
+}
+
+th,
+td,
+h1 {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  display: inline;
+}
+
+img {
+  width: 100%;
+  display: inline-block;
+}
+
+h1 {
+
+}
 
 a {
   font-weight: 500;

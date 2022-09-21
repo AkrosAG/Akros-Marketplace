@@ -1,23 +1,25 @@
-import {createI18n} from 'vue-i18n';
+import { createI18n } from 'vue-i18n';
 
 export default createI18n({
   locale: 'en',
   legacy: false,
   messages: {
     en: {
-      offer: 'I\'m offering',
-      request: 'I\'m looking for',
+      offer: "I'm offering",
+      request: "I'm looking for",
       categoriesPlaceholder: 'Ad category',
-      publish: 'Preview and publish',
+      publish: 'Publish',
+      preview: 'Preview',
+      back: 'Back',
       categories: {
         accomodation: {
           subCategories: {
             room: 'Room',
             apartment: 'Apartment',
             house: 'House',
-            parking: 'Parking space',
+            parking: 'Parking space'
           },
-          typeTitle: 'Accomodation',
+          typeTitle: 'Accommodation',
           title: 'Title',
           region: 'Location',
           postalCode: 'Zipcode',
@@ -33,16 +35,16 @@ export default createI18n({
             options: {
               month: 'Per month',
               week: 'Per Week',
-              day: 'Per Day',
-            },
+              day: 'Per Day'
+            }
           },
           availability: {
             title: 'Available',
             options: {
               now: 'Immediately',
               date: 'Specific date',
-              agreement: 'By agreement',
-            },
+              agreement: 'By agreement'
+            }
           },
           temporary: 'Temporary',
           start_date: 'Moving Date',
@@ -62,16 +64,18 @@ export default createI18n({
         carShare: {
           typeTitle: 'Car sharing',
           subCategories: {
-            share: 'Car sharing',
-          },
-        },
-      },
+            share: 'Car sharing'
+          }
+        }
+      }
     },
     de: {
       offer: 'Ich biete',
       request: 'Ich suche nach',
       categoriesPlaceholder: 'Art des Angebots',
-      publish: 'Vorschau anzeigen und veröffentlichen',
+      publish: 'Veröffentlichen',
+      preview: 'Vorschau anzeigen',
+      back: 'Zurück',
       categories: {
         accomodation: {
           subCategories: {
@@ -96,16 +100,16 @@ export default createI18n({
             options: {
               month: 'Pro Monat',
               week: 'Pro Woche',
-              day: 'Pro Tag',
-            },
+              day: 'Pro Tag'
+            }
           },
           availability: {
             title: 'Verfügbar',
             options: {
               now: 'Ab sofort',
               date: 'Ab Datum',
-              agreement: 'Auf Anfrage',
-            },
+              agreement: 'Auf Anfrage'
+            }
           },
           temporary: 'Befristet',
           start_date: 'Umzugsdatum',
@@ -125,10 +129,10 @@ export default createI18n({
         carShare: {
           typeTitle: 'Car sharing',
           subCategories: {
-            share: 'Car sharing',
-          },
-        },
-      },
-    },
-  },
+            share: 'Car sharing'
+          }
+        }
+      }
+    }
+  }
 });
