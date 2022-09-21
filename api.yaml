@@ -173,6 +173,7 @@ components:
       required:
         - topic_image_id
         - topic_id
+        - thumbnail
         - value
       properties:
         topic_image_id:
@@ -181,9 +182,11 @@ components:
         topic_id:
           type: integer
           format: int64
+        thumbnail:
+          type: boolean
         value:
           type: string
-          format: binary
+          format: byte
 
     SubCategoryDTO:
       type: object
@@ -322,19 +325,6 @@ components:
         topic_images:
           type: array
           items:
-            $ref: "#/components/schemas/TopicImageLoadResponseDTO"
-
-    TopicImageLoadResponseDTO:
-      type: object
-      required:
-        - topic_image_id
-      properties:
-        topic_image_id:
-          type: integer
-          format: int64
-        value:
-          type: array
-          items:
             $ref: "#/components/schemas/TopicImageDTO"
 
     TopicValueLoadResponseDTO:
@@ -415,11 +405,16 @@ components:
       type: object
       required:
         - topics
+        - images
       properties:
         topics:
           type: array
           items:
             $ref: "#/components/schemas/TopicSearchResponseDTO"
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/TopicImageDTO"
 
     TopicSearchResponseDTO:
       type: object
@@ -438,6 +433,10 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TopicSearchValueResponseDTO"
+        topic_images:
+          type: array
+          items:
+            $ref: "#/components/schemas/TopicImageDTO"
 
     TopicSearchValueResponseDTO:
       type: object

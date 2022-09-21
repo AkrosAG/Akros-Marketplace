@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {SearchResultDetailsService} from './search-result-details.service';
 import {TopicValue} from '../../data/models/TopicValue';
+import {TopicImage} from "../../data/models/TopicImage";
 
 @Component({
   selector: 'mp-search-result-details',
@@ -17,6 +18,7 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
   public result = {};
   public resultJson: TopicValue[] = [];
   public id: string | null;
+  public images: TopicImage[] = [];
 
   /**
    * @description Component to display the detail view of a Topic
@@ -39,6 +41,7 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
       this.searchResultDetailSubscription = this.searchDetailResultService
         .getById(+this.id)
         .subscribe(res => {
+          this.images = res.topic_images;
           this.resultJson = res.topic_values;
         });
     }

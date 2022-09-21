@@ -7,13 +7,15 @@ import ch.akros.marketplace.service.repository.AdvertiserRepository;
 import ch.akros.marketplace.service.repository.FieldRepository;
 import ch.akros.marketplace.service.repository.SubCategoryRepository;
 import ch.akros.marketplace.service.repository.TopicRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.type.BlobType;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -78,18 +80,15 @@ public class TopicService {
         return result;
     }
 
-    public void saveTopic(TopicSaveRequestDTO topicSaveRequestDTO) {
+    public void saveTopic(String json, MultipartFile[] files, MultipartFile thumbnail) throws IOException {
+        TopicSaveRequestDTO topicSaveRequestDTO = deserializeStringToTopicSaveRequestDTO(json);
         Topic topic = new Topic();
-
         topic.setTopicId(topicSaveRequestDTO.getTopicId());
         final SubCategory subCategory = subCategoryRepository.getById(topicSaveRequestDTO.getSubcategoryId());
-        //TODO CHECK IF NEEDED
         topic.setSubCategory(subCategory);
-
         topic.setValidFrom(LocalDate.now());
         topic.setValidTo(LocalDate.now().plusDays(365));
         topic.setRequestOrOffer(topicSaveRequestDTO.getRequestOrOffer());
-
         topic.setAdvertiser(advertiserRepository.getById(1L));
         List<TopicValue> topicValues = topicSaveRequestDTO.getTopicValues()
                 .stream()
@@ -98,16 +97,35 @@ public class TopicService {
         List<TopicValue> finalTopicValues = getFinalTopicValuesList(topicValues);
         topic.setTopicValues(finalTopicValues);
 
-/*
-        List<TopicImage> topicImages = topicSaveRequestDTO.getTopicImages()
-                .stream()
-                .map(e -> toTopicImage(topic, e))
-                .collect(Collectors.toList());
+        List<TopicImage> topicImages = getTopicImages(topic, files);
+        topicImages.add(createThumbnailFromMultipartFile(topic, thumbnail));
         topic.setTopicImages(topicImages);
-
- */
-
         topicRepository.save(topic);
+    }
+
+    private TopicImage createThumbnailFromMultipartFile(Topic topic, MultipartFile thumbnail) throws IOException {
+        TopicImage topicImage = new TopicImage();
+        topicImage.setTopic(topic);
+        topicImage.setThumbnail(true);
+        topicImage.setValue(thumbnail.getBytes());
+        return topicImage;
+    }
+
+    private List<TopicImage> getTopicImages(Topic topic, MultipartFile[] files) throws IOException {
+        List<TopicImage> topicImages = new ArrayList<>();
+        for (MultipartFile file : files) {
+            TopicImage topicImage = new TopicImage();
+            topicImage.setTopic(topic);
+            topicImage.setThumbnail(false);
+            topicImage.setValue(file.getBytes());
+            topicImages.add(topicImage);
+        }
+        return topicImages;
+    }
+
+    private TopicSaveRequestDTO deserializeStringToTopicSaveRequestDTO(String json) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(json, TopicSaveRequestDTO.class);
     }
 
     private List<TopicValue> getFinalTopicValuesList(List<TopicValue> topicValues) {
@@ -167,18 +185,7 @@ public class TopicService {
         return result;
     }
 
-    /*
-    private TopicImage toTopicImage(
-            Topic topic,
-            TopicImageSaveRequestDTO topicImageSaveRequestDTO
-    ) {
-        TopicImage result = new TopicImage();
-        result.setTopic(topic);
-      //  result.setValue((BlobType) topicImageSaveRequestDTO.getValue());
-        return result;
-    }
-
-     */
+    @Transactional
     public TopicLoadResponseDTO loadTopic(Long topicId) {
         Topic topic = topicRepository.getById(topicId);
 
@@ -194,7 +201,20 @@ public class TopicService {
                         - e2.getField().getSortNumber())
                 .map(this::toTopicValueLoadResponseDTO)
                 .collect(Collectors.toList()));
+        result.setTopicImages(getTopicImageDtosFromImages(topic.getTopicImages()));
         return result;
+    }
+
+    private List<TopicImageDTO> getTopicImageDtosFromImages(List<TopicImage> topicImages) {
+        List<TopicImageDTO> topicImageDTOS = new ArrayList<>();
+        for (TopicImage image : topicImages) {
+            TopicImageDTO dto = new TopicImageDTO();
+            dto.setThumbnail(image.isThumbnail());
+            dto.setValue(image.getValue());
+            dto.setTopicImageId(image.getTopicImageId());
+            topicImageDTOS.add(dto);
+        }
+        return topicImageDTOS;
     }
 
     private TopicValueLoadResponseDTO toTopicValueLoadResponseDTO(TopicValue topicValue) {
@@ -264,6 +284,7 @@ public class TopicService {
         return result;
     }
 
+    @Transactional
     public TopicSearchListResponseDTO findAllTopics() {
         TopicSearchListResponseDTO topicSearchListResponseDTO = new TopicSearchListResponseDTO();
         List<Topic> topics = topicRepository.findAll();
@@ -273,9 +294,26 @@ public class TopicService {
             result.setSubcategoryId(topic.getSubCategory().getSubCategoryId());
             result.setSubcategoryKey(topic.getSubCategory().getKey());
             result.setTopicValues(generateTopicValues(topic.getTopicValues()));
+            result.setTopicImages(generateTopicImages(topic.getTopicImages()));
             topicSearchListResponseDTO.addTopicsItem(result);
         }
         return topicSearchListResponseDTO;
+    }
+
+    private List<TopicImageDTO> generateTopicImages(List<TopicImage> topicImages) {
+        List<TopicImageDTO> topicImageList = new ArrayList<>();
+        if (topicImages.size() == 0) {
+            return topicImageList;
+        }
+        for (TopicImage image : topicImages) {
+            TopicImageDTO dto = new TopicImageDTO();
+            dto.setTopicImageId(image.getTopicImageId());
+            dto.setTopicId(image.getTopic().getTopicId());
+            dto.setThumbnail(image.isThumbnail());
+            dto.setValue(image.getValue());
+            topicImageList.add(dto);
+        }
+        return topicImageList;
     }
 
     private List<TopicSearchValueResponseDTO> generateTopicValues(List<TopicValue> topicValues) {

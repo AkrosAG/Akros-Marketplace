@@ -80,6 +80,7 @@ img {
   margin-bottom: 0.4em;
 }
 .sr-ad-thumb {
+  max-height: 350px;
   display: block;
   border-radius: 0.5em;
   object-fit: cover;

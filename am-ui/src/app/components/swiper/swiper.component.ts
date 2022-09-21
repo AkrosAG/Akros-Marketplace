@@ -1,8 +1,9 @@
-import {Component, Input, ViewEncapsulation} from "@angular/core";
+import {Component, Input, OnInit, ViewEncapsulation} from "@angular/core";
 import SwiperCore, {
   Navigation,
   Pagination,
 } from 'swiper';
+import {TopicImage} from "../../data/models/TopicImage";
 
 SwiperCore.use([Navigation, Pagination]);
 
@@ -12,8 +13,8 @@ SwiperCore.use([Navigation, Pagination]);
   styleUrls: ['./swiper.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SwiperComponent {
-  @Input() images: []
+export class SwiperComponent implements OnInit {
+  @Input() images: TopicImage[] = [];
 
   pagination = {
     clickable: true,
@@ -21,4 +22,12 @@ export class SwiperComponent {
       return '<span class="' + className + '">' + (index + 1) + "</span>";
     },
   };
+
+  createImageFromTopicImage(image): string {
+    return `data:image/jpeg;base64,${image.value}`;
+  }
+
+  ngOnInit(): void {
+    this.images.sort((a, b) => Number(b.thumbnail) - Number(a.thumbnail));
+  }
 }

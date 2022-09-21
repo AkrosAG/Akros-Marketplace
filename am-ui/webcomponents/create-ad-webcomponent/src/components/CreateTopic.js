@@ -7,28 +7,20 @@ export default class CreateTopic {
     this.apiClient = apiClient || ApiClient.instance;
   }
 
-  topicsPost(files, topics) {
-    console.log(topics);
-    console.log("fiiiiiiiiiiilesssssssss", files);
-
+  topicsPost(files, topics, thumbnail) {
     const formData = new FormData();
-    formData.append("files", this.files);
-   // formData.append("topics", this.topics);
+    formData.append("topics", JSON.stringify(topics));
+    for (let i = 0; i < files.length; i++) {
+      formData.append("images", files[i]);
+    }
+    formData.append("thumbnail", thumbnail);
     const token = this.apiClient.authentications['bearerAuth'].accessToken
-
     axios.post("/topics", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         "Accept": "multipart/form-data",
         "Authorization": "Bearer " + token
       },
-
     })
-      .then(function (result) {
-        console.log(result)
-      }, function (error) {
-        console.log(error);
-      })
-
   }
 }

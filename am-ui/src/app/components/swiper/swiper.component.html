@@ -1,16 +1,13 @@
-<swiper
-  [pagination]="{
+<div class="swiper-container">
+  <swiper
+    [pagination]="{
       clickable: true
     }"
-  [navigation]="true"
-  class="mySwiper">
-  <ng-template swiperSlide><img src="../../../assets/images/placeholder-ad-image.jpg"/></ng-template>
-  <ng-template swiperSlide><img src="../../../assets/images/placeholder-ad-image.jpg"/></ng-template>
-  <ng-template swiperSlide><img src="../../../assets/images/placeholder-ad-image.jpg"/></ng-template>
-  <ng-template swiperSlide><img src="../../../assets/images/placeholder-ad-image.jpg"/></ng-template>
-  <ng-template swiperSlide><img src="../../../assets/images/placeholder-ad-image.jpg"/></ng-template>
-  <ng-template swiperSlide><img src="../../../assets/images/placeholder-ad-image.jpg"/></ng-template>
-  <ng-template swiperSlide><img src="../../../assets/images/placeholder-ad-image.jpg"/></ng-template>
-  <ng-template swiperSlide><img src="../../../assets/images/placeholder-ad-image.jpg"/></ng-template>
-  <ng-template swiperSlide><img src="../../../assets/images/placeholder-ad-image.jpg"/></ng-template>
-</swiper>
+    [navigation]="true"
+    class="mySwiper">
+    <ng-template  *ngFor="let image of images" swiperSlide>
+      <img [src]="createImageFromTopicImage(image)" [alt]="image.topic_image_id"/>
+    </ng-template>
+  </swiper>
+
+</div>

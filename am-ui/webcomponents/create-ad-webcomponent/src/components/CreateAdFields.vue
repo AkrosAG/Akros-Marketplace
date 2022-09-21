@@ -184,6 +184,9 @@
     </div>
   </div>
   <div class="upload-section">
+    <UploadThumbnail @update-parent-thumbnail="updateParentThumbnail"></UploadThumbnail>
+  </div>
+  <div class="upload-section">
     <UploadImages @update-parent="updateParent"></UploadImages>
   </div>
   <p class="submit-row">
@@ -212,6 +215,7 @@ import {onMounted, ref} from 'vue';
 import {useI18n} from './useI18n';
 import i18n from '../locales/i18n';
 import UploadImages from './UploadImages.vue';
+import UploadThumbnail from './UploadThumbnail.vue';
 
 const props = defineProps({fieldsToShow: Array, selectedCategory: String});
 const emit = defineEmits(['submit']);
@@ -223,9 +227,14 @@ const {t} = useI18n(i18n.global.messages.value);
 const formHasErrors = ref([]);
 const hasSpecificDate = ref(false);
 const images = [];
+const thumbnail = [];
 
 function updateParent(variable) {
   images.push(variable);
+}
+
+function updateParentThumbnail(variable) {
+  thumbnail.push(variable);
 }
 
 /**
@@ -374,7 +383,7 @@ function submit() {
     props.fieldsToShow.forEach((field) => {
       fields.push({field_type_id: field.field_id, value: fieldValues.value[field.field_id]});
     });
-    emit('submit', fields, images);
+    emit('submit', fields, images, thumbnail);
   } else {
     formHasErrors.value = true;
   }

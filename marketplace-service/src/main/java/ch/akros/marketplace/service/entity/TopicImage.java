@@ -1,8 +1,6 @@
 package ch.akros.marketplace.service.entity;
 
 import lombok.*;
-import org.hibernate.type.BlobType;
-
 import javax.persistence.*;
 
 @NoArgsConstructor
@@ -21,10 +19,14 @@ public class TopicImage {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "TOPIC_ID", name = "TOPIC_ID",
-            foreignKey = @ForeignKey(name = "TOPIC_IMAGE_TOPIC_FK"))
+            foreignKey = @ForeignKey(name = "TOPIC_VALUE_TOPIC_FK"))
     @ToString.Exclude
     private Topic topic;
 
-    @Column(name = "value")
-    private BlobType value;
+    @Column(name = "thumbnail")
+    private boolean thumbnail = false;
+
+    @Lob
+    @Column(name = "value", columnDefinition = "BLOB")
+    private byte[] value;
 }

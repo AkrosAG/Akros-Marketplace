@@ -105,16 +105,12 @@ function updateRequestOfferFields() {
   }
 }
 
-function convertImageArrayToTopicImageDTO() {
-  //TODO: convert const image to dto
-}
-
 /**
  * @description Method triggered from submit event in CreadAdFields component, builds the body for the
  * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
  * @param {[{}]} data - Form field values
  */
-function submit(data, images) {
+function submit(data, images, thumbnail) {
   if (bearerToken.value) {
     apiClient.authentications['bearerAuth'].accessToken = bearerToken.value;
   } else {
@@ -126,7 +122,8 @@ function submit(data, images) {
   );
 
   const files = createTopicImageSaveRequestDTO(images);
-  console.log("asdfjworuwoqieru", files);
+
+  const thumbnailImage = createTopicImageSaveRequestDTO(thumbnail)[0];
 
   const topics = new TopicSaveRequestDTO(
     0,
@@ -134,52 +131,18 @@ function submit(data, images) {
     requestOrOffer.value.toUpperCase(),
     data
   );
-  const opts = {
-    topics,
-    files
-  }
-  createTopic.topicsPost(files, topics);
+
+  createTopic.topicsPost(files, topics, thumbnailImage);
 }
 
 function createTopicImageSaveRequestDTO(images) {
-  console.log(images);
   const proxy = new Proxy(images, {})
   const files = proxy[0];
-  const convertedImages = [];
-  let image = null;
-  for (let i = 0; i < images.length; i++) {
-    console.log("siuuuuuuuuuuuuuuuuuuuuu")
-    //convertedImages.push(files[i]);
-    //convertedImages.push(convertFileToByte(files[i]));
-    convertedImages.push(convertFileToByte(files[i]));
+  let image = [];
+  for (let i = 0; i <= images.length; i++) {
+    image.push(files[i]);
   }
-  return convertedImages;
-}
-
-/*
-function createBlob(file) {
-  //return new Blob(file);
-  const formData = new FormData();
-  const blob = new Blob([file], {type: "text/json;charset=utf-8"});
-  formData.append("webmasterfile", blob);
-  return formData;
-}
- */
-function convertFileToByte(file) {
-  const reader = new FileReader();
-  let fileByteArray = [];
-  reader.readAsArrayBuffer(file);
-  reader.onloadend = (evt) => {
-    if (evt.target.readyState === FileReader.DONE) {
-      const arrayBuffer = evt.target.result,
-        array = new Uint8Array(arrayBuffer);
-      for (const a of array) {
-        fileByteArray.push(a);
-      }
-      return fileByteArray;
-    }
-  }
-  return fileByteArray;
+  return image;
 }
 
 defineExpose({updateSubCategoryFields, updateRequestOfferFields, updateSubCategories});
@@ -451,26 +414,36 @@ select {
   align-items: center;
   flex-direction: column;
 
-  .upload-container {
+  .container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    border: 2px dashed grey;
-    border-radius: 5px;
     width: 90%;
-    padding: 0.5em;
+    flex-direction: column;
 
-    .file-upload {
-      cursor: pointer;
+    h3 {
+      text-align: left;
+      margin: 1em 0;
+    }
+
+    .upload-container {
       width: 100%;
-      display: flex;
-      justify-content: center;
+      border: 2px dashed grey;
+      border-radius: 5px;
+      padding: 0.5em;
 
-      .file-upload-input {
-        display: none;
+      .file-upload {
+        cursor: pointer;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        .file-upload-input {
+          display: none;
+        }
       }
     }
   }
+
 
   .image-preview-list-container {
     margin: 1em 0;

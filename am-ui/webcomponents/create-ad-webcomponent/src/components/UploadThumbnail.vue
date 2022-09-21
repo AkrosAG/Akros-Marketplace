@@ -13,24 +13,24 @@ export default {
 
   data() {
     return {
-      selectedFiles: [],
+      selectedFile: [],
     }
   },
   methods: {
     onFileChanged(event) {
       const files = event.target.files;
       for (let i = 0; i < files.length; i++) {
-        this.selectedFiles.push(files[i]);
+        this.selectedFile.push(files[i]);
       }
-      this.$emit("update-parent", this.selectedFiles);
+      this.$emit("update-parent-thumbnail", this.selectedFile);
     },
     getImage(index) {
-      const file = this.selectedFiles[index];
+      const file = this.selectedFile[index];
       return URL.createObjectURL(file);
     },
     deleteImage(index) {
-      this.selectedFiles.splice(index, 1);
-      this.$emit("update-parent", this.selectedFiles);
+      this.selectedFile.splice(index, 1);
+      this.$emit("update-parent-thumbnail", this.selectedFile);
     }
   }
 }
@@ -38,17 +38,16 @@ export default {
 
 <template>
   <div class="container">
-    <h3>{{ t('upload') }}</h3>
+    <h3>{{ t('uploadThumbnail')}}</h3>
     <div class="upload-container">
       <label class="file-upload">
-        <input class="file-upload-input" type="file" multiple @change="onFileChanged">
+        <input class="file-upload-input" type="file" @change="onFileChanged">
         {{ t('upload') }}
       </label>
-
     </div>
     <div class="image-preview-list-container">
       <ul>
-        <li v-if="selectedFiles.length !== 0" v-for="(image, index) in selectedFiles">
+        <li v-if="selectedFile.length !== 0" v-for="(image, index) in selectedFile">
           <div class="list-container">
             <img :src="getImage(index)" :alt="image.name">
             <button class="list-button" @click.stop.prevent="deleteImage(index)">

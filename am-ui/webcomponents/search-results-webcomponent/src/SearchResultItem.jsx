@@ -1,10 +1,18 @@
 /* eslint-disable */
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import React from 'react';
 
 function SearchResultListItem(props) {
-  const { t, i18n } = useTranslation();
+  const {t, i18n} = useTranslation();
   /* istanbul ignore next */
+
+  const createImageFromProps = (images) => {
+    const thumbnail = images.find((e) => e.thumbnail);
+    return thumbnail !== null ?
+      `data:image/jpeg;base64,${thumbnail.value}` :
+      'https://media.istockphoto.com/photos/bohemian-living-room-interior-3d-render-picture-id1182454657?k=20&m=1182454657&s=612x612&w=0&h=1xEsm7BqeicA8jYk9KlerUtGsAgzzo530l5Ak1HJdnc=';
+  }
+
   const listElements = props.results.map((result) => {
     return (
       <li key={result.topic_id} className="sr-ad-block">
@@ -15,7 +23,7 @@ function SearchResultListItem(props) {
         >
           <div className="sr-ad-thumb-block">
             <img
-              src="https://media.istockphoto.com/photos/bohemian-living-room-interior-3d-render-picture-id1182454657?k=20&m=1182454657&s=612x612&w=0&h=1xEsm7BqeicA8jYk9KlerUtGsAgzzo530l5Ak1HJdnc="
+              src={createImageFromProps(result.topic_images)}
               className="sr-ad-thumb"
               alt="2 ½ rooms apartment"
             />
@@ -25,18 +33,19 @@ function SearchResultListItem(props) {
               </span>
               {
                 result.topic_values.find((value) => value.key === 'price') &&
-                    <span className="sr-ad-price">
+                <span className="sr-ad-price">
                       {result.topic_values.find((value) => value.key === 'price').value}
                     </span>
               }
               {
                 result.topic_values.find((value) => value.key === 'toPrice') &&
-                    <span className="sr-ad-price">
+                <span className="sr-ad-price">
                       {result.topic_values.find((value) => value.key === 'toPrice').value}
                     </span>
               }
               <span className="sr-ad-currency"> CHF</span>&nbsp;/&nbsp;
-              <span className="sr-ad-per-time">{t(result.topic_values.find((value) => value.key === 'priceUnit').value)}</span>
+              <span
+                className="sr-ad-per-time">{t(result.topic_values.find((value) => value.key === 'priceUnit').value)}</span>
             </p>
           </div>
           <p className="sr-ad-rooms">
