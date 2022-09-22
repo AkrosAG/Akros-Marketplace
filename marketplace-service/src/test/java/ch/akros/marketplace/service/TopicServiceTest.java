@@ -56,7 +56,14 @@ public class TopicServiceTest {
     final private Long SUBCATEGORY_ID_2 = 2L;
     final private Long TOPIC_FIELD_ID_6 = 6L;
     final private Long TOPIC_FIELD_ID_8 = 8L;
-
+    final private Long TOPIC_FIELD_ID_24 = 24L;
+    final private Long TOPIC_FIELD_ID_25 = 25L;
+    final private String FIELD_VALUE_40 = "40";
+    final private String FIELD_VALUE_80 = "80";
+    final private String FIELD_VALUE_90 = "90";
+    final private String FIELD_VALUE_100 = "100";
+    final private String FIELD_VALUE_200 = "200";
+    final private String FIELD_VALUE_150 = "150";
     @BeforeEach
     public void beforeEach() {
         MockitoAnnotations.openMocks(this);
@@ -67,13 +74,9 @@ public class TopicServiceTest {
 
         this.field = new Field();
 
-        String FIELD_VALUE_40 = "40";
         this.firstExpectedTopic = expectedTopicCreator(OFFER, TOPIC_ID_11, SUBCATEGORY_ID_1, TOPIC_FIELD_ID_6, FIELD_VALUE_40);
-        String FIELD_VALUE_80 = "80";
         this.secondExpectedTopic = expectedTopicCreator(OFFER, TOPIC_ID_12, SUBCATEGORY_ID_1, TOPIC_FIELD_ID_6, FIELD_VALUE_80);
-        String FIELD_VALUE_100 = "100";
         this.thirdExpectedTopic = expectedTopicCreator(REQUEST, TOPIC_ID_13, SUBCATEGORY_ID_2, TOPIC_FIELD_ID_8, FIELD_VALUE_100);
-        String FIELD_VALUE_200 = "200";
         this.fourthExpectedTopic = expectedTopicCreator(OFFER, TOPIC_ID_14, SUBCATEGORY_ID_2, TOPIC_FIELD_ID_8, FIELD_VALUE_200);
     }
 
@@ -231,9 +234,8 @@ public class TopicServiceTest {
         inputTopicSearchRequestDTO.setRequestOrOffer(OFFER);
 
         TopicSearchFieldValuesRequestDTO searchValue = new TopicSearchFieldValuesRequestDTO();
-        Long TOPIC_FIELD_ID_25 = 25L;
+
         searchValue.setFieldId(TOPIC_FIELD_ID_25);
-        String FIELD_VALUE_150 = "150";
         searchValue.setValue(FIELD_VALUE_150);
         inputTopicSearchRequestDTO.setSearchValues(List.of(searchValue));
 
@@ -283,12 +285,10 @@ public class TopicServiceTest {
         inputTopicSearchRequestDTO.setRequestOrOffer(OFFER);
 
         TopicSearchFieldValuesRequestDTO searchValue = new TopicSearchFieldValuesRequestDTO();
-        Long TOPIC_FIELD_ID_24 = 24L;
+
         searchValue.setFieldId(TOPIC_FIELD_ID_24);
-        String FIELD_VALUE_90 = "90";
         searchValue.setValue(FIELD_VALUE_90);
         inputTopicSearchRequestDTO.setSearchValues(List.of(searchValue));
-
         field.setFieldId(TOPIC_FIELD_ID_6);
 
         Topic predefinedTopic = Topic.builder()

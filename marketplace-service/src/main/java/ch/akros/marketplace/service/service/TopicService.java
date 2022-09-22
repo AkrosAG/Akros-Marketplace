@@ -48,6 +48,8 @@ public class TopicService {
 
   private final int SIZE = 8;
   private final int PRICE = 6;
+  private final int FROM_SIZE = 25;
+  private final int TO_PRICE = 24;
 
   public TopicService(
       FieldRepository fieldRepository,
@@ -218,6 +220,17 @@ public class TopicService {
     topicRepository.deleteById(topicId);
   }
 
+    /**
+     * Searches through the topic repository and get all topics corresponding
+     * to requested search parameters: subCategory and requestOrOffer.
+     * Then the output list is filtered according to the given search values: from_size and to_price.
+     * This implementation ignores radius, as search value parameter.
+     *
+     * @param topicSearchRequestDTO has multiple search parameters. One of them is topic_values,
+     *                              which it is optional and contains search fields: from_size, to_price and radius.
+     *
+     * @return List of filtered
+     */
   public TopicSearchListResponseDTO searchTopic(TopicSearchRequestDTO topicSearchRequestDTO) {
         TopicSearchListResponseDTO result = new TopicSearchListResponseDTO();
 
@@ -244,11 +257,11 @@ public class TopicService {
                 .collect(Collectors.toList());
 
         for (TopicValue topicValue : topicValues) {
-            int FROM_SIZE = 25;
+
             if (topicValue.getTopicValueId() == FROM_SIZE) {
                 topicList = filterTopicsByFromSize(topicValue.getValue(), topicList);
             }
-            int TO_PRICE = 24;
+
             if (topicValue.getTopicValueId() == TO_PRICE) {
                 topicList = filterTopicsByToPrice(topicValue.getValue(), topicList);
             }
