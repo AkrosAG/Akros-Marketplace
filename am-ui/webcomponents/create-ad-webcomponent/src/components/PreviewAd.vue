@@ -21,6 +21,7 @@
         </tr>
       </tbody>
     </table>
+    <MapPreview v-if="lat != '' && lon != ''" :lat="lat" :lon="lon"></MapPreview>
 
     <p class="submit-row">
       <a class="btn" v-on:click="submit">{{ t('publish') }}</a>
@@ -32,12 +33,12 @@
 <script setup>
 import { useI18n } from './useI18n';
 import i18n from '../locales/i18n';
+import MapPreview from './MapPreview.vue';
 
 const props = defineProps({ fieldsToPreview: Array, selectedCategory: String });
 const { t } = useI18n(i18n.global.messages.value);
 const emit = defineEmits(['submit', 'back']);
 
-console.log(props.fieldsToPreview);
 /**
  * @description Method to emit the submit event to parent component.
  */
