@@ -31,8 +31,8 @@ public class TopicController implements TopicsApi {
 
     @PostMapping(value = "/topics", consumes = { "multipart/form-data" })
     public ResponseEntity<Void> createTopic(@RequestPart("topics") String topicSaveRequestDTO,
-                                            @RequestPart("thumbnail") MultipartFile thumbnail,
-                                            @RequestPart("images") MultipartFile[] images) {
+                                            @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
+                                            @RequestPart(value = "images", required = false) MultipartFile[] images) {
         try {
             log.debug("TopicController.topicsPost() called");
             topicService.saveTopic(topicSaveRequestDTO, images, thumbnail);

@@ -22,7 +22,7 @@
           </span>
         </span>
 
-        <div style="max-height: 500px; margin-top: 2rem">
+        <div style="max-height: 500px; margin-top: 2rem" *ngIf="images.length !== 0">
           <mp-swiper [images]="images"></mp-swiper>
         </div>
 

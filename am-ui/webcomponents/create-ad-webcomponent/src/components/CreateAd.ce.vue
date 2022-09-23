@@ -121,9 +121,15 @@ function submit(data, images, thumbnail) {
     (subcategory) => subcategory.key === selectedSubCategoryKey.value
   );
 
-  const files = createTopicImageSaveRequestDTO(images);
+  let files = [] = [];
+  if (images.length !== 0) {
+    files = createTopicImageSaveRequestDTO(images);
+  }
 
-  const thumbnailImage = createTopicImageSaveRequestDTO(thumbnail)[0];
+  let thumbnailImage = {};
+  if (thumbnail.length !== 0) {
+    thumbnailImage = createTopicImageSaveRequestDTO(thumbnail)[0];
+  }
 
   const topics = new TopicSaveRequestDTO(
     0,

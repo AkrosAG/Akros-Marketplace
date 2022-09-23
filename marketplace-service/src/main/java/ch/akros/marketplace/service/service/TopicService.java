@@ -89,8 +89,14 @@ public class TopicService {
         List<TopicValue> finalTopicValues = getFinalTopicValuesList(topicValues);
         topic.setTopicValues(finalTopicValues);
 
-        List<TopicImage> topicImages = getTopicImages(topic, files);
-        topicImages.add(createThumbnailFromMultipartFile(topic, thumbnail));
+        List<TopicImage> topicImages = new ArrayList<>();
+        if (files != null) {
+            topicImages.addAll(getTopicImages(topic, files));
+        }
+        if (thumbnail != null) {
+            topicImages.add(createThumbnailFromMultipartFile(topic, thumbnail));
+        }
+
         topic.setTopicImages(topicImages);
         topicRepository.save(topic);
     }

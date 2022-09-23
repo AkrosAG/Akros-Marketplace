@@ -10,6 +10,7 @@ export default class CreateTopic {
   topicsPost(files, topics, thumbnail) {
     const formData = new FormData();
     formData.append("topics", JSON.stringify(topics));
+
     for (let i = 0; i < files.length; i++) {
       formData.append("images", files[i]);
     }
