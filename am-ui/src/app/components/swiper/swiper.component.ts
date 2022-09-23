@@ -30,7 +30,6 @@ export class SwiperComponent implements OnInit {
   }
 
   onOpenFullscreen() {
-    console.log("siiiiiiiiiiiiiiiiiiii")
     this.isFullscreen = true;
   }
 
