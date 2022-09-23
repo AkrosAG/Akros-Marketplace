@@ -53,7 +53,7 @@ import {NavigationService} from './utils/navigation.service';
 import {OAuthModule, OAuthService, OAuthStorage} from 'angular-oauth2-oidc';
 import {SearchResultDetailsService} from './components/search-result-details/search-result-details.service';
 import {SwiperComponent} from './components/swiper/swiper.component';
-import {SwiperModule} from "swiper/angular";
+import {SwiperModule} from 'swiper/angular';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);

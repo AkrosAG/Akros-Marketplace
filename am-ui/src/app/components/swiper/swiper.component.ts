@@ -1,9 +1,6 @@
-import {Component, Input, OnInit, ViewEncapsulation} from "@angular/core";
-import SwiperCore, {
-  Navigation,
-  Pagination,
-} from 'swiper';
-import {TopicImage} from "../../data/models/TopicImage";
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import SwiperCore, {Navigation, Pagination} from 'swiper';
+import {TopicImage} from '../../data/models/TopicImage';
 
 SwiperCore.use([Navigation, Pagination]);
 
@@ -19,7 +16,7 @@ export class SwiperComponent implements OnInit {
   pagination = {
     clickable: true,
     renderBullet: function (index, className) {
-      return '<span class="' + className + '">' + (index + 1) + "</span>";
+      return '<span class="' + className + '">' + (index + 1) + '</span>';
     },
   };
 

@@ -4,7 +4,7 @@ import {Subscription} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {SearchResultDetailsService} from './search-result-details.service';
 import {TopicValue} from '../../data/models/TopicValue';
-import {TopicImage} from "../../data/models/TopicImage";
+import {TopicImage} from '../../data/models/TopicImage';
 
 @Component({
   selector: 'mp-search-result-details',
