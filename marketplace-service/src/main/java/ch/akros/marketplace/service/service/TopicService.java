@@ -1,20 +1,7 @@
 package ch.akros.marketplace.service.service;
 
-import ch.akros.marketplace.api.model.FieldOptionResponseDTO;
-import ch.akros.marketplace.api.model.FieldResponseDTO;
-import ch.akros.marketplace.api.model.TopicLoadResponseDTO;
-import ch.akros.marketplace.api.model.TopicSaveRequestDTO;
-import ch.akros.marketplace.api.model.TopicSearchListResponseDTO;
-import ch.akros.marketplace.api.model.TopicSearchRequestDTO;
-import ch.akros.marketplace.api.model.TopicSearchResponseDTO;
-import ch.akros.marketplace.api.model.TopicSearchValueResponseDTO;
-import ch.akros.marketplace.api.model.TopicValueLoadResponseDTO;
-import ch.akros.marketplace.api.model.TopicValueSaveRequestDTO;
-import ch.akros.marketplace.service.entity.Field;
-import ch.akros.marketplace.service.entity.FieldOption;
-import ch.akros.marketplace.service.entity.SubCategory;
-import ch.akros.marketplace.service.entity.Topic;
-import ch.akros.marketplace.service.entity.TopicValue;
+import ch.akros.marketplace.api.model.*;
+import ch.akros.marketplace.service.entity.*;
 import ch.akros.marketplace.service.model.LatLon;
 import ch.akros.marketplace.service.repository.AdvertiserRepository;
 import ch.akros.marketplace.service.repository.FieldRepository;
@@ -23,7 +10,6 @@ import ch.akros.marketplace.service.repository.TopicRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.type.BlobType;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
@@ -37,10 +23,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
@@ -62,13 +44,6 @@ public class TopicService {
     this.topicRepository = topicRepository;
     this.subCategoryRepository = subCategoryRepository;
   }
-
-    public List<FieldResponseDTO> listTopicFieldTypes(Long categoryId, String requestOrOffer) {
-        return fieldRepository.listTopicSearchFields(categoryId, "REQUEST".equals(requestOrOffer))
-                .stream()
-                .map(this::toFieldResponseDTO)
-                .collect(Collectors.toList());
-    }
 
     private FieldResponseDTO toFieldResponseDTO(Field field) {
         FieldResponseDTO result = new FieldResponseDTO();
@@ -114,6 +89,9 @@ public class TopicService {
         List<TopicValue> finalTopicValues = getFinalTopicValuesList(topicValues);
         topic.setTopicValues(finalTopicValues);
 
+        List<TopicImage> topicImages = getTopicImages(topic, files);
+        topicImages.add(createThumbnailFromMultipartFile(topic, thumbnail));
+        topic.setTopicImages(topicImages);
         topicRepository.save(topic);
     }
 
