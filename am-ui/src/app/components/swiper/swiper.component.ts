@@ -12,6 +12,7 @@ SwiperCore.use([Navigation, Pagination]);
 })
 export class SwiperComponent implements OnInit {
   @Input() images: TopicImage[] = [];
+  isFullscreen: boolean = false;
 
   pagination = {
     clickable: true,
@@ -26,5 +27,14 @@ export class SwiperComponent implements OnInit {
 
   ngOnInit(): void {
     this.images.sort((a, b) => Number(b.thumbnail) - Number(a.thumbnail));
+  }
+
+  onOpenFullscreen() {
+    console.log("siiiiiiiiiiiiiiiiiiii")
+    this.isFullscreen = true;
+  }
+
+  onCloseFullscreen() {
+    this.isFullscreen = false;
   }
 }

@@ -1,13 +1,18 @@
-<div class="swiper-container">
-  <swiper
-    [pagination]="{
+<div>
+  <div class="swiper-container">
+    <swiper
+      [loop]="true"
+      [slidesPerView]="2"
+      [spaceBetween]="20"
+      [pagination]="{
       clickable: true
     }"
-    [navigation]="true"
-    class="mySwiper">
-    <ng-template  *ngFor="let image of images" swiperSlide>
-      <img [src]="createImageFromTopicImage(image)" [alt]="image.topic_image_id"/>
-    </ng-template>
-  </swiper>
-
+      [navigation]="true"
+      class="mySwiper">
+      <span class="close-button"></span>
+      <ng-template  *ngFor="let image of images" swiperSlide>
+        <img [src]="createImageFromTopicImage(image)" [alt]="image.topic_image_id" (click)="onOpenFullscreen()"/>
+      </ng-template>
+    </swiper>
+  </div>
 </div>

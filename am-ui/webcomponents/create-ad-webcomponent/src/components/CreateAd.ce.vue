@@ -139,7 +139,7 @@ function createTopicImageSaveRequestDTO(images) {
   const proxy = new Proxy(images, {})
   const files = proxy[0];
   let image = [];
-  for (let i = 0; i <= images.length; i++) {
+  for (let i = 0; i <= files.length; i++) {
     image.push(files[i]);
   }
   return image;
@@ -460,7 +460,7 @@ select {
         align-items: center;
 
         img {
-          max-height: 150px;
+          height: 100px;
           object-fit: contain;
         }
 
