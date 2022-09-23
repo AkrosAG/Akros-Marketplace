@@ -284,9 +284,14 @@ public class TopicService {
                             .anyMatch(topicValue -> Long.parseLong(topicValue.getValue()) >= fromSize))
                     .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
+<<<<<<< HEAD
             log.error(e.getMessage(), e);
         }
         return topicList;
+=======
+            return topicList;
+        }
+>>>>>>> 1f5315754355282e7bbb69178890c71786e874c8
     }
 
     private List<TopicSearchResponseDTO> filterTopicsByToPrice(String topicValueToPrice,
@@ -302,9 +307,14 @@ public class TopicService {
                             .anyMatch(topicValue -> Long.parseLong(topicValue.getValue()) <= toPrice))
                     .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
+<<<<<<< HEAD
             log.error(e.getMessage(), e);
         }
         return topicList;
+=======
+            return topicList;
+        }
+>>>>>>> 1f5315754355282e7bbb69178890c71786e874c8
     }
 
     private TopicSearchResponseDTO toTopicSearchResponseDTO(Topic topic) {

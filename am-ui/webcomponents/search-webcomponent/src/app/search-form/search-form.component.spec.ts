@@ -1,5 +1,9 @@
 import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
+<<<<<<< HEAD
 import {TranslateFakeLoader, TranslateLoader, TranslateModule} from '@ngx-translate/core';
+=======
+import {TranslateFakeLoader, TranslateLoader, TranslateModule,} from '@ngx-translate/core';
+>>>>>>> 1f5315754355282e7bbb69178890c71786e874c8
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormFieldControlService} from './form/form-field-control.service';
