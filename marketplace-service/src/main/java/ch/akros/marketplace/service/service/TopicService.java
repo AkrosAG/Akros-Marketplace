@@ -25,11 +25,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.stereotype.Service;
-
 @Service
 @Slf4j
 public class TopicService {
@@ -55,6 +50,13 @@ public class TopicService {
     this.topicRepository = topicRepository;
     this.subCategoryRepository = subCategoryRepository;
   }
+
+    public List<FieldResponseDTO> listTopicFieldTypes(Long categoryId, String requestOrOffer) {
+        return fieldRepository.listTopicSearchFields(categoryId, "REQUEST".equals(requestOrOffer))
+                .stream()
+                .map(this::toFieldResponseDTO)
+                .collect(Collectors.toList());
+    }
 
     private FieldResponseDTO toFieldResponseDTO(Field field) {
         FieldResponseDTO result = new FieldResponseDTO();
@@ -206,8 +208,8 @@ public class TopicService {
 
         result.setTopicValues(topic.getTopicValues()
                 .stream()
-                .sorted((e1, e2) -> e1.getField().getSortNumber()
-                        - e2.getField().getSortNumber())
+                .sorted((e1, e2) -> e1.getField().getSortNumber() -
+                        e2.getField().getSortNumber())
                 .map(this::toTopicValueLoadResponseDTO)
                 .collect(Collectors.toList()));
         result.setTopicImages(getTopicImageDtosFromImages(topic.getTopicImages()));
@@ -258,6 +260,7 @@ public class TopicService {
      *
      * @return List of filtered
      */
+    @Transactional
   public TopicSearchListResponseDTO searchTopic(TopicSearchRequestDTO topicSearchRequestDTO) {
         TopicSearchListResponseDTO result = new TopicSearchListResponseDTO();
 
@@ -344,6 +347,8 @@ public class TopicService {
                 .stream()
                 .map(e -> toTopicSearchValueResponseDTO(topic.getTopicId(), e))
                 .collect(Collectors.toList()));
+
+        result.setTopicImages(generateTopicImages(topic.getTopicImages()));
         return result;
     }
 
