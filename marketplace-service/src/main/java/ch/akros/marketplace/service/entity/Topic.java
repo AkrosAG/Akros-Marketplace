@@ -4,7 +4,6 @@ package ch.akros.marketplace.service.entity;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.annotation.Nullable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;

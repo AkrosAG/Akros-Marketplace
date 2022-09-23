@@ -56,27 +56,27 @@ public class TopicController implements TopicsApi {
         }
     }
 
-    @Override
-    public ResponseEntity<TopicSearchListResponseDTO> topicsSearchesPost(TopicSearchRequestDTO topicSearchRequestDTO) {
-        try {
-            log.debug("TopicController.topicsSearchPost() called");
-            TopicSearchListResponseDTO topicSearchListResponseDTO = topicService.searchTopic(topicSearchRequestDTO);
-            return ResponseEntity.status(HttpStatus.OK).body(topicSearchListResponseDTO);
-        } catch (Exception ex) {
-            log.error(ex.getMessage(), ex);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+  @Override
+  public ResponseEntity<TopicSearchListResponseDTO> topicsSearchesPost(TopicSearchRequestDTO topicSearchRequestDTO) {
+    try {
+      log.debug("TopicController.topicsSearchPost() called");
+      TopicSearchListResponseDTO topicSearchListResponseDTO = topicService.searchTopic(topicSearchRequestDTO);
+      return ResponseEntity.status(HttpStatus.OK).body(topicSearchListResponseDTO);
+    } catch (Exception ex) {
+      log.error(ex.getMessage(), ex);
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
+  }
 
-    @Override
-    public ResponseEntity<TopicSearchListResponseDTO> topicsSearchesGet() {
-        try {
-            log.debug("TopicController.topicsSearchesGet() called");
-            TopicSearchListResponseDTO topics = topicService.findAllTopics();
-            return ResponseEntity.status(HttpStatus.OK).body(topics);
-        } catch(Exception e) {
-            log.error(e.getMessage(), e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+  @Override
+  public ResponseEntity<TopicSearchListResponseDTO> topicsSearchesGet() {
+    try {
+      log.debug("TopicController.topicsSearchesGet() called");
+      TopicSearchListResponseDTO topics = topicService.findAllTopics();
+      return ResponseEntity.status(HttpStatus.OK).body(topics);
+    } catch(Exception e) {
+      log.error(e.getMessage(), e);
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
+  }
 }

@@ -28,7 +28,13 @@ This module serves the Rest-Services for the UI.
 
 - **build-only**: mvn clean package
 - **run**: mvn
+- **test**: mvn test
 
+## Lint
+
+- **Run the linter**: mvn checkstyle:checkstyle
+- **Generate the report**: mvn checkstyle:checkstyle site
+The checkstyle report will be available at marketplace-service/target/site/checkstyle.html
 
 ## Rest Services
 

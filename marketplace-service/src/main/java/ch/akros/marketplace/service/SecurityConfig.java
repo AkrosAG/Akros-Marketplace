@@ -17,47 +17,47 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
-    private static final String TOPICS_URI = "/topics";
-    private static final String ANY_TOPICS_SEARCHES = "/topics/searches/**";
-    private static final String ANY_CATEGORIES_URI = "/categories/**";
+  private static final String TOPICS_URI = "/topics";
+  private static final String ANY_TOPICS_SEARCHES = "/topics/searches/**";
+  private static final String ANY_CATEGORIES_URI = "/categories/**";
 
-    @Bean
-    public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
-        return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
-    }
+  @Bean
+  public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+    return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
+  }
 
-    /**
-     * Registers the KeycloakAuthenticationProvider with the authentication manager.
-     */
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(keycloakAuthenticationProvider());
-    }
+  /**
+   * Registers the KeycloakAuthenticationProvider with the authentication manager.
+   */
+  @Autowired
+  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    auth.authenticationProvider(keycloakAuthenticationProvider());
+  }
 
-    /**
-     * Defines the session authentication strategy.
-     */
-    @Bean
-    @Override
-    protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-        return new RegisterSessionAuthenticationStrategy(buildSessionRegistry());
-    }
+  /**
+   * Defines the session authentication strategy.
+   */
+  @Bean
+  @Override
+  protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
+    return new RegisterSessionAuthenticationStrategy(buildSessionRegistry());
+  }
 
-    @Bean
-    protected SessionRegistry buildSessionRegistry() {
-        return new SessionRegistryImpl();
-    }
+  @Bean
+  protected SessionRegistry buildSessionRegistry() {
+    return new SessionRegistryImpl();
+  }
 
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
-        http
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET, TOPICS_URI, ANY_CATEGORIES_URI, ANY_TOPICS_SEARCHES).permitAll()
-                .antMatchers(HttpMethod.POST, TOPICS_URI).hasAnyAuthority("ADMIN","USER")
-                .antMatchers(HttpMethod.DELETE, TOPICS_URI).hasAnyAuthority("ADMIN","USER")
-                .anyRequest().permitAll()
-                .and().csrf().disable();
-    }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    super.configure(http);
+    http
+      .authorizeRequests()
+      .antMatchers(HttpMethod.GET, TOPICS_URI, ANY_CATEGORIES_URI, ANY_TOPICS_SEARCHES).permitAll()
+      .antMatchers(HttpMethod.POST, TOPICS_URI).hasAnyAuthority("ADMIN", "USER")
+      .antMatchers(HttpMethod.DELETE, TOPICS_URI).hasAnyAuthority("ADMIN", "USER")
+      .anyRequest().permitAll()
+      .and().csrf().disable();
+  }
 }
