@@ -27,7 +27,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
@@ -43,6 +45,11 @@ public class TopicService {
   private final AdvertiserRepository advertiserRepository;
   private final TopicRepository topicRepository;
   private final SubCategoryRepository subCategoryRepository;
+
+  private final int SIZE = 8;
+  private final int PRICE = 6;
+  private final int FROM_SIZE = 25;
+  private final int TO_PRICE = 24;
 
   public TopicService(
       FieldRepository fieldRepository,
@@ -213,51 +220,121 @@ public class TopicService {
     topicRepository.deleteById(topicId);
   }
 
+    /**
+     * Searches through the topic repository and get all topics corresponding
+     * to requested search parameters: subCategory and requestOrOffer.
+     * Then the output list is filtered according to the given search values: from_size and to_price.
+     * This implementation ignores radius, as search value parameter.
+     *
+     * @param topicSearchRequestDTO has multiple search parameters. One of them is topic_values,
+     *                              which it is optional and contains search fields: from_size, to_price and radius.
+     *
+     * @return List of filtered
+     */
   public TopicSearchListResponseDTO searchTopic(TopicSearchRequestDTO topicSearchRequestDTO) {
-    TopicSearchListResponseDTO result = new TopicSearchListResponseDTO();
+        TopicSearchListResponseDTO result = new TopicSearchListResponseDTO();
 
-    Topic topic = new Topic();
-    topic.setRequestOrOffer(topicSearchRequestDTO.getRequestOrOffer());
-    if (topicSearchRequestDTO.getSearchValues() != null) {
-      List<TopicValue> collect = topicSearchRequestDTO.getSearchValues().stream().map(value -> {
-        return TopicValue.builder().value(value.getValue()).build();
-      }).collect(Collectors.toList());
+        List<TopicValue> topicValues = Collections.emptyList();
+        if (topicSearchRequestDTO.getSearchValues() != null) {
+            topicValues = topicSearchRequestDTO.getSearchValues().stream()
+                    .map(value -> TopicValue.builder()
+                            .value(value.getValue())
+                            .topicValueId(value.getFieldId())
+                            .build())
+                    .collect(Collectors.toList());
+        }
+
+        Topic topic = Topic.builder()
+                .requestOrOffer(topicSearchRequestDTO.getRequestOrOffer())
+                .subCategory(SubCategory.builder()
+                        .subCategoryId(topicSearchRequestDTO.getSubcategoryId())
+                        .build())
+                .build();
+
+        Example<Topic> exampleTopic = Example.of(topic, ExampleMatcher.matchingAll());
+        List<TopicSearchResponseDTO> topicList = topicRepository.findAll(exampleTopic).stream()
+                .map(this::toTopicSearchResponseDTO)
+                .collect(Collectors.toList());
+
+        for (TopicValue topicValue : topicValues) {
+
+            if (topicValue.getTopicValueId() == FROM_SIZE) {
+                topicList = filterTopicsByFromSize(topicValue.getValue(), topicList);
+            }
+
+            if (topicValue.getTopicValueId() == TO_PRICE) {
+                topicList = filterTopicsByToPrice(topicValue.getValue(), topicList);
+            }
+        }
+
+        result.setTopics(topicList);
+        return result;
     }
 
-    Example<Topic> exampleTopic = Example.of(topic, ExampleMatcher.matchingAll());
-    List<TopicSearchResponseDTO> topicList = topicRepository.findAll(exampleTopic).stream()
-        .map(this::toTopicSearchResponseDTO).collect(Collectors.toList());
-    result.setTopics(topicList);
-    return result;
-  }
+    private List<TopicSearchResponseDTO> filterTopicsByFromSize(String topicValueFromSize,
+                                                                List<TopicSearchResponseDTO> topicList) {
+        try {
+            long fromSize = Long.parseLong(topicValueFromSize);
 
-  private TopicSearchResponseDTO toTopicSearchResponseDTO(Topic topic) {
-    TopicSearchResponseDTO result = new TopicSearchResponseDTO();
-    result.setTopicId(topic.getTopicId());
-    result.setSubcategoryId(topic.getSubCategory().getSubCategoryId());
-    result.setSubcategoryKey(topic.getSubCategory().getKey());
+            return topicList
+                    .stream()
+                    .filter(topic -> topic.getTopicValues()
+                            .stream()
+                            .filter(topicValue -> topicValue.getFieldId() == SIZE)
+                            .anyMatch(topicValue -> Long.parseLong(topicValue.getValue()) >= fromSize))
+                    .collect(Collectors.toList());
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage(), e);
+        }
+        return topicList;
+    }
 
-    result.setTopicValues(loadTopic(topic.getTopicId()).getTopicValues()
-        .stream()
-        .map(e -> toTopicSearchValueResponseDTO(topic.getTopicId(), e))
-        .collect(Collectors.toList()));
+    private List<TopicSearchResponseDTO> filterTopicsByToPrice(String topicValueToPrice,
+                                                               List<TopicSearchResponseDTO> topicList) {
+        try {
+            long toPrice = Long.parseLong(topicValueToPrice);
 
-    return result;
-  }
+            return topicList
+                    .stream()
+                    .filter(topic -> topic.getTopicValues()
+                            .stream()
+                            .filter(topicValue -> topicValue.getFieldId() == PRICE)
+                            .anyMatch(topicValue -> Long.parseLong(topicValue.getValue()) <= toPrice))
+                    .collect(Collectors.toList());
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage(), e);
+        }
+        return topicList;
+    }
 
-  private TopicSearchValueResponseDTO toTopicSearchValueResponseDTO(
-      Long topicId,
-      TopicValueLoadResponseDTO topicValueLoadResponseDTO) {
-    TopicSearchValueResponseDTO result = new TopicSearchValueResponseDTO();
-    result.setFieldId(topicValueLoadResponseDTO.getFieldId());
-    result.setTopicId(topicId);
-    fieldRepository.findAll().stream().filter(field -> field.getFieldId() == topicValueLoadResponseDTO.getFieldId())
-        .findAny().ifPresent(field -> {
-          result.setKey(field.getKey());
-        });
-    result.setValue(topicValueLoadResponseDTO.getValue());
-    return result;
-  }
+    private TopicSearchResponseDTO toTopicSearchResponseDTO(Topic topic) {
+        TopicSearchResponseDTO result = new TopicSearchResponseDTO();
+        result.setTopicId(topic.getTopicId());
+        result.setSubcategoryId(topic.getSubCategory().getSubCategoryId());
+        result.setSubcategoryKey(topic.getSubCategory().getKey());
+
+        result.setTopicValues(loadTopic(topic.getTopicId()).getTopicValues()
+                .stream()
+                .map(e -> toTopicSearchValueResponseDTO(topic.getTopicId(), e))
+                .collect(Collectors.toList()));
+        return result;
+    }
+
+    private TopicSearchValueResponseDTO toTopicSearchValueResponseDTO(
+            Long topicId,
+            TopicValueLoadResponseDTO topicValueLoadResponseDTO) {
+        TopicSearchValueResponseDTO result = new TopicSearchValueResponseDTO();
+        result.setFieldId(topicValueLoadResponseDTO.getFieldId());
+        result.setTopicId(topicId);
+        fieldRepository.findAll().stream().filter(field -> Objects.equals(field.getFieldId(),
+                        topicValueLoadResponseDTO
+                                .getFieldId()))
+                .findAny()
+                .ifPresent(field -> result.setKey(field.getKey()));
+
+        result.setValue(topicValueLoadResponseDTO.getValue());
+        return result;
+    }
 
   public TopicSearchListResponseDTO findAllTopics() {
     TopicSearchListResponseDTO topicSearchListResponseDTO = new TopicSearchListResponseDTO();
