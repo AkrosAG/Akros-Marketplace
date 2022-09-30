@@ -171,6 +171,7 @@
   },
   "defaultProject": "marketplace-ui",
   "cli": {
+    "analytics": false,
     "defaultCollection": "@angular-eslint/schematics"
   }
 }
