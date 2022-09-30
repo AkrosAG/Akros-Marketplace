@@ -184,10 +184,16 @@
     </div>
   </div>
   <div class="upload-section">
-    <UploadThumbnail @update-parent-thumbnail="updateParentThumbnail"></UploadThumbnail>
+    <UploadImagesThumbnail
+      @update-parent="updateParentThumbnail"
+      :is-thumbnail-upload="true"
+    ></UploadImagesThumbnail>
   </div>
   <div class="upload-section">
-    <UploadImages @update-parent="updateParent"></UploadImages>
+    <UploadImagesThumbnail
+      @update-parent="updateParent"
+      :is-thumbnail-upload="false"
+    ></UploadImagesThumbnail>
   </div>
   <p class="submit-row">
     <a
@@ -214,8 +220,7 @@
 import {onMounted, ref} from 'vue';
 import {useI18n} from './useI18n';
 import i18n from '../locales/i18n';
-import UploadImages from './UploadImages.vue';
-import UploadThumbnail from './UploadThumbnail.vue';
+import UploadImagesThumbnail from './UploadImagesThumbnail.vue';
 
 const props = defineProps({fieldsToShow: Array, selectedCategory: String});
 const emit = defineEmits(['submit']);

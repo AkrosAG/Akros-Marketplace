@@ -10,14 +10,13 @@ import ApiClient from '../api/src/ApiClient';
 import CategoriesApi from '../api/src/api/CategoriesApi';
 import TopicsApi from '../api/src/api/TopicsApi';
 import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
-import {onMounted, ref, toRefs} from 'vue';
+import { onMounted, ref, toRefs } from 'vue';
 import CreateAdFields from './CreateAdFields.vue';
-import {useI18n} from 'vue-i18n';
-import CreateTopic from "./CreateTopic";
+import { useI18n } from 'vue-i18n';
+import CreateTopic from './CreateTopic';
 
 const apiClient = new ApiClient('/');
 const categoriesApi = new CategoriesApi(apiClient);
-const topicsApi = new TopicsApi(apiClient);
 const createTopic = new CreateTopic(apiClient);
 const categories = ref([]);
 const subCategories = ref([]);
@@ -37,8 +36,8 @@ const props = defineProps({
   bearerToken: String
 });
 
-const {t} = useI18n({useScope: 'global'});
-const {bearerToken} = toRefs(props);
+const { t } = useI18n({ useScope: 'global' });
+const { bearerToken } = toRefs(props);
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
@@ -109,6 +108,8 @@ function updateRequestOfferFields() {
  * @description Method triggered from submit event in CreadAdFields component, builds the body for the
  * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
  * @param {[{}]} data - Form field values
+ * @param images - Images for detail view of an ad
+ * @param thumbnail - thumbnail for ad's
  */
 function submit(data, images, thumbnail) {
   if (bearerToken.value) {
@@ -121,7 +122,7 @@ function submit(data, images, thumbnail) {
     (subcategory) => subcategory.key === selectedSubCategoryKey.value
   );
 
-  let files = [] = [];
+  let files = ([] = []);
   if (images.length !== 0) {
     files = createTopicImageSaveRequestDTO(images);
   }
@@ -144,7 +145,7 @@ function submit(data, images, thumbnail) {
 function createTopicImageSaveRequestDTO(images) {
   const proxy = new Proxy(images, {})
   const files = proxy[0];
-  let image = [];
+  const image = [];
   for (let i = 0; i <= files.length; i++) {
     image.push(files[i]);
   }
@@ -411,9 +412,7 @@ select {
   }
 }
 
-// Styles for UploadImages.vue
-// TODO: Check why styles can't be applied directly in the UploadImages.vue file
-
+// Styles for UploadImagesThumbnail.vue
 .upload-section {
   display: flex;
   justify-content: center;

@@ -1,5 +1,5 @@
 import ApiClient from "../api/src/ApiClient";
-import axios from 'axios'
+import axios from 'axios';
 
 export default class CreateTopic {
 

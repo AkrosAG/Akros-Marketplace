@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import React from 'react';
 
 function SearchResultListItem(props) {
-  const {t, i18n} = useTranslation();
+  const { t } = useTranslation();
   /* istanbul ignore next */
 
   const createImageFromProps = (images) => {

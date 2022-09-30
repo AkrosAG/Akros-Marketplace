@@ -28,12 +28,4 @@ export class SwiperComponent implements OnInit {
   ngOnInit(): void {
     this.images.sort((a, b) => Number(b.thumbnail) - Number(a.thumbnail));
   }
-
-  onOpenFullscreen() {
-    this.isFullscreen = true;
-  }
-
-  onCloseFullscreen() {
-    this.isFullscreen = false;
-  }
 }

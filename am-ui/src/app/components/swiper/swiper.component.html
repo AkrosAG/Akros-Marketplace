@@ -11,7 +11,7 @@
       class="mySwiper">
       <span class="close-button"></span>
       <ng-template  *ngFor="let image of images" swiperSlide>
-        <img [src]="createImageFromTopicImage(image)" [alt]="image.topic_image_id" (click)="onOpenFullscreen()"/>
+        <img [src]="createImageFromTopicImage(image)" [alt]="image.topic_image_id"/>
       </ng-template>
     </swiper>
   </div>
