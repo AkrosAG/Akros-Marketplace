@@ -217,8 +217,8 @@
  * based on the field_type_id and the HTML logic.
  * @param {String} selectedCategory - Key string value of the selected category
  */
-import {onMounted, ref} from 'vue';
-import {useI18n} from './useI18n';
+import { onMounted, ref } from 'vue';
+import { useI18n } from './useI18n';
 import i18n from '../locales/i18n';
 import UploadImagesThumbnail from './UploadImagesThumbnail.vue';
 
@@ -228,16 +228,24 @@ const fieldValues = ref([]);
 const fieldKeys = ref([]);
 const errors = ref([]);
 const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8]);
-const {t} = useI18n(i18n.global.messages.value);
+const { t } = useI18n(i18n.global.messages.value);
 const formHasErrors = ref([]);
 const hasSpecificDate = ref(false);
 const images = [];
 const thumbnail = [];
 
+/**
+ * @description method that send the selected images from the children to the parent component.
+ * @param variable are the images that has been selected for the ad
+ */
 function updateParent(variable) {
   images.push(variable);
 }
 
+/**
+ * @description method that send the selected thumbnail from the children to the parent component.
+ * @param variable are the thumbnail that has been selected for the ad
+ */
 function updateParentThumbnail(variable) {
   thumbnail.push(variable);
 }

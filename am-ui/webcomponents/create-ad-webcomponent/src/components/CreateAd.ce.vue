@@ -8,7 +8,6 @@
  */
 import ApiClient from '../api/src/ApiClient';
 import CategoriesApi from '../api/src/api/CategoriesApi';
-import TopicsApi from '../api/src/api/TopicsApi';
 import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
 import { onMounted, ref, toRefs } from 'vue';
 import CreateAdFields from './CreateAdFields.vue';
@@ -108,8 +107,8 @@ function updateRequestOfferFields() {
  * @description Method triggered from submit event in CreadAdFields component, builds the body for the
  * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
  * @param {[{}]} data - Form field values
- * @param images - Images for detail view of an ad
- * @param thumbnail - thumbnail for ad's
+ * @param {[{}]} images - Images for detail view of an ad
+ * @param {[{}]} thumbnail - thumbnail for ad's
  */
 function submit(data, images, thumbnail) {
   if (bearerToken.value) {
@@ -143,7 +142,7 @@ function submit(data, images, thumbnail) {
 }
 
 function createTopicImageSaveRequestDTO(images) {
-  const proxy = new Proxy(images, {})
+  const proxy = new Proxy(images, {});
   const files = proxy[0];
   const image = [];
   for (let i = 0; i <= files.length; i++) {
@@ -152,7 +151,11 @@ function createTopicImageSaveRequestDTO(images) {
   return image;
 }
 
-defineExpose({updateSubCategoryFields, updateRequestOfferFields, updateSubCategories});
+defineExpose({
+  updateSubCategoryFields,
+  updateRequestOfferFields,
+  updateSubCategories
+});
 </script>
 
 <template>
@@ -449,13 +452,12 @@ select {
     }
   }
 
-
   .image-preview-list-container {
     margin: 1em 0;
     width: 90%;
 
     li {
-      padding: .5em;
+      padding: 0.5em;
       width: 100%;
       margin-bottom: 0.5em;
 
@@ -487,7 +489,6 @@ select {
     }
   }
 }
-
 
 /*                           MEDIA QUERIES
 ***********************************************************************/

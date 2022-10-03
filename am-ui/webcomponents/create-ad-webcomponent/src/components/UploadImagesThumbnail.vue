@@ -1,8 +1,8 @@
 <script setup>
-import {useI18n} from "./useI18n";
-import i18n from "../locales/i18n";
+import { useI18n } from './useI18n';
+import i18n from '../locales/i18n';
 
-const {t} = useI18n(i18n.global.messages.value);
+const { t } = useI18n(i18n.global.messages.value);
 const emit = defineEmits(['change']);
 const props = defineProps({isThumbnailUpload: Boolean});
 const isThumbnailUpload = props.isThumbnailUpload.valueOf();
@@ -21,7 +21,7 @@ export default {
       for (let i = 0; i < files.length; i++) {
         this.selectedFiles.push(files[i]);
       }
-      this.$emit("update-parent", this.selectedFiles);
+      this.$emit('update-parent', this.selectedFiles);
     },
     getImage(index) {
       const file = this.selectedFiles[index];
@@ -29,7 +29,7 @@ export default {
     },
     deleteImage(index) {
       this.selectedFiles.splice(index, 1);
-      this.$emit("update-parent", this.selectedFiles);
+      this.$emit('update-parent', this.selectedFiles);
     }
   }
 }
