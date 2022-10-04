@@ -7,9 +7,6 @@
   <div class="container content-block" *ngIf="resultJson.length !== 0; else noDetailsFound">
     <a mpBackButton class="back-button">{{ 'back' | translate }}</a>
     <div class="detail-container">
-      <div class="image-container">
-        <img src="../../../assets/images/placeholder-ad-image.jpg" [alt]="getValueByKey('title')"/>
-      </div>
       <div class="title-container">
         <h2>{{ 'search-results-detail.rent' | translate }}  {{ getValueByKey('description')}}</h2>
         <span>{{ getValueByKey('address')}}, {{getValueByKey('postalCode')}} {{getValueByKey('region')}} - </span>
@@ -24,6 +21,10 @@
             {{ 'search-results-detail.price-unit-week' | translate }}
           </span>
         </span>
+
+        <div style="max-height: 500px; margin-top: 2rem" *ngIf="images.length !== 0">
+          <mp-swiper [images]="images"></mp-swiper>
+        </div>
 
         <div class="rent-container">
           <h3>{{ 'search-results-detail.rent-simple' | translate }}</h3>

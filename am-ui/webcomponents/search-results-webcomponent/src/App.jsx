@@ -35,20 +35,23 @@ class SearchResultsWebComponent extends HTMLElement {
     this._results = results;
     this.renderComponent();
   }
+
   get results() {
     return this._results;
   }
+
   set language(language) {
     this._language = language;
     this.renderComponent();
   }
+
   get language() {
     return this._language;
   }
 
   connectedCallback() {
     // Create a ShadowDOM
-    const root = this.attachShadow({ mode: 'closed' });
+    const root = this.attachShadow({mode: 'closed'});
     // Create a mount element
     this.mountPoint = document.createElement('div');
     // Adding custom style sheets for webcomponents to habe them
@@ -125,25 +128,28 @@ class SearchResultsWebComponent extends HTMLElement {
       const markers = this.getAllMarkers();
       const map = (
         center && markers &&
-          <MapContainer
-            whenCreated={mapInstance => {this.configureZoom(mapInstance)}}
-            attributionControl={false}
-            style={{height: 500}}
-            center={[center.lat, center.lng]}
-            zoom={8}
-            scrollWheelZoom={false}>
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            {markers}
-          </MapContainer>
+        <MapContainer
+          whenCreated={mapInstance => {
+            this.configureZoom(mapInstance)
+          }}
+          attributionControl={false}
+          style={{height: 500}}
+          center={[center.lat, center.lng]}
+          zoom={8}
+          scrollWheelZoom={false}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {markers}
+        </MapContainer>
       );
 
       ReactDOM.render(<>{map} {searchResultList}</>, this.mountPoint);
     }
   }
 }
+
 customElements.define('search-results-component', SearchResultsWebComponent);
 
 function App() {

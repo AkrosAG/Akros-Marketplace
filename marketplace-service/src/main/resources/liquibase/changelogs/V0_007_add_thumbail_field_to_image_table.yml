@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: V0.007/1
+      author: Filipe-Inacio
+      comment: Add thumbnail field to topicImage
+      changes:
+        - addColumn:
+            tableName: topic_image
+            columns:
+            - column:
+                name: thumbnail
+                type: boolean
+                defaultValueBoolean: false
