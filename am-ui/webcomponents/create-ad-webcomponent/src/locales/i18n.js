@@ -11,6 +11,9 @@ export default createI18n({
       publish: 'Publish',
       preview: 'Preview',
       back: 'Back',
+      delete: 'Delete',
+      upload: 'Upload images',
+      uploadThumbnail: 'Upload thumbnail',
       categories: {
         accomodation: {
           subCategories: {
@@ -76,6 +79,9 @@ export default createI18n({
       publish: 'Veröffentlichen',
       preview: 'Vorschau anzeigen',
       back: 'Zurück',
+      delete: 'Löschen',
+      upload: 'Bilder hochladen',
+      uploadThumbnail: 'Vorschaubild hochladen',
       categories: {
         accomodation: {
           subCategories: {

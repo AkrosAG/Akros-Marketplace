@@ -41,7 +41,10 @@
             ],
             "styles": [
               "src/styles.scss",
-              "./node_modules/leaflet/dist/leaflet.css"
+              "./node_modules/leaflet/dist/leaflet.css",
+              "./node_modules/swiper/swiper.scss",
+              "./node_modules/swiper/modules/pagination/pagination.scss",
+              "./node_modules/swiper/modules/navigation/navigation.scss"
             ],
             "scripts": [
               "src/assets/scripts/webcomponents/create-ad-webcomponent.js",
@@ -168,6 +171,7 @@
   },
   "defaultProject": "marketplace-ui",
   "cli": {
+    "analytics": false,
     "defaultCollection": "@angular-eslint/schematics"
   }
 }

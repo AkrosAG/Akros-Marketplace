@@ -8,17 +8,18 @@
  */
 import ApiClient from '../api/src/ApiClient';
 import CategoriesApi from '../api/src/api/CategoriesApi';
-import TopicsApi from '../api/src/api/TopicsApi';
 import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
 import { onMounted, ref, toRefs } from 'vue';
 import CreateAdFields from './CreateAdFields.vue';
 import PreviewAd from './PreviewAd.vue';
-import { useI18n } from 'vue-i18n';
 import ConfirmAd from './ConfirmAd.vue';
+import { useI18n } from 'vue-i18n';
+import CreateTopic from './CreateTopic';
+
 
 const apiClient = new ApiClient('/');
 const categoriesApi = new CategoriesApi(apiClient);
-const topicsApi = new TopicsApi(apiClient);
+const createTopic = new CreateTopic(apiClient);
 const categories = ref([]);
 const subCategories = ref([]);
 const selectedCategoryKey = ref('');
@@ -113,8 +114,10 @@ function updateRequestOfferFields() {
  * @description Method triggered from submit event in PreviewAd component, builds the body for the
  * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
  * @param {[{}]} data - Form field values
+ * @param {[{}]} images - Images for detail view of an ad
+ * @param {[{}]} thumbnail - thumbnail for ad's
  */
-function submit() {
+function submit(data, images, thumbnail) {
   if (bearerToken.value) {
     apiClient.authentications['bearerAuth'].accessToken = bearerToken.value;
   } else {
@@ -125,7 +128,17 @@ function submit() {
     (subcategory) => subcategory.key === selectedSubCategoryKey.value
   );
 
-  const dto = new TopicSaveRequestDTO(
+  let files = ([] = []);
+  if (images.length !== 0) {
+    files = createTopicImageSaveRequestDTO(images);
+  }
+
+  let thumbnailImage = {};
+  if (thumbnail.length !== 0) {
+    thumbnailImage = createTopicImageSaveRequestDTO(thumbnail)[0];
+  }
+
+  const topics = new TopicSaveRequestDTO(
     0,
     selectedSubCategory.subcategory_id,
     requestOrOffer.value.toUpperCase(),
@@ -157,6 +170,18 @@ function back() {
   showSubDropdown.value = true;
   showDropdown.value = true;
   previewAd.value = false;
+
+  createTopic.topicsPost(files, topics, thumbnailImage);
+}
+
+function createTopicImageSaveRequestDTO(images) {
+  const proxy = new Proxy(images, {});
+  const files = proxy[0];
+  const image = [];
+  for (let i = 0; i <= files.length; i++) {
+    image.push(files[i]);
+  }
+  return image;
 }
 
 defineExpose({
@@ -497,6 +522,81 @@ select {
     color: $akros-red;
     background-color: $akros-red-bg;
     border-width: 0.1rem;
+  }
+}
+
+// Styles for UploadImagesThumbnail.vue
+.upload-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .container {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    flex-direction: column;
+
+    h3 {
+      text-align: left;
+      margin: 1em 0;
+    }
+
+    .upload-container {
+      width: 100%;
+      border: 2px dashed grey;
+      border-radius: 5px;
+      padding: 0.5em;
+
+      .file-upload {
+        cursor: pointer;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        .file-upload-input {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .image-preview-list-container {
+    margin: 1em 0;
+    width: 90%;
+
+    li {
+      padding: 0.5em;
+      width: 100%;
+      margin-bottom: 0.5em;
+
+      .list-container {
+        display: grid;
+        grid-template-columns: [first] 60% [line2] 40%;
+        align-items: center;
+
+        img {
+          height: 100px;
+          object-fit: contain;
+        }
+
+        .list-button {
+          border-radius: 50px;
+          background-color: #9c132c;
+          color: white;
+          border: none;
+          padding: 6px 24px;
+          cursor: pointer;
+          font-size: 11.5pt;
+        }
+
+        .list-button:hover {
+          color: #fff;
+          background-color: $akros-red;
+        }
+      }
+    }
   }
 }
 

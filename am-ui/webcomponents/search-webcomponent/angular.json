@@ -108,6 +108,7 @@
   },
   "defaultProject": "search-webcomponent",
   "cli": {
+    "analytics": false,
     "defaultCollection": "@angular-eslint/schematics"
   }
 }

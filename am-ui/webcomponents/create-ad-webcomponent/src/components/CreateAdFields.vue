@@ -55,6 +55,82 @@
           third: field.field_type_definition_id === 7,
           disabled: field.key === 'price_unit'
         }"
+      />
+    </div>
+
+    <!-- Input type lan lon(17) -->
+    <input
+      v-if="field.field_type_definition_id === 17"
+      v-bind:id="'create-add-field-' + field.field_id"
+      hidden
+      v-model="fieldValues[field.field_id]"
+      v-on:change="event => checkField(field.field_id, field.key)"
+      v-bind:class="{
+          error: errors[field.field_id]
+        }"
+    />
+
+    <!-- Input type phone(10) -->
+    <div class="form-field full" v-if="field.field_type_definition_id === 10">
+      <input
+        v-bind:id="'create-add-field-' + field.field_id"
+        type="tel"
+        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
+        v-model="fieldValues[field.field_id]"
+        v-on:change="event => checkField(field.field_id, field.key)"
+        v-bind:class="{
+          error: errors[field.field_id]
+        }"
+      />
+    </div>
+
+    <!-- Input type file(11) -->
+    <!-- //TODO app nor post ready for images -->
+    <!-- <div class="form-field full" v-if="field.field_type_definition_id === 11">
+      <input
+        v-bind:id="'create-add-field-' + field.field_id"
+        type="file"
+        @change="uploadFiles"
+        v-model="fieldValues[field.field_id]"
+      />
+    </div> -->
+
+    <!-- Input type date half/full:(12), third(13) -->
+    <div
+      class="form-field half"
+      v-if="field.field_type_definition_id === 12 || field.field_type_definition_id === 13"
+      v-bind:class="{
+        third: field.field_type_definition_id === 13
+      }"
+    >
+      <input
+        v-bind:id="'create-add-field-' + field.field_id"
+        type="date"
+        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
+        v-model="fieldValues[field.field_id]"
+        v-on:change="event => checkField(field.field_id, field.key)"
+        v-bind:class="{
+          error: errors[field.field_id]
+        }"
+        :disabled="!hasSpecificDate"
+      />
+    </div>
+
+    <!-- Selector counter half(14), full(15) -->
+    <div
+      class="form-field half"
+      v-if="field.field_type_definition_id === 14 || field.field_type_definition_id === 15"
+      v-bind:class="{
+        third: field.field_type_definition_id === 15
+      }"
+    >
+      <select
+        v-bind:id="'create-add-field-' + field.field_id"
+        v-model="fieldValues[field.field_id]"
+        v-bind:class="{
+          error: errors[field.field_id]
+        }"
+        v-on:change="event => checkField(field.field_id, field.key)"
       >
         <select
           v-bind:id="'create-add-field-' + field.field_id"
@@ -195,6 +271,28 @@
       >{{ t('preview') }}</a>
     </p>
   </div>
+  <div class="upload-section">
+    <UploadImagesThumbnail
+      @update-parent="updateParentThumbnail"
+      :is-thumbnail-upload="true"
+    ></UploadImagesThumbnail>
+  </div>
+  <div class="upload-section">
+    <UploadImagesThumbnail
+      @update-parent="updateParent"
+      :is-thumbnail-upload="false"
+    ></UploadImagesThumbnail>
+  </div>
+  <p class="submit-row">
+    <a
+      class="btn"
+      v-on:click="submit"
+      v-bind:class="{
+        disabled: formHasErrors
+      }"
+    >{{ t('publish') }}</a
+    >
+  </p>
 </template>
 
 <script setup>
@@ -210,6 +308,7 @@
 import { onMounted, ref } from 'vue';
 import { useI18n } from './useI18n';
 import i18n from '../locales/i18n';
+import UploadImagesThumbnail from './UploadImagesThumbnail.vue';
 
 const props = defineProps({ fieldsToShow: Array, selectedCategory: String, fieldsToModify: Array });
 const emit = defineEmits(['preview']);
@@ -220,6 +319,24 @@ const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8]);
 const { t } = useI18n(i18n.global.messages.value);
 const formHasErrors = ref([]);
 const hasSpecificDate = ref(false);
+const images = [];
+const thumbnail = [];
+
+/**
+ * @description method that send the selected images from the children to the parent component.
+ * @param variable are the images that has been selected for the ad
+ */
+function updateParent(variable) {
+  images.push(variable);
+}
+
+/**
+ * @description method that send the selected thumbnail from the children to the parent component.
+ * @param variable are the thumbnail that has been selected for the ad
+ */
+function updateParentThumbnail(variable) {
+  thumbnail.push(variable);
+}
 
 console.log(props.fieldsToShow);
 /**
@@ -369,9 +486,9 @@ function preview() {
     });
   });
   if (!containsErrors) {
-    emit('preview', fields);
+    emit('preview', fields, images, thumbnail);
   } else {
-    emit('preview', fields);
+    emit('preview', fields, images, thumbnail);
     //formHasErrors.value = true;
   }
 }

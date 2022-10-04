@@ -5,7 +5,7 @@ import {FormGroup} from '@angular/forms';
 import {ValidationMessages} from '../utils/validators/ValidationMessages';
 import {TopicsService} from '../api/services';
 import {lastValueFrom} from 'rxjs';
-import {SubCategoryDto, TopicSearchRequestDto} from '../api/models';
+import {SubCategoryDto, TopicSearchFieldValuesRequestDto, TopicSearchRequestDto} from '../api/models';
 import {Store} from '@ngrx/store';
 import {SearchWebcomponentState} from '../data/store/search-webcomponent.state';
 import * as storeSelector from '../data/store/search-webcomponent.selector';
@@ -49,7 +49,8 @@ export class SearchFormComponent implements OnInit {
     private formFieldsBuilderService: FormFieldsBuilderService,
     private formFieldControlService: FormFieldControlService,
     private topicsService: TopicsService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.store.select(
@@ -63,6 +64,7 @@ export class SearchFormComponent implements OnInit {
     this.store.select(
       storeSelector.getCurrentSubCategories
     ).subscribe(currentSubcategories => this.renderForm(currentSubcategories));
+
   }
 
   renderForm(currentSubcategories: SubCategoryDto[] | undefined) {
@@ -96,10 +98,26 @@ export class SearchFormComponent implements OnInit {
    */
   async onSubmit() {
     const formData = JSON.parse(JSON.stringify(this.form.getRawValue()));
+
     this.payLoad.category_id = this.currentCategoryId;
     this.payLoad.request_or_offer = formData.requestOrOffer;
     this.payLoad.subcategory_id = this.currentSubCategoryId;
-    // TODO: Map Fields in FormData to Fields in DTO
+
+    this.payLoad.search_values = [];
+
+    let searchFields = this.selectedCategorySearchFields?.values();
+    if (searchFields !== undefined) {
+      for (const searchField of searchFields) {
+        if (formData[searchField.key] !== undefined && formData[searchField.key] !== null) {
+          let searchValue: TopicSearchFieldValuesRequestDto = {
+            field_id: searchField.id,
+            value: formData[searchField.key]
+          };
+          this.payLoad.search_values.push(searchValue);
+        }
+      }
+    }
+
     const res = await lastValueFrom(
       this.topicsService.topicsSearchesPost({body: this.payLoad})
     );

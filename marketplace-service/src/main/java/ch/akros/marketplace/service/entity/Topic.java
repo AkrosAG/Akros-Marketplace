@@ -3,6 +3,7 @@ package ch.akros.marketplace.service.entity;
 
 import java.time.LocalDate;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,7 +45,8 @@ public class Topic {
   @ToString.Exclude
   private Advertiser advertiser;
 
-  //TODO CHECK IF ENTIRE CATEGORY IS NEEDED
+
+//  TODO CHECK IF ENTIRE CATEGORY IS NEEDED
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(referencedColumnName = "SUBCATEGORY_ID", name = "SUBCATEGORY_ID",
       foreignKey = @ForeignKey(name = "TOPIC_SUBCATEGORY_FK"))
@@ -59,6 +62,10 @@ public class Topic {
   @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
   @ToString.Exclude
   private List<TopicValue> topicValues;
+
+  @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  private List<TopicImage> topicImages;
 
   @Column(name = "REQUEST_OR_OFFER")
   private String requestOrOffer;
