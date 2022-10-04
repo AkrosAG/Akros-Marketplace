@@ -5,7 +5,7 @@
       <!-- Inputs Text input fields: full(1), half(2), third(3) -->
       <div
         class="form-field full"
-        v-if="
+        v-show="
           field.field_type_definition_id === 1 ||
             field.field_type_definition_id === 2 ||
             field.field_type_definition_id === 3
@@ -28,7 +28,7 @@
       </div>
 
       <!-- Textarea(4) -->
-      <div class="form-field full" v-if="field.field_type_definition_id === 4">
+      <div class="form-field full" v-show="field.field_type_definition_id === 4">
         <textarea
           v-bind:id="'create-add-field-' + field.field_id"
           type="text"
@@ -44,7 +44,7 @@
       <!-- Selector with received options full(5), half(6), third(7) -->
       <div
         class="form-field full"
-        v-if="
+        v-show="
           (field.field_type_definition_id === 5 ||
             field.field_type_definition_id === 6 ||
             field.field_type_definition_id === 7
@@ -76,7 +76,7 @@
       <!-- Boolean checkbox(8,16) -->
       <div
         class="form-field checkbox half"
-        v-if="field.field_type_definition_id === 8 || field.field_type_definition_id === 16"
+        v-show="field.field_type_definition_id === 8 || field.field_type_definition_id === 16"
       >
         <input
           v-bind:id="'create-add-field-' + field.field_id"
@@ -88,7 +88,7 @@
       </div>
 
       <!-- Input type email(9) -->
-      <div class="form-field full" v-if="field.field_type_definition_id === 9">
+      <div class="form-field full" v-show="field.field_type_definition_id === 9">
         <input
           v-bind:id="'create-add-field-' + field.field_id"
           type="email"
@@ -104,7 +104,7 @@
 
       <!-- Input type lan lon(17) -->
         <input
-          v-if="field.field_type_definition_id === 17"
+          v-show="field.field_type_definition_id === 17"
           v-bind:id="'create-add-field-' + field.field_id"
           hidden
           v-model="fieldValues[field.field_id]"
@@ -115,7 +115,7 @@
         />
 
       <!-- Input type phone(10) -->
-      <div class="form-field full" v-if="field.field_type_definition_id === 10">
+      <div class="form-field full" v-show="field.field_type_definition_id === 10">
         <input
           v-bind:id="'create-add-field-' + field.field_id"
           type="tel"
@@ -130,7 +130,7 @@
 
       <!-- Input type file(11) -->
       <!-- //TODO app nor post ready for images -->
-      <!-- <div class="form-field full" v-if="field.field_type_definition_id === 11">
+      <!-- <div class="form-field full" v-show="field.field_type_definition_id === 11">
         <input
           v-bind:id="'create-add-field-' + field.field_id"
           type="file"
@@ -142,7 +142,7 @@
       <!-- Input type date half/full:(12), third(13) -->
       <div
         class="form-field half"
-        v-if="field.field_type_definition_id === 12 || field.field_type_definition_id === 13"
+        v-show="field.field_type_definition_id === 12 || field.field_type_definition_id === 13"
         v-bind:class="{
           third: field.field_type_definition_id === 13
         }"
@@ -163,7 +163,7 @@
       <!-- Selector counter half(14), full(15) -->
       <div
         class="form-field half"
-        v-if="field.field_type_definition_id === 14 || field.field_type_definition_id === 15"
+        v-show="field.field_type_definition_id === 14 || field.field_type_definition_id === 15"
         v-bind:class="{
           third: field.field_type_definition_id === 15
         }"

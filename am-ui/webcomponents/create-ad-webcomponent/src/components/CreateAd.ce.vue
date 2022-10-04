@@ -159,7 +159,13 @@ function back() {
   previewAd.value = false;
 }
 
-defineExpose({ updateSubCategoryFields, updateRequestOfferFields, updateSubCategories, preview, back });
+defineExpose({
+  updateSubCategoryFields,
+  updateRequestOfferFields,
+  updateSubCategories,
+  preview,
+  back
+});
 </script>
 
 <template>
@@ -173,7 +179,7 @@ defineExpose({ updateSubCategoryFields, updateRequestOfferFields, updateSubCateg
       name="create-ad-form"
       class="simple-form"
     >
-      <p v-if="showDropdown">
+      <p v-show="showDropdown">
         <select
           id="ad-category"
           v-model="selectedCategoryKey"
@@ -187,7 +193,7 @@ defineExpose({ updateSubCategoryFields, updateRequestOfferFields, updateSubCateg
           </option>
         </select>
       </p>
-      <p v-if="showSubDropdown">
+      <p v-show="showSubDropdown">
         <select
           id="ad-sub-category"
           v-model="selectedSubCategoryKey"
@@ -204,7 +210,7 @@ defineExpose({ updateSubCategoryFields, updateRequestOfferFields, updateSubCateg
           </option>
         </select>
       </p>
-      <div class="form-field half" v-if="showAdFields">
+      <div class="form-field half" v-show="showAdFields">
         <input
           id="ad-search"
           v-model="requestOrOffer"
@@ -216,7 +222,7 @@ defineExpose({ updateSubCategoryFields, updateRequestOfferFields, updateSubCateg
         />
         <label for="ad-search" class="radio-label">{{ t('offer') }}</label>
       </div>
-      <div class="form-field half" v-if="showAdFields">
+      <div class="form-field half" v-show="showAdFields">
         <input
           v-model="requestOrOffer"
           type="radio"
@@ -229,7 +235,7 @@ defineExpose({ updateSubCategoryFields, updateRequestOfferFields, updateSubCateg
       </div>
       <CreateAdFields
         :key="selectedSubCategoryKey-requestOrOffer"
-        v-if="showAdFields"
+        v-show="showAdFields"
         :selected-category="selectedCategoryKey"
         :fields-to-show="fieldsToShow"
         :fields-to-modify = "fieldsToPreview"
@@ -237,7 +243,7 @@ defineExpose({ updateSubCategoryFields, updateRequestOfferFields, updateSubCateg
       />
       <PreviewAd
         :key="selectedSubCategoryKey-requestOrOffer"
-        v-if="previewAd"
+        v-show="previewAd"
         :selected-category="selectedCategoryKey"
         :fieldsToPreview="fieldsToPreview"
         @back="back"
@@ -258,26 +264,64 @@ defineExpose({ updateSubCategoryFields, updateRequestOfferFields, updateSubCateg
 @import '../styles/colors.scss';
 @import '../styles/reset.scss';
 
-table {
-  margin: auto;
-}
+.detail-container {
+  margin-top: 1em;
 
-th,
-td,
-h1 {
-  margin: auto;
-  width: 50%;
-  padding: 10px;
-  display: inline;
+  .image-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .title-container {
+    position: relative;
+    margin-top: 2em;
+    margin-bottom: 2em;
+
+    h2 {
+      text-align: left;
+    }
+
+    h1 {
+      text-align: center;
+    }
+  }
+
+  .rent-container {
+    margin-top: 2em;
+  }
+
+  h3 {
+    text-align: left;
+    margin-bottom: 1em;
+  }
+
+  table {
+    width: 100%;
+
+    tr {
+      border-bottom: 1px solid lightgray;
+
+      th {
+        text-align: left;
+        width: 50%;
+      }
+
+      td {
+        width: 50%;
+      }
+
+      td,
+      th {
+        padding: 0.8em 0;
+      }
+    }
+  }
 }
 
 img {
-  width: 100%;
-  display: inline-block;
-}
-
-h1 {
-
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 a {

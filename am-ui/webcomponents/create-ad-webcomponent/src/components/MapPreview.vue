@@ -6,9 +6,10 @@
 </template>
 
 <script>
+import 'leaflet/dist/leaflet.css';
 import { LMap, LTileLayer, LMarker } from '@vue-leaflet/vue-leaflet';
-
-const props = defineProps({ lat: String, lon: String });
+import { CRS, LatLngBounds, Map } from 'leaflet';
+//const props = defineProps({ lat: String, lon: String });
 
 export default {
   components: {
