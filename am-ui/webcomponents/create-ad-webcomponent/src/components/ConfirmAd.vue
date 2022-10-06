@@ -1,7 +1,7 @@
 <script>
 import { useI18n } from './useI18n';
 import i18n from '../locales/i18n';
-const { t } = useI18n(i18n.global.messages.value);
+//const { t } = useI18n(i18n.global.messages.value);
 </script>
 
 <template>

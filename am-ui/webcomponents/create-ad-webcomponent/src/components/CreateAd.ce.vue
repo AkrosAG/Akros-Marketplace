@@ -16,7 +16,6 @@ import ConfirmAd from './ConfirmAd.vue';
 import { useI18n } from 'vue-i18n';
 import CreateTopic from './CreateTopic';
 
-
 const apiClient = new ApiClient('/');
 const categoriesApi = new CategoriesApi(apiClient);
 const createTopic = new CreateTopic(apiClient);
@@ -27,6 +26,8 @@ const selectedSubCategoryKey = ref('');
 const requestOrOffer = ref('OFFER');
 const fieldsToShow = ref([]);
 const fieldsToPreview = ref([]);
+const images = [];
+const thumbnail = [];
 const showDropdown = ref(true);
 const showSubDropdown = ref(false);
 const showAdFields = ref(false);
@@ -128,9 +129,9 @@ function submit(data, images, thumbnail) {
     (subcategory) => subcategory.key === selectedSubCategoryKey.value
   );
 
-  let files = ([] = []);
+  let imagesToUpload = ([] = []);
   if (images.length !== 0) {
-    files = createTopicImageSaveRequestDTO(images);
+    imagesToUpload = createTopicImageSaveRequestDTO(images);
   }
 
   let thumbnailImage = {};
@@ -144,7 +145,7 @@ function submit(data, images, thumbnail) {
     requestOrOffer.value.toUpperCase(),
     fieldsToPreview
   );
-  topicsApi.topicsPost(dto);
+  createTopic.topicsPost(imagesToUpload, topics, thumbnailImage);
   previewAd.value = false;
   confirmAd.value = true;
 }
@@ -152,14 +153,22 @@ function submit(data, images, thumbnail) {
 /**
  * @description Method triggered from submit event in CreadAdFields component, builds the body for the
  * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
- * @param {[{}]} data - Form field values
+ * @param {[{}]} fields - Form field values
+ * @param {[{}]} imagesUploaded
+ * @param {[{}]} thumbnailUploaded
  */
-function preview(data) {
+function preview(fields, imagesUploaded, thumbnailUploaded) {
   showAdFields.value = false;
   showSubDropdown.value = false;
   showDropdown.value = false;
   previewAd.value = true;
-  fieldsToPreview.value = data;
+  fieldsToPreview.value = fields;
+  let i = ([] = []);
+  if (images.length !== 0) {
+    i = createTopicImageSaveRequestDTO(imagesUploaded);
+  }
+  images.value = i;
+  thumbnail.value = thumbnailUploaded;
 }
 
 /**
@@ -170,10 +179,13 @@ function back() {
   showSubDropdown.value = true;
   showDropdown.value = true;
   previewAd.value = false;
-
-  createTopic.topicsPost(files, topics, thumbnailImage);
 }
 
+/**
+ * @description
+ * @param {Array} images
+ * @return {Array}
+ */
 function createTopicImageSaveRequestDTO(images) {
   const proxy = new Proxy(images, {});
   const files = proxy[0];
@@ -187,9 +199,7 @@ function createTopicImageSaveRequestDTO(images) {
 defineExpose({
   updateSubCategoryFields,
   updateRequestOfferFields,
-  updateSubCategories,
-  preview,
-  back
+  updateSubCategories
 });
 </script>
 
@@ -204,7 +214,7 @@ defineExpose({
       name="create-ad-form"
       class="simple-form"
     >
-      <p v-show="showDropdown">
+      <p v-if="showDropdown">
         <select
           id="ad-category"
           v-model="selectedCategoryKey"
@@ -218,7 +228,7 @@ defineExpose({
           </option>
         </select>
       </p>
-      <p v-show="showSubDropdown">
+      <p v-if="showSubDropdown">
         <select
           id="ad-sub-category"
           v-model="selectedSubCategoryKey"
@@ -235,7 +245,7 @@ defineExpose({
           </option>
         </select>
       </p>
-      <div class="form-field half" v-show="showAdFields">
+      <div class="form-field half" v-if="showAdFields">
         <input
           id="ad-search"
           v-model="requestOrOffer"
@@ -247,7 +257,7 @@ defineExpose({
         />
         <label for="ad-search" class="radio-label">{{ t('offer') }}</label>
       </div>
-      <div class="form-field half" v-show="showAdFields">
+      <div class="form-field half" v-if="showAdFields">
         <input
           v-model="requestOrOffer"
           type="radio"
@@ -260,25 +270,24 @@ defineExpose({
       </div>
       <CreateAdFields
         :key="selectedSubCategoryKey-requestOrOffer"
-        v-show="showAdFields"
+        v-if="showAdFields"
         :selected-category="selectedCategoryKey"
         :fields-to-show="fieldsToShow"
         :fields-to-modify = "fieldsToPreview"
         @preview="preview"
       />
       <PreviewAd
-        :key="selectedSubCategoryKey-requestOrOffer"
-        v-show="previewAd"
+        v-if="previewAd"
         :selected-category="selectedCategoryKey"
         :fieldsToPreview="fieldsToPreview"
+        :images="images"
+        :thumbnail="thumbnail"
         @back="back"
         @submit="submit"
       />
       <ConfirmAd
         :key="selectedSubCategoryKey-requestOrOffer"
         v-if="confirmAd"
-        :selected-category="selectedCategoryKey"
-        :fields-to-show="fieldsToShow"
       />
     </form>
   </div>
