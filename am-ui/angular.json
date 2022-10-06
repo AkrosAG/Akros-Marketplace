@@ -151,7 +151,8 @@
         "cypress-run": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "marketplace-ui:serve"
+            "devServerTarget": "marketplace-ui:serve",
+            "browser": "chrome"
           },
           "configurations": {
             "production": {
