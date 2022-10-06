@@ -19,6 +19,10 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: none
+  servlet:
+    multipart:
+      max-file-size: 500KB
+      max-request-size: 10MB
 
 server:
   ssl:
