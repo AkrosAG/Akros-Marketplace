@@ -9,6 +9,9 @@ export default createI18n({
       request: 'I\'m looking for',
       categoriesPlaceholder: 'Ad category',
       publish: 'Preview and publish',
+      delete: 'Delete',
+      upload: 'Upload images',
+      uploadThumbnail: 'Upload thumbnail',
       categories: {
         accomodation: {
           subCategories: {
@@ -26,6 +29,8 @@ export default createI18n({
           size: 'Living space (M²)',
           price: 'Rent (CHF)',
           floor: 'Floor',
+          lat: 'Latitude (x-coordinate)',
+          lon: 'Longitude (y-coordinate)',
           priceUnit: {
             title: 'Price unit',
             options: {
@@ -70,6 +75,9 @@ export default createI18n({
       request: 'Ich suche nach',
       categoriesPlaceholder: 'Art des Angebots',
       publish: 'Vorschau anzeigen und veröffentlichen',
+      delete: 'Löschen',
+      upload: 'Bilder hochladen',
+      uploadThumbnail: 'Vorschaubild hochladen',
       categories: {
         accomodation: {
           subCategories: {
@@ -87,6 +95,8 @@ export default createI18n({
           size: 'Wohnfläche (M²)',
           price: 'Miete (CHF)',
           floor: 'Etage',
+          lat: 'Breitengrad (x-Koordinate)',
+          lon: 'Längengrade (y-Koordinate)',
           priceUnit: {
             title: 'Preiseinheit',
             options: {

@@ -562,3 +562,20 @@ databaseChangeLog:
                   name: field_id
                   valueNumeric: 34
             tableName: subcategory_field
+  - changeSet:
+      id: V0.002/9
+      author: asiday
+      comment: Remove fields for parking
+      changes:
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=1 AND field_id=34
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=2 AND field_id=34
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=3 AND field_id=34
+        - delete:
+            tableName: subcategory_field
+            where: subcategory_id=4 AND field_id=34

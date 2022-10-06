@@ -63,6 +63,10 @@ public class Topic {
   @ToString.Exclude
   private List<TopicValue> topicValues;
 
+  @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  private List<TopicImage> topicImages;
+
   @Column(name = "REQUEST_OR_OFFER")
   private String requestOrOffer;
 }

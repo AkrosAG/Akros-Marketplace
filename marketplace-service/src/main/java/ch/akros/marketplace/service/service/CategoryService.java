@@ -11,11 +11,10 @@ import ch.akros.marketplace.service.entity.FieldOption;
 import ch.akros.marketplace.service.entity.SubCategory;
 import ch.akros.marketplace.service.repository.CategoryRepository;
 import ch.akros.marketplace.service.repository.FieldRepository;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CategoryService {
@@ -30,22 +29,22 @@ public class CategoryService {
   }
 
   public List<CategoryDTO> listCategories(Boolean create) {
-      return categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "key"))
-          .stream()
-          .map(category -> {
-            List<SubCategory> subCategories = category.getSubCategories();
-            for (SubCategory subCategory : subCategories) {
-              if (Boolean.TRUE.equals(create)) {
-                subCategory.setFields(fieldRepository.listSubCategoryCreateFields(subCategory.getSubCategoryId()));
-              } else {
-                subCategory.setFields(fieldRepository.listSubCategorySearchFields(subCategory.getSubCategoryId()));
-              }
-            }
+    return categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "key"))
+      .stream()
+      .map(category -> {
+        List<SubCategory> subCategories = category.getSubCategories();
+        for (SubCategory subCategory : subCategories) {
+          if (Boolean.TRUE.equals(create)) {
+            subCategory.setFields(fieldRepository.listSubCategoryCreateFields(subCategory.getSubCategoryId()));
+          } else {
+            subCategory.setFields(fieldRepository.listSubCategorySearchFields(subCategory.getSubCategoryId()));
+          }
+        }
 
-            return category;
-          })
-          .map(this::toCategoryDTO)
-          .collect(Collectors.toList());
+        return category;
+      })
+      .map(this::toCategoryDTO)
+      .collect(Collectors.toList());
   }
 
   private CategoryDTO toCategoryDTO(Category category) {

@@ -133,7 +133,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     timeout-minutes: 15
     runs-on: ubuntu-latest

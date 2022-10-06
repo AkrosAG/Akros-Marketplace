@@ -23,6 +23,7 @@ import {createCustomElement} from '@angular/elements';
 import {ApiModule} from './api/api.module';
 import {DateClickDirective} from './utils/directives/date-click.directive';
 import {SwitchCasesDirective} from './utils/directives/switch-cases.directive';
+import {MpSearchService} from './mp-search.service';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import {SwitchCasesDirective} from './utils/directives/switch-cases.directive';
     FormFieldControlService,
     FormFieldsBuilderService,
     LocalizationService,
+    MpSearchService
   ],
   entryComponents: [MpSearchComponent],
 })

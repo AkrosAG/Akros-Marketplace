@@ -100,6 +100,18 @@
       />
     </div>
 
+    <!-- Input type lan lon(17) -->
+    <input
+      v-if="field.field_type_definition_id === 17"
+      v-bind:id="'create-add-field-' + field.field_id"
+      hidden
+      v-model="fieldValues[field.field_id]"
+      v-on:change="event => checkField(field.field_id, field.key)"
+      v-bind:class="{
+          error: errors[field.field_id]
+        }"
+    />
+
     <!-- Input type phone(10) -->
     <div class="form-field full" v-if="field.field_type_definition_id === 10">
       <input
@@ -171,6 +183,18 @@
       </select>
     </div>
   </div>
+  <div class="upload-section">
+    <UploadImagesThumbnail
+      @update-parent="updateParentThumbnail"
+      :is-thumbnail-upload="true"
+    ></UploadImagesThumbnail>
+  </div>
+  <div class="upload-section">
+    <UploadImagesThumbnail
+      @update-parent="updateParent"
+      :is-thumbnail-upload="false"
+    ></UploadImagesThumbnail>
+  </div>
   <p class="submit-row">
     <a
       class="btn"
@@ -178,7 +202,7 @@
       v-bind:class="{
         disabled: formHasErrors
       }"
-      >{{ t('publish') }}</a
+    >{{ t('publish') }}</a
     >
   </p>
 </template>
@@ -196,8 +220,9 @@
 import { onMounted, ref } from 'vue';
 import { useI18n } from './useI18n';
 import i18n from '../locales/i18n';
+import UploadImagesThumbnail from './UploadImagesThumbnail.vue';
 
-const props = defineProps({ fieldsToShow: Array, selectedCategory: String });
+const props = defineProps({fieldsToShow: Array, selectedCategory: String});
 const emit = defineEmits(['submit']);
 const fieldValues = ref([]);
 const fieldKeys = ref([]);
@@ -206,6 +231,24 @@ const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8]);
 const { t } = useI18n(i18n.global.messages.value);
 const formHasErrors = ref([]);
 const hasSpecificDate = ref(false);
+const images = [];
+const thumbnail = [];
+
+/**
+ * @description method that send the selected images from the children to the parent component.
+ * @param variable are the images that has been selected for the ad
+ */
+function updateParent(variable) {
+  images.push(variable);
+}
+
+/**
+ * @description method that send the selected thumbnail from the children to the parent component.
+ * @param variable are the thumbnail that has been selected for the ad
+ */
+function updateParentThumbnail(variable) {
+  thumbnail.push(variable);
+}
 
 /**
  * @description Method to validate the input in the form fields, currently only implemented for accomodation
@@ -273,6 +316,8 @@ function checkField(fieldId, fieldKey) {
     // Phone, price, size, floor: Number only regex
     case 'phone':
     case 'price':
+    case 'lat':
+    case 'lon':
     case 'size':
     case 'floor':
     case 'radius':
@@ -349,15 +394,16 @@ function submit() {
   if (!containsErrors) {
     const fields = [];
     props.fieldsToShow.forEach((field) => {
-      fields.push({ field_type_id: field.field_id, value: fieldValues.value[field.field_id] });
+      fields.push({field_type_id: field.field_id, value: fieldValues.value[field.field_id]});
     });
-    emit('submit', fields);
+    emit('submit', fields, images, thumbnail);
   } else {
     formHasErrors.value = true;
   }
 }
 
 onMounted(() => {
+
   formHasErrors.value = false;
   props.fieldsToShow.forEach((field) => {
     // checkbox default value shoud be false

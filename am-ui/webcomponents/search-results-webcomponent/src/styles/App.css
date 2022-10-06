@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
-
+@import '../../node_modules/leaflet/dist/leaflet.css';
 /*                         GENERAL STYLING
 ***********************************************************************/
 h1 {
@@ -80,6 +80,7 @@ img {
   margin-bottom: 0.4em;
 }
 .sr-ad-thumb {
+  height: 250px;
   display: block;
   border-radius: 0.5em;
   object-fit: cover;

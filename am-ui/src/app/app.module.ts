@@ -47,9 +47,13 @@ import {UserService} from './data/services/login/user.service';
 import {environment} from 'src/environments/environment';
 import {SearchResultsComponent} from './components/search-results/search-results.component';
 import {SearchResultDetailsComponent} from './components/search-result-details/search-result-details.component';
+import {SearchResultDetailsMapComponent} from './components/search-result-details/search-result-details-map/search-result-details-map.component';
 import {BackButtonDirective} from './utils/back-button.directive';
 import {NavigationService} from './utils/navigation.service';
 import {OAuthModule, OAuthService, OAuthStorage} from 'angular-oauth2-oidc';
+import {SearchResultDetailsService} from './components/search-result-details/search-result-details.service';
+import {SwiperComponent} from './components/swiper/swiper.component';
+import {SwiperModule} from 'swiper/angular';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -88,7 +92,9 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     AdsComponent,
     SearchResultsComponent,
     SearchResultDetailsComponent,
+    SearchResultDetailsMapComponent,
     BackButtonDirective,
+    SwiperComponent,
   ],
   imports: [
     BrowserModule,
@@ -114,10 +120,12 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
         deps: [HttpClient],
       },
     }),
+    SwiperModule,
   ],
   providers: [
     RestHelperService,
     UserService,
+    SearchResultDetailsService,
     AuthGuard,
     {
       provide: LOCALE_ID,

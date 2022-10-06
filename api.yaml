@@ -65,29 +65,6 @@ paths:
             "application/problem+json":
               schema:
                 $ref: "#/components/schemas/Problem"
-  /topics:
-    post:
-      tags:
-        - Topics
-      summary: Save a topic
-      description: Save a topic
-      requestBody:
-        description: All values to save a topic
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/TopicSaveRequestDTO"
-        required: true
-      responses:
-        200:
-          description: OK
-        default:
-          description: Unexpected error
-          content:
-            "application/problem+json":
-              schema:
-                $ref: "#/components/schemas/Problem"
-
     delete:
       tags:
         - Topics
@@ -138,6 +115,24 @@ paths:
             "application/problem+json":
               schema:
                 $ref: "#/components/schemas/Problem"
+    get:
+      tags:
+        - Topics
+      summary: Search for all topics
+      description: Search for all topics
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TopicSearchListResponseDTO"
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: "#/components/schemas/Problem"
 
 components:
   securitySchemes:
@@ -172,6 +167,26 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/SubCategoryDTO"
+
+    TopicImageDTO:
+      type: object
+      required:
+        - topic_image_id
+        - topic_id
+        - thumbnail
+        - value
+      properties:
+        topic_image_id:
+          type: integer
+          format: int64
+        topic_id:
+          type: integer
+          format: int64
+        thumbnail:
+          type: boolean
+        value:
+          type: string
+          format: byte
 
     SubCategoryDTO:
       type: object
@@ -290,6 +305,7 @@ components:
         - subcategory_id
         - request_or_offer
         - topic_values
+        - topic_images
       properties:
         topic_id:
           type: integer
@@ -306,6 +322,10 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TopicValueLoadResponseDTO"
+        topic_images:
+          type: array
+          items:
+            $ref: "#/components/schemas/TopicImageDTO"
 
     TopicValueLoadResponseDTO:
       type: object
@@ -385,11 +405,16 @@ components:
       type: object
       required:
         - topics
+        - images
       properties:
         topics:
           type: array
           items:
             $ref: "#/components/schemas/TopicSearchResponseDTO"
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/TopicImageDTO"
 
     TopicSearchResponseDTO:
       type: object
@@ -408,6 +433,10 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TopicSearchValueResponseDTO"
+        topic_images:
+          type: array
+          items:
+            $ref: "#/components/schemas/TopicImageDTO"
 
     TopicSearchValueResponseDTO:
       type: object
@@ -427,6 +456,7 @@ components:
           type: string
         value:
           type: string
+
 
     Problem:
       type: object
@@ -476,4 +506,4 @@ components:
           example: "/problem/connection-error#token-info-read-timed-out"
 
 security:
-  - bearerAuth: []
+  - bearerAuth: [ ]

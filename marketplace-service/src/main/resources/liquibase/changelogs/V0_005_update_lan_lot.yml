@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: V0.005/1
+      author: Filipe-Inacio
+      comment: Update existing fields
+      changes:
+        - update:
+            columns:
+              - column:
+                  name: field_type_definition_id
+                  value: 17
+              - column:
+                  name: required
+                  value: false
+            tableName: field
+            where: field_id=36
+        - update:
+            columns:
+              - column:
+                  name: field_type_definition_id
+                  value: 17
+              - column:
+                  name: required
+                  value: false
+            tableName: field
+            where: field_id=37

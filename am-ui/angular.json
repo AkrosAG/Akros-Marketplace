@@ -32,10 +32,19 @@
                 "glob": "silent-refresh.html",
                 "input": "src/assets/static-pages/",
                 "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images/",
+                "output": "./assets"
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/leaflet/dist/leaflet.css",
+              "./node_modules/swiper/swiper.scss",
+              "./node_modules/swiper/modules/pagination/pagination.scss",
+              "./node_modules/swiper/modules/navigation/navigation.scss"
             ],
             "scripts": [
               "src/assets/scripts/webcomponents/create-ad-webcomponent.js",
@@ -68,7 +77,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "2mb"
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -162,6 +171,7 @@
   },
   "defaultProject": "marketplace-ui",
   "cli": {
+    "analytics": false,
     "defaultCollection": "@angular-eslint/schematics"
   }
 }
