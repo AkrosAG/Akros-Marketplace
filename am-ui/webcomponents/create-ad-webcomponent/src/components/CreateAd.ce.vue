@@ -172,7 +172,7 @@ function preview(fields, imagesUploaded, thumbnailUploaded) {
 }
 
 /**
- * @description
+ * @description Hides and display elements to go back to the edit ad page from the preview page.
  */
 function back() {
   showAdFields.value = true;
@@ -181,11 +181,6 @@ function back() {
   previewAd.value = false;
 }
 
-/**
- * @description
- * @param {Array} images
- * @return {Array}
- */
 function createTopicImageSaveRequestDTO(images) {
   const proxy = new Proxy(images, {});
   const files = proxy[0];

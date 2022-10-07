@@ -3,10 +3,6 @@
     <h3>Preview</h3>
     <br />
     <div class="image-container">
-      <!--<img
-        src="https://media.istockphoto.com/photos/bohemian-living-room-interior-3d-render-picture-id1182454657?k=20&m=1182454657&s=612x612&w=0&h=1xEsm7BqeicA8jYk9KlerUtGsAgzzo530l5Ak1HJdnc="
-        alt="2 ½ rooms apartment"
-      />-->
       <SwiperPreview :images="props.images.value"></SwiperPreview>
     </div>
     <div class="rent-container">
@@ -25,11 +21,6 @@
           </tr>
         </tbody>
       </table>
-      <!--<MapPreview
-        v-if="props.fieldsToPreview.lat != '' && props.fieldsToPreview.lon != ''"
-        :lat="props.fieldsToPreview.lat"
-        :lon="props.fieldsToPreview.lon"
-      ></MapPreview>-->
     </div>
     <p class="submit-row">
       <a
@@ -45,7 +36,6 @@
 <script setup>
 import { useI18n } from './useI18n';
 import i18n from '../locales/i18n';
-import MapPreview from './MapPreview.vue';
 import SwiperPreview from './SwiperPreview.vue';
 
 const props = defineProps({
