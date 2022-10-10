@@ -163,12 +163,6 @@ function preview(fields, imagesUploaded, thumbnailUploaded) {
   showDropdown.value = false;
   previewAd.value = true;
   fieldsToPreview.value = fields;
-  let i = ([] = []);
-  console.log(imagesUploaded);
-  if (imagesUploaded.length !== 0) {
-    i = createTopicImageSaveRequestDTO(imagesUploaded);
-    console.log(i);
-  }
   images.value = imagesUploaded;
   thumbnail.value = thumbnailUploaded;
 }
@@ -181,16 +175,6 @@ function back() {
   showSubDropdown.value = true;
   showDropdown.value = true;
   previewAd.value = false;
-}
-
-function createTopicImageSaveRequestDTO(images) {
-  const proxy = new Proxy(images, {});
-  const files = proxy[0];
-  const image = [];
-  for (let i = 0; i < files.length; i++) {
-    image.push(files[i]);
-  }
-  return image;
 }
 
 defineExpose({
