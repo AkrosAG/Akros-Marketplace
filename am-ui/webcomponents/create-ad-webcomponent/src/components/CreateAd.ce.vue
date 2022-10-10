@@ -11,6 +11,8 @@ import CategoriesApi from '../api/src/api/CategoriesApi';
 import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
 import { onMounted, ref, toRefs } from 'vue';
 import CreateAdFields from './CreateAdFields.vue';
+import PreviewAd from './PreviewAd.vue';
+import ConfirmAd from './ConfirmAd.vue';
 import { useI18n } from 'vue-i18n';
 import CreateTopic from './CreateTopic';
 
@@ -23,8 +25,14 @@ const selectedCategoryKey = ref('');
 const selectedSubCategoryKey = ref('');
 const requestOrOffer = ref('OFFER');
 const fieldsToShow = ref([]);
+const fieldsToPreview = ref([]);
+const images = [];
+const thumbnail = [];
+const showDropdown = ref(true);
 const showSubDropdown = ref(false);
 const showAdFields = ref(false);
+const previewAd = ref(false);
+const confirmAd = ref(false);
 const currentRequestFields = ref([]);
 const currentOfferFields = ref([]);
 const props = defineProps({
@@ -104,7 +112,7 @@ function updateRequestOfferFields() {
 }
 
 /**
- * @description Method triggered from submit event in CreadAdFields component, builds the body for the
+ * @description Method triggered from submit event in PreviewAd component, builds the body for the
  * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
  * @param {[{}]} data - Form field values
  * @param {[{}]} images - Images for detail view of an ad
@@ -121,9 +129,9 @@ function submit(data, images, thumbnail) {
     (subcategory) => subcategory.key === selectedSubCategoryKey.value
   );
 
-  let files = ([] = []);
+  let imagesToUpload = ([] = []);
   if (images.length !== 0) {
-    files = createTopicImageSaveRequestDTO(images);
+    imagesToUpload = createTopicImageSaveRequestDTO(images);
   }
 
   let thumbnailImage = {};
@@ -135,20 +143,38 @@ function submit(data, images, thumbnail) {
     0,
     selectedSubCategory.subcategory_id,
     requestOrOffer.value.toUpperCase(),
-    data
+    fieldsToPreview
   );
-
-  createTopic.topicsPost(files, topics, thumbnailImage);
+  createTopic.topicsPost(imagesToUpload, topics, thumbnailImage);
+  previewAd.value = false;
+  confirmAd.value = true;
 }
 
-function createTopicImageSaveRequestDTO(images) {
-  const proxy = new Proxy(images, {});
-  const files = proxy[0];
-  const image = [];
-  for (let i = 0; i <= files.length; i++) {
-    image.push(files[i]);
-  }
-  return image;
+/**
+ * @description Method triggered from submit event in CreadAdFields component, builds the body for the
+ * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
+ * @param {[{}]} fields - Form field values
+ * @param {[{}]} imagesUploaded
+ * @param {[{}]} thumbnailUploaded
+ */
+function preview(fields, imagesUploaded, thumbnailUploaded) {
+  showAdFields.value = false;
+  showSubDropdown.value = false;
+  showDropdown.value = false;
+  previewAd.value = true;
+  fieldsToPreview.value = fields;
+  images.value = imagesUploaded;
+  thumbnail.value = thumbnailUploaded;
+}
+
+/**
+ * @description Hides and display elements to go back to the edit ad page from the preview page.
+ */
+function back() {
+  showAdFields.value = true;
+  showSubDropdown.value = true;
+  showDropdown.value = true;
+  previewAd.value = false;
 }
 
 defineExpose({
@@ -169,7 +195,7 @@ defineExpose({
       name="create-ad-form"
       class="simple-form"
     >
-      <p>
+      <p v-if="showDropdown">
         <select
           id="ad-category"
           v-model="selectedCategoryKey"
@@ -228,7 +254,21 @@ defineExpose({
         v-if="showAdFields"
         :selected-category="selectedCategoryKey"
         :fields-to-show="fieldsToShow"
+        :fields-to-modify = "fieldsToPreview"
+        @preview="preview"
+      />
+      <PreviewAd
+        v-if="previewAd"
+        :selected-category="selectedCategoryKey"
+        :fieldsToPreview="fieldsToPreview"
+        :images="images"
+        :thumbnail="thumbnail"
+        @back="back"
         @submit="submit"
+      />
+      <ConfirmAd
+        :key="selectedSubCategoryKey-requestOrOffer"
+        v-if="confirmAd"
       />
     </form>
   </div>
@@ -238,6 +278,66 @@ defineExpose({
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 @import '../styles/colors.scss';
 @import '../styles/reset.scss';
+
+.detail-container {
+  margin-top: 1em;
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .title-container {
+    position: relative;
+    margin-top: 2em;
+    margin-bottom: 2em;
+
+    h2 {
+      text-align: left;
+    }
+
+    h1 {
+      text-align: center;
+    }
+  }
+
+  .rent-container {
+    margin-top: 2em;
+  }
+
+  h3 {
+    text-align: left;
+    margin-bottom: 1em;
+  }
+
+  table {
+    width: 100%;
+
+    tr {
+      border-bottom: 1px solid lightgray;
+
+      th {
+        text-align: left;
+        width: 50%;
+      }
+
+      td {
+        width: 50%;
+      }
+
+      td,
+      th {
+        padding: 0.8em 0;
+      }
+    }
+  }
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 a {
   font-weight: 500;
