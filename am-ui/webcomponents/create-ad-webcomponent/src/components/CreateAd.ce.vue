@@ -164,10 +164,12 @@ function preview(fields, imagesUploaded, thumbnailUploaded) {
   previewAd.value = true;
   fieldsToPreview.value = fields;
   let i = ([] = []);
-  if (images.length !== 0) {
+  console.log(imagesUploaded);
+  if (imagesUploaded.length !== 0) {
     i = createTopicImageSaveRequestDTO(imagesUploaded);
+    console.log(i);
   }
-  images.value = i;
+  images.value = imagesUploaded;
   thumbnail.value = thumbnailUploaded;
 }
 
@@ -185,7 +187,7 @@ function createTopicImageSaveRequestDTO(images) {
   const proxy = new Proxy(images, {});
   const files = proxy[0];
   const image = [];
-  for (let i = 0; i <= files.length; i++) {
+  for (let i = 0; i < files.length; i++) {
     image.push(files[i]);
   }
   return image;

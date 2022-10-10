@@ -2,9 +2,6 @@
   <div class="detail-container container-fluid simple">
     <h3>Preview</h3>
     <br />
-    <div class="image-container">
-      <SwiperPreview :images="props.images.value"></SwiperPreview>
-    </div>
     <div class="rent-container">
       <table class="table">
         <tbody>
@@ -15,7 +12,7 @@
                 field.value !== '' && field.field_type_id !== 'lat' && field.field_type_id !== 'lon'
               "
             >
-              <th scope="col">{{ t(`categories.${selectedCategory}.${field.key}`) }}</th>
+              <th scope="col">{{ t(`categories.${selectedCategory}.${field.key}`) + ': ' }}</th>
               <td>{{ field.value }}</td>
             </div>
           </tr>
@@ -36,7 +33,6 @@
 <script setup>
 import { useI18n } from './useI18n';
 import i18n from '../locales/i18n';
-import SwiperPreview from './SwiperPreview.vue';
 
 const props = defineProps({
   fieldsToPreview: Array,

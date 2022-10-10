@@ -381,8 +381,6 @@ function preview() {
       }
     }
   });
-  // TO DELETE
-  containsErrors = false;
   if (!containsErrors) {
     const fields = [];
     props.fieldsToShow.forEach((field) => {
@@ -398,6 +396,7 @@ function preview() {
     formHasErrors.value = true;
   }
 }
+
 onMounted(() => {
   formHasErrors.value = false;
   props.fieldsToShow.forEach((field) => {
