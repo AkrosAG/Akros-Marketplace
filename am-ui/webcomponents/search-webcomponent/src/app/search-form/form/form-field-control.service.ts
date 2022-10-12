@@ -56,7 +56,7 @@ export class FormFieldControlService {
     return new FormGroup(group);
   }
 
-    /**
+  /**
    * @description Funtion to obtain validation messages for category fields
    * @param {formFields} FormFieldBase[] - Array of category fields already transformed into FormFieldBase objects
    */
