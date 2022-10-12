@@ -236,7 +236,7 @@ defineExpose({
           checked="checked"
           @change="updateRequestOfferFields"
         />
-        <label for="ad-search" class="radio-label">{{ t('offer') }}</label>
+        <label for="ad-search">{{ t('offer') }}</label>
       </div>
       <div class="form-field half" v-if="showAdFields">
         <input
@@ -245,7 +245,7 @@ defineExpose({
           name="type-ad"
           value="REQUEST"
           @change="updateRequestOfferFields"
-        /><label for="ad-offer" class="radio-label">
+        /><label for="ad-offer">
         {{ t('request') }}
       </label>
       </div>
@@ -282,6 +282,13 @@ defineExpose({
 .detail-container {
   margin-top: 1em;
 
+  .title{
+    text-align: left;
+    margin-bottom: 1em;
+    font-weight:bold;
+    font-size:1.3em;
+  }
+
   .image-container {
     display: flex;
     justify-content: center;
@@ -316,13 +323,17 @@ defineExpose({
     tr {
       border-bottom: 1px solid lightgray;
 
+      div{
+       display: flex;
+      }
+
       th {
         text-align: left;
-        width: 50%;
       }
 
       td {
-        width: 50%;
+        position: relative;
+        margin-left: 0.4em;
       }
 
       td,

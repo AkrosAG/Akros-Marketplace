@@ -1,6 +1,6 @@
 <template>
   <div class="detail-container container-fluid simple">
-    <h3>Preview</h3>
+    <span class="title">Preview</span>
     <br />
     <div class="rent-container">
       <table class="table">
@@ -13,7 +13,7 @@
               "
             >
               <th scope="col">{{ t(`categories.${selectedCategory}.${field.key}`) + ': ' }}</th>
-              <td>{{ field.value }}</td>
+              <td>{{ getFieldValue(field) }} </td>
             </div>
           </tr>
         </tbody>
@@ -42,4 +42,35 @@ const props = defineProps({
 });
 const { t } = useI18n(i18n.global.messages.value);
 const emit = defineEmits(['submit', 'back']);
+/**
+ * Retrieves the value property from the Field and formats the content according to its type.
+ * @param {[{}]} field - contains all the field properties
+ */
+function getFieldValue(field) {
+  switch(field.key.toLowerCase()) {
+  case "price":{
+     const options = { style: "decimal", minimumFractionDigits: 2, maximumFractionDigits: 2  };
+     let formatter = new Intl.NumberFormat('de-CH', options);
+     return formatter.format(field.value);
+      break;
+   }
+  case "date":{
+     const splittedDate = field.value.split("-");
+     return (`${splittedDate[2]}.${splittedDate[1]}.${splittedDate[0]}`);
+     break;
+  }
+  case "furnished":{
+    return field.value? t('affirmative')  : t('negative');
+     break;
+  }
+  case "temporary":{
+    return field.value? t('affirmative')  : t('negative');
+     break;
+  }
+  default:
+    return field.value ;
+    break;
+}
+
+}
 </script>

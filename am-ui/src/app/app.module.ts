@@ -1,4 +1,4 @@
-import {CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
@@ -150,6 +150,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     NavigationService,
     OAuthService,
     {provide: OAuthStorage, useValue: localStorage},
+    {provide: DEFAULT_CURRENCY_CODE, useValue: 'CHF' },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],

@@ -5,6 +5,8 @@ export default createI18n({
   legacy: false,
   messages: {
     en: {
+      affirmative: "Yes",
+      negative: "No",
       offer: "I'm offering",
       request: "I'm looking for",
       categoriesPlaceholder: 'Ad category',
@@ -73,6 +75,8 @@ export default createI18n({
       }
     },
     de: {
+      affirmative: "Ja",
+      negative: "Nein",
       offer: 'Ich biete',
       request: 'Ich suche nach',
       categoriesPlaceholder: 'Art des Angebots',
