@@ -16,6 +16,7 @@ export default createI18n({
       delete: 'Delete',
       upload: 'Upload images',
       uploadThumbnail: 'Upload thumbnail',
+      adIsPublished:'Ad is published',
       categories: {
         accomodation: {
           subCategories: {
@@ -86,6 +87,7 @@ export default createI18n({
       delete: 'Löschen',
       upload: 'Bilder hochladen',
       uploadThumbnail: 'Vorschaubild hochladen',
+      adIsPublished:'Anzeige wird veröffentlicht',
       categories: {
         accomodation: {
           subCategories: {
