@@ -12,7 +12,7 @@
                 field.value !== '' && field.field_type_id !== 'lat' && field.field_type_id !== 'lon'
               "
             >
-              <th scope="col">{{ t(`categories.${selectedCategory}.${field.key}`) + ': ' }}</th>
+              <th scope="col">{{ getFieldTitle(field, selectedCategory) }}  :  </th>
               <td>{{ getFieldValue(field) }} </td>
             </div>
           </tr>
@@ -31,46 +31,68 @@
 </template>
 
 <script setup>
-import { useI18n } from './useI18n';
-import i18n from '../locales/i18n';
+    import { useI18n } from './useI18n';
+    import i18n from '../locales/i18n';
 
-const props = defineProps({
-  fieldsToPreview: Array,
-  selectedCategory: String,
-  images: Array,
-  thumbnail: Array
-});
-const { t } = useI18n(i18n.global.messages.value);
-const emit = defineEmits(['submit', 'back']);
-/**
- * Retrieves the value property from the Field and formats the content according to its type.
- * @param {[{}]} field - contains all the field properties
- */
-function getFieldValue(field) {
-  switch(field.key.toLowerCase()) {
-  case "price":{
-     const options = { style: "decimal", minimumFractionDigits: 2, maximumFractionDigits: 2  };
-     let formatter = new Intl.NumberFormat('de-CH', options);
-     return formatter.format(field.value);
-      break;
-   }
-  case "date":{
-     const splittedDate = field.value.split("-");
-     return (`${splittedDate[2]}.${splittedDate[1]}.${splittedDate[0]}`);
-     break;
-  }
-  case "furnished":{
-    return field.value? t('affirmative')  : t('negative');
-     break;
-  }
-  case "temporary":{
-    return field.value? t('affirmative')  : t('negative');
-     break;
-  }
-  default:
-    return field.value ;
-    break;
-}
+    const props = defineProps({
+      fieldsToPreview: Array,
+      selectedCategory: String,
+      images: Array,
+      thumbnail: Array
+    });
+    const { t } = useI18n(i18n.global.messages.value);
+    const emit = defineEmits(['submit', 'back']);
+    /**
+    * Retrieves the value property from the Field and formats the content according to its type.
+    * @param {[{}]} field - contains all the field properties
+    */
+    function getFieldValue(field) {
+      switch(field.key.toLowerCase()) {
+          case "price":{
+            const options = { style: "decimal", minimumFractionDigits: 2, maximumFractionDigits: 2  };
+            let formatter = new Intl.NumberFormat('de-CH', options);
+            return formatter.format(field.value);
+              break;
+          }
+          case "availability":{
+              return t(`categories.accomodation.availability.options.${field.value}`);
+              break;
+          }
+          case "date":{
+            const splittedDate = field.value.split("-");
+            return (`${splittedDate[2]}.${splittedDate[1]}.${splittedDate[0]}`);
+            break;
+          }
+          case "furnished":{
+            return field.value? t('affirmative')  : t('negative');
+            break;
+          }
+          case "temporary":{
+            return field.value? t('affirmative')  : t('negative');
+            break;
+          }
+          default: {
+            return field.value ;
+            break;
+          }
+      }
+    }
+    /**
+     * Retrieves the Title property from the Field.
+     * @param {[{}]} field - contains all the field properties
+     */
+     function getFieldTitle(field, category) {
+       switch(field.key.toLowerCase()) {
+           case "priceunit":
+              return t('categories.accomodation.priceUnit.title');
+              break;
+           case "availability":
+              return t('categories.accomodation.availability.title');
+              break;
+           default:
+              return t(`categories.${category}.${field.key}`);
+              break;
+       }
+     }
 
-}
 </script>
