@@ -8,9 +8,7 @@
           <tr></tr>
           <tr v-for="field in props.fieldsToPreview">
             <div
-              v-if="
-                field.value !== '' && field.field_type_id !== 'lat' && field.field_type_id !== 'lon'
-              "
+              v-if=" field.value !== '' && field.key !== 'lat' && field.key!== 'lon'"
             >
               <th scope="col">{{ getFieldTitle(field, selectedCategory) }}  :  </th>
               <td>{{ getFieldValue(field) }} </td>
@@ -25,7 +23,7 @@
         v-on:click="emit('submit', props.fieldsToPreview, props.images, props.thumbnail)"
         >{{ t('publish') }}</a
       >
-      <a class="btn" v-on:click="emit('back')">{{ t('back') }}</a>
+      <a class="btn"  v-on:click="back">{{ t('back') }}</a>
     </p>
   </div>
 </template>
@@ -93,6 +91,19 @@
               return t(`categories.${category}.${field.key}`);
               break;
        }
+     }
+
+     function back(){
+       const fields = [];
+        props.fieldsToPreview.forEach((field) => {
+            fields.push({
+              field_id: field.field_id,
+              field_type_definition_id: field.field_type_definition_id,
+              key: field.key,
+              value: field.value
+            });
+        });
+        emit('back', fields, props.images, props.thumbnail);
      }
 
 </script>

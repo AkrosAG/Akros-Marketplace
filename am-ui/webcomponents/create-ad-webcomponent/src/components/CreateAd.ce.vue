@@ -162,7 +162,7 @@ function preview(fields, imagesUploaded, thumbnailUploaded) {
   showSubDropdown.value = false;
   showDropdown.value = false;
   previewAd.value = true;
-  fieldsToPreview.value = fields;
+  fieldsToPreview.value = fields ;
   images.value = imagesUploaded;
   thumbnail.value = thumbnailUploaded;
 }
@@ -170,11 +170,12 @@ function preview(fields, imagesUploaded, thumbnailUploaded) {
 /**
  * @description Hides and display elements to go back to the edit ad page from the preview page.
  */
-function back() {
+function back(fields) {
   showAdFields.value = true;
   showSubDropdown.value = true;
   showDropdown.value = true;
   previewAd.value = false;
+  fieldsToShow.value = fields ;
 }
 
 defineExpose({
