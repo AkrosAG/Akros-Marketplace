@@ -63,9 +63,9 @@
           v-on:change="(event) => checkField(field.field_id, field.key)"
         >
           <option disabled value="">
-            {{ t(`categories.${selectedCategory}.${field.key}.title`) }}
+            {{t(`categories.${selectedCategory}.${field.key}.title`)}}
           </option>
-          <option v-for="option in field.field_options" v-bind:value="option.key">
+          <option v-for="option in field.field_options" v-bind:value="option.key"  v-bind:selected="option.key === field.value">
             {{ t(`categories.${selectedCategory}.${field.key}.options.${option.key}`) }}
           </option>
         </select>
@@ -389,7 +389,8 @@ function preview() {
         field_id: field.field_id,
         field_type_definition_id: field.field_type_definition_id,
         key: field.key,
-        value: field.value ?? fieldValues.value[field.field_id]
+        value: fieldValues.value[field.field_id],
+        field_options: field.field_options
       });
     });
     emit('preview', fields, images, thumbnail);
@@ -406,8 +407,7 @@ onMounted(() => {
       fieldValues.value[field.field_id] = field.value ?? false;
     } else if (field.field_type_definition_id === 6){
       //selectbox
-      //fieldValues.value[field.field_id] = t(`categories.accomodation.${field.key}.options.${field.value}`) ?? "";
-      fieldValues.value[field.field_id] = "";
+      fieldValues.value[field.field_id] = field?.value || "";
     }else {
       fieldValues.value[field.field_id] = field?.value;
     }

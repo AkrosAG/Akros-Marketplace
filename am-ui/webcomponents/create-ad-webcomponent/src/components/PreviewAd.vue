@@ -52,6 +52,10 @@
             return formatter.format(field.value);
               break;
           }
+          case "priceunit":{
+              return t(`categories.accomodation.priceUnit.options.${field.value}`);
+              break;
+          }
           case "availability":{
               return t(`categories.accomodation.availability.options.${field.value}`);
               break;
@@ -100,7 +104,8 @@
               field_id: field.field_id,
               field_type_definition_id: field.field_type_definition_id,
               key: field.key,
-              value: field.value
+              value: field.value,
+              field_options: field.field_options
             });
         });
         emit('back', fields, props.images, props.thumbnail);
