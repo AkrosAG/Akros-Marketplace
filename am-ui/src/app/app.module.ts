@@ -149,7 +149,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     NavigationService,
     OAuthService,
-    {provide: OAuthStorage, useValue: localStorage}
+    {provide: OAuthStorage, useValue: localStorage},
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
