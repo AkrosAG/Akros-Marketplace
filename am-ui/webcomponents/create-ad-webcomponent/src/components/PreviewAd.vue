@@ -20,7 +20,7 @@
     <p class="submit-row">
       <a
         class="btn"
-        v-on:click="emit('submit', props.fieldsToPreview, props.images, props.thumbnail)"
+        v-on:click="submit"
         >{{ t('publish') }}</a
       >
       <a class="btn"  v-on:click="back">{{ t('back') }}</a>
@@ -95,6 +95,17 @@
               return t(`categories.${category}.${field.key}`);
               break;
        }
+     }
+
+     function submit(){
+       const fields = [];
+       props.fieldsToPreview.forEach((field) => {
+            fields.push({
+              field_type_id: field.field_id,
+              value: field.value
+            });
+        });
+       emit('submit', fields, props.images, props.thumbnail)
      }
 
      function back(){

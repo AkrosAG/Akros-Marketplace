@@ -143,8 +143,10 @@ function submit(data, images, thumbnail) {
     0,
     selectedSubCategory.subcategory_id,
     requestOrOffer.value.toUpperCase(),
-    fieldsToPreview
+    data
   );
+
+
   createTopic.topicsPost(imagesToUpload, topics, thumbnailImage);
   previewAd.value = false;
   confirmAd.value = true;
@@ -177,6 +179,7 @@ function back(fields) {
   previewAd.value = false;
   fieldsToShow.value = fields ;
 }
+
 
 defineExpose({
   updateSubCategoryFields,
