@@ -5,6 +5,8 @@ export default createI18n({
   legacy: false,
   messages: {
     en: {
+      affirmative: "Yes",
+      negative: "No",
       offer: "I'm offering",
       request: "I'm looking for",
       categoriesPlaceholder: 'Ad category',
@@ -14,6 +16,7 @@ export default createI18n({
       delete: 'Delete',
       upload: 'Upload images',
       uploadThumbnail: 'Upload thumbnail',
+      adIsPublished:'Ad is published',
       categories: {
         accomodation: {
           subCategories: {
@@ -73,6 +76,8 @@ export default createI18n({
       }
     },
     de: {
+      affirmative: "Ja",
+      negative: "Nein",
       offer: 'Ich biete',
       request: 'Ich suche nach',
       categoriesPlaceholder: 'Art des Angebots',
@@ -82,6 +87,7 @@ export default createI18n({
       delete: 'Löschen',
       upload: 'Bilder hochladen',
       uploadThumbnail: 'Vorschaubild hochladen',
+      adIsPublished:'Anzeige wird veröffentlicht',
       categories: {
         accomodation: {
           subCategories: {

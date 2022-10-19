@@ -63,9 +63,9 @@
           v-on:change="(event) => checkField(field.field_id, field.key)"
         >
           <option disabled value="">
-            {{ t(`categories.${selectedCategory}.${field.key}.title`) }}
+            {{t(`categories.${selectedCategory}.${field.key}.title`)}}
           </option>
-          <option v-for="option in field.field_options" v-bind:value="option.key">
+          <option v-for="option in field.field_options" v-bind:value="option.key"  v-bind:selected="option.key === field.value">
             {{ t(`categories.${selectedCategory}.${field.key}.options.${option.key}`) }}
           </option>
         </select>
@@ -196,7 +196,7 @@
     >
     <a
       class="btn"
-      v-on:click="emit('back', fields, images, thumbnail)"
+      v-on:click="emit('back', 0, images, thumbnail)"
       v-bind:class="{
         disabled: formHasErrors
       }"
@@ -219,6 +219,7 @@ import { onMounted, ref } from 'vue';
 import { useI18n } from './useI18n';
 import i18n from '../locales/i18n';
 import UploadImagesThumbnail from './UploadImagesThumbnail.vue';
+import { getSafePropertyAccessString } from '@angular/compiler';
 const props = defineProps({ fieldsToShow: Array, selectedCategory: String });
 const emit = defineEmits(['preview', 'back']);
 const fieldValues = ref([]);
@@ -385,10 +386,11 @@ function preview() {
     const fields = [];
     props.fieldsToShow.forEach((field) => {
       fields.push({
-        field_type_id: field.field_type_id,
+        field_id: field.field_id,
         field_type_definition_id: field.field_type_definition_id,
         key: field.key,
-        value: fieldValues.value[field.field_id]
+        value: fieldValues.value[field.field_id],
+        field_options: field.field_options
       });
     });
     emit('preview', fields, images, thumbnail);
@@ -402,12 +404,16 @@ onMounted(() => {
   props.fieldsToShow.forEach((field) => {
     // checkbox default value shoud be false
     if (field.field_type_definition_id === 8 || field.field_type_definition_id === 16) {
-      fieldValues.value[field.field_id] = false;
-    } else {
-      fieldValues.value[field.field_id] = '';
+      fieldValues.value[field.field_id] = field.value ?? false;
+    } else if (field.field_type_definition_id === 6){
+      //selectbox
+      fieldValues.value[field.field_id] = field?.value || "";
+    }else {
+      fieldValues.value[field.field_id] = field?.value;
     }
     fieldKeys.value[field.field_id] = field.key;
     errors.value[field.field_id] = false;
   });
 });
+
 </script>
