@@ -238,14 +238,16 @@ let thumbnail = [];
  * @param {Array} variable are the images that has been selected for the ad
  */
 function updateParent(variable) {
-  images.push(variable);
+  images=[];
+  Object.keys(variable).forEach(key => images.push(variable[key]));
 }
 /**
  * @description method that send the selected thumbnail from the children to the parent component.
  * @param {Array} variable are the thumbnail that has been selected for the ad
  */
 function updateParentThumbnail(variable) {
-  thumbnail.push(variable);
+  //thumbnail.push(variable);
+  thumbnail = variable;
 }
 /**
  * @description Method to validate the input in the form fields, currently only implemented for accomodation

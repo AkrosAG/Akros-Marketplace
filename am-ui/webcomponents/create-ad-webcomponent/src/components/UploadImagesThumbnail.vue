@@ -5,28 +5,29 @@ import i18n from '../locales/i18n';
 const { t } = useI18n(i18n.global.messages.value);
 const props = defineProps({ isThumbnailUpload: Boolean, files: Array});
 const isThumbnailUpload = props.isThumbnailUpload.valueOf();
-const previewImages = props.files;
 </script>
 
 <script>
 export default {
   props: {
-    files: []
+    files: [],
+    isThumbnailUpload: Boolean
   },
   data() {
-    let arr = [];
-    Object.keys(this.files).forEach((key,index) => {
-       arr.push(this.files[key][0]);
-    });
     return {
-      selectedFiles: arr
+      selectedFiles: this.files,
+      isThumbnail: this.isThumbnailUpload
     };
   },
   methods: {
     onFileChanged(event) {
       const files = event.target.files;
-      for (let i = 0; i < files.length; i++) {
+      if(this.isThumbnail){
+        this.selectedFiles = [files[0]];
+      }else{
+        for (let i = 0; i < files.length; i++) {
         this.selectedFiles.push(files[i]);
+      }
       }
       this.$emit('update-parent', this.selectedFiles);
     },

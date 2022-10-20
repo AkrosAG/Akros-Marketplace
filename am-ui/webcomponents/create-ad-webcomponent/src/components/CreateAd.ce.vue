@@ -131,12 +131,14 @@ function submit(data, images, thumbnail) {
 
   let imagesToUpload = ([] = []);
   if (images.length !== 0) {
-   imagesToUpload = createTopicImageSaveRequestDTO(images);
+  // imagesToUpload = createTopicImageSaveRequestDTO(images);
+    imagesToUpload = images;
   }
 
   let thumbnailImage = {};
   if (thumbnail.length !== 0) {
-    thumbnailImage = createTopicImageSaveRequestDTO(thumbnail)[0];
+   // thumbnailImage = createTopicImageSaveRequestDTO(thumbnail)[0];
+   thumbnailImage = Object.assign({},thumbnail);
   }
 
   const topics = new TopicSaveRequestDTO(
@@ -147,7 +149,7 @@ function submit(data, images, thumbnail) {
   );
 
 
-  createTopic.topicsPost(imagesToUpload, topics, thumbnailImage);
+ createTopic.topicsPost(imagesToUpload, topics, thumbnailImage);
   previewAd.value = false;
   confirmAd.value = true;
 }
@@ -188,7 +190,7 @@ const files = proxy[0];
 
 const image = [];
 
-for (let i = 0; i <= files.length; i++) {
+for (let i = 0; i < files.length; i++) {
 
   image.push(files[i]);
 
