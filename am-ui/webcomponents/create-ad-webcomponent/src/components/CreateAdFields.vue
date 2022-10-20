@@ -177,12 +177,14 @@
     <UploadImagesThumbnail
       @update-parent="updateParentThumbnail"
       :is-thumbnail-upload="true"
+      :files="props.thumbnail"
     ></UploadImagesThumbnail>
   </div>
   <div class="upload-section">
     <UploadImagesThumbnail
       @update-parent="updateParent"
       :is-thumbnail-upload="false"
+      :files="props.images"
     ></UploadImagesThumbnail>
   </div>
   <p class="submit-row">
@@ -220,7 +222,7 @@ import { useI18n } from './useI18n';
 import i18n from '../locales/i18n';
 import UploadImagesThumbnail from './UploadImagesThumbnail.vue';
 import { getSafePropertyAccessString } from '@angular/compiler';
-const props = defineProps({ fieldsToShow: Array, selectedCategory: String });
+const props = defineProps({ fieldsToShow: Array, images: Array, thumbnail: Array, selectedCategory: String });
 const emit = defineEmits(['preview', 'back']);
 const fieldValues = ref([]);
 const fieldKeys = ref([]);
@@ -229,8 +231,8 @@ const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8]);
 const { t } = useI18n(i18n.global.messages.value);
 const formHasErrors = ref([]);
 const hasSpecificDate = ref(false);
-const images = [];
-const thumbnail = [];
+let images = [];
+let thumbnail = [];
 /**
  * @description method that send the selected images from the children to the parent component.
  * @param {Array} variable are the images that has been selected for the ad
@@ -401,6 +403,8 @@ function preview() {
 
 onMounted(() => {
   formHasErrors.value = false;
+  images = props.images;
+  thumbnail = props.thumbnail;
   props.fieldsToShow.forEach((field) => {
     // checkbox default value shoud be false
     if (field.field_type_definition_id === 8 || field.field_type_definition_id === 16) {

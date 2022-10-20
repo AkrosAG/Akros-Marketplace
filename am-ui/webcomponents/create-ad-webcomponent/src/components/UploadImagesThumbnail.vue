@@ -3,15 +3,23 @@ import { useI18n } from './useI18n';
 import i18n from '../locales/i18n';
 
 const { t } = useI18n(i18n.global.messages.value);
-const props = defineProps({ isThumbnailUpload: Boolean });
+const props = defineProps({ isThumbnailUpload: Boolean, files: Array});
 const isThumbnailUpload = props.isThumbnailUpload.valueOf();
+const previewImages = props.files;
 </script>
 
 <script>
 export default {
+  props: {
+    files: []
+  },
   data() {
+    let arr = [];
+    Object.keys(this.files).forEach((key,index) => {
+       arr.push(this.files[key][0]);
+    });
     return {
-      selectedFiles: []
+      selectedFiles: arr
     };
   },
   methods: {

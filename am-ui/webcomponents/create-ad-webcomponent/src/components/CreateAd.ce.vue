@@ -26,8 +26,8 @@ const selectedSubCategoryKey = ref('');
 const requestOrOffer = ref('OFFER');
 const fieldsToShow = ref([]);
 const fieldsToPreview = ref([]);
-const images = [];
-const thumbnail = [];
+let images = [];
+let thumbnail = [];
 const showDropdown = ref(true);
 const showSubDropdown = ref(false);
 const showAdFields = ref(false);
@@ -131,7 +131,7 @@ function submit(data, images, thumbnail) {
 
   let imagesToUpload = ([] = []);
   if (images.length !== 0) {
-    imagesToUpload = createTopicImageSaveRequestDTO(images);
+   imagesToUpload = createTopicImageSaveRequestDTO(images);
   }
 
   let thumbnailImage = {};
@@ -165,8 +165,8 @@ function preview(fields, imagesUploaded, thumbnailUploaded) {
   showDropdown.value = false;
   previewAd.value = true;
   fieldsToPreview.value = fields ;
-  images.value = imagesUploaded;
-  thumbnail.value = thumbnailUploaded;
+  images = imagesUploaded ?? [];
+  thumbnail =[...thumbnailUploaded];
 }
 
 /**
@@ -180,6 +180,23 @@ function back(fields) {
   fieldsToShow.value = fields ;
 }
 
+function createTopicImageSaveRequestDTO(images) {
+
+const proxy = new Proxy(images, {});
+
+const files = proxy[0];
+
+const image = [];
+
+for (let i = 0; i <= files.length; i++) {
+
+  image.push(files[i]);
+
+}
+
+return image;
+
+}
 
 defineExpose({
   updateSubCategoryFields,
@@ -259,6 +276,8 @@ defineExpose({
         :selected-category="selectedCategoryKey"
         :fields-to-show="fieldsToShow"
         :fields-to-modify = "fieldsToPreview"
+        :images="images"
+        :thumbnail="thumbnail"
         @preview="preview"
       />
       <PreviewAd
