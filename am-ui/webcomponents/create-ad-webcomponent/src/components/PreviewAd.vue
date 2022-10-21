@@ -29,10 +29,8 @@
 </template>
 
 <script setup>
-    import { onMounted, ref } from 'vue'
     import { useI18n } from './useI18n';
     import i18n from '../locales/i18n';
-    import { prop } from 'dom7';
 
     const props = defineProps({
       fieldsToPreview: Array,

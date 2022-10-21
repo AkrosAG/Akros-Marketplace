@@ -147,6 +147,7 @@ function submit(data, images, thumbnail) {
   );
 
 
+
  createTopic.topicsPost(imagesToUpload, topics, thumbnailImage);
   previewAd.value = false;
   confirmAd.value = true;
@@ -180,23 +181,6 @@ function back(fields) {
   fieldsToShow.value = fields ;
 }
 
-function createTopicImageSaveRequestDTO(images) {
-
-const proxy = new Proxy(images, {});
-
-const files = proxy[0];
-
-const image = [];
-
-for (let i = 0; i < files.length; i++) {
-
-  image.push(files[i]);
-
-}
-
-return image;
-
-}
 
 defineExpose({
   updateSubCategoryFields,

@@ -11,7 +11,6 @@ export default class CreateTopic {
     let formData = new FormData();
     formData.append("topics", JSON.stringify(topics));
 
-    //formData.append("thumbnail", thumbnail);
     for (let i = 0; i < thumbnail.length; i++) {
       formData.append("thumbnail", thumbnail[i]);
     }
