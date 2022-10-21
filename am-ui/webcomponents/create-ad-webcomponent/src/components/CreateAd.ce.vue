@@ -6,15 +6,15 @@
  * from child component and form has been correctly filled.
  * Contains the styles of the module.
  */
-import ApiClient from '../api/src/ApiClient';
-import CategoriesApi from '../api/src/api/CategoriesApi';
-import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
 import { onMounted, ref, toRefs } from 'vue';
-import CreateAdFields from './CreateAdFields.vue';
-import PreviewAd from './PreviewAd.vue';
-import ConfirmAd from './ConfirmAd.vue';
 import { useI18n } from 'vue-i18n';
+import CategoriesApi from '../api/src/api/CategoriesApi';
+import ApiClient from '../api/src/ApiClient';
+import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
+import ConfirmAd from './ConfirmAd.vue';
+import CreateAdFields from './CreateAdFields.vue';
 import CreateTopic from './CreateTopic';
+import PreviewAd from './PreviewAd.vue';
 
 const apiClient = new ApiClient('/');
 const categoriesApi = new CategoriesApi(apiClient);
@@ -131,14 +131,12 @@ function submit(data, images, thumbnail) {
 
   let imagesToUpload = ([] = []);
   if (images.length !== 0) {
-  // imagesToUpload = createTopicImageSaveRequestDTO(images);
     imagesToUpload = images;
   }
 
-  let thumbnailImage = {};
+  let thumbnailImage = [] ;
   if (thumbnail.length !== 0) {
-   // thumbnailImage = createTopicImageSaveRequestDTO(thumbnail)[0];
-   thumbnailImage = Object.assign({},thumbnail);
+   thumbnailImage = thumbnail ;
   }
 
   const topics = new TopicSaveRequestDTO(
