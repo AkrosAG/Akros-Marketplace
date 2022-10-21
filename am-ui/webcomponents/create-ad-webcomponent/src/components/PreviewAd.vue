@@ -38,6 +38,8 @@
       images: Array,
       thumbnail: Array
     });
+
+
     const { t } = useI18n(i18n.global.messages.value);
     const emit = defineEmits(['submit', 'back']);
     /**
@@ -105,7 +107,7 @@
               value: field.value
             });
         });
-       emit('submit', fields, props.images, props.thumbnail)
+       emit('submit', fields, props.images, props.thumbnail);
      }
 
      function back(){
@@ -119,7 +121,6 @@
               field_options: field.field_options
             });
         });
-        emit('back', fields, props.images, props.thumbnail);
+        emit('back', fields);
      }
-
 </script>

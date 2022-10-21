@@ -6,15 +6,15 @@
  * from child component and form has been correctly filled.
  * Contains the styles of the module.
  */
-import ApiClient from '../api/src/ApiClient';
-import CategoriesApi from '../api/src/api/CategoriesApi';
-import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
 import { onMounted, ref, toRefs } from 'vue';
-import CreateAdFields from './CreateAdFields.vue';
-import PreviewAd from './PreviewAd.vue';
-import ConfirmAd from './ConfirmAd.vue';
 import { useI18n } from 'vue-i18n';
+import CategoriesApi from '../api/src/api/CategoriesApi';
+import ApiClient from '../api/src/ApiClient';
+import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
+import ConfirmAd from './ConfirmAd.vue';
+import CreateAdFields from './CreateAdFields.vue';
 import CreateTopic from './CreateTopic';
+import PreviewAd from './PreviewAd.vue';
 
 const apiClient = new ApiClient('/');
 const categoriesApi = new CategoriesApi(apiClient);
@@ -26,8 +26,8 @@ const selectedSubCategoryKey = ref('');
 const requestOrOffer = ref('OFFER');
 const fieldsToShow = ref([]);
 const fieldsToPreview = ref([]);
-const images = [];
-const thumbnail = [];
+let images = [];
+let thumbnail = [];
 const showDropdown = ref(true);
 const showSubDropdown = ref(false);
 const showAdFields = ref(false);
@@ -131,12 +131,12 @@ function submit(data, images, thumbnail) {
 
   let imagesToUpload = ([] = []);
   if (images.length !== 0) {
-    imagesToUpload = createTopicImageSaveRequestDTO(images);
+    imagesToUpload = images;
   }
 
-  let thumbnailImage = {};
+  let thumbnailImage = [] ;
   if (thumbnail.length !== 0) {
-    thumbnailImage = createTopicImageSaveRequestDTO(thumbnail)[0];
+   thumbnailImage = thumbnail ;
   }
 
   const topics = new TopicSaveRequestDTO(
@@ -147,7 +147,8 @@ function submit(data, images, thumbnail) {
   );
 
 
-  createTopic.topicsPost(imagesToUpload, topics, thumbnailImage);
+
+ createTopic.topicsPost(imagesToUpload, topics, thumbnailImage);
   previewAd.value = false;
   confirmAd.value = true;
 }
@@ -165,8 +166,8 @@ function preview(fields, imagesUploaded, thumbnailUploaded) {
   showDropdown.value = false;
   previewAd.value = true;
   fieldsToPreview.value = fields ;
-  images.value = imagesUploaded;
-  thumbnail.value = thumbnailUploaded;
+  images = imagesUploaded ?? [];
+  thumbnail =[...thumbnailUploaded];
 }
 
 /**
@@ -259,6 +260,8 @@ defineExpose({
         :selected-category="selectedCategoryKey"
         :fields-to-show="fieldsToShow"
         :fields-to-modify = "fieldsToPreview"
+        :images="images"
+        :thumbnail="thumbnail"
         @preview="preview"
       />
       <PreviewAd

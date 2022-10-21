@@ -1,5 +1,5 @@
-import ApiClient from "../api/src/ApiClient";
 import axios from 'axios';
+import ApiClient from "../api/src/ApiClient";
 
 export default class CreateTopic {
 
@@ -11,22 +11,23 @@ export default class CreateTopic {
     let formData = new FormData();
     formData.append("topics", JSON.stringify(topics));
 
-    formData.append("thumbnail", thumbnail);
+    for (let i = 0; i < thumbnail.length; i++) {
+      formData.append("thumbnail", thumbnail[i]);
+    }
 
     for (let i = 0; i < files.length; i++) {
       formData.append("images", files[i]);
     }
 
-
     const token = this.apiClient.authentications['bearerAuth'].accessToken
     axios.post("/topics", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          "Accept": "multipart/form-data",
+          "Accept": "application/json , text/plain, */*",
           "Authorization": "Bearer " + token
         },
       }).then(res=>{
-        console.warn(res);
+        console.log(res);
       },err=> console.error(err));
 
   }
