@@ -1,17 +1,22 @@
-import {createI18n} from 'vue-i18n';
+import { createI18n } from 'vue-i18n';
 
 export default createI18n({
   locale: 'en',
   legacy: false,
   messages: {
     en: {
-      offer: 'I\'m offering',
-      request: 'I\'m looking for',
+      affirmative: "Yes",
+      negative: "No",
+      offer: "I'm offering",
+      request: "I'm looking for",
       categoriesPlaceholder: 'Ad category',
-      publish: 'Preview and publish',
+      publish: 'Publish',
+      preview: 'Preview',
+      back: 'Back',
       delete: 'Delete',
       upload: 'Upload images',
       uploadThumbnail: 'Upload thumbnail',
+      adIsPublished:'Ad is published',
       errorMessage_title_tooLongOrTooShort: 'Titel zu lange oder zu kurz',
       errorMessage_address_tooLongOrTooShort: 'Adresse zu lange oder zu kurz',
       errorMessage_region: 'Ort fehlt',
@@ -34,9 +39,9 @@ export default createI18n({
             room: 'Room',
             apartment: 'Apartment',
             house: 'House',
-            parking: 'Parking space',
+            parking: 'Parking space'
           },
-          typeTitle: 'Accomodation',
+          typeTitle: 'Accommodation',
           title: 'Title',
           region: 'Location',
           postalCode: 'Zipcode',
@@ -52,16 +57,16 @@ export default createI18n({
             options: {
               month: 'Per month',
               week: 'Per Week',
-              day: 'Per Day',
-            },
+              day: 'Per Day'
+            }
           },
           availability: {
             title: 'Available',
             options: {
               now: 'Immediately',
               date: 'Specific date',
-              agreement: 'By agreement',
-            },
+              agreement: 'By agreement'
+            }
           },
           temporary: 'Temporary',
           start_date: 'Moving Date',
@@ -81,19 +86,24 @@ export default createI18n({
         carShare: {
           typeTitle: 'Car sharing',
           subCategories: {
-            share: 'Car sharing',
-          },
-        },
-      },
+            share: 'Car sharing'
+          }
+        }
+      }
     },
     de: {
+      affirmative: "Ja",
+      negative: "Nein",
       offer: 'Ich biete',
       request: 'Ich suche nach',
       categoriesPlaceholder: 'Art des Angebots',
-      publish: 'Vorschau anzeigen und veröffentlichen',
+      publish: 'Veröffentlichen',
+      preview: 'Vorschau anzeigen',
+      back: 'Zurück',
       delete: 'Löschen',
       upload: 'Bilder hochladen',
       uploadThumbnail: 'Vorschaubild hochladen',
+      adIsPublished:'Anzeige wird veröffentlicht',
       errorMessage_title_tooLongOrTooShort: 'Titel zu lange oder zu kurz',
       errorMessage_address_tooLongOrTooShort: 'Adresse zu lange oder zu kurz',
       errorMessage_region: 'Ort fehlt',
@@ -134,16 +144,16 @@ export default createI18n({
             options: {
               month: 'Pro Monat',
               week: 'Pro Woche',
-              day: 'Pro Tag',
-            },
+              day: 'Pro Tag'
+            }
           },
           availability: {
             title: 'Verfügbar',
             options: {
               now: 'Ab sofort',
               date: 'Ab Datum',
-              agreement: 'Auf Anfrage',
-            },
+              agreement: 'Auf Anfrage'
+            }
           },
           temporary: 'Befristet',
           start_date: 'Umzugsdatum',
@@ -163,10 +173,10 @@ export default createI18n({
         carShare: {
           typeTitle: 'Car sharing',
           subCategories: {
-            share: 'Car sharing',
-          },
-        },
-      },
-    },
-  },
+            share: 'Car sharing'
+          }
+        }
+      }
+    }
+  }
 });

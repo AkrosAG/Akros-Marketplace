@@ -7,26 +7,38 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
   en: {
     translation: {
-      'no-results': 'Unfortunately your search criteria produced no result.',
+      noResults: 'Unfortunately your search criteria produced no result.',
       month: 'Month',
       week: 'Week',
       day: 'Day',
       room: 'Room',
       apartment: 'Apartment',
       house: 'House',
-      parking: 'Parking'
+      parking: 'Parking',
+      sortBy: 'Sort by: ',
+      byPriceLowToHigh: 'Price: Increasing',
+      byPriceHighToLow: 'Price: Decreasing',
+      byDateNewToOld: 'Date: Newest First',
+      byDateOldToNew: 'Date: Oldest First',
+      location: 'Location: Alphabetical'
     }
   },
   de: {
     translation: {
-      'no-results': 'Die gesetzten Suchkriterien haben leider keinen Treffer ergeben.',
+      noResults: 'Die gesetzten Suchkriterien haben leider keinen Treffer ergeben.',
       month: 'Monat',
       week: 'Woche',
       day: 'Tag',
       room: 'Zimmer',
       apartment: 'Wohnung',
       house: 'Haus',
-      parking: 'Parkplatz'
+      parking: 'Parkplatz',
+      sortBy: "Sortieren nach: ",
+      byPriceLowToHigh: 'Preis: Aufsteigend',
+      byPriceHighToLow: 'Preis: Absteigend',
+      byDateNewToOld: 'Datum: Neuste zuerst',
+      byDateOldToNew: 'Datum: Älteste zuerst',
+      location: 'Ort: Alphabetisch'
     }
   }
 };

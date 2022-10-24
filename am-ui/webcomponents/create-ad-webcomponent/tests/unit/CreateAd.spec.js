@@ -24,7 +24,7 @@ describe('CreateAd.vue', () => {
           {
             subcategory_id: 1,
             key: "room",
-            fields: [{field_option_id: 6, key: 'house', sort_number: 3}],
+            fields: [{ field_option_id: 6, key: 'house', sort_number: 3 }]
           }
         ]
       },

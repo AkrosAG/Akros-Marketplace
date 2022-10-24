@@ -1,11 +1,11 @@
 <template>
-  <!-- eslint-disable -->
-  <div v-for="field in fieldsToShow">
-    <!-- Inputs Text input fields: full(1), half(2), third(3) -->
-    <div
-      class="form-field full"
-      v-if="
-        field.field_type_definition_id === 1 ||
+  <div>
+    <div v-for="field in fieldsToShow">
+      <!-- Inputs Text input fields: full(1), half(2), third(3) -->
+      <div
+        class="form-field full"
+        v-if="
+          field.field_type_definition_id === 1 ||
           field.field_type_definition_id === 2 ||
           field.field_type_definition_id === 3
       "
@@ -22,7 +22,7 @@
           v-bind:class="{
             error: errors[field.field_id]?.hasError
           }"
-          v-on:change="event => checkField(field.field_id, field.key)"
+          v-on:change="(event) => checkField(field.field_id, field.key)"
         />
         <label
           v-bind:class="{
@@ -56,11 +56,11 @@
       >{{ t('errorMessage_' + errors[field.field_id]?.reason) }}</div>
     </div>
 
-    <!-- Selector with received options full(5), half(6), third(7) -->
-    <div
-      class="form-field full"
-      v-if="
-        field.field_type_definition_id === 5 ||
+      <!-- Selector with received options full(5), half(6), third(7) -->
+      <div
+        class="form-field full"
+        v-if="
+          field.field_type_definition_id === 5 ||
           field.field_type_definition_id === 6 ||
           field.field_type_definition_id === 7
       "
@@ -76,12 +76,12 @@
         v-bind:class="{
           error: errors[field.field_id]?.hasError
         }"
-        v-on:change="event => checkField(field.field_id, field.key)"
+        v-on:change="(event) => checkField(field.field_id, field.key)"
       >
         <option disabled value="">
-          {{ t(`categories.${selectedCategory}.${field.key}.title`) }}
+          {{t(`categories.${selectedCategory}.${field.key}.title`)}}
         </option>
-        <option v-for="option in field.field_options" v-bind:value="option.key">
+        <option v-for="option in field.field_options" v-bind:value="option.key" v-bind:selected="option.key === field.value">
           {{ t(`categories.${selectedCategory}.${field.key}.options.${option.key}`) }}
         </option>
       </select>
@@ -95,46 +95,46 @@
       </div>
     </div>
 
-    <!-- Boolean checkbox(8,16) -->
-    <div
-      class="form-field checkbox half"
-      v-if="field.field_type_definition_id === 8 || field.field_type_definition_id === 16"
-    >
-      <input
-        v-bind:id="'create-add-field-' + field.field_id"
-        type="checkbox"
-        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
-        v-model="fieldValues[field.field_id]"
-      />
-      <label>{{ t(`categories.${selectedCategory}.${field.key}`) }}</label>
-    </div>
+      <!-- Boolean checkbox(8,16) -->
+      <div
+        class="form-field checkbox half"
+        v-if="field.field_type_definition_id === 8 || field.field_type_definition_id === 16"
+      >
+        <input
+          v-bind:id="'create-add-field-' + field.field_id"
+          type="checkbox"
+          v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
+          v-model="fieldValues[field.field_id]"
+        />
+        <label>{{ t(`categories.${selectedCategory}.${field.key}`) }}</label>
+      </div>
 
-    <!-- Input type email(9) -->
-    <div class="form-field full" v-if="field.field_type_definition_id === 9">
+      <!-- Input type email(9) -->
+      <div class="form-field full" v-if="field.field_type_definition_id === 9">
+        <input
+          v-bind:id="'create-add-field-' + field.field_id"
+          type="email"
+          v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
+          v-model="fieldValues[field.field_id]"
+          class="nocap"
+          v-on:change="(event) => checkField(field.field_id, field.key)"
+          v-bind:class="{
+            error: errors[field.field_id]?.hasError
+          }"
+        />
+      </div>
+
+      <!-- Input type lan lon(17) -->
       <input
+        v-if="field.field_type_definition_id === 17"
         v-bind:id="'create-add-field-' + field.field_id"
-        type="email"
-        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
+        hidden
         v-model="fieldValues[field.field_id]"
-        class="nocap"
-        v-on:change="event => checkField(field.field_id, field.key)"
+        v-on:change="(event) => checkField(field.field_id, field.key)"
         v-bind:class="{
           error: errors[field.field_id]?.hasError
         }"
       />
-    </div>
-
-    <!-- Input type lan lon(17) -->
-    <input
-      v-if="field.field_type_definition_id === 17"
-      v-bind:id="'create-add-field-' + field.field_id"
-      hidden
-      v-model="fieldValues[field.field_id]"
-      v-on:change="event => checkField(field.field_id, field.key)"
-      v-bind:class="{
-          error: errors[field.field_id]?.hasError
-        }"
-    />
 
     <!-- Input type phone(10) -->
     <div class="form-field full" v-if="field.field_type_definition_id === 10">
@@ -143,7 +143,7 @@
         type="tel"
         v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
         v-model="fieldValues[field.field_id]"
-        v-on:change="event => checkField(field.field_id, field.key)"
+        v-on:change="(event) => checkField(field.field_id, field.key)"
         v-bind:class="{
           error: errors[field.field_id]?.hasError
         }"
@@ -171,7 +171,7 @@
         type="date"
         v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
         v-model="fieldValues[field.field_id]"
-        v-on:change="event => checkField(field.field_id, field.key)"
+        v-on:change="(event) => checkField(field.field_id, field.key)"
         v-bind:class="{
           error: errors[field.field_id]?.hasError
         }"
@@ -179,35 +179,37 @@
       />
     </div>
 
-    <!-- Selector counter half(14), full(15) -->
-    <div
-      class="form-field half"
-      v-if="field.field_type_definition_id === 14 || field.field_type_definition_id === 15"
-      v-bind:class="{
-        third: field.field_type_definition_id === 15
-      }"
-    >
-      <select
-        v-bind:id="'create-add-field-' + field.field_id"
-        v-model="fieldValues[field.field_id]"
+      <!-- Selector counter half(14), full(15) -->
+      <div
+        class="form-field half"
+        v-if="field.field_type_definition_id === 14 || field.field_type_definition_id === 15"
         v-bind:class="{
-          error: errors[field.field_id]?.hasError
+          third: field.field_type_definition_id === 15
         }"
-        v-on:change="event => checkField(field.field_id, field.key)"
       >
-        <option disabled value="">
-          {{ t(`categories.${selectedCategory}.${field.key}`) }}
-        </option>
-        <option v-for="option in counterOptions" v-bind:value="option">
-          {{ option }}
-        </option>
-      </select>
+        <select
+          v-bind:id="'create-add-field-' + field.field_id"
+          v-model="fieldValues[field.field_id]"
+          v-bind:class="{
+            error: errors[field.field_id]?.hasError
+          }"
+          v-on:change="(event) => checkField(field.field_id, field.key)"
+        >
+          <option disabled value="">
+            {{ t(`categories.${selectedCategory}.${field.key}`) }}
+          </option>
+          <option v-for="option in counterOptions" v-bind:value="option">
+            {{ option }}
+          </option>
+        </select>
+      </div>
     </div>
   </div>
   <div class="upload-section">
     <UploadImagesThumbnail
       @update-parent="updateParentThumbnail"
       :is-thumbnail-upload="true"
+      :files="props.thumbnail"
     ></UploadImagesThumbnail>
     <div
       v-bind:class="{
@@ -223,17 +225,26 @@
     <UploadImagesThumbnail
       @update-parent="updateParent"
       :is-thumbnail-upload="false"
+      :files="props.images"
     ></UploadImagesThumbnail>
     <div>hier ebenso</div>
   </div>
   <p class="submit-row">
     <a
       class="btn"
-      v-on:click="submit"
+      v-on:click="preview"
       v-bind:class="{
         disabled: formHasErrors
       }"
-    >{{ t('publish') }}</a
+      >{{ t('preview') }}</a
+    >
+    <a
+      class="btn"
+      v-on:click="emit('back', 0, images, thumbnail)"
+      v-bind:class="{
+        disabled: formHasErrors
+      }"
+      >{{ t('back') }}</a
     >
   </p>
 </template>
@@ -252,9 +263,9 @@ import { onMounted, ref, toRaw } from 'vue';
 import { useI18n } from './useI18n';
 import i18n from '../locales/i18n';
 import UploadImagesThumbnail from './UploadImagesThumbnail.vue';
-
-const props = defineProps({fieldsToShow: Array, selectedCategory: String, status: { hasError: Boolean, reason: String}});
-const emit = defineEmits(['submit']);
+import { getSafePropertyAccessString } from '@angular/compiler';
+const props = defineProps({ fieldsToShow: Array, images: Array, thumbnail: Array, selectedCategory: String , status: { hasError: Boolean, reason: String}});
+const emit = defineEmits(['preview', 'back']);
 const fieldValues = ref([]);
 const fieldKeys = ref([]);
 const errors = ref([]);
@@ -262,23 +273,23 @@ const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8]);
 const { t } = useI18n(i18n.global.messages.value);
 let formHasErrors = ref(false);
 const hasSpecificDate = ref(false);
-const images = [];
-const thumbnail = [];
-
+let images = [];
+let thumbnail = [];
 /**
  * @description method that send the selected images from the children to the parent component.
- * @param variable are the images that has been selected for the ad
+ * @param {Array} variable are the images that has been selected for the ad
  */
 function updateParent(variable) {
-  images.push(variable);
+  images=[];
+  Object.keys(variable).forEach(key => images.push(variable[key]));
 }
-
 /**
  * @description method that send the selected thumbnail from the children to the parent component.
- * @param variable are the thumbnail that has been selected for the ad
+ * @param {Array} variable are the thumbnail that has been selected for the ad
  */
 function updateParentThumbnail(variable) {
-  thumbnail.push(variable);
+  //thumbnail.push(variable);
+  thumbnail = variable;
 }
 
 function checkImages() {
@@ -347,7 +358,6 @@ function checkField(fieldId, fieldKey) {
   const zipCodePatternRegex = new RegExp('[0-9]{4}');
   const numberPatternRegex = new RegExp('^[0-9]*$');
   const alphabeticPatternRegex = new RegExp('^((?![0-9]).)*$$');
-
   // Static specific validations based on AM categories (currently only accomodation), TODO improve
   switch (fieldKey) {
     // Title, Address: max length 50, min length 1 chars
@@ -470,7 +480,6 @@ function checkField(fieldId, fieldKey) {
     }
   });
 }
-
 /**
  * @description Method to emit the submit event to parent component with the values filled in the fields.
  * Performs a second validation to not allow send POST event if some fields have not been filled.
@@ -478,9 +487,8 @@ function checkField(fieldId, fieldKey) {
  * @param {Number} fieldId - Id of the field to find its reference in the array of field values and erros
  * @param {String} fieldKey - Key string value of the edited field
  */
-function submit() {
+function preview() {
   let containsErrors = false;
-
   props.fieldsToShow.forEach((field) => {
     // Temp exception attachments(18) as it is at this point not developed
     if (field.required && field.field_id !== 18) {
@@ -498,27 +506,37 @@ function submit() {
   if (!containsErrors && !status.hasError) {
     const fields = [];
     props.fieldsToShow.forEach((field) => {
-      fields.push({field_type_id: field.field_id, value: fieldValues.value[field.field_id]});
+      fields.push({
+        field_id: field.field_id,
+        field_type_definition_id: field.field_type_definition_id,
+        key: field.key,
+        value: fieldValues.value[field.field_id],
+        field_options: field.field_options
+      });
     });
-    emit('submit', fields, images, thumbnail);
+    emit('preview', fields, images, thumbnail);
   } else {
     formHasErrors = true;
   }
 }
 
 onMounted(() => {
-
   formHasErrors = true;
+  images = props.images;
+  thumbnail = props.thumbnail;
   props.fieldsToShow.forEach((field) => {
     // checkbox default value shoud be false
     if (field.field_type_definition_id === 8 || field.field_type_definition_id === 16) {
-      fieldValues.value[field.field_id] = false;
-    } else {
-      fieldValues.value[field.field_id] = '';
+      fieldValues.value[field.field_id] = field.value ?? false;
+    } else if (field.field_type_definition_id === 6){
+      //selectbox
+      fieldValues.value[field.field_id] = field?.value || "";
+    }else {
+      fieldValues.value[field.field_id] = field?.value;
     }
-
     fieldKeys.value[field.field_id] = field.key;
     errors.value[field.field_id] = { hasError: false, reason: null };
   });
 });
+
 </script>
