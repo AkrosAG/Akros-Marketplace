@@ -70,6 +70,43 @@
       ></mp-form-field>
     </div>
   </div>
+
+  <ng-container *ngIf="isFieldVisible">
+    <div class="mb-2 flex furnished" *ngIf="enableFurnishedCheckbox">
+      <input type="checkbox"   [formControl]="isFurnished">
+      <label for="furnishedCheckbox"> {{ 'searchForm.furnished' | translate }} </label><br>
+  </div>
+
+  <div class="mb-2 flex availability">
+      <select
+      class="block w-full cursor-pointer"
+      [formControl]="selectedAvailability"
+    >
+     <option disabled value="">
+      {{
+        'searchForm.categories.' +
+        currentCategoryKey +
+        '.availability.title'  | translate
+      }}
+     </option>
+      <option
+        *ngFor="let item of  availabilities"
+        [value]="item"
+        class="options"
+      >
+        {{
+            'searchForm.categories.' +
+            currentCategoryKey +
+            '.availability.options.' +
+            item | translate
+        }}
+      </option>
+    </select>
+     <input type='date'  [formControl]="selectedDate"  [class.enabled]="isDatePickerEnabled"/>
+  </div>
+  </ng-container>
+
+
   <div class="error-message mt-1" *ngIf="!form.valid">
     <!-- TODO a logic to receive event from mp-form-field upon error and construct error message based on the sum of active
        errors, then use [innerHtml] to display constructed msg -->

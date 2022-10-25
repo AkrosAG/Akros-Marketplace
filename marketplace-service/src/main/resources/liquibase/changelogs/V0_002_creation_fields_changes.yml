@@ -579,3 +579,35 @@ databaseChangeLog:
         - delete:
             tableName: subcategory_field
             where: subcategory_id=4 AND field_id=34
+  - changeSet:
+      id: V0.002/10
+      author: Brice Nguenkam
+      comment: Add fields for room
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 1
+              - column:
+                  name: field_id
+                  valueNumeric: 14
+            tableName: subcategory_field
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 1
+              - column:
+                  name: field_id
+                  valueNumeric: 19
+            tableName: subcategory_field
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 1
+              - column:
+                  name: field_id
+                  valueNumeric: 29
+            tableName: subcategory_field

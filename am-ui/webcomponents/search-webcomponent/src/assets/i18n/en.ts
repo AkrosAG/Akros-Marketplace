@@ -3,6 +3,7 @@ export default {
     search: 'Search',
     offers: 'Offers',
     searches: 'Requests',
+    furnished: 'Furnished',
     categories: {
       all: {
         title: 'Search over all'
@@ -15,6 +16,14 @@ export default {
             apartment: 'Apartment',
             house: 'House',
             parking: 'Parking space'
+          }
+        },
+        availability: {
+          title: 'Available',
+          options: {
+            now: 'Immediately',
+            date: 'Specific date',
+            agreement: 'By agreement'
           }
         },
         region: 'Region, City or Canton',

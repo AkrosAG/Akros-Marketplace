@@ -1,15 +1,15 @@
-import {FormFieldControlService} from './form/form-field-control.service';
-import {FormFieldBase} from './form/form-field-base';
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormGroup} from '@angular/forms';
-import {ValidationMessages} from '../utils/validators/ValidationMessages';
-import {TopicsService} from '../api/services';
-import {lastValueFrom} from 'rxjs';
-import {SubCategoryDto, TopicSearchFieldValuesRequestDto, TopicSearchRequestDto} from '../api/models';
-import {Store} from '@ngrx/store';
-import {SearchWebcomponentState} from '../data/store/search-webcomponent.state';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { lastValueFrom } from 'rxjs';
+import { SubCategoryDto, TopicSearchFieldValuesRequestDto, TopicSearchRequestDto } from '../api/models';
+import { TopicsService } from '../api/services';
 import * as storeSelector from '../data/store/search-webcomponent.selector';
-import {FormFieldsBuilderService} from '../utils/form/form-fields-builder.service';
+import { SearchWebcomponentState } from '../data/store/search-webcomponent.state';
+import { FormFieldsBuilderService } from '../utils/form/form-fields-builder.service';
+import { ValidationMessages } from '../utils/validators/ValidationMessages';
+import { FormFieldBase } from './form/form-field-base';
+import { FormFieldControlService } from './form/form-field-control.service';
 
 @Component({
   selector: 'mp-search-form',
@@ -32,6 +32,25 @@ export class SearchFormComponent implements OnInit {
   currentCategoryKey: string;
   currentSubCategoryId: number;
   currentSubCategoryKey: string;
+
+  categoryKeyList = ["accomodation","carShare"];
+  availabilities: string[] = ["now","date","agreement"];
+  selectedAvailability = new FormControl("");
+  selectedDate = new FormControl();
+  isFurnished = new FormControl(false);
+
+  get isDatePickerEnabled():boolean{
+    return this.selectedAvailability.value === this.availabilities[1];
+  }
+
+  get isFieldVisible ():boolean{
+    return this.currentCategoryKey === this.categoryKeyList[0];
+  }
+
+  get enableFurnishedCheckbox ():boolean{
+    return this.currentSubCategoryId != 4 ? true : false ;
+  }
+
 
   /**
    * @description Component in charge of rendering the list of fields obtained from the chosen category, as well
@@ -63,8 +82,28 @@ export class SearchFormComponent implements OnInit {
 
     this.store.select(
       storeSelector.getCurrentSubCategories
-    ).subscribe(currentSubcategories => this.renderForm(currentSubcategories));
+    ).subscribe(currentSubcategories =>{
+      this.renderForm(currentSubcategories);
+    } );
 
+    const dateNow = new Date();
+    const month = dateNow.getMonth()+1 > 9 ? dateNow.getMonth()+1 : `0${dateNow.getMonth()+1}`;
+    const date = dateNow.getDate() > 9 ? dateNow.getDate() : `0${dateNow.getDate()}`;
+    const today = `${dateNow.getFullYear()}-${month}-${date}`;
+    //this.selectedDate.setValue(today);
+
+    this.selectedAvailability.valueChanges.subscribe((value)=>{
+        switch(value){
+
+            case  this.availabilities[0] : {
+              this.selectedDate.setValue(today);
+              break;
+            }
+            default:{
+              this.selectedDate.setValue("");
+            }
+         }
+    });
   }
 
   renderForm(currentSubcategories: SubCategoryDto[] | undefined) {
@@ -77,6 +116,7 @@ export class SearchFormComponent implements OnInit {
 
   renderSearchFields(currentSubCategoryId: number) {
     const subCategory = this.subCategories.find(subcategory => subcategory.subcategory_id == currentSubCategoryId);
+   console.warn(subCategory);
     if (subCategory) {
       this.currentSubCategoryId = currentSubCategoryId;
       this.currentSubCategoryKey = subCategory.key;
@@ -106,6 +146,7 @@ export class SearchFormComponent implements OnInit {
     this.payLoad.search_values = [];
 
     let searchFields = this.selectedCategorySearchFields?.values();
+    console.warn(searchFields);
     if (searchFields !== undefined) {
       for (const searchField of searchFields) {
         if (formData[searchField.key] !== undefined && formData[searchField.key] !== null) {
@@ -117,6 +158,31 @@ export class SearchFormComponent implements OnInit {
         }
       }
     }
+
+
+    // is furnished ?
+    this.payLoad.search_values.push({
+      field_id:14,
+      value: this.isFurnished.value
+    });
+
+    // availability modus
+    if(this.selectedAvailability.value.length){
+      this.payLoad.search_values.push({
+        field_id:29,
+        value: this.selectedAvailability.value
+      });
+    }
+
+    // from date - availability
+    if(this.selectedDate.value){
+      this.payLoad.search_values.push({
+        field_id:19,
+        value: this.selectedDate.value
+      });
+    }
+
+    console.warn(this.payLoad);
 
     const res = await lastValueFrom(
       this.topicsService.topicsSearchesPost({body: this.payLoad})
