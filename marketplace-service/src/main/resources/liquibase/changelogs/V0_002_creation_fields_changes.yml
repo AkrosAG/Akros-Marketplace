@@ -591,23 +591,47 @@ databaseChangeLog:
                   valueNumeric: 1
               - column:
                   name: field_id
-                  valueNumeric: 14
+                  valueNumeric: 19
             tableName: subcategory_field
+  - changeSet:
+      id: V0.002/11
+      author: Brice Nguenkam
+      comment: Add fields for apartment
+      changes:
         - insert:
             columns:
               - column:
                   name: subcategory_id
-                  valueNumeric: 1
+                  valueNumeric: 2
               - column:
                   name: field_id
                   valueNumeric: 19
             tableName: subcategory_field
+  - changeSet:
+      id: V0.002/12
+      author: Brice Nguenkam
+      comment: Add fields for house
+      changes:
         - insert:
             columns:
               - column:
                   name: subcategory_id
-                  valueNumeric: 1
+                  valueNumeric: 3
               - column:
                   name: field_id
-                  valueNumeric: 29
+                  valueNumeric: 19
+            tableName: subcategory_field
+  - changeSet:
+      id: V0.002/13
+      author: Brice Nguenkam
+      comment: Add fields for parking
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 4
+              - column:
+                  name: field_id
+                  valueNumeric: 19
             tableName: subcategory_field

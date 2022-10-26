@@ -127,26 +127,4 @@
 
   }
 
-  .availability{
-
-    >select{
-      width: 11em;
-      margin-right: 1em;
-    }
-
-    >input{
-      width: 11em;
-      height: 2em;
-      &::-webkit-calendar-picker-indicator{
-        display: none;
-      }
-      &.enabled{
-        &::-webkit-calendar-picker-indicator{
-          display: block;
-        }
-      }
-
-    }
-
-  }
 }

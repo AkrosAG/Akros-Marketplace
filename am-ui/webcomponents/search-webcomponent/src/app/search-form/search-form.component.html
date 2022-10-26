@@ -75,35 +75,7 @@
     <div class="mb-2 flex furnished" *ngIf="enableFurnishedCheckbox">
       <input type="checkbox"   [formControl]="isFurnished">
       <label for="furnishedCheckbox"> {{ 'searchForm.furnished' | translate }} </label><br>
-  </div>
-
-  <div class="mb-2 flex availability">
-      <select
-      class="block w-full cursor-pointer"
-      [formControl]="selectedAvailability"
-    >
-     <option disabled value="">
-      {{
-        'searchForm.categories.' +
-        currentCategoryKey +
-        '.availability.title'  | translate
-      }}
-     </option>
-      <option
-        *ngFor="let item of  availabilities"
-        [value]="item"
-        class="options"
-      >
-        {{
-            'searchForm.categories.' +
-            currentCategoryKey +
-            '.availability.options.' +
-            item | translate
-        }}
-      </option>
-    </select>
-     <input type='date'  [formControl]="selectedDate"  [class.enabled]="isDatePickerEnabled"/>
-  </div>
+    </div>
   </ng-container>
 
 

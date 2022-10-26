@@ -34,14 +34,9 @@ export class SearchFormComponent implements OnInit {
   currentSubCategoryKey: string;
 
   categoryKeyList = ["accomodation","carShare"];
-  availabilities: string[] = ["now","date","agreement"];
-  selectedAvailability = new FormControl("");
-  selectedDate = new FormControl();
   isFurnished = new FormControl(false);
 
-  get isDatePickerEnabled():boolean{
-    return this.selectedAvailability.value === this.availabilities[1];
-  }
+
 
   get isFieldVisible ():boolean{
     return this.currentCategoryKey === this.categoryKeyList[0];
@@ -85,25 +80,6 @@ export class SearchFormComponent implements OnInit {
     ).subscribe(currentSubcategories =>{
       this.renderForm(currentSubcategories);
     } );
-
-    const dateNow = new Date();
-    const month = dateNow.getMonth()+1 > 9 ? dateNow.getMonth()+1 : `0${dateNow.getMonth()+1}`;
-    const date = dateNow.getDate() > 9 ? dateNow.getDate() : `0${dateNow.getDate()}`;
-    const today = `${dateNow.getFullYear()}-${month}-${date}`;
-    //this.selectedDate.setValue(today);
-
-    this.selectedAvailability.valueChanges.subscribe((value)=>{
-        switch(value){
-
-            case  this.availabilities[0] : {
-              this.selectedDate.setValue(today);
-              break;
-            }
-            default:{
-              this.selectedDate.setValue("");
-            }
-         }
-    });
   }
 
   renderForm(currentSubcategories: SubCategoryDto[] | undefined) {
@@ -116,7 +92,6 @@ export class SearchFormComponent implements OnInit {
 
   renderSearchFields(currentSubCategoryId: number) {
     const subCategory = this.subCategories.find(subcategory => subcategory.subcategory_id == currentSubCategoryId);
-   console.warn(subCategory);
     if (subCategory) {
       this.currentSubCategoryId = currentSubCategoryId;
       this.currentSubCategoryKey = subCategory.key;
@@ -146,7 +121,6 @@ export class SearchFormComponent implements OnInit {
     this.payLoad.search_values = [];
 
     let searchFields = this.selectedCategorySearchFields?.values();
-    console.warn(searchFields);
     if (searchFields !== undefined) {
       for (const searchField of searchFields) {
         if (formData[searchField.key] !== undefined && formData[searchField.key] !== null) {
@@ -161,28 +135,13 @@ export class SearchFormComponent implements OnInit {
 
 
     // is furnished ?
-    this.payLoad.search_values.push({
-      field_id:14,
-      value: this.isFurnished.value
-    });
-
-    // availability modus
-    if(this.selectedAvailability.value.length){
+    if(this.isFurnished.value){
       this.payLoad.search_values.push({
-        field_id:29,
-        value: this.selectedAvailability.value
+        field_id:14,
+        value: this.isFurnished.value
       });
     }
 
-    // from date - availability
-    if(this.selectedDate.value){
-      this.payLoad.search_values.push({
-        field_id:19,
-        value: this.selectedDate.value
-      });
-    }
-
-    console.warn(this.payLoad);
 
     const res = await lastValueFrom(
       this.topicsService.topicsSearchesPost({body: this.payLoad})
