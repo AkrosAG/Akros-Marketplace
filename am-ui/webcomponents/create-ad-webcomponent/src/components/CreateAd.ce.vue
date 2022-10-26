@@ -550,6 +550,14 @@ select {
   align-items: center;
   flex-direction: column;
 
+  .hidden {
+    display: none;
+  }
+
+  .shown {
+    color: $akros-red;
+  }
+
   .container {
     display: flex;
     justify-content: center;

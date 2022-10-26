@@ -122,6 +122,14 @@
             error: errors[field.field_id]?.hasError
           }"
         />
+        <div
+          v-bind:class="{
+              hidden: !errors[field.field_id]?.hasError,
+              shown: errors[field.field_id]?.hasError
+          }"
+        >
+          {{ t('errorMessage_' + errors[field.field_id]?.reason) }}
+        </div>
       </div>
 
       <!-- Input type lan lon(17) -->
@@ -211,15 +219,6 @@
       :is-thumbnail-upload="true"
       :files="props.thumbnail"
     ></UploadImagesThumbnail>
-    <div
-      v-bind:class="{
-          hidden: !status.hasError,
-          shown: status.hasError
-      }"
-    >
-      Hmm... {{status}}
-      {{ t('errorMessage_' + status.reason) }}
-    </div>
   </div>
   <div class="upload-section">
     <UploadImagesThumbnail
@@ -227,7 +226,14 @@
       :is-thumbnail-upload="false"
       :files="props.images"
     ></UploadImagesThumbnail>
-    <div>hier ebenso</div>
+    <div
+      v-bind:class="{
+          hidden: !status.hasError,
+          shown: status.hasError
+      }"
+    >
+      {{t('errorMessage_' + status.reason)}}
+    </div>
   </div>
   <p class="submit-row">
     <a
@@ -236,16 +242,16 @@
       v-bind:class="{
         disabled: formHasErrors
       }"
-      >{{ t('preview') }}</a
-    >
+      >{{ t('preview') }}
+    </a>
     <a
       class="btn"
       v-on:click="emit('back', 0, images, thumbnail)"
       v-bind:class="{
         disabled: formHasErrors
       }"
-      >{{ t('back') }}</a
-    >
+      >{{ t('back') }}
+    </a>
   </p>
 </template>
 
@@ -263,18 +269,18 @@ import { onMounted, ref, toRaw } from 'vue';
 import { useI18n } from './useI18n';
 import i18n from '../locales/i18n';
 import UploadImagesThumbnail from './UploadImagesThumbnail.vue';
-import { getSafePropertyAccessString } from '@angular/compiler';
-const props = defineProps({ fieldsToShow: Array, images: Array, thumbnail: Array, selectedCategory: String , status: { hasError: Boolean, reason: String}});
+const props = defineProps({ fieldsToShow: Array, images: Array, thumbnail: Array, selectedCategory: String});
 const emit = defineEmits(['preview', 'back']);
 const fieldValues = ref([]);
 const fieldKeys = ref([]);
 const errors = ref([]);
 const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8]);
 const { t } = useI18n(i18n.global.messages.value);
-let formHasErrors = ref(false);
+let formHasErrors = ref(true);
 const hasSpecificDate = ref(false);
 let images = [];
 let thumbnail = [];
+let status = { hasError: false, reason: null}
 /**
  * @description method that send the selected images from the children to the parent component.
  * @param {Array} variable are the images that has been selected for the ad
@@ -288,12 +294,20 @@ function updateParent(variable) {
  * @param {Array} variable are the thumbnail that has been selected for the ad
  */
 function updateParentThumbnail(variable) {
-  //thumbnail.push(variable);
   thumbnail = variable;
 }
 
-function checkImages() {
+function reRenderComponent() {
+  console.log('reRender now pls...')
+  checkField(1, "title")
+}
 
+function hasErrorsConcerningImages() {
+  return status.hasError;
+}
+
+function checkImages() {
+  console.log('checkImages called')
   const maxFileSize = 500000
   const maxSumFileSize = 2000000
 
@@ -303,20 +317,31 @@ function checkImages() {
   let isThumbnailMissing = false
   let areImagesMissing = false
 
-  if (thumbnail[0] === undefined || toRaw(thumbnail[0]).length === 0) {
+  let rawThumb =  toRaw(thumbnail)
+  console.log('rawThumb >>>', rawThumb, 'lengthCheck', rawThumb.length === 0, 'undefCheck', rawThumb[0] === undefined)
+  if (rawThumb.length === 0 || rawThumb[0] === undefined) {
     isThumbnailMissing = true
-    status.hasError = true
-    status.reason = "thumbnailMissing"
+    // status.hasError = true
+    // status.reason = "thumbnailMissing"
+  } else {
+    isThumbnailMissing = false
+    // status.hasError = false
+    // status.reason = null  
   }
 
-  if (images[0] === undefined || toRaw(images[0]).length === 0) {
+  if (images === undefined || images.length === 0) {
     areImagesMissing = true
-    status.hasError = true
-    status.reason = "imagesMissing"
+    // status.hasError = true
+    // status.reason = "imagesMissing"
+  } else {
+    if (!isThumbnailMissing) {
+      status.hasError = false
+      status.reason = null  
+    }
   }
 
   if (!isThumbnailMissing) {
-    const rawThumbnail = toRaw(thumbnail[0])[0]
+    const rawThumbnail = rawThumb[0]
     if (rawThumbnail.size > maxFileSize) {
       singleFileTooBig = true
     }
@@ -324,7 +349,7 @@ function checkImages() {
   }
 
   if (!areImagesMissing) {
-    toRaw(images[0]).forEach((file) => {
+    images.forEach((file) => {
       if (file.size > maxFileSize) {
         singleFileTooBig = true
       }
@@ -336,13 +361,15 @@ function checkImages() {
     sumOfFilesTooBig = true
   }
 
-  if (sumOfFilesTooBig) {
-    status.hasError = true
-    status.reason = "sumOfFilesTooBig"
-
-  } else if (singleFileTooBig) {
+  if (singleFileTooBig) {
     status.hasError = true
     status.reason = "singleFileTooBig"
+  } else if (sumOfFilesTooBig) {
+    status.hasError = true
+    status.reason = "sumOfFilesTooBig"
+  } else { // In case we have mandatory images this else needs to be removed otherwise the other errors will just be ignored/overwritten.
+    status.hasError = false
+    status.reason = null
   }
 
   return status;
@@ -354,16 +381,20 @@ function checkImages() {
  * @param {String} fieldKey - Key string value of the edited field
  */
 function checkField(fieldId, fieldKey) {
+  console.log('checkField called', fieldId, fieldKey)
+  console.log('errors.value', errors.value)
   const emailPatternRegex = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
   const zipCodePatternRegex = new RegExp('[0-9]{4}');
   const numberPatternRegex = new RegExp('^[0-9]*$');
   const alphabeticPatternRegex = new RegExp('^((?![0-9]).)*$$');
+
+  let _value = fieldValues.value[fieldId]
   // Static specific validations based on AM categories (currently only accomodation), TODO improve
   switch (fieldKey) {
     // Title, Address: max length 50, min length 1 chars
     case 'title':
     case 'address':
-      if (fieldValues.value[fieldId].length > 50 || fieldValues.value[fieldId].length < 1) {
+      if (_value === undefined || _value.length > 50 || _value.length < 1) {
         errors.value[fieldId] = { hasError: true, reason: fieldKey + "_tooLongOrTooShort" };
       } else {
         errors.value[fieldId] = { hasError: false, reason: null };
@@ -372,9 +403,10 @@ function checkField(fieldId, fieldKey) {
     // Region: max length 50, min length 1 chars and not numbers
     case 'region':
       if (
-        fieldValues.value[fieldId].length > 50 ||
-        fieldValues.value[fieldId].length < 1 ||
-        !alphabeticPatternRegex.test(fieldValues.value[fieldId])
+        _value === undefined || 
+        _value.length > 50 ||
+        _value.length < 1 ||
+        !alphabeticPatternRegex.test(_value)
       ) {
         errors.value[fieldId] = { hasError: true, reason: fieldKey };
       } else {
@@ -385,7 +417,7 @@ function checkField(fieldId, fieldKey) {
     case 'expectations':
     case 'description':
     case 'about':
-      if (fieldValues.value[fieldId].length > 1000 || fieldValues.value[fieldId].length < 1) {
+      if (_value === undefined || _value.length > 1000 || _value.length < 1) {
         errors.value[fieldId] = { hasError: true, reason: fieldKey + "_exdeab" };
       } else {
         errors.value[fieldId] = { hasError: false, reason: null };
@@ -393,7 +425,7 @@ function checkField(fieldId, fieldKey) {
       break;
     // Email: Email format regex
     case 'email':
-      if (!emailPatternRegex.test(fieldValues.value[fieldId])) {
+      if (!emailPatternRegex.test(_value)) {
         errors.value[fieldId] = { hasError: true, reason: "email" };
       } else {
         errors.value[fieldId] = { hasError: false, reason: null };
@@ -402,8 +434,8 @@ function checkField(fieldId, fieldKey) {
     // Selectors: Ok if not empty
     case 'priceUnit':
       console.log('priceUnit Brudi1', fieldValues)
-      console.log('priceUnit Brudi2', fieldValues.value[fieldId])
-      if (fieldValues.value[fieldId] === '') {
+      console.log('priceUnit Brudi2', _value)
+      if (_value === '') {
         errors.value[fieldId] = { hasError: true, reason: fieldKey + "_nothingSelected"};
       } else {
         errors.value[fieldId] = { hasError: false, reason: null};
@@ -412,7 +444,7 @@ function checkField(fieldId, fieldKey) {
     case 'rooms':
     case 'type':
     case 'fromRooms':
-      if (fieldValues.value[fieldId] !== null) {
+      if (_value !== null) {
         errors.value[fieldId] = { hasError: false, reason: null };
       } else {
         errors.value[fieldId] = { hasError: true, reason: fieldKey + "_missing" };
@@ -429,9 +461,9 @@ function checkField(fieldId, fieldKey) {
     case 'toPrice':
     case 'fromSize':
     case 'propertySize':
-      if (!numberPatternRegex.test(fieldValues.value[fieldId])) {
+      if (!numberPatternRegex.test(_value)) {
         errors.value[fieldId] = { hasError: true, reason: fieldKey + "_NaN" };
-      } else if (fieldValues.value[fieldId].length < 1) {
+      } else if (_value.length < 1) {
         errors.value[fieldId] = { hasError: true, reason: fieldKey + "_missing" };
       } else {
         errors.value[fieldId] = { hasError: false, reason: null };
@@ -439,7 +471,7 @@ function checkField(fieldId, fieldKey) {
       break;
     // Zipcode: Four digit only regex
     case 'postalCode':
-      if (!zipCodePatternRegex.test(fieldValues.value[fieldId])) {
+      if (!zipCodePatternRegex.test(_value)) {
         errors.value[fieldId] = { hasError: true, reason: fieldKey };
       } else {
         errors.value[fieldId] = { hasError: false, reason: null };
@@ -448,7 +480,7 @@ function checkField(fieldId, fieldKey) {
     // Date: Selected date not prior to current date
     case 'date':
       const today = new Date();
-      const selectedDate = new Date(fieldValues.value[fieldId]);
+      const selectedDate = new Date(_value);
       if (today.getTime() < selectedDate.getTime()) {
         errors.value[fieldId] = { hasError: false, reason: null };
       } else {
@@ -456,16 +488,16 @@ function checkField(fieldId, fieldKey) {
       }
       break;
     case 'availability':
-      hasSpecificDate.value = fieldValues.value[fieldId] === 'date';
+      hasSpecificDate.value = _value === 'date';
       const dateFieldId = props.fieldsToShow.find((field) => field.key === 'date').field_id;
 
-      if (fieldValues.value[fieldId] === 'now') {
+      if (_value === 'now') {
         fieldValues.value[dateFieldId] = new Date().toISOString().substring(0, 10);
       } else {
         fieldValues.value[dateFieldId] = '';
       }
 
-      if (fieldValues.value[fieldId] === '') {
+      if (_value === '') {
         errors.value[fieldId] = { hasError: true, reason: fieldKey + "_nothingSelected"};
       } else {
         errors.value[fieldId] = { hasError: false, reason: null};
@@ -473,6 +505,7 @@ function checkField(fieldId, fieldKey) {
 
       break;
   }
+
   formHasErrors = false;
   errors.value.forEach((err) => {
     if (err.hasError) {
@@ -480,6 +513,17 @@ function checkField(fieldId, fieldKey) {
     }
   });
 }
+
+function forcedCheckField() {
+  console.log('forcedCheckField called..')
+  formHasErrors = false;
+  errors.value.forEach((err) => {
+    if (err.hasError) {
+      formHasErrors = true;
+    }
+  });
+}
+
 /**
  * @description Method to emit the submit event to parent component with the values filled in the fields.
  * Performs a second validation to not allow send POST event if some fields have not been filled.
@@ -489,7 +533,10 @@ function checkField(fieldId, fieldKey) {
  */
 function preview() {
   let containsErrors = false;
+  console.log('preview called')
+  console.log('fieldsToShowSize', props.fieldsToShow.length)
   props.fieldsToShow.forEach((field) => {
+    console.log('field', field)
     // Temp exception attachments(18) as it is at this point not developed
     if (field.required && field.field_id !== 18) {
       if (
@@ -503,6 +550,8 @@ function preview() {
   });
 
   status = checkImages()
+  console.log('status', status)
+  console.log('containsErrors', containsErrors)
   if (!containsErrors && !status.hasError) {
     const fields = [];
     props.fieldsToShow.forEach((field) => {
@@ -518,6 +567,7 @@ function preview() {
   } else {
     formHasErrors = true;
   }
+  reRenderComponent()
 }
 
 onMounted(() => {

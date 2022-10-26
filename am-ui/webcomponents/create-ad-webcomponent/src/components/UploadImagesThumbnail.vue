@@ -30,6 +30,7 @@ export default {
       }
       }
       this.$emit('update-parent', this.selectedFiles);
+      //this.$emit('aschi-test');
     },
     getImage(index) {
       const file = this.selectedFiles[index];
@@ -38,6 +39,7 @@ export default {
     deleteImage(index) {
       this.selectedFiles.splice(index, 1);
       this.$emit('update-parent', this.selectedFiles);
+      //this.$emit('aschi-test');
     }
   }
 };
