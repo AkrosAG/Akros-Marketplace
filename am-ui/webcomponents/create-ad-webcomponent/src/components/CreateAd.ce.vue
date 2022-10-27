@@ -200,7 +200,7 @@ defineExpose({
       name="create-ad-form"
       class="simple-form"
     >
-      <p v-if="showDropdown">
+      <p class="paragraph" v-if="showDropdown">
         <select
           id="ad-category"
           v-model="selectedCategoryKey"
@@ -214,7 +214,7 @@ defineExpose({
           </option>
         </select>
       </p>
-      <p v-if="showSubDropdown">
+      <p class="paragraph" v-if="showSubDropdown">
         <select
           id="ad-sub-category"
           v-model="selectedSubCategoryKey"
@@ -389,7 +389,6 @@ textarea {
   box-shadow: 0 1px 0 0 #fff;
   -webkit-appearance: none;
   width: 100%;
-  margin-bottom: 1em;
 }
 
 input:-webkit-autofill,
@@ -466,6 +465,10 @@ select {
   font: 400 11pt/1.5 Inter, Helvetica, sans-serif;
 }
 
+.paragraph {
+  margin-bottom: 2em;
+}
+
 .radio-label {
   text-transform: capitalize;
 }
@@ -473,7 +476,6 @@ select {
 .form-field {
   border-radius: 1.5rem;
   padding: 0.25em 0.8em 0.2em;
-  height: 30px;
   margin-bottom: 1em;
   display: inline-block;
 
@@ -531,6 +533,14 @@ select {
     background-color: $akros-red-bg;
     border-width: 0.1rem;
   }
+
+  .hidden {
+    display: none;
+  }
+
+  .shown {
+    color: $akros-red;
+  }
 }
 
 // Styles for UploadImagesThumbnail.vue
@@ -539,6 +549,14 @@ select {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  .hidden {
+    display: none;
+  }
+
+  .shown {
+    color: $akros-red;
+  }
 
   .container {
     display: flex;
