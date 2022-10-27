@@ -240,7 +240,7 @@
       class="btn"
       v-on:click="preview"
       v-bind:class="{
-        disabled: formHasErrors
+        disabled: formHasErrors || status.hasError
       }"
       >{{ t('preview') }}
     </a>
@@ -288,6 +288,8 @@ let status = { hasError: false, reason: null}
 function updateParent(variable) {
   images=[];
   Object.keys(variable).forEach(key => images.push(variable[key]));
+  checkImages()
+  reRenderComponent()
 }
 /**
  * @description method that send the selected thumbnail from the children to the parent component.
@@ -295,57 +297,33 @@ function updateParent(variable) {
  */
 function updateParentThumbnail(variable) {
   thumbnail = variable;
+  checkImages()
+  reRenderComponent()
 }
 
 function reRenderComponent() {
-  console.log('reRender now pls...')
   checkField(1, "title")
 }
 
-function hasErrorsConcerningImages() {
-  return status.hasError;
-}
-
+// This functions updates the error stored in status which is used for the images
 function checkImages() {
-  console.log('checkImages called')
-  const maxFileSize = 500000
-  const maxSumFileSize = 2000000
+  const maxFileSize = 500000 // This is 500KB
+  const maxSumFileSize = 2000000 // This is 2000KB or 2MB
 
   let sumOfFileSize = 0
   let singleFileTooBig = false
   let sumOfFilesTooBig = false
-  let isThumbnailMissing = false
-  let areImagesMissing = false
 
-  let rawThumb =  toRaw(thumbnail)
-  console.log('rawThumb >>>', rawThumb, 'lengthCheck', rawThumb.length === 0, 'undefCheck', rawThumb[0] === undefined)
-  if (rawThumb.length === 0 || rawThumb[0] === undefined) {
-    isThumbnailMissing = true
-    // status.hasError = true
-    // status.reason = "thumbnailMissing"
-  } else {
-    isThumbnailMissing = false
-    // status.hasError = false
-    // status.reason = null  
-  }
-
-  if (images === undefined || images.length === 0) {
-    areImagesMissing = true
-    // status.hasError = true
-    // status.reason = "imagesMissing"
-  } else {
-    if (!isThumbnailMissing) {
-      status.hasError = false
-      status.reason = null  
-    }
-  }
-
+  const rawThumb = toRaw(thumbnail) // Convert proxy to raw object
+  const isThumbnailMissing = rawThumb.length === 0 || rawThumb[0] === undefined
+  const areImagesMissing = images === undefined || images.length === 0
+  
   if (!isThumbnailMissing) {
-    const rawThumbnail = rawThumb[0]
-    if (rawThumbnail.size > maxFileSize) {
+    const rawThumbnailSize = rawThumb[0].size
+    if (rawThumbnailSize > maxFileSize) {
       singleFileTooBig = true
     }
-    sumOfFileSize += rawThumbnail.size
+    sumOfFileSize += rawThumbnailSize
   }
 
   if (!areImagesMissing) {
@@ -357,10 +335,8 @@ function checkImages() {
     })
   }
 
-  if (sumOfFileSize > maxSumFileSize) {
-    sumOfFilesTooBig = true
-  }
-
+  sumOfFilesTooBig = sumOfFileSize > maxSumFileSize
+  
   if (singleFileTooBig) {
     status.hasError = true
     status.reason = "singleFileTooBig"
@@ -371,8 +347,6 @@ function checkImages() {
     status.hasError = false
     status.reason = null
   }
-
-  return status;
 }
 
 /**
@@ -381,8 +355,6 @@ function checkImages() {
  * @param {String} fieldKey - Key string value of the edited field
  */
 function checkField(fieldId, fieldKey) {
-  console.log('checkField called', fieldId, fieldKey)
-  console.log('errors.value', errors.value)
   const emailPatternRegex = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
   const zipCodePatternRegex = new RegExp('[0-9]{4}');
   const numberPatternRegex = new RegExp('^[0-9]*$');
@@ -433,8 +405,6 @@ function checkField(fieldId, fieldKey) {
       break;
     // Selectors: Ok if not empty
     case 'priceUnit':
-      console.log('priceUnit Brudi1', fieldValues)
-      console.log('priceUnit Brudi2', _value)
       if (_value === '') {
         errors.value[fieldId] = { hasError: true, reason: fieldKey + "_nothingSelected"};
       } else {
@@ -506,16 +476,10 @@ function checkField(fieldId, fieldKey) {
       break;
   }
 
-  formHasErrors = false;
-  errors.value.forEach((err) => {
-    if (err.hasError) {
-      formHasErrors = true;
-    }
-  });
+  updateFormHasErrors()
 }
 
-function forcedCheckField() {
-  console.log('forcedCheckField called..')
+function updateFormHasErrors() {
   formHasErrors = false;
   errors.value.forEach((err) => {
     if (err.hasError) {
@@ -533,10 +497,7 @@ function forcedCheckField() {
  */
 function preview() {
   let containsErrors = false;
-  console.log('preview called')
-  console.log('fieldsToShowSize', props.fieldsToShow.length)
   props.fieldsToShow.forEach((field) => {
-    console.log('field', field)
     // Temp exception attachments(18) as it is at this point not developed
     if (field.required && field.field_id !== 18) {
       if (
@@ -549,9 +510,7 @@ function preview() {
     }
   });
 
-  status = checkImages()
-  console.log('status', status)
-  console.log('containsErrors', containsErrors)
+  checkImages()
   if (!containsErrors && !status.hasError) {
     const fields = [];
     props.fieldsToShow.forEach((field) => {
@@ -571,7 +530,7 @@ function preview() {
 }
 
 onMounted(() => {
-  formHasErrors = true;
+  updateFormHasErrors() // Required so the formHasErrors is also updated on back button
   images = props.images;
   thumbnail = props.thumbnail;
   props.fieldsToShow.forEach((field) => {
