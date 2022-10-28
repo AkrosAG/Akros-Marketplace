@@ -1,23 +1,16 @@
-import { LocalizationService } from './data/services/localization.service';
-import { Store } from '@ngrx/store';
-import { SearchWebcomponentState } from './data/store/search-webcomponent.state';
-import { Observable, Subscription } from 'rxjs';
-import { FormGroup } from '@angular/forms';
 import {
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  Input,
-  SimpleChanges,
-  OnChanges,
-  EventEmitter,
-  OnDestroy,
+  Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation
 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { LocalizationService } from './data/services/localization.service';
+import { SearchWebcomponentState } from './data/store/search-webcomponent.state';
 
-import * as storeSelector from './data/store/search-webcomponent.selector';
-import * as storeActions from './data/store/search-webcomponent.actions';
-import { CategoryDto } from './api/models';
 import { Output } from '@angular/core';
+import { CategoryDto } from './api/models';
+import * as storeActions from './data/store/search-webcomponent.actions';
+import * as storeSelector from './data/store/search-webcomponent.selector';
 import { MpSearchService } from './mp-search.service';
 
 @Component({

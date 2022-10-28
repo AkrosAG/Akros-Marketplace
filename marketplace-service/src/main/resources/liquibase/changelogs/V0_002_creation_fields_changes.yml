@@ -579,3 +579,59 @@ databaseChangeLog:
         - delete:
             tableName: subcategory_field
             where: subcategory_id=4 AND field_id=34
+  - changeSet:
+      id: V0.002/10
+      author: Brice Nguenkam
+      comment: Add fields for room
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 1
+              - column:
+                  name: field_id
+                  valueNumeric: 19
+            tableName: subcategory_field
+  - changeSet:
+      id: V0.002/11
+      author: Brice Nguenkam
+      comment: Add fields for apartment
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 2
+              - column:
+                  name: field_id
+                  valueNumeric: 19
+            tableName: subcategory_field
+  - changeSet:
+      id: V0.002/12
+      author: Brice Nguenkam
+      comment: Add fields for house
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 3
+              - column:
+                  name: field_id
+                  valueNumeric: 19
+            tableName: subcategory_field
+  - changeSet:
+      id: V0.002/13
+      author: Brice Nguenkam
+      comment: Add fields for parking
+      changes:
+        - insert:
+            columns:
+              - column:
+                  name: subcategory_id
+                  valueNumeric: 4
+              - column:
+                  name: field_id
+                  valueNumeric: 19
+            tableName: subcategory_field

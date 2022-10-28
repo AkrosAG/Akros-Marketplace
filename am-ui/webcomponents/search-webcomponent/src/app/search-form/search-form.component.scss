@@ -113,4 +113,18 @@
   .field-container {
     overflow: auto;
   }
+
+  .furnished {
+    display: flex;
+    align-items: center;
+
+    >input{
+      width: 1em;
+      height: 1em;
+      margin-right: 0.3em;
+      margin-left: 0.3em;
+    }
+
+  }
+
 }

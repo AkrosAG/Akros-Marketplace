@@ -4,6 +4,7 @@ export default {
     offers: 'Angebote',
     searches: 'Anfragen',
     select: 'Art der Unterkunft',
+    furnished: '(Nur) Möbiliert',
     categories: {
       all: {
         title: 'Alle Anzeigen'
@@ -17,6 +18,14 @@ export default {
             apartment: 'Wohnung',
             house: 'Haus',
             parking: 'Parkplatz'
+          }
+        },
+        availability: {
+          title: 'Verfügbar',
+          options: {
+            now: 'Ab sofort',
+            date: 'Ab Datum',
+            agreement: 'Auf Anfrage'
           }
         },
         region: 'Region, Stadt oder Kanton',
