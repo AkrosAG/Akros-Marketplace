@@ -142,7 +142,6 @@ export class SearchFormComponent implements OnInit {
       });
     }
 
-
     const res = await lastValueFrom(
       this.topicsService.topicsSearchesPost({body: this.payLoad})
     );

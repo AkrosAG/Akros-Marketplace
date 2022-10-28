@@ -372,7 +372,7 @@ public class TopicService {
     private List<TopicSearchResponseDTO> filterTopicsByFromDate(String topicValueFromDate, 
                    List<TopicSearchResponseDTO> topicList) {
         
-        String[] fromDate = topicValueFromDate.split("-", 3);
+        LocalDate fromDate = LocalDate.parse(topicValueFromDate);
         try {
 
         return topicList
@@ -380,9 +380,7 @@ public class TopicService {
         .filter(topic -> topic.getTopicValues()
         .stream()
         .filter(topicValue -> topicValue.getFieldId() == DATE)
-        .anyMatch(topicValue -> 
-          Long.parseLong(topicValue.getValue().split("-", 3)[0]) >= Long.parseLong(fromDate[0]) && Long.parseLong(topicValue.getValue().split("-", 3)[1]) >= Long.parseLong(fromDate[1]) && Long.parseLong(topicValue.getValue().split("-", 3)[2]) >= Long.parseLong(fromDate[2]) 
-        ))
+        .anyMatch(topicValue -> LocalDate.parse(topicValue.getValue()).compareTo(fromDate) >= 0))
         .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
         log.error(e.getMessage(), e);

@@ -1,8 +1,8 @@
-import {ValidationMessages} from '../../utils/validators/ValidationMessages';
-import {Injectable} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ValidationMessages } from '../../utils/validators/ValidationMessages';
 
-import {FormFieldBase} from './form-field-base';
+import { FormFieldBase } from './form-field-base';
 
 @Injectable()
 export class FormFieldControlService {
@@ -29,6 +29,8 @@ export class FormFieldControlService {
   toFormGroup(formFields: FormFieldBase<string>[]): FormGroup {
     const group: any = {};
 
+    console.warn(formFields);
+
     formFields.forEach(formFields => {
       switch (formFields.type) {
         case 1:
@@ -44,6 +46,9 @@ export class FormFieldControlService {
         case 5:
           group[formFields.key] = new FormControl(null);
           break;
+        case 19:
+            group[formFields.key] = new FormControl();
+            break;
         default:
           group[formFields.key] = formFields.required
             ? new FormControl(null, [Validators.required])

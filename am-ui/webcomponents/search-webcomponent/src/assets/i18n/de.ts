@@ -4,7 +4,7 @@ export default {
     offers: 'Angebote',
     searches: 'Anfragen',
     select: 'Art der Unterkunft',
-    furnished: 'Möbiliert',
+    furnished: '(Nur) Möbiliert',
     categories: {
       all: {
         title: 'Alle Anzeigen'

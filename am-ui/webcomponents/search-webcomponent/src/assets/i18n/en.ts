@@ -3,7 +3,7 @@ export default {
     search: 'Search',
     offers: 'Offers',
     searches: 'Requests',
-    furnished: 'Furnished',
+    furnished: 'Furnished (only)',
     categories: {
       all: {
         title: 'Search over all'
