@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
 import {Component, OnInit, OnDestroy} from '@angular/core';
@@ -45,6 +46,14 @@ export class CreateComponent implements OnInit, OnDestroy {
       return this.oAuthService.getAccessToken().replace(/"/g, '');
     }
 
+    return null;
+  }
+
+  getUserId(): string | null {
+    const user = this.auth.userValue.id;
+    if (user) {
+      return user;
+    }
     return null;
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
@@ -40,6 +41,7 @@ import {CreateComponent} from './components/create/create.component';
 import {ErrorInterceptor} from './data/services/login/error.interceptor';
 import {JwtInterceptor} from './data/services/login/jwt.interceptor';
 import {AuthGuard} from './data/services/login/auth.guard';
+import { AdComponent } from './components/ads/ad-detail/ad.component';
 
 import {RestHelperService} from './utils/restHelperService';
 import {UserService} from './data/services/login/user.service';
@@ -54,6 +56,7 @@ import {OAuthModule, OAuthService, OAuthStorage} from 'angular-oauth2-oidc';
 import {SearchResultDetailsService} from './components/search-result-details/search-result-details.service';
 import {SwiperComponent} from './components/swiper/swiper.component';
 import {SwiperModule} from 'swiper/angular';
+import { AdsService } from './components/ads/ads.service';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -90,6 +93,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     FooterComponent,
     ProfileComponent,
     AdsComponent,
+    AdComponent,
     SearchResultsComponent,
     SearchResultDetailsComponent,
     SearchResultDetailsMapComponent,
@@ -126,6 +130,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     RestHelperService,
     UserService,
     SearchResultDetailsService,
+    AdsService,
     AuthGuard,
     {
       provide: LOCALE_ID,

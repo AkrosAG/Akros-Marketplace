@@ -67,6 +67,9 @@ public class Topic {
   @ToString.Exclude
   private List<TopicImage> topicImages;
 
+  @Column(name = "user_id")
+  private String userId;
+
   @Column(name = "REQUEST_OR_OFFER")
   private String requestOrOffer;
 }

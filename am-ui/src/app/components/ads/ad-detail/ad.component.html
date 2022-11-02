@@ -1,0 +1,53 @@
+<div class="container">
+    <ul>
+        <li key={ad.topic_id}>
+            <a class="ad-link" (click)="navigatoToDetailView()" [title]="getValueByKey('title')">
+                <div class="sr-ad-thumb-block">
+                    <img [src]="getThumbnailFromProps()" class="sr-ad-thumb" alt="2 ½ rooms apartment" />
+                    <p class="sr-ad-info">
+                        <span class="sr-ad-type">
+                            {{ getValueByKey('title')}}
+                        </span>
+                        <span class="sr-ad-price">
+                            {{ getValueByKey('price') }}
+                        </span>
+                        <span class="sr-ad-price">
+                            {{ getValueByKey('toPrice') }}
+                        </span>
+                        <span class="sr-ad-currency"> CHF</span>&nbsp;/&nbsp;
+                        <span class="sr-ad-per-time" *ngIf="getValueByKey('priceUnit') === 'month'">
+                            {{ 'search-results-detail.price-unit-month' | translate }}
+                        </span>
+                        <span class="sr-ad-per-time" *ngIf="getValueByKey('priceUnit') === 'day'">
+                            {{ 'search-results-detail.price-unit-day' | translate }}
+                        </span>
+                        <span class="sr-ad-per-time" *ngIf="getValueByKey('priceUnit') === 'week'">
+                            {{ 'search-results-detail.price-unit-week' | translate }}
+                        </span>
+                    </p>
+                </div>
+                <div>
+                    <p class="sr-ad-rooms">
+                        {{ 'ad.' + ad.subcategory_id | translate }}
+                    </p>
+                    <p class="sr-ad-address">
+                        <span class="sr-ad-post-code">
+                            {{ getValueByKey('postalCode') }}
+                        </span>
+                        <span class="sr-ad-city">
+                            {{ getValueByKey('region') }}
+                        </span>
+                    </p>
+                </div>
+            </a>
+            <div class="button-container">
+                <button class="update-button">
+                    {{ 'ad.update' | translate }}
+                </button>
+                <button class="delete-button">
+                    {{ 'ad.delete' | translate }}
+                </button>
+            </div>
+        </li>
+    </ul>
+</div>

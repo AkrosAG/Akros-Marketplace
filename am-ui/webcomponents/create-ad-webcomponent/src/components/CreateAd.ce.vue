@@ -40,11 +40,13 @@ const props = defineProps({
     default: 'de',
     type: String
   },
+  userId: String,
   bearerToken: String
 });
 
 const { t } = useI18n({ useScope: 'global' });
 const { bearerToken } = toRefs(props);
+const { userId } = toRefs(props);
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
@@ -119,6 +121,7 @@ function updateRequestOfferFields() {
  * @param {[{}]} thumbnail - thumbnail for ad's
  */
 function submit(data, images, thumbnail) {
+
   if (bearerToken.value) {
     apiClient.authentications['bearerAuth'].accessToken = bearerToken.value;
   } else {
@@ -139,6 +142,8 @@ function submit(data, images, thumbnail) {
    thumbnailImage = thumbnail ;
   }
 
+  
+
   const topics = new TopicSaveRequestDTO(
     0,
     selectedSubCategory.subcategory_id,
@@ -146,9 +151,7 @@ function submit(data, images, thumbnail) {
     data
   );
 
-
-
- createTopic.topicsPost(imagesToUpload, topics, thumbnailImage);
+ createTopic.topicsPost(imagesToUpload, topics, thumbnailImage, userId.value);
   previewAd.value = false;
   confirmAd.value = true;
 }

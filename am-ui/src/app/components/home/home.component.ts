@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {Component, OnDestroy, OnInit} from '@angular/core';

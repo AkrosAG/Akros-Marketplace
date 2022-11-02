@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 public class TopicController implements TopicsApi {
@@ -29,13 +31,26 @@ public class TopicController implements TopicsApi {
         }
     }
 
+    @GetMapping(value = "/topics/user/{userId}")
+    public ResponseEntity<List<TopicLoadResponseDTO>> getAllTopicsFromUser(@PathVariable("userId") String userId) {
+        try {
+            log.debug("TopicController.getAllTopicsFromUser() called");
+            List<TopicLoadResponseDTO> topics = topicService.loadTopicsFromUser(userId);
+            return ResponseEntity.status(HttpStatus.OK).body(topics);
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @PostMapping(value = "/topics", consumes = { "multipart/form-data" })
     public ResponseEntity<Void> createTopic(@RequestPart("topics") String topicSaveRequestDTO,
                                             @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
-                                            @RequestPart(value = "images", required = false) MultipartFile[] images) {
+                                            @RequestPart(value = "images", required = false) MultipartFile[] images,
+                                            @RequestPart(value = "userId", required = false) String userId) {
         try {
             log.debug("TopicController.topicsPost() called");
-            topicService.saveTopic(topicSaveRequestDTO, images, thumbnail);
+            topicService.saveTopic(topicSaveRequestDTO, images, thumbnail, userId);
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception ex) {
             log.error(ex.getMessage(), ex);

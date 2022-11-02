@@ -64,5 +64,20 @@
     "no": "No",
     "no-details-found": "No advertisement could be found",
     "availability-agreement": "By agreement"
+  },
+  "ad": {
+    "title": "My ads",
+    "sort": "Sort by:",
+    "1": "Room",
+    "2": "Apartment",
+    "3": "House",
+    "4": "Parking",
+    "delete": "Delete",
+    "update": "Update",
+    "byPriceLowToHigh": "Price: Increasing",
+    "byPriceHighToLow": "Price: Decreasing",
+    "byDateNewToOld": "Date: Newest First",
+    "byDateOldToNew": "Date: Oldest First",
+    "location": "Location: Alphabetical"
   }
 }
