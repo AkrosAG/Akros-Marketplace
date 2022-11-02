@@ -64,6 +64,8 @@ public class TopicServiceTest {
     final private String FIELD_VALUE_100 = "100";
     final private String FIELD_VALUE_200 = "200";
     final private String FIELD_VALUE_150 = "150";
+
+    final private String USER_ID = "user-id";
     @BeforeEach
     public void beforeEach() {
         MockitoAnnotations.openMocks(this);
@@ -74,19 +76,20 @@ public class TopicServiceTest {
 
         this.field = new Field();
 
-        this.firstExpectedTopic = expectedTopicCreator(OFFER, TOPIC_ID_11, SUBCATEGORY_ID_1, TOPIC_FIELD_ID_6, FIELD_VALUE_40);
-        this.secondExpectedTopic = expectedTopicCreator(OFFER, TOPIC_ID_12, SUBCATEGORY_ID_1, TOPIC_FIELD_ID_6, FIELD_VALUE_80);
-        this.thirdExpectedTopic = expectedTopicCreator(REQUEST, TOPIC_ID_13, SUBCATEGORY_ID_2, TOPIC_FIELD_ID_8, FIELD_VALUE_100);
-        this.fourthExpectedTopic = expectedTopicCreator(OFFER, TOPIC_ID_14, SUBCATEGORY_ID_2, TOPIC_FIELD_ID_8, FIELD_VALUE_200);
+        this.firstExpectedTopic = expectedTopicCreator(OFFER, TOPIC_ID_11, SUBCATEGORY_ID_1, TOPIC_FIELD_ID_6, FIELD_VALUE_40, USER_ID);
+        this.secondExpectedTopic = expectedTopicCreator(OFFER, TOPIC_ID_12, SUBCATEGORY_ID_1, TOPIC_FIELD_ID_6, FIELD_VALUE_80, USER_ID);
+        this.thirdExpectedTopic = expectedTopicCreator(REQUEST, TOPIC_ID_13, SUBCATEGORY_ID_2, TOPIC_FIELD_ID_8, FIELD_VALUE_100, USER_ID);
+        this.fourthExpectedTopic = expectedTopicCreator(OFFER, TOPIC_ID_14, SUBCATEGORY_ID_2, TOPIC_FIELD_ID_8, FIELD_VALUE_200, USER_ID);
     }
 
     private Topic expectedTopicCreator(String requestOrOfferValue, Long topicIdValue, Long subCategoryIdValue,
-                                        Long topicFieldIdValue, String valueValue){
+                                        Long topicFieldIdValue, String valueValue, String userId) {
         field.setFieldId(topicFieldIdValue);
 
         return Topic.builder()
                 .requestOrOffer(requestOrOfferValue)
                 .topicId(topicIdValue)
+                .userId(userId)
                 .subCategory(SubCategory.builder()
                         .subCategoryId(subCategoryIdValue)
                         .category(new Category())

@@ -49,12 +49,13 @@ export class CreateComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  getUserId(): string | null {
-    const user = this.auth.userValue.id;
-    if (user) {
-      return user;
+  getUserId(): string | undefined {
+    try {
+      return this.auth.userValue.id;
+    } catch (e) {
+      console.log(e);
+      throw new Error;
     }
-    return null;
   }
 
   ngOnDestroy() {
