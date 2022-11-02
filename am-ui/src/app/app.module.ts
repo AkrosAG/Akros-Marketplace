@@ -41,7 +41,7 @@ import {CreateComponent} from './components/create/create.component';
 import {ErrorInterceptor} from './data/services/login/error.interceptor';
 import {JwtInterceptor} from './data/services/login/jwt.interceptor';
 import {AuthGuard} from './data/services/login/auth.guard';
-import { AdComponent } from './components/ads/ad-detail/ad.component';
+import {AdComponent} from './components/ads/ad-detail/ad.component';
 
 import {RestHelperService} from './utils/restHelperService';
 import {UserService} from './data/services/login/user.service';

@@ -253,8 +253,6 @@ public class TopicService {
 
             topicLoadResponseDTO.setTopicValues(topic.getTopicValues()
                     .stream()
-                    .sorted((e1, e2) -> e1.getField().getSortNumber() -
-                            e2.getField().getSortNumber())
                     .map(this::toTopicValueLoadResponseDTO)
                     .collect(Collectors.toList()));
             if (topic.getTopicImages().size() != 0) {
