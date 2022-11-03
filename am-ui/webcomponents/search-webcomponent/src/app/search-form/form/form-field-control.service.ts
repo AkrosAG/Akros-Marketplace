@@ -24,10 +24,10 @@ export class FormFieldControlService {
   /**
    * @description Funtion to transform array of fields into a FormGroup
    * @param {formFields} FormFieldBase[] - Array of category fields already transformed into FormFieldBase objects
-   * @param {offer} Boolean - Sets value of requestOrOffer for formcontrol
+   * @param {isOffer} Boolean - Sets value of requestOrOffer for formcontrol
    * @return {FormGroup} form - The form with the data of the category fields
    */
-  toFormGroup(formFields: FormFieldBase<string>[], offer: Boolean): FormGroup {
+  toFormGroup(formFields: FormFieldBase<string>[], isOffer: Boolean): FormGroup {
     const group: any = {};
     formFields.forEach(formFields => {
       switch (formFields.type) {
@@ -54,7 +54,7 @@ export class FormFieldControlService {
           break;
       }
     });
-    group['requestOrOffer'] = new FormControl(offer ? 'OFFER' : 'REQUEST', [Validators.required]);
+    group['requestOrOffer'] = new FormControl(isOffer ? 'OFFER' : 'REQUEST', [Validators.required]);
     group['subCategoryDropdown'] = new FormControl(0);
     return new FormGroup(group);
   }
