@@ -9,7 +9,7 @@ FROM quay.io/keycloak/keycloak:18.0.0
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 WORKDIR /opt/keycloak
 COPY ./infrastructure/keycloak/realms.json ./
-COPY ./infrastructure/keycloak/startup.sh ./
+COPY --chmod=0755 ./infrastructure/keycloak/startup.sh ./
 
 ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
