@@ -32,11 +32,10 @@ export class SearchFormComponent implements OnInit {
   currentCategoryKey: string;
   currentSubCategoryId: number;
   currentSubCategoryKey: string;
+  offer = true;
 
   categoryKeyList = ["accomodation","carShare"];
   isFurnished = new FormControl(false);
-
-
 
   get isFieldVisible ():boolean{
     return this.currentCategoryKey === this.categoryKeyList[0];
@@ -45,7 +44,6 @@ export class SearchFormComponent implements OnInit {
   get enableFurnishedCheckbox ():boolean{
     return this.currentSubCategoryId != 4 ? true : false ;
   }
-
 
   /**
    * @description Component in charge of rendering the list of fields obtained from the chosen category, as well
@@ -97,7 +95,7 @@ export class SearchFormComponent implements OnInit {
       this.currentSubCategoryKey = subCategory.key;
       this.selectedCategorySearchFields = this.formFieldsBuilderService.searchFieldsToFormFields(subCategory.fields);
       this.form = this.formFieldControlService.toFormGroup(
-        this.selectedCategorySearchFields as FormFieldBase<string>[]
+        this.selectedCategorySearchFields as FormFieldBase<string>[], this.offer
       );
       this.errorMessages = this.formFieldControlService.getValidationMessages(
         this.selectedCategorySearchFields as FormFieldBase<string>[]

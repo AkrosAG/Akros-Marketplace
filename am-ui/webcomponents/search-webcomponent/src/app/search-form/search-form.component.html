@@ -8,7 +8,8 @@
         id="offerRadio"
         value="OFFER"
         formControlName="requestOrOffer"
-        checked
+        (change)="offer = true"
+        [checked] = "offer"
       />
       <label
         class="form-check-label inline-block text-gray-800 pl-4"
@@ -24,6 +25,8 @@
         formControlName="requestOrOffer"
         name="requestOrOffer"
         id="searchRadio"
+        (change)="offer = false"
+        [checked] = "!offer"
       />
       <label
         class="form-check-label inline-block text-gray-800 pl-4"
@@ -73,7 +76,7 @@
 
   <ng-container *ngIf="isFieldVisible">
     <div class="mb-2 flex furnished" *ngIf="enableFurnishedCheckbox">
-      <input type="checkbox"   [formControl]="isFurnished">
+      <input type="checkbox" [formControl]="isFurnished">
       <label for="furnishedCheckbox"> {{ 'searchForm.furnished' | translate }} </label><br>
     </div>
   </ng-container>
