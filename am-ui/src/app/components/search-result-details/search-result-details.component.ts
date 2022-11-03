@@ -74,33 +74,23 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
       hasSize:
         values.find(
           (element: TopicValue) => element.field_description === 'size'
-        )?.value !== ''
-          ? true
-          : false,
+        )?.value !== '',
       hasFloor:
         values.find(
           (element: TopicValue) => element.field_description === 'floor'
-        )?.value === 'true'
-          ? true
-          : false,
+        )?.value !== '',
       isFurnished:
         values.find(
           (element: TopicValue) => element.field_description === 'furnished'
-        )?.value === 'true'
-          ? true
-          : false,
+        )?.value === 'true',
       isTemporary:
         values.find(
           (element: TopicValue) => element.field_description === 'temporary'
-        )?.value === 'true'
-          ? true
-          : false,
+        )?.value === 'true',
       isAvailableNow:
         values.find(
           (element: TopicValue) => element.field_description === 'availability'
-        )?.value === 'now'
-          ? true
-          : false,
+        )?.value === 'now',
       isAvailableByDate:
         values.find(
           (element: TopicValue) => element.field_description === 'availability'
@@ -114,15 +104,11 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
       hasDate:
         values.find(
           (element: TopicValue) => element.field_description === 'date'
-        )?.value !== ''
-          ? true
-          : false,
+        )?.value !== '',
       hasExpectations:
         values.find(
           (element: TopicValue) => element.field_description === 'expectations'
-        )?.value === 'true'
-          ? true
-          : false,
+        )?.value !== '',
     };
   }
 
