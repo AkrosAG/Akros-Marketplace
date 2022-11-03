@@ -62,6 +62,7 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  /* istanbul ignore next */
   setDetailViewControlValues(values: TopicValue[]) {
     const availability = values.find(
       (element: TopicValue) => element.field_description === 'availability'

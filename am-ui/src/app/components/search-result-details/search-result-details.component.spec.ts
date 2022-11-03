@@ -119,10 +119,10 @@ describe('SearchResultDetailsComponent', () => {
     expect(component.viewControlValues.hasSize).toBe(true);
     expect(component.viewControlValues.hasFloor).toBe(true);
     expect(component.viewControlValues.isFurnished).toBe(true);
-    expect(component.viewControlValues.isTemporary).toBe(false);
-    expect(component.viewControlValues.isAvailableNow).toBe(false);
+    expect(component.viewControlValues.isTemporary).toBe(true);
+    expect(component.viewControlValues.isAvailableNow).toBe(true);
     expect(component.viewControlValues.isAvailableByDate).toBe(false);
-    expect(component.viewControlValues.isAvailableByRequest).toBe(true);
+    expect(component.viewControlValues.isAvailableByRequest).toBe(false);
     expect(component.viewControlValues.hasDate).toBe(false);
     expect(component.viewControlValues.hasExpectations).toBe(true);
   });
@@ -253,7 +253,7 @@ describe('SearchResultDetailsComponent', () => {
       field_type_definition_description: '',
       min_value: 0,
       max_value: 0,
-      value: 'agreement',
+      value: 'now',
       field_type_options: [],
     },
     {
@@ -289,7 +289,7 @@ describe('SearchResultDetailsComponent', () => {
       field_type_definition_description: '',
       min_value: 0,
       max_value: 1,
-      value: 'false',
+      value: 'true',
       field_type_options: [],
     },
     {
