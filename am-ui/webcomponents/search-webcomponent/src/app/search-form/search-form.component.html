@@ -81,12 +81,6 @@
     </div>
   </ng-container>
 
-
-  <div class="error-message mt-1" *ngIf="!form.valid">
-    <!-- TODO a logic to receive event from mp-form-field upon error and construct error message based on the sum of active
-       errors, then use [innerHtml] to display constructed msg -->
-    Test for a generic error to see how it fits in the layout
-  </div>
   <a [ngClass]="{error: !form.valid}" class="btn big mt-2" (click)="onSubmit()">
     <svg class="icon-btn" [ngClass]="{error: !form.valid}" viewBox="0 0 24 24">
       <rect
