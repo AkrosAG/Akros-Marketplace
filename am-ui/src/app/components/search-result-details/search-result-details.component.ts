@@ -7,6 +7,19 @@ import {SearchResultDetailsService} from './search-result-details.service';
 import {TopicValue} from '../../data/models/TopicValue';
 import {TopicImage} from '../../data/models/TopicImage';
 
+interface DetailViewControls {
+  priceUnit: String;
+  hasSize: boolean;
+  hasFloor: boolean;
+  isFurnished: boolean;
+  isTemporary: boolean;
+  isAvailableByDate: boolean;
+  isAvailableNow: boolean;
+  isAvailableByRequest: boolean;
+  hasDate: boolean;
+  hasExpectations: boolean;
+}
+
 @Component({
   selector: 'mp-search-result-details',
   templateUrl: './search-result-details.component.html',
@@ -20,6 +33,7 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
   public resultJson: TopicValue[] = [];
   public id: string | null;
   public images: TopicImage[] = [];
+  public viewControlValues!: DetailViewControls;
 
   /**
    * @description Component to display the detail view of a Topic
@@ -44,8 +58,60 @@ export class SearchResultDetailsComponent implements OnInit, OnDestroy {
         .subscribe(res => {
           this.images = res.topic_images;
           this.resultJson = res.topic_values;
+          this.setDetailViewControlValues(this.resultJson);
         });
     }
+  }
+
+  /* istanbul ignore next */
+  setDetailViewControlValues(values: TopicValue[]) {
+    const availability = values.find(
+      (element: TopicValue) => element.field_description === 'availability'
+    )?.value;
+    this.viewControlValues = {
+      priceUnit:
+        values.find(
+          (element: TopicValue) => element.field_description === 'priceUnit'
+        )?.value || '',
+      hasSize:
+        values.find(
+          (element: TopicValue) => element.field_description === 'size'
+        )?.value !== '',
+      hasFloor:
+        values.find(
+          (element: TopicValue) => element.field_description === 'floor'
+        )?.value !== '',
+      isFurnished:
+        values.find(
+          (element: TopicValue) => element.field_description === 'furnished'
+        )?.value === 'true',
+      isTemporary:
+        values.find(
+          (element: TopicValue) => element.field_description === 'temporary'
+        )?.value === 'true',
+      isAvailableNow:
+        values.find(
+          (element: TopicValue) => element.field_description === 'availability'
+        )?.value === 'now',
+      isAvailableByDate:
+        values.find(
+          (element: TopicValue) => element.field_description === 'availability'
+        )?.value === 'date'
+          ? true
+          : false,
+      isAvailableByRequest:
+        availability !== '' &&
+        availability !== 'now' &&
+        availability !== 'date',
+      hasDate:
+        values.find(
+          (element: TopicValue) => element.field_description === 'date'
+        )?.value !== '',
+      hasExpectations:
+        values.find(
+          (element: TopicValue) => element.field_description === 'expectations'
+        )?.value !== '',
+    };
   }
 
   ngOnInit(): void {

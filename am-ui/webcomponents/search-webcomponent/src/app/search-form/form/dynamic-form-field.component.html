@@ -1,7 +1,7 @@
 <div [formGroup]="form">
   <div [ngSwitch]="formField.type" >
     <!-- Number fields for fromSize and toPrice field.-->
-     <div *ngIf="formField.id==24 || formField.id==25 ">
+     <div *ngIf="formField.id===24 || formField.id===25 ">
        <input
          *mpSwitchCases="[2, 3]"
          [formControlName]="formField.key"
