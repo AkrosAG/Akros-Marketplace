@@ -1,1 +1,36 @@
 /* stylelint-disable */
+.ads-container {
+    min-height: 100vh;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px 50px;
+}
+
+.sort-container {
+    margin-bottom: 1em;
+
+    .sort-label {
+        margin-right: 1em;
+    }
+}
+
+@media screen and (max-width:1500px) {
+    .grid-container { 
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width:1200px) {
+    .grid-container { 
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width:800px) {
+    .grid-container { 
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

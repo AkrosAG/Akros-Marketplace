@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: V0.008/1
+      author: Filipe-Inacio
+      comment: Add user_id to topic
+      changes:
+        - addColumn:
+            tableName: topic
+            columns:
+              - column:
+                  name: user_id
+                  type: varchar(100)

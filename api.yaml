@@ -271,6 +271,7 @@ components:
         - subcategory_id
         - request_or_offer
         - topic_values
+        - user_id
       properties:
         topic_id:
           type: integer
@@ -284,6 +285,8 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/TopicValueSaveRequestDTO"
+        user_id:
+          type: string
 
     TopicValueSaveRequestDTO:
       type: object

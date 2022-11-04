@@ -111,6 +111,7 @@ public class TopicService {
     public void saveTopic(String json, MultipartFile[] files, MultipartFile thumbnail) throws IOException {
         TopicSaveRequestDTO topicSaveRequestDTO = deserializeStringToTopicSaveRequestDTO(json);
         Topic topic = new Topic();
+        topic.setUserId(topicSaveRequestDTO.getUserId());
         topic.setTopicId(topicSaveRequestDTO.getTopicId());
         final SubCategory subCategory = subCategoryRepository.getById(topicSaveRequestDTO.getSubcategoryId());
         topic.setSubCategory(subCategory);
@@ -236,6 +237,30 @@ public class TopicService {
                 .map(this::toTopicValueLoadResponseDTO)
                 .collect(Collectors.toList()));
         result.setTopicImages(getTopicImageDtosFromImages(topic.getTopicImages()));
+        return result;
+    }
+
+    @Transactional
+    public List<TopicLoadResponseDTO> loadTopicsForUser(String userId) {
+        List<Topic> topics = topicRepository.findAllByUserId(userId);
+        List<TopicLoadResponseDTO> result = new ArrayList<>();
+        for (Topic topic : topics) {
+            TopicLoadResponseDTO topicLoadResponseDTO = new TopicLoadResponseDTO();
+            topicLoadResponseDTO.setRequestOrOffer(topic.getRequestOrOffer());
+            topicLoadResponseDTO.setSubcategoryId(topic.getSubCategory().getSubCategoryId());
+            topicLoadResponseDTO.setCategoryId(topic.getSubCategory().getCategory().getCategoryId());
+            topicLoadResponseDTO.setTopicId(topic.getTopicId());
+
+            topicLoadResponseDTO.setTopicValues(topic.getTopicValues()
+                    .stream()
+                    .map(this::toTopicValueLoadResponseDTO)
+                    .collect(Collectors.toList()));
+            if (topic.getTopicImages().size() != 0) {
+                topicLoadResponseDTO.setTopicImages(getTopicImageDtosFromImages(topic.getTopicImages()));
+            }
+
+            result.add(topicLoadResponseDTO);
+        }
         return result;
     }
 

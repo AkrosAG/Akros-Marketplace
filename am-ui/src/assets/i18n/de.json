@@ -64,5 +64,20 @@
     "no": "Nein",
     "no-details-found": "Es konnte keine Anzeige gefunden werden",
     "availability-agreement": "Auf Anfrage"
+  },
+  "ad": {
+    "title": "Meine Anzeigen",
+    "sort": "Sortieren nach:",
+    "1": "Zimmer",
+    "2": "Wohnung",
+    "3": "Haus",
+    "4": "Parkplatz",
+    "delete": "Löschen",
+    "update": "Bearbeiten",
+    "byPriceLowToHigh": "Preis: Aufsteigend",
+    "byPriceHighToLow": "Preis: Absteigend",
+    "byDateNewToOld": "Datum: Neuste zuerst",
+    "byDateOldToNew": "Datum: Älteste zuerst",
+    "location": "Ort: Alphabetisch"
   }
 }

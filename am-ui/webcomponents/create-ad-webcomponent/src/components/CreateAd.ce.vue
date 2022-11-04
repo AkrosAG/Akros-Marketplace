@@ -6,8 +6,8 @@
  * from child component and form has been correctly filled.
  * Contains the styles of the module.
  */
-import { onMounted, ref, toRefs } from 'vue';
-import { useI18n } from 'vue-i18n';
+import {onMounted, ref, toRefs} from 'vue';
+import {useI18n} from 'vue-i18n';
 import CategoriesApi from '../api/src/api/CategoriesApi';
 import ApiClient from '../api/src/ApiClient';
 import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
@@ -40,11 +40,13 @@ const props = defineProps({
     default: 'de',
     type: String
   },
+  userId: String,
   bearerToken: String
 });
 
-const { t } = useI18n({ useScope: 'global' });
-const { bearerToken } = toRefs(props);
+const {t} = useI18n({useScope: 'global'});
+const {bearerToken} = toRefs(props);
+const {userId} = toRefs(props);
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
@@ -119,6 +121,7 @@ function updateRequestOfferFields() {
  * @param {[{}]} thumbnail - thumbnail for ad's
  */
 function submit(data, images, thumbnail) {
+
   if (bearerToken.value) {
     apiClient.authentications['bearerAuth'].accessToken = bearerToken.value;
   } else {
@@ -134,21 +137,21 @@ function submit(data, images, thumbnail) {
     imagesToUpload = images;
   }
 
-  let thumbnailImage = [] ;
+  let thumbnailImage = [];
   if (thumbnail.length !== 0) {
-   thumbnailImage = thumbnail ;
+    thumbnailImage = thumbnail;
   }
+
 
   const topics = new TopicSaveRequestDTO(
     0,
     selectedSubCategory.subcategory_id,
     requestOrOffer.value.toUpperCase(),
-    data
+    data,
+    userId.value
   );
 
-
-
- createTopic.topicsPost(imagesToUpload, topics, thumbnailImage);
+  createTopic.topicsPost(imagesToUpload, topics, thumbnailImage);
   previewAd.value = false;
   confirmAd.value = true;
 }
@@ -165,9 +168,9 @@ function preview(fields, imagesUploaded, thumbnailUploaded) {
   showSubDropdown.value = false;
   showDropdown.value = false;
   previewAd.value = true;
-  fieldsToPreview.value = fields ;
+  fieldsToPreview.value = fields;
   images = imagesUploaded ?? [];
-  thumbnail =[...thumbnailUploaded];
+  thumbnail = [...thumbnailUploaded];
 }
 
 /**
@@ -178,7 +181,7 @@ function back(fields) {
   showSubDropdown.value = true;
   showDropdown.value = true;
   previewAd.value = false;
-  fieldsToShow.value = fields ;
+  fieldsToShow.value = fields;
 }
 
 
@@ -259,7 +262,7 @@ defineExpose({
         v-if="showAdFields"
         :selected-category="selectedCategoryKey"
         :fields-to-show="fieldsToShow"
-        :fields-to-modify = "fieldsToPreview"
+        :fields-to-modify="fieldsToPreview"
         :images="images"
         :thumbnail="thumbnail"
         @preview="preview"
@@ -289,11 +292,11 @@ defineExpose({
 .detail-container {
   margin-top: 1em;
 
-  .title{
+  .title {
     text-align: left;
     margin-bottom: 1em;
-    font-weight:bold;
-    font-size:1.3em;
+    font-weight: bold;
+    font-size: 1.3em;
   }
 
   .image-container {
@@ -330,8 +333,8 @@ defineExpose({
     tr {
       border-bottom: 1px solid lightgray;
 
-      div{
-       display: flex;
+      div {
+        display: flex;
       }
 
       th {

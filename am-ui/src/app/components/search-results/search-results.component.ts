@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
