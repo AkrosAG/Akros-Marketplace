@@ -108,10 +108,10 @@ public class TopicService {
         return result;
     }
 
-    public void saveTopic(String json, MultipartFile[] files, MultipartFile thumbnail, String userId) throws IOException {
+    public void saveTopic(String json, MultipartFile[] files, MultipartFile thumbnail) throws IOException {
         TopicSaveRequestDTO topicSaveRequestDTO = deserializeStringToTopicSaveRequestDTO(json);
         Topic topic = new Topic();
-        topic.setUserId(userId);
+        topic.setUserId(topicSaveRequestDTO.getUserId());
         topic.setTopicId(topicSaveRequestDTO.getTopicId());
         final SubCategory subCategory = subCategoryRepository.getById(topicSaveRequestDTO.getSubcategoryId());
         topic.setSubCategory(subCategory);
