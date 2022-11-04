@@ -1,9 +1,6 @@
 package ch.akros.marketplace.service;
 
-import ch.akros.marketplace.api.model.TopicSearchFieldValuesRequestDTO;
-import ch.akros.marketplace.api.model.TopicSearchListResponseDTO;
-import ch.akros.marketplace.api.model.TopicSearchRequestDTO;
-import ch.akros.marketplace.api.model.TopicSearchResponseDTO;
+import ch.akros.marketplace.api.model.*;
 import ch.akros.marketplace.service.entity.*;
 import ch.akros.marketplace.service.repository.AdvertiserRepository;
 import ch.akros.marketplace.service.repository.FieldRepository;
@@ -19,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -322,6 +320,33 @@ public class TopicServiceTest {
         verify(fieldRepository, times(2)).findAll();
         verifyNoMoreInteractions(topicRepository, fieldRepository);
         verifyNoInteractions(advertiserRepository, subCategoryRepository);
+    }
+
+    @Test
+    public void convertTopicToTopicLoadResponseDTO() {
+        Topic topic = firstExpectedTopic;
+        TopicLoadResponseDTO dto = new TopicLoadResponseDTO();
+        dto.setTopicId(topic.getTopicId());
+        dto.setSubcategoryId(topic.getSubCategory().getSubCategoryId());
+        dto.setRequestOrOffer(topic.getRequestOrOffer());
+        dto.setTopicValues(getTopicValueLoadResponseDto(topic.getTopicValues()));
+
+        assertEquals(topic.getTopicId(), dto.getTopicId());
+        assertEquals(topic.getSubCategory().getSubCategoryId(), dto.getSubcategoryId());
+        assertEquals(topic.getRequestOrOffer(), dto.getRequestOrOffer());
+        assertEquals(topic.getTopicValues().get(0).getTopicValueId(), dto.getTopicValues().get(0).getTopicValueId());
+    }
+
+    private List<TopicValueLoadResponseDTO> getTopicValueLoadResponseDto(List<TopicValue> topicValues) {
+        List<TopicValueLoadResponseDTO> dtoList = new ArrayList<>();
+        for (TopicValue topicValue : topicValues) {
+            TopicValueLoadResponseDTO dto = new TopicValueLoadResponseDTO();
+            dto.setFieldId(topicValue.getField().getFieldId());
+            dto.setValue(topicValue.getValue());
+            dto.setTopicValueId(topicValue.getTopicValueId());
+            dtoList.add(dto);
+        }
+        return dtoList;
     }
 
     private static class CustomExampleTopicMatcher implements ArgumentMatcher<Example<Topic>> {
