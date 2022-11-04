@@ -7,11 +7,9 @@ export default class CreateTopic {
     this.apiClient = apiClient || ApiClient.instance;
   }
 
-  topicsPost(files, topics, thumbnail, userId) {
+  topicsPost(files, topics, thumbnail) {
     let formData = new FormData();
     formData.append("topics", JSON.stringify(topics));
-
-    formData.append("userId", userId);
 
     for (let i = 0; i < thumbnail.length; i++) {
       formData.append("thumbnail", thumbnail[i]);
