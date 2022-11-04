@@ -32,10 +32,10 @@ public class TopicController implements TopicsApi {
     }
 
     @GetMapping(value = "/topics/user/{userId}")
-    public ResponseEntity<List<TopicLoadResponseDTO>> getAllTopicsFromUser(@PathVariable("userId") String userId) {
+    public ResponseEntity<List<TopicLoadResponseDTO>> getTopicsForUser(@PathVariable("userId") String userId) {
         try {
             log.debug("TopicController.getAllTopicsFromUser() called");
-            List<TopicLoadResponseDTO> topics = topicService.loadTopicsFromUser(userId);
+            List<TopicLoadResponseDTO> topics = topicService.loadTopicsForUser(userId);
             return ResponseEntity.status(HttpStatus.OK).body(topics);
         } catch (Exception ex) {
             log.error(ex.getMessage(), ex);

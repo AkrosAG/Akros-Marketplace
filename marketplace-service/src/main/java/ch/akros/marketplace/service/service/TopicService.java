@@ -241,7 +241,7 @@ public class TopicService {
     }
 
     @Transactional
-    public List<TopicLoadResponseDTO> loadTopicsFromUser(String userId) {
+    public List<TopicLoadResponseDTO> loadTopicsForUser(String userId) {
         List<Topic> topics = topicRepository.findAllByUserId(userId);
         List<TopicLoadResponseDTO> result = new ArrayList<>();
         for (Topic topic : topics) {
