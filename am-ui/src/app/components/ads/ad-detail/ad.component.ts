@@ -1,17 +1,22 @@
 /* eslint-disable */
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {Topic} from '../../../data/models/Topic';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AdsService} from "../ads.service";
+import {Subscription} from "rxjs";
+import "node_modules/bootstrap/js/src/modal";
 
 @Component({
     selector: 'mp-ad',
     templateUrl: './ad.component.html',
     styleUrls: ['./ad.component.scss'],
   })
-export class AdComponent  {
+export class AdComponent {
     @Input() ad: Topic;
+    @Output() deleteTopicEvent: EventEmitter<Topic> = new EventEmitter();
 
-    constructor( private router: Router) { }
+
+    constructor(private router: Router, private adsService: AdsService, private route: ActivatedRoute) { }
 
     getThumbnailFromProps() {
         const thumbnail = this.ad.topic_images.find((e) => e.thumbnail);
@@ -25,5 +30,9 @@ export class AdComponent  {
 
     navigateTeDetailView() {
         this.router.navigate(['search-result-details/' + this.ad.topic_id]);
+    }
+
+    deleteTopic() {
+      this.deleteTopicEvent.emit(this.ad);
     }
 }

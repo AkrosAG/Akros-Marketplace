@@ -14,7 +14,7 @@
         </div>
         <div class="grid-container">
             <div *ngFor="let ad of sortedAds">
-                <mp-ad [ad]="ad"></mp-ad>
+                <mp-ad [ad]="ad" (deleteTopicEvent)="deleteTopic($event)"></mp-ad>
             </div>
         </div>
     </div>

@@ -5,9 +5,14 @@ import {Topic} from '../../data/models/Topic';
 
 @Injectable({providedIn: 'root'})
 export class AdsService {
-    constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-    getAdsByUserId(userId: string) {
-        return this.http.get<Topic[]>(`/topics/user/${userId}`);
-    }
+  getAdsByUserId(userId: string) {
+    return this.http.get<Topic[]>(`/topics/user/${userId}`);
+  }
+
+  deleteTopic(topicId: number) {
+    return this.http.delete(`/topics/${topicId}`).toPromise();
+  }
 }

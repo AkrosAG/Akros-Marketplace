@@ -1,5 +1,19 @@
 /* stylelint-disable */
 @import "./../../../../assets/styles/colors";
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/mixins";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/modal";
+
+.modal {
+  height: 100%;
+  background-color: rgba(0,0,0,.5);
+  color: #fff;
+}
+
+.modal-body {
+  color: black;
+}
 
 li {
   list-style: none;
@@ -14,7 +28,7 @@ img {
 }
 
 @media screen and (max-width: 1200px) {
-  img { 
+  img {
     width: auto;
   }
 }
@@ -97,14 +111,12 @@ img {
   }
 
   .delete-button {
-    padding: 6px 24px;
     text-align: center;
     color: #e9d3d6;
     background-color: #9c132c;
     border-radius: 1.2em;
     cursor: pointer;
     display: block;
-    max-width: 360px;
     padding: 8px 24px;
     transition: 0.3s;
     border: none;
@@ -125,6 +137,7 @@ img {
     cursor: pointer;
     transition: 0.3s;
     border: none;
+    max-width: 360px;
 
     &:hover {
       background-color: $akros-beige;
