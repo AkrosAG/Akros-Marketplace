@@ -6,7 +6,7 @@
                     <img [src]="getThumbnailFromProps()" class="sr-ad-thumb" alt="2 ½ rooms apartment" />
                     <p class="sr-ad-info">
                         <span class="sr-ad-type">
-                            {{ getValueByKey('title')}}
+                            {{ getValueByKey('title')}} {{ ad.topic_id}}
                         </span>
                         <span class="sr-ad-price">
                             {{ getValueByKey('price') }}
@@ -44,8 +44,7 @@
                 <button class="update-button">
                     {{ 'ad.update' | translate }}
                 </button>
-                <button type="button" class="delete-button" data-bs-toggle="modal" data-bs-target="#deleteAdModel">
-                  <!-- (click)="deleteTopic()" -->
+                <button type="button" class="delete-button" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + ad.topic_id">
                     {{ 'ad.delete' | translate }}
                 </button>
             </div>
@@ -54,7 +53,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="deleteAdModel" tabindex="-1" aria-labelledby="deleteAdModelLabel" aria-hidden="true">
+<div class="modal fade" id="modal{{ad.topic_id}}" tabindex="-1" aria-labelledby="deleteAdModelLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -70,3 +69,4 @@
     </div>
   </div>
 </div>
+

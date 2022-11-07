@@ -39,11 +39,6 @@ export class AdsComponent implements OnDestroy {
     }
   }
 
-  async deleteTopic(topic: Topic) {
-    await this.adsService.deleteTopic(topic.topic_id);
-    this.getAdsFromUser();
-  }
-
   onChangeSortOrder(event: Event) {
     const result = (event.target as HTMLInputElement).value;
     switch (result) {
@@ -75,6 +70,14 @@ export class AdsComponent implements OnDestroy {
         break;
       default:
         this.sortedAds = this.ads;
+    }
+  }
+
+  resetView() {
+    this.getAdsFromUser();
+    const sortSelect =  <HTMLSelectElement>document.getElementById("sortSelect");
+    if (sortSelect) {
+      sortSelect.selectedIndex = 0;
     }
   }
 
