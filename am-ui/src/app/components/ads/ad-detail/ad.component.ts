@@ -1,9 +1,8 @@
 /* eslint-disable */
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {Topic} from '../../../data/models/Topic';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {AdsService} from "../ads.service";
-import {Subscription} from "rxjs";
 import "node_modules/bootstrap/js/src/modal";
 
 @Component({
@@ -15,7 +14,7 @@ export class AdComponent {
   @Input() ad: Topic;
   @Output() deleteTopicEvent: EventEmitter<Topic> = new EventEmitter();
 
-  constructor(private router: Router, private adsService: AdsService, private route: ActivatedRoute) {
+  constructor(private router: Router, private adsService: AdsService) {
   }
 
   getThumbnailFromProps() {
