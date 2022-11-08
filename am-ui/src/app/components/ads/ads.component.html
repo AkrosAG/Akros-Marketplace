@@ -1,1 +1,27 @@
-myads layout
+<div id="intro">
+    <div class="container intro-block">
+      <h1 class="text-white">{{ 'ad.title' | translate }}</h1>
+    </div>
+</div>
+
+<div class="container-fluid simple">
+    <div class="container content-block ads-container" *ngIf="sortedAds.length !== 0; else noAdsFound">
+        <div class="sort-container">
+            <span class="sort-label">{{ "ad.sort" | translate}}</span>
+            <select class="filter-select" (change)="onChangeSortOrder($event)">
+                <option *ngFor="let type of sortTypes;" [value]="type.value">{{ type.label | translate }}</option>
+            </select>
+        </div>
+        <div class="grid-container">
+            <div *ngFor="let ad of sortedAds">
+                <mp-ad [ad]="ad"></mp-ad>
+            </div>
+        </div>
+    </div>
+    <ng-template #noAdsFound>
+        <div class="container content-block">
+          <a mpBackButton>{{ 'back' | translate }}</a>
+          <h2>{{'search-results-detail.no-details-found' | translate }}</h2>
+        </div>
+    </ng-template>
+</div>

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
@@ -27,7 +28,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       this.language = appLanguage.lang;
     });
     this.results = history.state.topics;
-    // TODO: If results is null, redirect to home
   }
 
   ngOnDestroy() {
@@ -44,6 +44,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         language: this.language,
       },
     };
+
     this.router.navigate(
       ['search-result-details/' + topic.topic_id],
       navigationExtras

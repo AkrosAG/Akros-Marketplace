@@ -4,10 +4,10 @@ import {Injectable} from '@angular/core';
 import {Topic} from '../../data/models/Topic';
 
 @Injectable({providedIn: 'root'})
-export class SearchResultDetailsService {
-  constructor(private http: HttpClient) {}
+export class AdsService {
+    constructor(private http : HttpClient) { }
 
-  getById(id: number) {
-    return this.http.get<Topic>(`/topics/${id}`);
-  }
+    getAdsByUserId(userId: string) {
+        return this.http.get<Topic[]>(`/topics/user/${userId}`);
+    }
 }

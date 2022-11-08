@@ -8,7 +8,8 @@
         id="offerRadio"
         value="OFFER"
         formControlName="requestOrOffer"
-        checked
+        (change)="offer = true"
+        [checked] = "offer"
       />
       <label
         class="form-check-label inline-block text-gray-800 pl-4"
@@ -24,6 +25,8 @@
         formControlName="requestOrOffer"
         name="requestOrOffer"
         id="searchRadio"
+        (change)="offer = false"
+        [checked] = "!offer"
       />
       <label
         class="form-check-label inline-block text-gray-800 pl-4"
@@ -70,11 +73,14 @@
       ></mp-form-field>
     </div>
   </div>
-  <div class="error-message mt-1" *ngIf="!form.valid">
-    <!-- TODO a logic to receive event from mp-form-field upon error and construct error message based on the sum of active
-       errors, then use [innerHtml] to display constructed msg -->
-    Test for a generic error to see how it fits in the layout
-  </div>
+
+  <ng-container *ngIf="isFieldVisible">
+    <div class="mb-2 flex furnished" *ngIf="enableFurnishedCheckbox">
+      <input type="checkbox" [formControl]="isFurnished">
+      <label for="furnishedCheckbox"> {{ 'searchForm.furnished' | translate }} </label><br>
+    </div>
+  </ng-container>
+
   <a [ngClass]="{error: !form.valid}" class="btn big mt-2" (click)="onSubmit()">
     <svg class="icon-btn" [ngClass]="{error: !form.valid}" viewBox="0 0 24 24">
       <rect

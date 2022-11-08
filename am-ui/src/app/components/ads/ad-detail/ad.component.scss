@@ -1,0 +1,148 @@
+/* stylelint-disable */
+@import "./../../../../assets/styles/colors";
+
+li {
+  list-style: none;
+}
+
+img {
+  height: 250px;
+  display: block;
+  width: 100%;
+  border-radius: 0.5em;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 1200px) {
+  img { 
+    width: auto;
+  }
+}
+
+.ad-link {
+  cursor: pointer;
+}
+
+.sr-ad-info {
+  position: absolute;
+  bottom: 0.3em;
+  left: 0.3em;
+  margin: 0;
+  padding: 0.4em 0.6em;
+  white-space: nowrap;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.67);
+  border-radius: 0.4em;
+}
+
+.sr-ad-type {
+  display: block;
+  margin-bottom: 0.1em;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+#search-results-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 102.6%;
+    margin: 0 -1.3%;
+    padding: 1em 0 1.4em;
+}
+
+.sr-ad-block {
+  display: block;
+  width: 97.4%;
+  margin: 0 1.3% 1.2em;
+  font-size: 0.9em;
+}
+
+.sr-ad-link {
+  display: block;
+  font-weight: 400;
+  color: #232323;
+}
+
+.sr-ad-thumb-block {
+  position: relative;
+  margin-bottom: 0.4em;
+}
+
+.sr-ad-thumb {
+  height: 250px;
+  display: block;
+  border-radius: 0.5em;
+  object-fit: cover;
+}
+
+
+.sr-ad-price {
+  font-weight: 700;
+}
+
+.sr-ad-rooms,
+.sr-ad-address {
+  margin-bottom: 0.1em;
+  padding-left: 0.75em;
+  white-space: nowrap;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+
+  button {
+    width: 45%;
+  }
+
+  .delete-button {
+    padding: 6px 24px;
+    text-align: center;
+    color: #e9d3d6;
+    background-color: #9c132c;
+    border-radius: 1.2em;
+    cursor: pointer;
+    display: block;
+    max-width: 360px;
+    padding: 8px 24px;
+    transition: 0.3s;
+    border: none;
+    font-size: 100%;
+
+    &:hover {
+      background-color: #d60929;
+      color: #fff;
+    }
+  }
+
+  .update-button {
+    padding: 6px 24px;
+    font-size: 100%;
+    color: rgb(255 255 255 / 80%);
+    background-color: $greige;
+    border-radius: 1.2em;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+
+    &:hover {
+      background-color: $akros-beige;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .button-container {
+    flex-direction: column;
+
+    .delete-button {
+      width: 360px;
+    }
+
+    .update-button {
+      margin: 0 0 .5em 0;
+      width: 375px;
+    }
+  }
+}

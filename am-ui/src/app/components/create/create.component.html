@@ -9,6 +9,7 @@
     <div class="text-block">
       <i18n-host [locale]="appLanguage">
         <create-ad-webcomponent
+            [userId]="getUserId()"
             [bearerToken]="getOauthToken()"></create-ad-webcomponent>
       </i18n-host>
     </div>

@@ -1,8 +1,8 @@
-import {ValidationMessages} from '../../utils/validators/ValidationMessages';
-import {Injectable} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ValidationMessages } from '../../utils/validators/ValidationMessages';
 
-import {FormFieldBase} from './form-field-base';
+import { FormFieldBase } from './form-field-base';
 
 @Injectable()
 export class FormFieldControlService {
@@ -24,11 +24,11 @@ export class FormFieldControlService {
   /**
    * @description Funtion to transform array of fields into a FormGroup
    * @param {formFields} FormFieldBase[] - Array of category fields already transformed into FormFieldBase objects
+   * @param {isOffer} Boolean - Sets value of requestOrOffer for formcontrol
    * @return {FormGroup} form - The form with the data of the category fields
    */
-  toFormGroup(formFields: FormFieldBase<string>[]): FormGroup {
+  toFormGroup(formFields: FormFieldBase<string>[], isOffer: Boolean): FormGroup {
     const group: any = {};
-
     formFields.forEach(formFields => {
       switch (formFields.type) {
         case 1:
@@ -44,6 +44,9 @@ export class FormFieldControlService {
         case 5:
           group[formFields.key] = new FormControl(null);
           break;
+        case 19:
+            group[formFields.key] = new FormControl();
+            break;
         default:
           group[formFields.key] = formFields.required
             ? new FormControl(null, [Validators.required])
@@ -51,12 +54,12 @@ export class FormFieldControlService {
           break;
       }
     });
-    group['requestOrOffer'] = new FormControl('OFFER', [Validators.required]);
+    group['requestOrOffer'] = new FormControl(isOffer ? 'OFFER' : 'REQUEST', [Validators.required]);
     group['subCategoryDropdown'] = new FormControl(0);
     return new FormGroup(group);
   }
 
-    /**
+  /**
    * @description Funtion to obtain validation messages for category fields
    * @param {formFields} FormFieldBase[] - Array of category fields already transformed into FormFieldBase objects
    */

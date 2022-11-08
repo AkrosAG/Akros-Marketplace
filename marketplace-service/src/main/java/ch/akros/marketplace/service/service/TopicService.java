@@ -1,20 +1,5 @@
 package ch.akros.marketplace.service.service;
 
-import ch.akros.marketplace.api.model.*;
-import ch.akros.marketplace.service.entity.*;
-import ch.akros.marketplace.service.model.LatLon;
-import ch.akros.marketplace.service.repository.AdvertiserRepository;
-import ch.akros.marketplace.service.repository.FieldRepository;
-import ch.akros.marketplace.service.repository.SubCategoryRepository;
-import ch.akros.marketplace.service.repository.TopicRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -25,6 +10,39 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import ch.akros.marketplace.api.model.FieldOptionResponseDTO;
+import ch.akros.marketplace.api.model.FieldResponseDTO;
+import ch.akros.marketplace.api.model.TopicImageDTO;
+import ch.akros.marketplace.api.model.TopicLoadResponseDTO;
+import ch.akros.marketplace.api.model.TopicSaveRequestDTO;
+import ch.akros.marketplace.api.model.TopicSearchListResponseDTO;
+import ch.akros.marketplace.api.model.TopicSearchRequestDTO;
+import ch.akros.marketplace.api.model.TopicSearchResponseDTO;
+import ch.akros.marketplace.api.model.TopicSearchValueResponseDTO;
+import ch.akros.marketplace.api.model.TopicValueLoadResponseDTO;
+import ch.akros.marketplace.api.model.TopicValueSaveRequestDTO;
+import ch.akros.marketplace.service.entity.Field;
+import ch.akros.marketplace.service.entity.FieldOption;
+import ch.akros.marketplace.service.entity.SubCategory;
+import ch.akros.marketplace.service.entity.Topic;
+import ch.akros.marketplace.service.entity.TopicImage;
+import ch.akros.marketplace.service.entity.TopicValue;
+import ch.akros.marketplace.service.model.LatLon;
+import ch.akros.marketplace.service.repository.AdvertiserRepository;
+import ch.akros.marketplace.service.repository.FieldRepository;
+import ch.akros.marketplace.service.repository.SubCategoryRepository;
+import ch.akros.marketplace.service.repository.TopicRepository;
+import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class TopicService {
@@ -39,6 +57,11 @@ public class TopicService {
   private final int PRICE = 6;
   private final int FROM_SIZE = 25;
   private final int TO_PRICE = 24;
+
+  private final int DATE = 15;
+  private final int FROM_DATE = 19;
+
+  private final int FURNISHED = 14;
 
   public TopicService(
       FieldRepository fieldRepository,
@@ -88,6 +111,7 @@ public class TopicService {
     public void saveTopic(String json, MultipartFile[] files, MultipartFile thumbnail) throws IOException {
         TopicSaveRequestDTO topicSaveRequestDTO = deserializeStringToTopicSaveRequestDTO(json);
         Topic topic = new Topic();
+        topic.setUserId(topicSaveRequestDTO.getUserId());
         topic.setTopicId(topicSaveRequestDTO.getTopicId());
         final SubCategory subCategory = subCategoryRepository.getById(topicSaveRequestDTO.getSubcategoryId());
         topic.setSubCategory(subCategory);
@@ -216,6 +240,30 @@ public class TopicService {
         return result;
     }
 
+    @Transactional
+    public List<TopicLoadResponseDTO> loadTopicsForUser(String userId) {
+        List<Topic> topics = topicRepository.findAllByUserId(userId);
+        List<TopicLoadResponseDTO> result = new ArrayList<>();
+        for (Topic topic : topics) {
+            TopicLoadResponseDTO topicLoadResponseDTO = new TopicLoadResponseDTO();
+            topicLoadResponseDTO.setRequestOrOffer(topic.getRequestOrOffer());
+            topicLoadResponseDTO.setSubcategoryId(topic.getSubCategory().getSubCategoryId());
+            topicLoadResponseDTO.setCategoryId(topic.getSubCategory().getCategory().getCategoryId());
+            topicLoadResponseDTO.setTopicId(topic.getTopicId());
+
+            topicLoadResponseDTO.setTopicValues(topic.getTopicValues()
+                    .stream()
+                    .map(this::toTopicValueLoadResponseDTO)
+                    .collect(Collectors.toList()));
+            if (topic.getTopicImages().size() != 0) {
+                topicLoadResponseDTO.setTopicImages(getTopicImageDtosFromImages(topic.getTopicImages()));
+            }
+
+            result.add(topicLoadResponseDTO);
+        }
+        return result;
+    }
+
     private List<TopicImageDTO> getTopicImageDtosFromImages(List<TopicImage> topicImages) {
         List<TopicImageDTO> topicImageDTOS = new ArrayList<>();
         for (TopicImage image : topicImages) {
@@ -280,6 +328,7 @@ public class TopicService {
                         .subCategoryId(topicSearchRequestDTO.getSubcategoryId())
                         .build())
                 .build();
+   
 
         Example<Topic> exampleTopic = Example.of(topic, ExampleMatcher.matchingAll());
         List<TopicSearchResponseDTO> topicList = topicRepository.findAll(exampleTopic).stream()
@@ -294,6 +343,14 @@ public class TopicService {
 
             if (topicValue.getTopicValueId() == TO_PRICE) {
                 topicList = filterTopicsByToPrice(topicValue.getValue(), topicList);
+            }
+
+            if (topicValue.getTopicValueId() == FROM_DATE) {
+                topicList = filterTopicsByFromDate(topicValue.getValue(), topicList);
+            }
+
+            if (topicValue.getTopicValueId() == FURNISHED) {
+                topicList = filterTopicsByFurnished (topicValue.getValue(), topicList);
             }
         }
 
@@ -333,6 +390,43 @@ public class TopicService {
                     .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
             log.error(e.getMessage(), e);
+        }
+        return topicList;
+    }
+
+    private List<TopicSearchResponseDTO> filterTopicsByFromDate(String topicValueFromDate, 
+                   List<TopicSearchResponseDTO> topicList) {
+        
+        LocalDate fromDate = LocalDate.parse(topicValueFromDate);
+        try {
+
+        return topicList
+        .stream()
+        .filter(topic -> topic.getTopicValues()
+        .stream()
+        .filter(topicValue -> topicValue.getFieldId() == DATE)
+        .anyMatch(topicValue -> LocalDate.parse(topicValue.getValue()).compareTo(fromDate) >= 0))
+        .collect(Collectors.toList());
+        } catch (IllegalArgumentException e) {
+        log.error(e.getMessage(), e);
+        }
+        return topicList;
+    }
+
+    private List<TopicSearchResponseDTO> filterTopicsByFurnished(String topicValueIsFurnished,
+                       List<TopicSearchResponseDTO> topicList) {
+        try {
+        
+        boolean isFurnished = Boolean.parseBoolean(topicValueIsFurnished);
+        return topicList
+        .stream()
+        .filter(topic -> topic.getTopicValues()
+        .stream()
+        .filter(topicValue -> topicValue.getFieldId() == FURNISHED)
+        .anyMatch(topicValue -> Boolean.parseBoolean(topicValue.getValue()) == isFurnished))
+        .collect(Collectors.toList());
+        } catch (IllegalArgumentException e) {
+        log.error(e.getMessage(), e);
         }
         return topicList;
     }

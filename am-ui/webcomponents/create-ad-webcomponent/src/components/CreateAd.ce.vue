@@ -6,13 +6,15 @@
  * from child component and form has been correctly filled.
  * Contains the styles of the module.
  */
-import ApiClient from '../api/src/ApiClient';
+import {onMounted, ref, toRefs} from 'vue';
+import {useI18n} from 'vue-i18n';
 import CategoriesApi from '../api/src/api/CategoriesApi';
+import ApiClient from '../api/src/ApiClient';
 import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
-import { onMounted, ref, toRefs } from 'vue';
+import ConfirmAd from './ConfirmAd.vue';
 import CreateAdFields from './CreateAdFields.vue';
-import { useI18n } from 'vue-i18n';
 import CreateTopic from './CreateTopic';
+import PreviewAd from './PreviewAd.vue';
 
 const apiClient = new ApiClient('/');
 const categoriesApi = new CategoriesApi(apiClient);
@@ -23,8 +25,14 @@ const selectedCategoryKey = ref('');
 const selectedSubCategoryKey = ref('');
 const requestOrOffer = ref('OFFER');
 const fieldsToShow = ref([]);
+const fieldsToPreview = ref([]);
+let images = [];
+let thumbnail = [];
+const showDropdown = ref(true);
 const showSubDropdown = ref(false);
 const showAdFields = ref(false);
+const previewAd = ref(false);
+const confirmAd = ref(false);
 const currentRequestFields = ref([]);
 const currentOfferFields = ref([]);
 const props = defineProps({
@@ -32,11 +40,13 @@ const props = defineProps({
     default: 'de',
     type: String
   },
+  userId: String,
   bearerToken: String
 });
 
-const { t } = useI18n({ useScope: 'global' });
-const { bearerToken } = toRefs(props);
+const {t} = useI18n({useScope: 'global'});
+const {bearerToken} = toRefs(props);
+const {userId} = toRefs(props);
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
@@ -104,13 +114,14 @@ function updateRequestOfferFields() {
 }
 
 /**
- * @description Method triggered from submit event in CreadAdFields component, builds the body for the
+ * @description Method triggered from submit event in PreviewAd component, builds the body for the
  * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
  * @param {[{}]} data - Form field values
  * @param {[{}]} images - Images for detail view of an ad
  * @param {[{}]} thumbnail - thumbnail for ad's
  */
 function submit(data, images, thumbnail) {
+
   if (bearerToken.value) {
     apiClient.authentications['bearerAuth'].accessToken = bearerToken.value;
   } else {
@@ -121,35 +132,58 @@ function submit(data, images, thumbnail) {
     (subcategory) => subcategory.key === selectedSubCategoryKey.value
   );
 
-  let files = ([] = []);
+  let imagesToUpload = ([] = []);
   if (images.length !== 0) {
-    files = createTopicImageSaveRequestDTO(images);
+    imagesToUpload = images;
   }
 
-  let thumbnailImage = {};
+  let thumbnailImage = [];
   if (thumbnail.length !== 0) {
-    thumbnailImage = createTopicImageSaveRequestDTO(thumbnail)[0];
+    thumbnailImage = thumbnail;
   }
+
 
   const topics = new TopicSaveRequestDTO(
     0,
     selectedSubCategory.subcategory_id,
     requestOrOffer.value.toUpperCase(),
-    data
+    data,
+    userId.value
   );
 
-  createTopic.topicsPost(files, topics, thumbnailImage);
+  createTopic.topicsPost(imagesToUpload, topics, thumbnailImage);
+  previewAd.value = false;
+  confirmAd.value = true;
 }
 
-function createTopicImageSaveRequestDTO(images) {
-  const proxy = new Proxy(images, {});
-  const files = proxy[0];
-  const image = [];
-  for (let i = 0; i <= files.length; i++) {
-    image.push(files[i]);
-  }
-  return image;
+/**
+ * @description Method triggered from submit event in CreadAdFields component, builds the body for the
+ * POST call with the filled fields that it receives and sets id (0) and value for request or offer.
+ * @param {[{}]} fields - Form field values
+ * @param {[{}]} imagesUploaded
+ * @param {[{}]} thumbnailUploaded
+ */
+function preview(fields, imagesUploaded, thumbnailUploaded) {
+  showAdFields.value = false;
+  showSubDropdown.value = false;
+  showDropdown.value = false;
+  previewAd.value = true;
+  fieldsToPreview.value = fields;
+  images = imagesUploaded ?? [];
+  thumbnail = [...thumbnailUploaded];
 }
+
+/**
+ * @description Hides and display elements to go back to the edit ad page from the preview page.
+ */
+function back(fields) {
+  showAdFields.value = true;
+  showSubDropdown.value = true;
+  showDropdown.value = true;
+  previewAd.value = false;
+  fieldsToShow.value = fields;
+}
+
 
 defineExpose({
   updateSubCategoryFields,
@@ -169,7 +203,7 @@ defineExpose({
       name="create-ad-form"
       class="simple-form"
     >
-      <p>
+      <p class="paragraph" v-if="showDropdown">
         <select
           id="ad-category"
           v-model="selectedCategoryKey"
@@ -183,7 +217,7 @@ defineExpose({
           </option>
         </select>
       </p>
-      <p v-if="showSubDropdown">
+      <p class="paragraph" v-if="showSubDropdown">
         <select
           id="ad-sub-category"
           v-model="selectedSubCategoryKey"
@@ -210,7 +244,7 @@ defineExpose({
           checked="checked"
           @change="updateRequestOfferFields"
         />
-        <label for="ad-search" class="radio-label">{{ t('offer') }}</label>
+        <label for="ad-search">{{ t('offer') }}</label>
       </div>
       <div class="form-field half" v-if="showAdFields">
         <input
@@ -219,7 +253,7 @@ defineExpose({
           name="type-ad"
           value="REQUEST"
           @change="updateRequestOfferFields"
-        /><label for="ad-offer" class="radio-label">
+        /><label for="ad-offer">
         {{ t('request') }}
       </label>
       </div>
@@ -228,7 +262,23 @@ defineExpose({
         v-if="showAdFields"
         :selected-category="selectedCategoryKey"
         :fields-to-show="fieldsToShow"
+        :fields-to-modify="fieldsToPreview"
+        :images="images"
+        :thumbnail="thumbnail"
+        @preview="preview"
+      />
+      <PreviewAd
+        v-if="previewAd"
+        :selected-category="selectedCategoryKey"
+        :fieldsToPreview="fieldsToPreview"
+        :images="images"
+        :thumbnail="thumbnail"
+        @back="back"
         @submit="submit"
+      />
+      <ConfirmAd
+        :key="selectedSubCategoryKey-requestOrOffer"
+        v-if="confirmAd"
       />
     </form>
   </div>
@@ -238,6 +288,77 @@ defineExpose({
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 @import '../styles/colors.scss';
 @import '../styles/reset.scss';
+
+.detail-container {
+  margin-top: 1em;
+
+  .title {
+    text-align: left;
+    margin-bottom: 1em;
+    font-weight: bold;
+    font-size: 1.3em;
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .title-container {
+    position: relative;
+    margin-top: 2em;
+    margin-bottom: 2em;
+
+    h2 {
+      text-align: left;
+    }
+
+    h1 {
+      text-align: center;
+    }
+  }
+
+  .rent-container {
+    margin-top: 2em;
+  }
+
+  h3 {
+    text-align: left;
+    margin-bottom: 1em;
+  }
+
+  table {
+    width: 100%;
+
+    tr {
+      border-bottom: 1px solid lightgray;
+
+      div {
+        display: flex;
+      }
+
+      th {
+        text-align: left;
+      }
+
+      td {
+        position: relative;
+        margin-left: 0.4em;
+      }
+
+      td,
+      th {
+        padding: 0.8em 0;
+      }
+    }
+  }
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 a {
   font-weight: 500;
@@ -271,7 +392,6 @@ textarea {
   box-shadow: 0 1px 0 0 #fff;
   -webkit-appearance: none;
   width: 100%;
-  margin-bottom: 1em;
 }
 
 input:-webkit-autofill,
@@ -348,6 +468,10 @@ select {
   font: 400 11pt/1.5 Inter, Helvetica, sans-serif;
 }
 
+.paragraph {
+  margin-bottom: 2em;
+}
+
 .radio-label {
   text-transform: capitalize;
 }
@@ -355,7 +479,6 @@ select {
 .form-field {
   border-radius: 1.5rem;
   padding: 0.25em 0.8em 0.2em;
-  height: 30px;
   margin-bottom: 1em;
   display: inline-block;
 
@@ -413,6 +536,14 @@ select {
     background-color: $akros-red-bg;
     border-width: 0.1rem;
   }
+
+  .hidden {
+    display: none;
+  }
+
+  .shown {
+    color: $akros-red;
+  }
 }
 
 // Styles for UploadImagesThumbnail.vue
@@ -421,6 +552,14 @@ select {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  .hidden {
+    display: none;
+  }
+
+  .shown {
+    color: $akros-red;
+  }
 
   .container {
     display: flex;

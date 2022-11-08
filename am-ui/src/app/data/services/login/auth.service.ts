@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* istanbul ignore file */
 import {UserLocalStorageService} from './user.localStorage.service';
 import {AuthAPIService} from './auth.api.service';
