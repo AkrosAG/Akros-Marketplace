@@ -44,10 +44,29 @@
                 <button class="update-button">
                     {{ 'ad.update' | translate }}
                 </button>
-                <button class="delete-button">
+                <button type="button" class="delete-button" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + ad.topic_id">
                     {{ 'ad.delete' | translate }}
                 </button>
             </div>
         </li>
     </ul>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal{{ad.topic_id}}" tabindex="-1" aria-labelledby="deleteAdModelLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteAdModelLabel">{{ "ad.modal-title" | translate}}</h5>
+      </div>
+      <div class="modal-body">
+        {{ "ad.modal-description" | translate }}
+      </div>
+      <div class="modal-footer button-container">
+        <button type="button" class="delete-button" (click)="deleteTopic()">{{ "ad.delete" | translate }}</button>
+        <button type="button" class="update-button" data-bs-dismiss="modal">{{ "ad.close-modal" | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+

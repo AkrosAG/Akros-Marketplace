@@ -78,6 +78,9 @@
     "byPriceHighToLow": "Preis: Absteigend",
     "byDateNewToOld": "Datum: Neuste zuerst",
     "byDateOldToNew": "Datum: Älteste zuerst",
-    "location": "Ort: Alphabetisch"
+    "location": "Ort: Alphabetisch",
+    "close-modal": "Schliessen",
+    "modal-title": "Anzeige löschen",
+    "modal-description": "Sind Sie sicher, dass Sie die Anzeige wirklich löschen möchten?"
   }
 }

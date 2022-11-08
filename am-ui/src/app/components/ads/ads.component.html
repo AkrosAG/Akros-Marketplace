@@ -8,13 +8,13 @@
     <div class="container content-block ads-container" *ngIf="sortedAds.length !== 0; else noAdsFound">
         <div class="sort-container">
             <span class="sort-label">{{ "ad.sort" | translate}}</span>
-            <select class="filter-select" (change)="onChangeSortOrder($event)">
+            <select class="filter-select" (change)="onChangeSortOrder($event)" id="sortSelect">
                 <option *ngFor="let type of sortTypes;" [value]="type.value">{{ type.label | translate }}</option>
             </select>
         </div>
         <div class="grid-container">
             <div *ngFor="let ad of sortedAds">
-                <mp-ad [ad]="ad"></mp-ad>
+                <mp-ad [ad]="ad" (deleteTopicEvent)="resetView()"></mp-ad>
             </div>
         </div>
     </div>
