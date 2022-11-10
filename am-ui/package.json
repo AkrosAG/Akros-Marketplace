@@ -56,6 +56,7 @@
     "fs-extra": "^10.1.0",
     "ngrx": "0.0.1-security",
     "ngx-logger": "^5.0.4",
+    "pnpm": "^7.14.2",
     "rxjs": "^6.6.7",
     "swiper": "^8.4.2",
     "tslib": "^2.0.0",
