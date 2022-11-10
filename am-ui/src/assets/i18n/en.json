@@ -78,6 +78,9 @@
     "byPriceHighToLow": "Price: Decreasing",
     "byDateNewToOld": "Date: Newest First",
     "byDateOldToNew": "Date: Oldest First",
-    "location": "Location: Alphabetical"
+    "location": "Location: Alphabetical",
+    "close-modal": "Close",
+    "modal-title": "Delete topic",
+    "modal-description": "Are you sure, that you want to delete the topic?"
   }
 }

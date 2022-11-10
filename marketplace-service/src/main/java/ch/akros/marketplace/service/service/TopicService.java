@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import ch.akros.marketplace.service.repository.*;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
@@ -38,11 +39,10 @@ import ch.akros.marketplace.service.entity.Topic;
 import ch.akros.marketplace.service.entity.TopicImage;
 import ch.akros.marketplace.service.entity.TopicValue;
 import ch.akros.marketplace.service.model.LatLon;
-import ch.akros.marketplace.service.repository.AdvertiserRepository;
-import ch.akros.marketplace.service.repository.FieldRepository;
-import ch.akros.marketplace.service.repository.SubCategoryRepository;
-import ch.akros.marketplace.service.repository.TopicRepository;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.persistence.EntityNotFoundException;
+
 @Service
 @Slf4j
 public class TopicService {
@@ -51,6 +51,9 @@ public class TopicService {
   private final FieldRepository fieldRepository;
   private final AdvertiserRepository advertiserRepository;
   private final TopicRepository topicRepository;
+  private final TopicValueRepository topicValueRepository;
+
+  private final TopicImageRepository topicImageRepository;
   private final SubCategoryRepository subCategoryRepository;
 
   private final int SIZE = 8;
@@ -67,11 +70,15 @@ public class TopicService {
       FieldRepository fieldRepository,
       AdvertiserRepository advertiserRepository,
       TopicRepository topicRepository,
-      SubCategoryRepository subCategoryRepository) {
+      SubCategoryRepository subCategoryRepository,
+      TopicImageRepository topicImageRepository,
+      TopicValueRepository topicValueRepository) {
     this.fieldRepository = fieldRepository;
     this.advertiserRepository = advertiserRepository;
     this.topicRepository = topicRepository;
     this.subCategoryRepository = subCategoryRepository;
+    this.topicImageRepository = topicImageRepository;
+    this.topicValueRepository = topicValueRepository;
   }
 
     public List<FieldResponseDTO> listTopicFieldTypes(Long categoryId, String requestOrOffer) {
@@ -293,8 +300,12 @@ public class TopicService {
         return result;
     }
 
+    @Transactional
     public void deleteTopic(Long topicId) {
-        topicRepository.deleteById(topicId);
+      Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new EntityNotFoundException("No topic with ID: " + topicId));
+      topicImageRepository.deleteTopicImagesByTopic(topic);
+      topicValueRepository.deleteTopicValuesByTopic(topic);
+      topicRepository.delete(topic);
     }
 
     /**

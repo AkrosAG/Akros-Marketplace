@@ -2,10 +2,7 @@ package ch.akros.marketplace.service;
 
 import ch.akros.marketplace.api.model.*;
 import ch.akros.marketplace.service.entity.*;
-import ch.akros.marketplace.service.repository.AdvertiserRepository;
-import ch.akros.marketplace.service.repository.FieldRepository;
-import ch.akros.marketplace.service.repository.SubCategoryRepository;
-import ch.akros.marketplace.service.repository.TopicRepository;
+import ch.akros.marketplace.service.repository.*;
 
 import ch.akros.marketplace.service.service.TopicService;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,6 +32,12 @@ public class TopicServiceTest {
     private TopicRepository topicRepository;
     @Mock
     private SubCategoryRepository subCategoryRepository;
+
+    @Mock
+    private TopicImageRepository topicImageRepository;
+
+    @Mock
+    private TopicValueRepository topicValueRepository;
 
     private Field field;
     private Topic firstExpectedTopic;
@@ -70,7 +73,9 @@ public class TopicServiceTest {
         this.topicService = new TopicService(fieldRepository,
                 advertiserRepository,
                 topicRepository,
-                subCategoryRepository);
+                subCategoryRepository,
+                topicImageRepository,
+                topicValueRepository);
 
         this.field = new Field();
 

@@ -4,6 +4,9 @@ import ch.akros.marketplace.api.TopicsApi;
 import ch.akros.marketplace.api.model.*;
 import ch.akros.marketplace.service.service.TopicService;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,14 +19,23 @@ import java.util.List;
 @RestController
 @Slf4j
 public class TopicController implements TopicsApi {
+    private final TopicService topicService;
+
+    // micrometer metric
+    private final Counter counterForLoadTopic;
+
     @Autowired
-    private TopicService topicService;
+    public TopicController(MeterRegistry registry, TopicService topicService) {
+        this.topicService = topicService;
+        this.counterForLoadTopic = registry.counter("counter_for_load_topic");
+    }
 
     @Override
     public ResponseEntity<TopicLoadResponseDTO> topicsTopicIdGet(Long topicId) {
         try {
             log.debug("TopicController.TopicTopicIdGet() called");
             TopicLoadResponseDTO topic = topicService.loadTopic(topicId);
+            counterForLoadTopic.increment();
             return ResponseEntity.status(HttpStatus.OK).body(topic);
         } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
@@ -43,6 +55,9 @@ public class TopicController implements TopicsApi {
         }
     }
 
+    // @Timed annotation metric records the execution time of the create method,
+    // from the start and until it exits normally or exceptionally.
+    @Timed(value = "create.topic.time", description = "Time taken to return topic")
     @PostMapping(value = "/topics", consumes = { "multipart/form-data" })
     public ResponseEntity<Void> createTopic(@RequestPart("topics") String topicSaveRequestDTO,
                                             @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail, @RequestPart(value = "images", required = false) MultipartFile[] images, @RequestPart(value = "userId", required = false) String userId) {

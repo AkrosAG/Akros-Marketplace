@@ -13,6 +13,8 @@ logging:
             JdbcTemplate: DEBUG
             StatementCreatorUtils: DEBUG
 spring:
+  application:
+    name: marketplace-service
   profiles:
     active: @profileActive@
   jpa:
@@ -31,4 +33,13 @@ server:
     key-store-type: PKCS12
   port: 8443
   tomcat:
-    max-http-post-size: 10MB
+    max-http-form-post-size: 10MB
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
