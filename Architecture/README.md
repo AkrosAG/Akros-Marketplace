@@ -93,28 +93,13 @@ The application should serve
 
 To be filled after MVP released.
 
-## Stakeholders
-
-- Jan Richter: Developer
-- Berthold Talla: Developer
-- Cristian Ayerbe: Developer
-- Stefan Le-Mingh: Developer
-- Martin Dobrev: Developer
-- Hermann Kamdoum: Developer
-- Irina Finger: Product Owner
-- Timmy Aeberli: Business Analyst
-- Iliyan Kostev: Designer
-- André Hirter: Maintainer
-- Heinz Lätsch: Maintainer
-- Thomas Kneubühl: Sponsor
-
 # Architecture Constraints
 
 # System Scope and Context
 
 ## Business Context
 
-The following diagram shows the most important AMP functions as a business flow. Colored boxes stand for the features in scope (going to be specify and develop next), white ones show the futureoriented functions.
+The following diagram shows the most important AM functions as a business flow. Colored boxes stand for the features in scope (going to be specify and develop next), white ones show the futureoriented functions.
 
 ![image](https://user-images.githubusercontent.com/96523998/151372519-99054f96-63d0-4bc6-843e-d1bc816ff4cb.png)
 
@@ -264,7 +249,7 @@ _Basic flow: Create an ad_
 6. User fills required fields, upload related pictures, give his contact address and confirm.
 7. The system validates the fields, ensures that the mandatory fields are filled and valid and shows the user his ad as a preview.
 8. The user checks the detail view of his ad. He has the possibility to go back to the creation page and correct the date or publish the ad.
-9. The user publish ad.
+9. The user publishes the ad.
 
 _Postcondition:_
 
@@ -371,13 +356,6 @@ _\<explanation\>_
 A list of the technical debts can be found in the [Github Project](https://github.com/orgs/AkrosAG/projects/6/views/13).
 
 ## Risks
-
-### Active Team
-
-The team composition's volatility makes this project a bit of a challenge - The composition can change at any given time and the priority to work on it is also set on the lowest. Thus it is harder to plan under these circumstances.
-Furthermore, as the team is not set, missing seniority in certain competences can be lacking.
-As the team can change at any moment, it will be a challenge to keep the coding standards and guidelines uniform.
-Nonetheless it isn't an urgent risk as this project also has no deadline or any other urgency to it. Any lack of competency can be compensated by being able to take the time to learn that skill.
 
 # Glossary
 
