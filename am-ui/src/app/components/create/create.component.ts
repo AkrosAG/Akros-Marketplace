@@ -51,7 +51,7 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   getUserId(): string | undefined {
     try {
-      return this.auth.userValue.id;
+      return this.auth.userValue.sub;
     } catch (e) {
       console.log(e);
       throw new Error;

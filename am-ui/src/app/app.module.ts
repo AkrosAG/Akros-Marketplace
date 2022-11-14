@@ -10,7 +10,11 @@ import {
   HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslatePipe,
+} from '@ngx-translate/core';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import {
   MSAL_INSTANCE,
@@ -155,6 +159,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     NavigationService,
     OAuthService,
     {provide: OAuthStorage, useValue: localStorage},
+    TranslatePipe,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],

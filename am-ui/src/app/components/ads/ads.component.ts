@@ -26,7 +26,7 @@ export class AdsComponent implements OnDestroy {
   ];
 
   constructor(private auth: AuthStore, private adsService: AdsService) {
-    this.userId = this.auth.userValue.id;
+    this.userId = this.auth.userValue.sub;
     this.getAdsFromUser();
   }
 

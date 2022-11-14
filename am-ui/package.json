@@ -43,6 +43,7 @@
     "@azure/msal-angular": "^2.1.0",
     "@azure/msal-browser": "^2.21.0",
     "@azure/msal-common": "^6.0.0",
+    "@ngneat/until-destroy": "^9.2.2",
     "@ngrx/effects": "^13.0.2",
     "@ngrx/store": "^13.0.2",
     "@ngx-translate/core": "^14.0.0",

@@ -1,5 +1,6 @@
 {
   "back": "Back",
+  "save": "Save",
   "home": {
     "information": "Post Your Advertisement for Free",
     "find": "Find what You are looking for",
@@ -82,5 +83,16 @@
     "close-modal": "Close",
     "modal-title": "Delete topic",
     "modal-description": "Are you sure, that you want to delete the topic?"
+  },
+  "profile": {
+    "welcome": "Welcome {{user}}!",
+    "form": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "E-Mail",
+      "phone": "Phone number"
+    },
+    "success": "Changed were successfully saved",
+    "error": "There has been an error"
   }
 }
