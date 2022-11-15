@@ -1,6 +1,3 @@
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
 using NUnit.Framework;
 
@@ -15,16 +12,13 @@ public class SearchTest : PageTest
     {
         await using var browser = await Playwright.Chromium.LaunchAsync(new()
         {
-            Headless = false,
-            SlowMo = 100
+            Headless = true
         });
 
         var page = await browser.NewPageAsync();
 
         await page.GotoAsync("https://am-ui.azurewebsites.net/");
-        await page.PauseAsync();
         await page.ClickAsync("search-component form > a");
-
         await page.WaitForSelectorAsync("search-results-component");
     }
 }
