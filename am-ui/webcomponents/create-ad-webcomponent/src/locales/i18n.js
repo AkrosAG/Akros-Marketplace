@@ -17,6 +17,7 @@ export default createI18n({
       upload: 'Upload images',
       uploadThumbnail: 'Upload thumbnail',
       adIsPublished:'Ad is published',
+      adError:'An error has occured',
       errorMessage_title_tooLongOrTooShort: 'Title is too long or too short',
       errorMessage_address_tooLongOrTooShort: 'Address is too long or too short',
       errorMessage_region: 'Region missing',
@@ -37,6 +38,7 @@ export default createI18n({
       errorMessage_phone_missing: 'Please enter a telephone number',
       errorMessage_priceUnit_nothingSelected: 'Please select a price unit',
       errorMessage_availability_nothingSelected: 'Please select availability',
+      preview: 'Preview',
       categories: {
         accomodation: {
           subCategories: {
@@ -108,6 +110,7 @@ export default createI18n({
       upload: 'Bilder hochladen',
       uploadThumbnail: 'Vorschaubild hochladen',
       adIsPublished:'Anzeige wird veröffentlicht',
+      adError:'Ein Fehler ist aufgetreten',
       errorMessage_title_tooLongOrTooShort: 'Titel zu lange oder zu kurz',
       errorMessage_address_tooLongOrTooShort: 'Adresse zu lange oder zu kurz',
       errorMessage_region: 'Ort fehlt',
@@ -128,6 +131,7 @@ export default createI18n({
       errorMessage_phone_missing: 'Bitte geben Sie eine Telefonnummer an',
       errorMessage_priceUnit_nothingSelected: 'Bitte wählen Sie eine Preiseinheit aus',
       errorMessage_availability_nothingSelected: 'Bitte wählen Sie die Verfügbarkeit aus',
+      preview: 'Vorschau',
       categories: {
         accomodation: {
           subCategories: {
@@ -143,7 +147,7 @@ export default createI18n({
           address: 'Strasse, Nr.',
           rooms: 'Zimmer',
           size: 'Wohnfläche (M²)',
-          price: 'Miete (CHF)',
+          price: 'Miete',
           floor: 'Etage',
           lat: 'Breitengrad (x-Koordinate)',
           lon: 'Längengrade (y-Koordinate)',

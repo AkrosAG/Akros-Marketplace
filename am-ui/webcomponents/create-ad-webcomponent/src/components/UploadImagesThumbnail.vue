@@ -3,7 +3,7 @@ import { useI18n } from './useI18n';
 import i18n from '../locales/i18n';
 
 const { t } = useI18n(i18n.global.messages.value);
-const props = defineProps({ isThumbnailUpload: Boolean, files: Array});
+const props = defineProps({ isThumbnailUpload: Boolean, files: Array });
 const isThumbnailUpload = props.isThumbnailUpload.valueOf();
 </script>
 
@@ -22,12 +22,12 @@ export default {
   methods: {
     onFileChanged(event) {
       const files = event.target.files;
-      if(this.isThumbnail){
+      if (this.isThumbnail) {
         this.selectedFiles = [files[0]];
-      }else{
+      } else {
         for (let i = 0; i < files.length; i++) {
-        this.selectedFiles.push(files[i]);
-      }
+          this.selectedFiles.push(files[i]);
+        }
       }
       this.$emit('update-parent', this.selectedFiles);
     },
