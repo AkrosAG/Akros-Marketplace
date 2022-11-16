@@ -45,8 +45,6 @@ public class Topic {
   @ToString.Exclude
   private Advertiser advertiser;
 
-
-//  TODO CHECK IF ENTIRE CATEGORY IS NEEDED
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(referencedColumnName = "SUBCATEGORY_ID", name = "SUBCATEGORY_ID",
       foreignKey = @ForeignKey(name = "TOPIC_SUBCATEGORY_FK"))

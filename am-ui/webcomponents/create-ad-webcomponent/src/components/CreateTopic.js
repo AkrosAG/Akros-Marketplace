@@ -20,7 +20,7 @@ export default class CreateTopic {
     }
 
     const token = this.apiClient.authentications['bearerAuth'].accessToken
-    axios.post("/topics", formData, {
+    return axios.post("/topics", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Accept": "application/json , text/plain, */*",
