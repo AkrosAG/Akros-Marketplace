@@ -96,7 +96,7 @@ function getFieldTitle(field, category) {
 }
 
 /**
- * Goes back from preview to create view with the form data
+ * Submits previously created form data to publish the Ad
  */
 function submit() {
   const fields = [];
@@ -110,7 +110,7 @@ function submit() {
 }
 
 /**
- * Submits previously created form data to publish the Ad
+ * Goes back from preview to create view with the form data
  */
 function back() {
   const fields = [];
