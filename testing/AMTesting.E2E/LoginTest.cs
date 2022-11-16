@@ -12,25 +12,17 @@ public class LoginTest : PageTest
     [Test]
     public async Task UserCanLogin()
     {
-        await using var browser = await Playwright.Chromium.LaunchAsync(new()
-        {
-            Headless = true
-        });
-
-        var page = await browser.NewPageAsync();
-
         var user = userStore.GetUser("fiedfi@akros.ch");
 
-        await page.GotoAsync("https://am-ui.azurewebsites.net/");
-        await page.ClickAsync("#btn-signin");
-        await page.ClickAsync("#user-menu > li:first-of-type");
-        // await page.PauseAsync();
-        await page.FillAsync("#username", user.Username);
-        await page.FillAsync("#password", user.Password);
-        await page.ClickAsync("#kc-login");
-        await page.WaitForTimeoutAsync(1500);
+        await Page.GotoAsync("https://am-ui.azurewebsites.net/");
+        await Page.ClickAsync("#btn-signin");
+        await Page.ClickAsync("#user-menu > li:first-of-type");
+        await Page.FillAsync("#username", user.Username);
+        await Page.FillAsync("#password", user.Password);
+        await Page.ClickAsync("#kc-login");
+        await Page.WaitForTimeoutAsync(1500);
 
-        var signInLabel = await page.Locator("span.signin-label").TextContentAsync();
+        var signInLabel = await Page.Locator("span.signin-label").TextContentAsync();
         
         Assert.IsTrue(signInLabel.Contains(user.FirstName));
     }

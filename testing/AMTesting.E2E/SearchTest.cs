@@ -10,15 +10,8 @@ public class SearchTest : PageTest
     [Test]
     public async Task UserCanSearchForObjects()
     {
-        await using var browser = await Playwright.Chromium.LaunchAsync(new()
-        {
-            Headless = true
-        });
-
-        var page = await browser.NewPageAsync();
-
-        await page.GotoAsync("https://am-ui.azurewebsites.net/");
-        await page.ClickAsync("search-component form > a");
-        await page.WaitForSelectorAsync("search-results-component");
+        await Page.GotoAsync("https://am-ui.azurewebsites.net/");
+        await Page.ClickAsync("search-component form > a");
+        await Page.WaitForSelectorAsync("search-results-component");
     }
 }
