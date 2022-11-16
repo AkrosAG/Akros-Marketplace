@@ -75,7 +75,7 @@ export class AdsComponent implements OnDestroy {
 
   resetView() {
     this.getAdsFromUser();
-    const sortSelect =  <HTMLSelectElement>document.getElementById("sortSelect");
+    const sortSelect =  <HTMLSelectElement>document.getElementById('sortSelect');
     if (sortSelect) {
       sortSelect.selectedIndex = 0;
     }
