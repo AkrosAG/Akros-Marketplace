@@ -1,2 +1,2 @@
 FROM prom/prometheus as deploy
-ADD prometheus.yml /etc/prometheus/
+ADD ./prometheus.yml /etc/prometheus/
