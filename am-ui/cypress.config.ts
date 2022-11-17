@@ -6,5 +6,6 @@ export default defineConfig({
   fixturesFolder: 'cypress/fixtures',
   e2e: {
     baseUrl: 'http://localhost:4200',
+    defaultCommandTimeout: 10000,
   },
 });
