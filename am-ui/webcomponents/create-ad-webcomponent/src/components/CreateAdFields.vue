@@ -8,53 +8,55 @@
           field.field_type_definition_id === 1 ||
           field.field_type_definition_id === 2 ||
           field.field_type_definition_id === 3
-      "
-      v-bind:class="{
-        half: field.field_type_definition_id === 2 || field.field_type_definition_id === 3
-      }"
-    >
-      <div>
-        <input
+        "
+        v-bind:class="{
+          half: field.field_type_definition_id === 2 || field.field_type_definition_id === 3
+        }"
+      >
+        <div>
+          <input
+            v-bind:id="'create-add-field-' + field.field_id"
+            type="text"
+            v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
+            v-model="fieldValues[field.field_id]"
+            v-bind:class="{
+              error: errors[field.field_id]?.hasError
+            }"
+            v-on:change="(event) => checkField(field.field_id, field.key)"
+          />
+          <label
+            v-bind:class="{
+              hidden: !errors[field.field_id]?.hasError,
+              shown: errors[field.field_id]?.hasError
+            }"
+          >
+            {{ t('errorMessage_' + errors[field.field_id]?.reason) }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Textarea(4) -->
+      <div class="form-field full" v-if="field.field_type_definition_id === 4">
+        <textarea
           v-bind:id="'create-add-field-' + field.field_id"
           type="text"
           v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
           v-model="fieldValues[field.field_id]"
+          v-on:change="(event) => checkField(field.field_id, field.key)"
           v-bind:class="{
             error: errors[field.field_id]?.hasError
           }"
-          v-on:change="(event) => checkField(field.field_id, field.key)"
         />
-        <label
+        <div
+          v-if="field.key !== 'about'"
           v-bind:class="{
-              hidden: !errors[field.field_id]?.hasError,
-              shown: errors[field.field_id]?.hasError
+            hidden: !errors[field.field_id]?.hasError,
+            shown: errors[field.field_id]?.hasError
           }"
         >
           {{ t('errorMessage_' + errors[field.field_id]?.reason) }}
-        </label>
+        </div>
       </div>
-
-    </div>
-
-    <!-- Textarea(4) -->
-    <div class="form-field full" v-if="field.field_type_definition_id === 4">
-      <textarea
-        v-bind:id="'create-add-field-' + field.field_id"
-        type="text"
-        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
-        v-model="fieldValues[field.field_id]"
-        v-on:change="event => checkField(field.field_id, field.key)"
-        v-bind:class="{
-          error: errors[field.field_id]?.hasError
-        }"
-      />
-      <div v-if="field.key !== 'about'"
-        v-bind:class="{
-          hidden: !errors[field.field_id]?.hasError,
-          shown: errors[field.field_id]?.hasError
-        }"
-      >{{ t('errorMessage_' + errors[field.field_id]?.reason) }}</div>
-    </div>
 
       <!-- Selector with received options full(5), half(6), third(7) -->
       <div
@@ -63,37 +65,41 @@
           field.field_type_definition_id === 5 ||
           field.field_type_definition_id === 6 ||
           field.field_type_definition_id === 7
-      "
-      v-bind:class="{
-        half: field.field_type_definition_id === 6,
-        third: field.field_type_definition_id === 7,
-        disabled: field.key === 'price_unit'
-      }"
-    >
-      <select
-        v-bind:id="'create-add-field-' + field.field_id"
-        v-model="fieldValues[field.field_id]"
+        "
         v-bind:class="{
-          error: errors[field.field_id]?.hasError
+          half: field.field_type_definition_id === 6,
+          third: field.field_type_definition_id === 7,
+          disabled: field.key === 'price_unit'
         }"
-        v-on:change="(event) => checkField(field.field_id, field.key)"
       >
-        <option disabled value="">
-          {{t(`categories.${selectedCategory}.${field.key}.title`)}}
-        </option>
-        <option v-for="option in field.field_options" v-bind:value="option.key" v-bind:selected="option.key === field.value">
-          {{ t(`categories.${selectedCategory}.${field.key}.options.${option.key}`) }}
-        </option>
-      </select>
-      <div
-        v-bind:class="{
+        <select
+          v-bind:id="'create-add-field-' + field.field_id"
+          v-model="fieldValues[field.field_id]"
+          v-bind:class="{
+            error: errors[field.field_id]?.hasError
+          }"
+          v-on:change="(event) => checkField(field.field_id, field.key)"
+        >
+          <option disabled value="">
+            {{ t(`categories.${selectedCategory}.${field.key}.title`) }}
+          </option>
+          <option
+            v-for="option in field.field_options"
+            v-bind:value="option.key"
+            v-bind:selected="option.key === field.value"
+          >
+            {{ t(`categories.${selectedCategory}.${field.key}.options.${option.key}`) }}
+          </option>
+        </select>
+        <div
+          v-bind:class="{
             hidden: !errors[field.field_id]?.hasError,
             shown: errors[field.field_id]?.hasError
-        }"
-      >
-        {{ t('errorMessage_' + errors[field.field_id]?.reason) }}
+          }"
+        >
+          {{ t('errorMessage_' + errors[field.field_id]?.reason) }}
+        </div>
       </div>
-    </div>
 
       <!-- Boolean checkbox(8,16) -->
       <div
@@ -124,8 +130,8 @@
         />
         <div
           v-bind:class="{
-              hidden: !errors[field.field_id]?.hasError,
-              shown: errors[field.field_id]?.hasError
+            hidden: !errors[field.field_id]?.hasError,
+            shown: errors[field.field_id]?.hasError
           }"
         >
           {{ t('errorMessage_' + errors[field.field_id]?.reason) }}
@@ -144,48 +150,48 @@
         }"
       />
 
-    <!-- Input type phone(10) -->
-    <div class="form-field full" v-if="field.field_type_definition_id === 10">
-      <input
-        v-bind:id="'create-add-field-' + field.field_id"
-        type="tel"
-        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
-        v-model="fieldValues[field.field_id]"
-        v-on:change="(event) => checkField(field.field_id, field.key)"
-        v-bind:class="{
-          error: errors[field.field_id]?.hasError
-        }"
-      />
-      <div
-        v-bind:class="{
+      <!-- Input type phone(10) -->
+      <div class="form-field full" v-if="field.field_type_definition_id === 10">
+        <input
+          v-bind:id="'create-add-field-' + field.field_id"
+          type="tel"
+          v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
+          v-model="fieldValues[field.field_id]"
+          v-on:change="(event) => checkField(field.field_id, field.key)"
+          v-bind:class="{
+            error: errors[field.field_id]?.hasError
+          }"
+        />
+        <div
+          v-bind:class="{
             hidden: !errors[field.field_id]?.hasError,
             shown: errors[field.field_id]?.hasError
+          }"
+        >
+          {{ t('errorMessage_' + errors[field.field_id]?.reason) }}
+        </div>
+      </div>
+
+      <!-- Input type date half/full:(12), third(13) -->
+      <div
+        class="form-field half"
+        v-if="field.field_type_definition_id === 12 || field.field_type_definition_id === 13"
+        v-bind:class="{
+          third: field.field_type_definition_id === 13
         }"
       >
-        {{ t('errorMessage_' + errors[field.field_id]?.reason) }}
+        <input
+          v-bind:id="'create-add-field-' + field.field_id"
+          type="date"
+          v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
+          v-model="fieldValues[field.field_id]"
+          v-on:change="(event) => checkField(field.field_id, field.key)"
+          v-bind:class="{
+            error: errors[field.field_id]?.hasError
+          }"
+          :disabled="!hasSpecificDate"
+        />
       </div>
-    </div>
-
-    <!-- Input type date half/full:(12), third(13) -->
-    <div
-      class="form-field half"
-      v-if="field.field_type_definition_id === 12 || field.field_type_definition_id === 13"
-      v-bind:class="{
-        third: field.field_type_definition_id === 13
-      }"
-    >
-      <input
-        v-bind:id="'create-add-field-' + field.field_id"
-        type="date"
-        v-bind:placeholder="t(`categories.${selectedCategory}.${field.key}`)"
-        v-model="fieldValues[field.field_id]"
-        v-on:change="(event) => checkField(field.field_id, field.key)"
-        v-bind:class="{
-          error: errors[field.field_id]?.hasError
-        }"
-        :disabled="!hasSpecificDate"
-      />
-    </div>
 
       <!-- Selector counter half(14), full(15) -->
       <div
@@ -228,11 +234,11 @@
     ></UploadImagesThumbnail>
     <div
       v-bind:class="{
-          hidden: !status.hasError,
-          shown: status.hasError
+        hidden: !status.hasError,
+        shown: status.hasError
       }"
     >
-      {{t('errorMessage_' + status.reason)}}
+      {{ t('errorMessage_' + status.reason) }}
     </div>
   </div>
   <p class="submit-row">
@@ -269,7 +275,12 @@ import { onMounted, ref, toRaw } from 'vue';
 import { useI18n } from './useI18n';
 import i18n from '../locales/i18n';
 import UploadImagesThumbnail from './UploadImagesThumbnail.vue';
-const props = defineProps({ fieldsToShow: Array, images: Array, thumbnail: Array, selectedCategory: String});
+const props = defineProps({
+  fieldsToShow: Array,
+  images: Array,
+  thumbnail: Array,
+  selectedCategory: String
+});
 const emit = defineEmits(['preview', 'back']);
 const fieldValues = ref([]);
 const fieldKeys = ref([]);
@@ -280,16 +291,16 @@ let formHasErrors = ref(true);
 const hasSpecificDate = ref(false);
 let images = [];
 let thumbnail = [];
-let status = { hasError: false, reason: null}
+const status = { hasError: false, reason: null };
 /**
  * @description method that send the selected images from the children to the parent component.
  * @param {Array} variable are the images that has been selected for the ad
  */
 function updateParent(variable) {
-  images=[];
-  Object.keys(variable).forEach(key => images.push(variable[key]));
-  checkImages()
-  reRenderComponent()
+  images = [];
+  Object.keys(variable).forEach((key) => images.push(variable[key]));
+  checkImages();
+  reRenderComponent();
 }
 /**
  * @description method that send the selected thumbnail from the children to the parent component.
@@ -297,55 +308,61 @@ function updateParent(variable) {
  */
 function updateParentThumbnail(variable) {
   thumbnail = variable;
-  checkImages()
-  reRenderComponent()
+  checkImages();
+  reRenderComponent();
 }
 
+/**
+ * @description reRenderComponent
+ */
 function reRenderComponent() {
-  checkField(1, "title")
+  checkField(1, 'title');
 }
 
-// This functions updates the error stored in status which is used for the images
+/**
+ * @description This functions updates the error stored in status which is used for the images
+ */
 function checkImages() {
-  const maxFileSize = 500000 // This is 500KB
-  const maxSumFileSize = 2000000 // This is 2000KB or 2MB
+  const maxFileSize = 500000; // This is 500KB
+  const maxSumFileSize = 2000000; // This is 2000KB or 2MB
 
-  let sumOfFileSize = 0
-  let singleFileTooBig = false
-  let sumOfFilesTooBig = false
+  let sumOfFileSize = 0;
+  let singleFileTooBig = false;
+  let sumOfFilesTooBig = false;
 
-  const rawThumb = toRaw(thumbnail) // Convert proxy to raw object
-  const isThumbnailMissing = rawThumb.length === 0 || rawThumb[0] === undefined
-  const areImagesMissing = images === undefined || images.length === 0
-  
+  const rawThumb = toRaw(thumbnail); // Convert proxy to raw object
+  const isThumbnailMissing = rawThumb.length === 0 || rawThumb[0] === undefined;
+  const areImagesMissing = images === undefined || images.length === 0;
+
   if (!isThumbnailMissing) {
-    const rawThumbnailSize = rawThumb[0].size
+    const rawThumbnailSize = rawThumb[0].size;
     if (rawThumbnailSize > maxFileSize) {
-      singleFileTooBig = true
+      singleFileTooBig = true;
     }
-    sumOfFileSize += rawThumbnailSize
+    sumOfFileSize += rawThumbnailSize;
   }
 
   if (!areImagesMissing) {
     images.forEach((file) => {
       if (file.size > maxFileSize) {
-        singleFileTooBig = true
+        singleFileTooBig = true;
       }
-      sumOfFileSize += file.size
-    })
+      sumOfFileSize += file.size;
+    });
   }
 
-  sumOfFilesTooBig = sumOfFileSize > maxSumFileSize
-  
+  sumOfFilesTooBig = sumOfFileSize > maxSumFileSize;
+
   if (singleFileTooBig) {
-    status.hasError = true
-    status.reason = "singleFileTooBig"
+    status.hasError = true;
+    status.reason = 'singleFileTooBig';
   } else if (sumOfFilesTooBig) {
-    status.hasError = true
-    status.reason = "sumOfFilesTooBig"
-  } else { // In case we have mandatory images this else needs to be removed otherwise the other errors will just be ignored/overwritten.
-    status.hasError = false
-    status.reason = null
+    status.hasError = true;
+    status.reason = 'sumOfFilesTooBig';
+  } else {
+    // In case we have mandatory images this else needs to be removed otherwise the other errors will just be ignored/overwritten.
+    status.hasError = false;
+    status.reason = null;
   }
 }
 
@@ -360,14 +377,14 @@ function checkField(fieldId, fieldKey) {
   const numberPatternRegex = new RegExp('^[0-9]*$');
   const alphabeticPatternRegex = new RegExp('^((?![0-9]).)*$$');
 
-  let _value = fieldValues.value[fieldId]
+  const _value = fieldValues.value[fieldId];
   // Static specific validations based on AM categories (currently only accomodation), TODO improve
   switch (fieldKey) {
     // Title, Address: max length 50, min length 1 chars
     case 'title':
     case 'address':
       if (_value === undefined || _value.length > 50 || _value.length < 1) {
-        errors.value[fieldId] = { hasError: true, reason: fieldKey + "_tooLongOrTooShort" };
+        errors.value[fieldId] = { hasError: true, reason: fieldKey + '_tooLongOrTooShort' };
       } else {
         errors.value[fieldId] = { hasError: false, reason: null };
       }
@@ -375,7 +392,7 @@ function checkField(fieldId, fieldKey) {
     // Region: max length 50, min length 1 chars and not numbers
     case 'region':
       if (
-        _value === undefined || 
+        _value === undefined ||
         _value.length > 50 ||
         _value.length < 1 ||
         !alphabeticPatternRegex.test(_value)
@@ -390,7 +407,7 @@ function checkField(fieldId, fieldKey) {
     case 'description':
     case 'about':
       if (_value === undefined || _value.length > 1000 || _value.length < 1) {
-        errors.value[fieldId] = { hasError: true, reason: fieldKey + "_exdeab" };
+        errors.value[fieldId] = { hasError: true, reason: fieldKey + '_exdeab' };
       } else {
         errors.value[fieldId] = { hasError: false, reason: null };
       }
@@ -398,7 +415,7 @@ function checkField(fieldId, fieldKey) {
     // Email: Email format regex
     case 'email':
       if (!emailPatternRegex.test(_value)) {
-        errors.value[fieldId] = { hasError: true, reason: "email" };
+        errors.value[fieldId] = { hasError: true, reason: 'email' };
       } else {
         errors.value[fieldId] = { hasError: false, reason: null };
       }
@@ -406,9 +423,9 @@ function checkField(fieldId, fieldKey) {
     // Selectors: Ok if not empty
     case 'priceUnit':
       if (_value === '') {
-        errors.value[fieldId] = { hasError: true, reason: fieldKey + "_nothingSelected"};
+        errors.value[fieldId] = { hasError: true, reason: fieldKey + '_nothingSelected' };
       } else {
-        errors.value[fieldId] = { hasError: false, reason: null};
+        errors.value[fieldId] = { hasError: false, reason: null };
       }
       break;
     case 'rooms':
@@ -417,7 +434,7 @@ function checkField(fieldId, fieldKey) {
       if (_value !== null) {
         errors.value[fieldId] = { hasError: false, reason: null };
       } else {
-        errors.value[fieldId] = { hasError: true, reason: fieldKey + "_missing" };
+        errors.value[fieldId] = { hasError: true, reason: fieldKey + '_missing' };
       }
       break;
     // Phone, price, size, floor: Number only regex
@@ -432,9 +449,9 @@ function checkField(fieldId, fieldKey) {
     case 'fromSize':
     case 'propertySize':
       if (!numberPatternRegex.test(_value)) {
-        errors.value[fieldId] = { hasError: true, reason: fieldKey + "_NaN" };
+        errors.value[fieldId] = { hasError: true, reason: fieldKey + '_NaN' };
       } else if (_value.length < 1) {
-        errors.value[fieldId] = { hasError: true, reason: fieldKey + "_missing" };
+        errors.value[fieldId] = { hasError: true, reason: fieldKey + '_missing' };
       } else {
         errors.value[fieldId] = { hasError: false, reason: null };
       }
@@ -468,17 +485,20 @@ function checkField(fieldId, fieldKey) {
       }
 
       if (_value === '') {
-        errors.value[fieldId] = { hasError: true, reason: fieldKey + "_nothingSelected"};
+        errors.value[fieldId] = { hasError: true, reason: fieldKey + '_nothingSelected' };
       } else {
-        errors.value[fieldId] = { hasError: false, reason: null};
+        errors.value[fieldId] = { hasError: false, reason: null };
       }
 
       break;
   }
 
-  updateFormHasErrors()
+  updateFormHasErrors();
 }
 
+/**
+ * @description Method to check if there are form errors.
+ */
 function updateFormHasErrors() {
   formHasErrors = false;
   errors.value.forEach((err) => {
@@ -504,13 +524,13 @@ function preview() {
         !fieldValues.value[field.field_id] ||
         fieldValues.value[field.field_id].toString().length < 1
       ) {
-        checkField(field.field_id, field.key)
+        checkField(field.field_id, field.key);
         containsErrors = true;
       }
     }
   });
 
-  checkImages()
+  checkImages();
   if (!containsErrors && !status.hasError) {
     const fields = [];
     props.fieldsToShow.forEach((field) => {
@@ -526,26 +546,25 @@ function preview() {
   } else {
     formHasErrors = true;
   }
-  reRenderComponent()
+  reRenderComponent();
 }
 
 onMounted(() => {
-  updateFormHasErrors() // Required so the formHasErrors is also updated on back button
+  updateFormHasErrors(); // Required so the formHasErrors is also updated on back button
   images = props.images;
   thumbnail = props.thumbnail;
   props.fieldsToShow.forEach((field) => {
     // checkbox default value shoud be false
     if (field.field_type_definition_id === 8 || field.field_type_definition_id === 16) {
       fieldValues.value[field.field_id] = field.value ?? false;
-    } else if (field.field_type_definition_id === 6){
-      //selectbox
-      fieldValues.value[field.field_id] = field?.value || "";
-    }else {
+    } else if (field.field_type_definition_id === 6) {
+      // selectbox
+      fieldValues.value[field.field_id] = field?.value || '';
+    } else {
       fieldValues.value[field.field_id] = field?.value;
     }
     fieldKeys.value[field.field_id] = field.key;
     errors.value[field.field_id] = { hasError: false, reason: null };
   });
 });
-
 </script>
