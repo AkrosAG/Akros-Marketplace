@@ -5,7 +5,7 @@ export default defineConfig({
   screenshotsFolder: 'cypress/screenshots',
   fixturesFolder: 'cypress/fixtures',
   e2e: {
-    baseUrl: 'http://localhost:4200',
-    defaultCommandTimeout: 10000,
+    baseUrl: 'https://localhost:4200',
+    defaultCommandTimeout: 5000,
   },
 });
