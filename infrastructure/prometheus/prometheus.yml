@@ -6,6 +6,7 @@ scrape_configs:
   # This is prometheus
   - job_name: 'prometheus'
     # Override the global default and scrape targets from this job every 5 seconds.
+    metrics_path: '/metrics'
     scheme: https
     scrape_interval: 5s
     static_configs:
