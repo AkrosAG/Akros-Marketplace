@@ -37,5 +37,5 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: "am-monitoring"
-          publish-profile: ${{ secrets.KEYCLOAK_SERVICE_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.MONITORING_SERVICE_PUBLISH_PROFILE }}
           images: "akrosmarketplace.azurecr.io/am-grafana-service:${{ github.sha }}"
