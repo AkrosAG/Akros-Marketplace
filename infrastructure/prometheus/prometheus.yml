@@ -6,9 +6,10 @@ scrape_configs:
   # This is prometheus
   - job_name: 'prometheus'
     # Override the global default and scrape targets from this job every 5 seconds.
+    scheme: https
     scrape_interval: 5s
     static_configs:
-      - targets: ['localhost:9091']
+      - targets: ['am-monitoring-service.azurewebsites.net']
 
   # This is marketplace-service
   - job_name: 'spring-actuator'
