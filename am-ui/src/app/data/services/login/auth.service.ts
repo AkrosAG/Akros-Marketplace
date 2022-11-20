@@ -1,8 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* istanbul ignore file */
 import {UserLocalStorageService} from './user.localStorage.service';
-import {AuthAPIService} from './auth.api.service';
-import {LocalAccountType} from './LocalAccountType';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -14,16 +12,15 @@ import {environment} from '../../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class AuthStore {
-  userSubject$: BehaviorSubject<LocalAccountType | null> =
-    new BehaviorSubject<LocalAccountType | null>(null);
-  user$: Observable<LocalAccountType | null> = this.userSubject$.asObservable();
+  userSubject$: BehaviorSubject<OAuthUserInfo | null> =
+    new BehaviorSubject<OAuthUserInfo | null>(null);
+  user$: Observable<OAuthUserInfo | null> = this.userSubject$.asObservable();
   isLoggedIn$: Observable<boolean>;
   isLoggedOut$: Observable<boolean>;
   loggedInUserName$: Observable<String>;
   private keycloakConfig: AuthConfig = environment.keycloakConfig;
 
   constructor(
-    private authApiService: AuthAPIService,
     private userLocalStorageService: UserLocalStorageService,
     private router: Router,
     private oAuthService: OAuthService
@@ -33,7 +30,11 @@ export class AuthStore {
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 
     this.loggedInUserName$ = this.user$.pipe(
-      map(user => user?.name || (user as any)?.displayName)
+      map(
+        user =>
+          `${user?.given_name} ${user?.family_name}` ||
+          (user as any)?.preferred_username
+      )
     );
 
     const user = this.userLocalStorageService.getData();
@@ -45,7 +46,7 @@ export class AuthStore {
     setTimeout(() => this.initOAuth(), 0);
   }
 
-  public get userValue(): LocalAccountType {
+  public get userValue(): OAuthUserInfo {
     return this.userSubject$.value!;
   }
 
@@ -68,9 +69,7 @@ export class AuthStore {
         } else {
           this.oAuthService.refreshToken().then(() =>
             this.oAuthService.loadUserProfile().then(userProfile => {
-              const user = this.buildPostUserFromOauth(
-                (userProfile as OAuthUser).info
-              );
+              const user = (userProfile as OAuthUser).info;
               this.postLogin(
                 this.oAuthService.getAccessToken(),
                 this.oAuthService.getIdToken(),
@@ -97,14 +96,6 @@ export class AuthStore {
     this.userLocalStorageService.accessToken = accessToken;
     this.userLocalStorageService.idToken = idToken;
     this.userSubject$.next(postUser);
-  }
-
-  private buildPostUserFromOauth(oauthUser: OAuthUserInfo): any {
-    return {
-      id: oauthUser.sub,
-      email: oauthUser.email,
-      name: oauthUser.name,
-    };
   }
 
   logout() {

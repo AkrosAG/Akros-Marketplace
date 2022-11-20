@@ -70,7 +70,7 @@ export class SearchResultDetailsMapComponent implements AfterViewInit {
 
   createMarkerPopup() {
     return (
-      `` +
+      '' +
       `<div>${this.address}</div>` +
       `<div>${this.postalCode} ${this.region}</div>`
     );

@@ -1,1 +1,48 @@
-profile layout
+<div class="profile-wrapper">
+  <h1>
+    {{welcome}}
+  </h1>
+  <div class="content-wrapper">
+    <div class="form-wrapper">
+      <form [formGroup]="formGroup">
+        <div class="form-field">
+          <input
+          [formControlName]="'firstName'"
+          class="w-full"
+          placeholder="{{ 'profile.form.firstName' | translate }}"
+          />
+        </div>
+        <div class="form-field">
+          <input
+          [formControlName]="'lastName'"
+          class="w-full"
+          placeholder="{{ 'profile.form.lastName' | translate }}"
+          />
+        </div>
+        <div class="form-field">
+          <input
+          [formControlName]="'email'"
+          class="w-full"
+          placeholder="{{ 'profile.form.email' | translate }}"
+          />
+        </div>
+        <div class="form-field">
+          <input
+          [formControlName]="'phoneNumber'"
+          class="w-full"
+          placeholder="{{ 'profile.form.phone' | translate }}"
+          />
+        </div>
+      </form>
+      <div class="form-field">
+        <a class="btn submit-btn" (click)="changeUserData()">
+          {{ 'save' | translate }}</a
+        >
+      </div>
+    </div>
+    <div class="result-banner" *ngIf="saveAction" [ngClass]="{error: saveError}">
+      <p *ngIf="saveAction && !saveError">{{ 'profile.success' | translate }}</p>
+      <p *ngIf="saveAction && saveError">{{ 'profile.error' | translate }}</p>
+    </div>
+  </div>
+</div>
