@@ -6,8 +6,8 @@
  * from child component and form has been correctly filled.
  * Contains the styles of the module.
  */
-import {onMounted, ref, toRefs} from 'vue';
-import {useI18n} from 'vue-i18n';
+import { onMounted, ref, toRefs } from 'vue';
+import { useI18n } from 'vue-i18n';
 import CategoriesApi from '../api/src/api/CategoriesApi';
 import ApiClient from '../api/src/ApiClient';
 import TopicSaveRequestDTO from '../api/src/model/TopicSaveRequestDTO';
@@ -33,6 +33,7 @@ const showSubDropdown = ref(false);
 const showAdFields = ref(false);
 const previewAd = ref(false);
 const confirmAd = ref(false);
+let createAddSuccess = false;
 const currentRequestFields = ref([]);
 const currentOfferFields = ref([]);
 const props = defineProps({
@@ -44,9 +45,9 @@ const props = defineProps({
   bearerToken: String
 });
 
-const {t} = useI18n({useScope: 'global'});
-const {bearerToken} = toRefs(props);
-const {userId} = toRefs(props);
+const { t } = useI18n({ useScope: 'global' });
+const { bearerToken } = toRefs(props);
+const { userId } = toRefs(props);
 
 onMounted(() => {
   categoriesApi.categoriesCreateGet(true, getCategories);
@@ -121,7 +122,6 @@ function updateRequestOfferFields() {
  * @param {[{}]} thumbnail - thumbnail for ad's
  */
 function submit(data, images, thumbnail) {
-
   if (bearerToken.value) {
     apiClient.authentications['bearerAuth'].accessToken = bearerToken.value;
   } else {
@@ -142,7 +142,6 @@ function submit(data, images, thumbnail) {
     thumbnailImage = thumbnail;
   }
 
-
   const topics = new TopicSaveRequestDTO(
     0,
     selectedSubCategory.subcategory_id,
@@ -151,9 +150,19 @@ function submit(data, images, thumbnail) {
     userId.value
   );
 
-  createTopic.topicsPost(imagesToUpload, topics, thumbnailImage);
-  previewAd.value = false;
-  confirmAd.value = true;
+  createTopic.topicsPost(imagesToUpload, topics, thumbnailImage).then(
+    () => {
+      createAddSuccess = true;
+      previewAd.value = false;
+      confirmAd.value = true;
+    },
+    (err) => {
+      createAddSuccess = false;
+      previewAd.value = false;
+      confirmAd.value = true;
+      console.error(err);
+    }
+  );
 }
 
 /**
@@ -175,6 +184,7 @@ function preview(fields, imagesUploaded, thumbnailUploaded) {
 
 /**
  * @description Hides and display elements to go back to the edit ad page from the preview page.
+ * @param {[{}]} fields - Form field values
  */
 function back(fields) {
   showAdFields.value = true;
@@ -183,7 +193,6 @@ function back(fields) {
   previewAd.value = false;
   fieldsToShow.value = fields;
 }
-
 
 defineExpose({
   updateSubCategoryFields,
@@ -278,6 +287,7 @@ defineExpose({
       />
       <ConfirmAd
         :key="selectedSubCategoryKey-requestOrOffer"
+        :createAddSuccess="createAddSuccess"
         v-if="confirmAd"
       />
     </form>
@@ -296,7 +306,7 @@ defineExpose({
     text-align: left;
     margin-bottom: 1em;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 1.5em;
   }
 
   .image-container {
