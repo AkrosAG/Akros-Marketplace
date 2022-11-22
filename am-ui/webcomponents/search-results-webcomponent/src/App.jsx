@@ -62,11 +62,11 @@ class SearchResultsWebComponent extends HTMLElement {
   }
 
   createMarkerFromTopic(topic) {
-    let latValue = topic.topic_values.find(v => v.key === 'lat')?.value;
-    let lonValue = topic.topic_values.find(v => v.key === 'lon')?.value;
-    let addressValue = topic.topic_values.find(v => v.key === 'address')?.value;
-    let postalCodeValue = topic.topic_values.find(v => v.key === 'postalCode')?.value;
-    let regionValue = topic.topic_values.find(v => v.key === 'region')?.value;
+    const latValue = topic.topic_values.find((v) => v.key === 'lat')?.value;
+    const lonValue = topic.topic_values.find((v) => v.key === 'lon')?.value;
+    const addressValue = topic.topic_values.find((v) => v.key === 'address')?.value;
+    const postalCodeValue = topic.topic_values.find((v) => v.key === 'postalCode')?.value;
+    const regionValue = topic.topic_values.find((v) => v.key === 'region')?.value;
 
     // In case of garbage address input we do not create a marker
     if (latValue === undefined || lonValue === undefined || latValue === "" || lonValue === "" || (latValue == 0 && lonValue == 0)) {

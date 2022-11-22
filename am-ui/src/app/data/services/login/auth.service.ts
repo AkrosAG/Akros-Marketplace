@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 /* istanbul ignore file */
 import {UserLocalStorageService} from './user.localStorage.service';
 import {Injectable} from '@angular/core';
@@ -33,6 +32,7 @@ export class AuthStore {
       map(
         user =>
           `${user?.given_name} ${user?.family_name}` ||
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (user as any)?.preferred_username
       )
     );
@@ -83,7 +83,7 @@ export class AuthStore {
     });
   }
 
-  public reconnectUser(user: any) {
+  public reconnectUser(user: OAuthUserInfo) {
     this.userSubject$.next(user);
     this.userLocalStorageService.storeData(user);
   }
@@ -92,7 +92,11 @@ export class AuthStore {
     this.oAuthService.initCodeFlow();
   }
 
-  private postLogin(accessToken: any, idToken: any, postUser: any) {
+  private postLogin(
+    accessToken: string,
+    idToken: string,
+    postUser: OAuthUserInfo
+  ) {
     this.userLocalStorageService.accessToken = accessToken;
     this.userLocalStorageService.idToken = idToken;
     this.userSubject$.next(postUser);

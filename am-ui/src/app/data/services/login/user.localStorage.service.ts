@@ -11,10 +11,9 @@ const IDTOKEN = 'idtoken';
 export class UserLocalStorageService {
   constructor(public router: Router) {}
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async storeData(data: any) {
     localStorage.setItem(AUTH_DATA, JSON.stringify(data));
-    // const newData = await this.getData();
-    // return this.router.navigate(['home'], newData);
   }
 
   getData() {

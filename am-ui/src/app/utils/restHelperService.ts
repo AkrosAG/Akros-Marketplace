@@ -15,6 +15,7 @@ export class RestHelperService {
    *
    * @returns a observable error
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public handleError(actionMsg: string, err: any): Observable<any> {
     let errorMessage: string;
 
