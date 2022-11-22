@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Topic} from '../../data/models/Topic';

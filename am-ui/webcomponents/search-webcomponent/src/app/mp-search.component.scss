@@ -86,7 +86,7 @@
   color: white;
   text-align: center;
   background-color: #9c132c;
-  margin-top: .2em;
+  margin-top: 0.2em;
   padding: 6px 24px;
   cursor: pointer;
   transition: 0.3s;
@@ -107,7 +107,6 @@
   &:hover {
     background-color: #d60929;
   }
-;
 
   .search-all-button {
     width: 100%;

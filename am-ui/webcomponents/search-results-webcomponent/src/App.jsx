@@ -79,7 +79,7 @@ class SearchResultsWebComponent extends HTMLElement {
           <div>{postalCodeValue} {regionValue}</div>
         </Popup>
       </Marker>
-    )
+    );
   }
 
   getAllMarkers() {
@@ -130,7 +130,7 @@ class SearchResultsWebComponent extends HTMLElement {
         center && markers &&
         <MapContainer
           whenCreated={mapInstance => {
-            this.configureZoom(mapInstance)
+            this.configureZoom(mapInstance);
           }}
           attributionControl={false}
           style={{height: 500}}
