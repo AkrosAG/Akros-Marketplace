@@ -1,4 +1,3 @@
-
 package ch.akros.marketplace.service.repository;
 
 import ch.akros.marketplace.service.entity.Category;

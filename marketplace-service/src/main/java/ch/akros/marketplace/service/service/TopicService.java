@@ -230,7 +230,6 @@ public class TopicService {
     @Transactional
     public TopicLoadResponseDTO loadTopic(Long topicId) {
         Topic topic = topicRepository.getById(topicId);
-
         TopicLoadResponseDTO result = new TopicLoadResponseDTO();
         result.setRequestOrOffer(topic.getRequestOrOffer());
         result.setSubcategoryId(topic.getSubCategory().getSubCategoryId());
@@ -285,7 +284,6 @@ public class TopicService {
 
     private TopicValueLoadResponseDTO toTopicValueLoadResponseDTO(TopicValue topicValue) {
         TopicValueLoadResponseDTO result = new TopicValueLoadResponseDTO();
-
         result.setTopicValueId(topicValue.getTopicValueId());
 
         // from Field
@@ -339,7 +337,6 @@ public class TopicService {
                         .subCategoryId(topicSearchRequestDTO.getSubcategoryId())
                         .build())
                 .build();
-   
 
         Example<Topic> exampleTopic = Example.of(topic, ExampleMatcher.matchingAll());
         List<TopicSearchResponseDTO> topicList = topicRepository.findAll(exampleTopic).stream()
@@ -410,16 +407,15 @@ public class TopicService {
         
         LocalDate fromDate = LocalDate.parse(topicValueFromDate);
         try {
-
-        return topicList
-        .stream()
-        .filter(topic -> topic.getTopicValues()
-        .stream()
-        .filter(topicValue -> topicValue.getFieldId() == DATE)
-        .anyMatch(topicValue -> LocalDate.parse(topicValue.getValue()).compareTo(fromDate) >= 0))
-        .collect(Collectors.toList());
+            return topicList
+            .stream()
+            .filter(topic -> topic.getTopicValues()
+            .stream()
+            .filter(topicValue -> topicValue.getFieldId() == DATE)
+            .anyMatch(topicValue -> LocalDate.parse(topicValue.getValue()).compareTo(fromDate) >= 0))
+            .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
-        log.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return topicList;
     }
@@ -427,17 +423,16 @@ public class TopicService {
     private List<TopicSearchResponseDTO> filterTopicsByFurnished(String topicValueIsFurnished,
                        List<TopicSearchResponseDTO> topicList) {
         try {
-        
-        boolean isFurnished = Boolean.parseBoolean(topicValueIsFurnished);
-        return topicList
-        .stream()
-        .filter(topic -> topic.getTopicValues()
-        .stream()
-        .filter(topicValue -> topicValue.getFieldId() == FURNISHED)
-        .anyMatch(topicValue -> Boolean.parseBoolean(topicValue.getValue()) == isFurnished))
-        .collect(Collectors.toList());
+            boolean isFurnished = Boolean.parseBoolean(topicValueIsFurnished);
+            return topicList
+            .stream()
+            .filter(topic -> topic.getTopicValues()
+            .stream()
+            .filter(topicValue -> topicValue.getFieldId() == FURNISHED)
+            .anyMatch(topicValue -> Boolean.parseBoolean(topicValue.getValue()) == isFurnished))
+            .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
-        log.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return topicList;
     }

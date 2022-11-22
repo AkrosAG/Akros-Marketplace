@@ -1,4 +1,3 @@
-
 package ch.akros.marketplace.service.service;
 
 import ch.akros.marketplace.api.model.CategoryDTO;
@@ -40,7 +39,6 @@ public class CategoryService {
             subCategory.setFields(fieldRepository.listSubCategorySearchFields(subCategory.getSubCategoryId()));
           }
         }
-
         return category;
       })
       .map(this::toCategoryDTO)
@@ -56,7 +54,6 @@ public class CategoryService {
             .map(this::toSubCategoryDTO)
             .collect(Collectors.toList())
     );
-
     return result;
   }
 
@@ -68,7 +65,6 @@ public class CategoryService {
             .stream()
             .map(this::toFieldResponseDTO)
             .collect(Collectors.toList()));
-
     return result;
   }
 
@@ -91,13 +87,6 @@ public class CategoryService {
             .map(this::toFieldOptionsDTO)
             .collect(Collectors.toList()));
     return result;
-  }
-
-  public List<FieldOptionResponseDTO> listFieldOptions(Long fieldId) {
-    return fieldRepository.listFieldOptions(fieldId)
-            .stream()
-            .map(this::toFieldOptionsDTO)
-            .collect(Collectors.toList());
   }
 
   private FieldOptionResponseDTO toFieldOptionsDTO(FieldOption fieldOption) {

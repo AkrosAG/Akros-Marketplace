@@ -1,4 +1,3 @@
-
 package ch.akros.marketplace.service.entity;
 
 import javax.persistence.Column;
