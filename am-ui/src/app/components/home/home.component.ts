@@ -1,18 +1,22 @@
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AuthStore} from '../../data/services/login/auth.service';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {LoadingService} from './../shared/spinner/loading.service';
 
+@UntilDestroy()
 @Component({
   selector: 'mp-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
   public appLanguage: string;
   public subscription: Subscription;
   public showLoginMessage: boolean;
+  public searching: boolean;
 
   /**
    * @description Component with the main screen of the appliction, which hosts the search webcomponent,
@@ -25,7 +29,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private translate: TranslateService,
     private router: Router,
-    private auth: AuthStore
+    private auth: AuthStore,
+    private loadingService: LoadingService
   ) {
     this.showLoginMessage = false;
   }
@@ -47,15 +52,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription = this.translate.onLangChange.subscribe(appLanguage => {
-      this.appLanguage = appLanguage.lang;
-    });
+    this.subscription = this.translate.onLangChange
+      .pipe(untilDestroyed(this))
+      .subscribe(appLanguage => {
+        this.appLanguage = appLanguage.lang;
+      });
   }
 
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+  showLoading() {
+    this.loadingService.loadingSub.next(true);
+  }
+
+  hideLoading() {
+    this.loadingService.loadingSub.next(false);
   }
 
   showResults(event: Event) {
