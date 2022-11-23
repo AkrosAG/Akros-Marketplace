@@ -62,6 +62,7 @@ import {SwiperModule} from 'swiper/angular';
 import {AdsService} from './components/ads/ads.service';
 import {SpinnerComponent} from './components/shared/spinner/spinner.component';
 import {HttpLoaderInterceptor} from './components/shared/spinner/httpLoaderInterceptor.service';
+import {LoadingService} from './components/shared/spinner/loading.service';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -167,6 +168,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
       useClass: HttpLoaderInterceptor,
       multi: true,
     },
+    LoadingService,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],

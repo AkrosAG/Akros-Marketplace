@@ -1,13 +1,8 @@
-<ng-container *ngIf="appLoaded; else loader">
-  <div id="container-wrapper">
-    <mp-navbar></mp-navbar>
-    <div class="content-wrapper">
-      <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
-    </div>
-    <mp-footer></mp-footer>
+<mp-spinner [active]="loading"></mp-spinner>
+<div id="container-wrapper">
+  <mp-navbar></mp-navbar>
+  <div class="content-wrapper">
+    <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
   </div>
-</ng-container>
-
-<ng-template #loader>
-  <div>loading...</div>
-</ng-template>
+  <mp-footer></mp-footer>
+</div>
