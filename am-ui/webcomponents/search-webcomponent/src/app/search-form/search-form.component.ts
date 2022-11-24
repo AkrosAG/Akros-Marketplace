@@ -26,6 +26,8 @@ export class SearchFormComponent implements OnInit {
 
   @Input() appLanguage: string;
   @Output() submitEvent = new EventEmitter<any>();
+  @Output() startLoadingEvent = new EventEmitter<boolean>();
+  @Output() endLoadingEvent = new EventEmitter<boolean>();
   selectedCategorySearchFields: FormFieldBase<string>[] | null = [];
   subCategories: SubCategoryDto[] = [];
   currentCategoryId: number;
@@ -110,6 +112,7 @@ export class SearchFormComponent implements OnInit {
    * @description Performs the search and notifies parent with the result obtained
    */
   async onSubmit() {
+    this.startLoadingEvent.emit(true);
     const formData = JSON.parse(JSON.stringify(this.form.getRawValue()));
 
     this.payLoad.category_id = this.currentCategoryId;
@@ -144,5 +147,6 @@ export class SearchFormComponent implements OnInit {
       this.topicsService.topicsSearchesPost({body: this.payLoad})
     );
     this.submitEvent.emit(res);
+    this.endLoadingEvent.emit(true);
   }
 }

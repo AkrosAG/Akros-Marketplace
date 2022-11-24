@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* istanbul ignore file */
 import {catchError, map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
@@ -29,7 +30,6 @@ export class HttpLoaderInterceptor implements HttpInterceptor {
         })
       )
       .pipe(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         map((evt: any) => {
           if (evt instanceof HttpResponse) {
             this.loadingService.setLoading(false, request.url);
