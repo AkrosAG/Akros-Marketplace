@@ -1,4 +1,3 @@
-
 package ch.akros.marketplace.service.repository;
 
 import ch.akros.marketplace.service.entity.Field;
@@ -22,6 +21,4 @@ public interface FieldRepository extends JpaRepository<Field, Long> {
       "sc.subCategoryId = :subCategoryId and (ft.request=:request or ft.offer!=:request) order by sortNumber")
   List<Field> listTopicSearchFields(Long subCategoryId, Boolean request);
 
-  @Query("select op from fieldOption op where op.field.fieldId = :fieldId")
-  List<FieldOption> listFieldOptions(Long fieldId);
 }

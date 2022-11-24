@@ -33,7 +33,7 @@ const resources = {
       apartment: 'Wohnung',
       house: 'Haus',
       parking: 'Parkplatz',
-      sortBy: "Sortieren nach: ",
+      sortBy: 'Sortieren nach: ',
       byPriceLowToHigh: 'Preis: Aufsteigend',
       byPriceHighToLow: 'Preis: Absteigend',
       byDateNewToOld: 'Datum: Neuste zuerst',

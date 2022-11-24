@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import SwiperCore, {Navigation, Pagination} from 'swiper';
 import {TopicImage} from '../../data/models/TopicImage';

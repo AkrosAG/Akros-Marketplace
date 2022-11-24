@@ -1,4 +1,3 @@
-
 package ch.akros.marketplace.service.controller;
 
 import lombok.extern.slf4j.Slf4j;

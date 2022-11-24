@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   UserDataModel,
   UserService,
@@ -16,7 +17,7 @@ import {
 import {FormBuilder} from '@angular/forms';
 
 class MockUserService {
-  public user: any = {
+  public user: unknown = {
     id: '7f265b74-c0fd-4087-a089-79646b36eff6',
     createdTimestamp: 1656058610699,
     username: 'admin1',

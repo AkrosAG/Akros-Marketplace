@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
 import {Component, OnInit, OnDestroy} from '@angular/core';
@@ -54,7 +53,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       return this.auth.userValue.sub;
     } catch (e) {
       console.log(e);
-      throw new Error;
+      throw new Error();
     }
   }
 

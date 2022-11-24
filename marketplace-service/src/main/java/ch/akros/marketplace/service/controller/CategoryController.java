@@ -1,4 +1,3 @@
-
 package ch.akros.marketplace.service.controller;
 
 import ch.akros.marketplace.api.CategoriesApi;

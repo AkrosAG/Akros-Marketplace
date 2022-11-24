@@ -70,7 +70,6 @@ public class TopicController implements TopicsApi {
             log.error(ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
     }
 
     @Override

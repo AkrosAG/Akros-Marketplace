@@ -15,7 +15,7 @@ export interface UserDataModel {
   enabled: boolean;
   requiredActions: [];
   attributes?: {
-    phoneNumber: [any];
+    phoneNumber: [string];
   };
 }
 

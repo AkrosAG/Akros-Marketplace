@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {Router} from '@angular/router';
 import {
   TranslateLoader,
@@ -23,7 +24,7 @@ class MockSearchComponent {
 }
 
 class MockStore {
-  public user: any = {};
+  public user: unknown = {};
   token = 'abc';
 
   get userValue() {
@@ -104,7 +105,7 @@ describe('HomeComponent', () => {
             type: string,
             bubbles?: boolean,
             cancelable?: boolean,
-            detail?: any
+            detail?: unknown
           ): void {
             throw new Error('Function not implemented.');
           },

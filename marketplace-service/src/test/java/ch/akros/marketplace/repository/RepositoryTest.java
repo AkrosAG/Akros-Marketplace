@@ -1,4 +1,3 @@
-
 package ch.akros.marketplace.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

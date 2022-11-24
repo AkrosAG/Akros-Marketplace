@@ -5,7 +5,4 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> {
-  @Query("from SubCategory sc where sc.subCategoryId = :categoryId")
-  List<SubCategory> findByCategoryId(Long categoryId);
-}
+public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> {}

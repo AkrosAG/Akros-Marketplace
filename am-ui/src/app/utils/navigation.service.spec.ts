@@ -8,7 +8,7 @@ class MockRouter {
     return url;
   }
   public events = {
-    subscribe(fn: any) {
+    subscribe() {
       return null;
     },
   };

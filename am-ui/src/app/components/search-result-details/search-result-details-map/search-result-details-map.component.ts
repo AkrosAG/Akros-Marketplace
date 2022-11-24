@@ -23,7 +23,7 @@ L.Marker.prototype.options.icon = iconDefault;
   styleUrls: ['./search-result-details-map.component.scss'],
 })
 export class SearchResultDetailsMapComponent implements AfterViewInit {
-  private map: any;
+  private map: unknown;
   @Input() lat: string;
   @Input() lon: string;
   @Input() address: string;

@@ -9,7 +9,7 @@ const authUrl = `${environment.ownUrl}/api/auth/`;
 export class AuthAPIService {
   constructor(public http: HttpClient) {}
 
-  postData(credentials: any, type: any) {
+  postData(credentials: unknown, type: unknown) {
     return new Promise((resolve, reject) => {
       const httpOptions = {
         headers: new HttpHeaders({'Content-Type': 'application/json'}),
