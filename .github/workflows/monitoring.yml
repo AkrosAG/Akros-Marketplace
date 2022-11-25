@@ -35,7 +35,6 @@ jobs:
           target: deploy
           tags: akrosmarketplace.azurecr.io/am-prometheus-service:${{ github.sha }}
 
-
   grafana:
     name: Grafana job
     runs-on: ubuntu-latest
@@ -60,10 +59,3 @@ jobs:
           push: true
           target: deploy
           tags: akrosmarketplace.azurecr.io/am-grafana-service:${{ github.sha }}
-
-      - name: Deploy monitoring service to azure
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: "am-monitoring-service"
-          publish-profile: ${{ secrets.MONITORING_SERVICE_PUBLISH_PROFILE }}
-          images: "akrosmarketplace.azurecr.io/am-grafana-service:${{ github.sha }}"
