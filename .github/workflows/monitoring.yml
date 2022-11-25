@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - "infrastructure/prometheus/Dockerfile"
-      - "infrastructure/prometheus/Dockerfile"
+      - "infrastructure/grafana/Dockerfile"
       - ".github/workflows/monitoring.yml"
     branches:
       - main
