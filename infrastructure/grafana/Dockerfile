@@ -6,4 +6,4 @@ ENV GF_AUTH_DISABLE_LOGIN_FORM "true"
 ENV GF_AUTH_ANONYMOUS_ENABLED "true"
 # Role of anonymous user
 ENV GF_AUTH_ANONYMOUS_ORG_ROLE "Admin"
-# Install plugins here our in your own config file
+ENV GF_PATHS_PROVISIONING "/var/lib/grafana/provisioning/"

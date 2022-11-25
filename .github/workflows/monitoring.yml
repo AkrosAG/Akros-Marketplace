@@ -35,6 +35,13 @@ jobs:
           target: deploy
           tags: akrosmarketplace.azurecr.io/am-prometheus-service:${{ github.sha }}
 
+      - name: Deploy prometheus service to azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: "am-prometheus"
+          publish-profile: ${{ secrets.PROMETHEUS_PUBLISH_PROFILE }}
+          images: "akrosmarketplace.azurecr.io/am-prometheus-service:${{ github.sha }}"
+
   grafana:
     name: Grafana job
     runs-on: ubuntu-latest
