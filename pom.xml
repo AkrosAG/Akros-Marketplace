@@ -23,6 +23,5 @@
 
     <modules>
         <module>marketplace-service</module>
-        <module>auth-service</module>
     </modules>
 </project>
