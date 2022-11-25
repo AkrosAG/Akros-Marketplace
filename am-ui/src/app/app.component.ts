@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import {LoadingService} from './components/shared/spinner/loading.service';
 import {Subscription} from 'rxjs';
 import {appConfig} from './../config';

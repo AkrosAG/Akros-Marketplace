@@ -60,10 +60,12 @@ export class HomeComponent implements OnInit {
   }
 
   showLoading() {
+    /* istanbul ignore next */
     this.loadingService.loadingSub.next(true);
   }
 
   hideLoading() {
+    /* istanbul ignore next */
     this.loadingService.loadingSub.next(false);
   }
 
