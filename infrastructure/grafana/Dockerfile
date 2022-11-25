@@ -1,4 +1,4 @@
-FROM grafana/grafana:7.1.5-ubuntu
+FROM grafana/grafana:7.1.5-ubuntu as deploy
 
 # Disable Login form or not
 ENV GF_AUTH_DISABLE_LOGIN_FORM "true"
