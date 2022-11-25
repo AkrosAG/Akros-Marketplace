@@ -3,6 +3,7 @@ export const environment = {
   ownUrl: 'https://am-ui.azurewebsites.net',
   apiUrl: 'https://amp-marketplace-service.azurewebsites.net',
   authUrl: 'https://amp-auth-service.azurewebsites.net',
+  usersManagementUrl: 'https://localhost:9090', //TODO needs correct deployed management API URL
   signOn: {
     authority:
       'https://login.microsoftonline.com/45a8141c-94c3-4fde-9cf3-0cfcc10ad529',

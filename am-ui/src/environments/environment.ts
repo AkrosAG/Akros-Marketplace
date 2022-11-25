@@ -12,6 +12,7 @@ export const environment = {
   ownUrl: 'https://localhost:4200',
   apiUrl: 'https://localhost:8443',
   authUrl: 'https://localhost:9443',
+  usersManagementUrl: 'http://127.0.0.1:9090',
   signOn: {
     authority:
       'https://login.microsoftonline.com/45a8141c-94c3-4fde-9cf3-0cfcc10ad529',

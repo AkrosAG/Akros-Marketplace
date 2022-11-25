@@ -1,5 +1,6 @@
 {
   "back": "Zurück",
+  "save": "Speichern",
   "home": {
     "information": "Erstellen Sie einen kostenloses Inserat",
     "find": "Finde was Du suchst",
@@ -82,5 +83,16 @@
     "close-modal": "Schliessen",
     "modal-title": "Anzeige löschen",
     "modal-description": "Sind Sie sicher, dass Sie die Anzeige wirklich löschen möchten?"
+  },
+  "profile": {
+    "welcome": "Wilkommen {{user}}!",
+    "form": {
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "email": "E-Mail",
+      "phone": "Telefonnummer"
+    },
+    "success": "Änderungen wurden erfolgreich geändert",
+    "error": "Es ist ein Fehler aufgetreten"
   }
 }

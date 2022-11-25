@@ -22,3 +22,4 @@ ENV KC_HOSTNAME_STRICT_HTTPS=false
 ENV KC_DB=postgres
 
 ENTRYPOINT ["/opt/keycloak/startup.sh"]
+

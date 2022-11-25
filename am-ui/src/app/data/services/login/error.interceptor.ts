@@ -14,9 +14,9 @@ export class ErrorInterceptor implements HttpInterceptor {
   constructor(private akrosAuthService: AuthStore) {}
 
   intercept(
-    request: HttpRequest<any>,
+    request: HttpRequest<unknown>,
     next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError(err => {
         if ([301, 302].indexOf(err.status) !== -1) {

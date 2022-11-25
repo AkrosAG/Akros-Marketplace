@@ -35,7 +35,7 @@ function SearchResultList(props) {
     window.history.replaceState(
       Object.assign({}, window.history.state, {order: event.target.value}),
       "push sort order");
-  }
+  };
 
   const sortTypes = [
     {value: 'location', label: t('location')},
@@ -90,7 +90,7 @@ function SearchResultList(props) {
         break;
     }
     setResults(sortedList);
-  }
+  };
 
   return results.length === 0 ? (
     <h1 className="no-results">{t('noResults')}</h1>
@@ -115,7 +115,7 @@ function SearchResultList(props) {
         <SearchResultItem handleClick={props.handleEvent} results={results}/>
       </div>
     </div>
-  )
+  );
 }
 
 SearchResultList.propTypes = {

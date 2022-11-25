@@ -38,7 +38,6 @@ public class MarketplaceServiceApplication {
 
   public static void main(final String[] args) {
     SpringApplication application = new SpringApplication(MarketplaceServiceApplication.class);
-
     application.run(args);
   }
 
@@ -54,7 +53,6 @@ public class MarketplaceServiceApplication {
     dataSource.setUrl(dbUrl);
     dataSource.setUsername(dbUsername);
     dataSource.setPassword(dbPassword);
-
     return dataSource;
   }
 

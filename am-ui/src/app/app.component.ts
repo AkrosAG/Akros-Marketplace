@@ -23,6 +23,7 @@ export class AppComponent {
     this.appLng = appConfig.appLanguage;
   }
   /* istanbul ignore next */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onOutletLoaded(component: any) {
     component.appLanguage = this.appLng;
   }

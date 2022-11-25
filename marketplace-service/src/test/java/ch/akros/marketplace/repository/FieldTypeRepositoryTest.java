@@ -1,4 +1,3 @@
-
 package ch.akros.marketplace.repository;
 
 import ch.akros.marketplace.service.MarketplaceServiceApplication;
