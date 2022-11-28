@@ -5,6 +5,8 @@
       <search-component
         [language]="appLanguage"
         (submitToContainerEvent)="showResults($event)"
+        (startSearchEvent)="showLoading()"
+        (endSearchEvent)="hideLoading()"
       ></search-component>
     </div>
   </div>
