@@ -39,12 +39,6 @@ public class Topic {
   private Long topicId;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(referencedColumnName = "ADVERTISER_ID", name = "ADVERTISER_ID",
-      foreignKey = @ForeignKey(name = "TOPIC_ADVERTISER_FK"))
-  @ToString.Exclude
-  private Advertiser advertiser;
-
-  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(referencedColumnName = "SUBCATEGORY_ID", name = "SUBCATEGORY_ID",
       foreignKey = @ForeignKey(name = "TOPIC_SUBCATEGORY_FK"))
   @ToString.Exclude
