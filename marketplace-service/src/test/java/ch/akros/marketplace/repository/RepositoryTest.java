@@ -20,9 +20,6 @@ public class RepositoryTest {
   private TopicRepository topicRepository;
 
   @Autowired
-  private AdvertiserRepository advertiserRepository;
-
-  @Autowired
   private CategoryRepository categoryRepository;
 
   @Autowired
@@ -34,11 +31,6 @@ public class RepositoryTest {
   @Test
   public void topicRepositoryTest() {
     assertEquals(0, topicRepository.count());
-  }
-
-  @Test
-  public void advertiserRepositoryTest() {
-    assertEquals(1, advertiserRepository.count());
   }
 
   @Test

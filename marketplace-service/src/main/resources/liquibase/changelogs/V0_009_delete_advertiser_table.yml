@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: V0.009/1
+      author: Filipe-Inacio
+      comment: Delete advertiser table and the relations
+      changes:
+        - dropColumn:
+            tableName: topic
+            columns:
+              - column:
+                  name: advertiser_id
+        - dropTable:
+            cascadeConstraints: true
+            tableName: advertiser

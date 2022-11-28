@@ -27,8 +27,6 @@ public class TopicServiceTest {
     @Mock
     private FieldRepository fieldRepository;
     @Mock
-    private AdvertiserRepository advertiserRepository;
-    @Mock
     private TopicRepository topicRepository;
     @Mock
     private SubCategoryRepository subCategoryRepository;
@@ -71,7 +69,6 @@ public class TopicServiceTest {
     public void beforeEach() {
         MockitoAnnotations.openMocks(this);
         this.topicService = new TopicService(fieldRepository,
-                advertiserRepository,
                 topicRepository,
                 subCategoryRepository,
                 topicImageRepository,
@@ -141,7 +138,7 @@ public class TopicServiceTest {
         verify(topicRepository).getById(TOPIC_ID_12);
         verify(fieldRepository, times(2)).findAll();
         verifyNoMoreInteractions(topicRepository, fieldRepository);
-        verifyNoInteractions(advertiserRepository, subCategoryRepository);
+        verifyNoInteractions(subCategoryRepository);
 
     }
 
@@ -187,7 +184,7 @@ public class TopicServiceTest {
         verify(topicRepository).getById(TOPIC_ID_14);
         verify(fieldRepository, times(2)).findAll();
         verifyNoMoreInteractions(topicRepository, fieldRepository);
-        verifyNoInteractions(advertiserRepository, subCategoryRepository);
+        verifyNoInteractions(subCategoryRepository);
     }
 
     @Test
@@ -226,7 +223,7 @@ public class TopicServiceTest {
         verify(topicRepository).getById(TOPIC_ID_13);
         verify(fieldRepository).findAll();
         verifyNoMoreInteractions(topicRepository, fieldRepository);
-        verifyNoInteractions(advertiserRepository, subCategoryRepository);
+        verifyNoInteractions(subCategoryRepository);
     }
 
     @Test
@@ -277,7 +274,7 @@ public class TopicServiceTest {
         verify(topicRepository).getById(TOPIC_ID_14);
         verify(fieldRepository).findAll();
         verifyNoMoreInteractions(topicRepository, fieldRepository);
-        verifyNoInteractions(advertiserRepository, subCategoryRepository);
+        verifyNoInteractions(subCategoryRepository);
     }
 
     @Test
@@ -324,7 +321,7 @@ public class TopicServiceTest {
         verify(topicRepository).getById(TOPIC_ID_12);
         verify(fieldRepository, times(2)).findAll();
         verifyNoMoreInteractions(topicRepository, fieldRepository);
-        verifyNoInteractions(advertiserRepository, subCategoryRepository);
+        verifyNoInteractions(subCategoryRepository);
     }
 
     @Test

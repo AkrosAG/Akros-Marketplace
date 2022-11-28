@@ -49,7 +49,6 @@ public class TopicService {
 
   private static final String LAT_LON_API_SEARCH_URL = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=";
   private final FieldRepository fieldRepository;
-  private final AdvertiserRepository advertiserRepository;
   private final TopicRepository topicRepository;
   private final TopicValueRepository topicValueRepository;
 
@@ -68,13 +67,11 @@ public class TopicService {
 
   public TopicService(
       FieldRepository fieldRepository,
-      AdvertiserRepository advertiserRepository,
       TopicRepository topicRepository,
       SubCategoryRepository subCategoryRepository,
       TopicImageRepository topicImageRepository,
       TopicValueRepository topicValueRepository) {
     this.fieldRepository = fieldRepository;
-    this.advertiserRepository = advertiserRepository;
     this.topicRepository = topicRepository;
     this.subCategoryRepository = subCategoryRepository;
     this.topicImageRepository = topicImageRepository;
@@ -125,7 +122,6 @@ public class TopicService {
         topic.setValidFrom(LocalDate.now());
         topic.setValidTo(LocalDate.now().plusDays(365));
         topic.setRequestOrOffer(topicSaveRequestDTO.getRequestOrOffer());
-        topic.setAdvertiser(advertiserRepository.getById(1L));
         List<TopicValue> topicValues = topicSaveRequestDTO.getTopicValues()
                 .stream()
                 .map(e -> toTopicValue(topic, e))
