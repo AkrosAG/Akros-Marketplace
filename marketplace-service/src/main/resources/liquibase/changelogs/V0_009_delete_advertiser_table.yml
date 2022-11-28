@@ -10,5 +10,4 @@ databaseChangeLog:
               - column:
                   name: advertiser_id
         - dropTable:
-            cascadeConstraints: true
             tableName: advertiser
