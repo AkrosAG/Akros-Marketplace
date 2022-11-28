@@ -32,6 +32,8 @@ export class MpSearchComponent implements OnInit, OnChanges, OnDestroy {
   public appLanguage: string;
   @Input() language = 'de';
   @Output() submitToContainerEvent = new EventEmitter<any>();
+  @Output() startSearchEvent = new EventEmitter<boolean>();
+  @Output() endSearchEvent = new EventEmitter<boolean>();
   public searchResultSubscription: Subscription;
 
   /**
@@ -97,12 +99,25 @@ export class MpSearchComponent implements OnInit, OnChanges, OnDestroy {
    */
   relayToContainer(event: Event) {
     this.submitToContainerEvent.emit(event);
+    this.startSearchEvent.emit(true);
   }
 
   onSubmitSearchAllAds() {
+    this.onStartSearchEvent();
     this.searchResultSubscription = this.mpSearchService.getAllTopics().subscribe(res => {
       this.submitToContainerEvent.emit(res);
+      this.onEndSearchEvent();
+    }, () => {
+      this.onEndSearchEvent();
     });
+  }
+
+  onStartSearchEvent() {
+    this.startSearchEvent.emit();
+  }
+
+  onEndSearchEvent() {
+    this.endSearchEvent.emit();
   }
 
   ngOnDestroy(): void {
