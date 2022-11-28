@@ -3,7 +3,6 @@
 # Use official node image as the base image
 FROM node:lts as build
 RUN apt-get update && apt-get install -y openjdk-11-jdk
-RUN npm install pnpm
 
 # Set the working directory
 WORKDIR /usr/local/app/am-ui
@@ -27,6 +26,7 @@ COPY ./api.yaml /usr/local/app/
 COPY ./am-ui ./
 
 # Install all the dependencies
+RUN npm install pnpm
 RUN pnpm install
 
 # Generate the build of the application
