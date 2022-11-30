@@ -26,7 +26,7 @@ COPY ./api.yaml /usr/local/app/
 COPY ./am-ui ./
 
 # Install all the dependencies
-RUN npm install pnpm
+RUN npm install -g pnpm
 RUN pnpm install
 
 # Generate the build of the application

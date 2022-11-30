@@ -3,7 +3,6 @@
 # Use official node image as the base image
 FROM node:lts as build
 RUN apt-get update && apt-get install -y openjdk-11-jdk
-RUN npm install pnpm
 
 # Set the working directory
 WORKDIR /usr/local/app/am-ui
@@ -23,13 +22,12 @@ COPY ./am-ui/webcomponents/search-results-webcomponent/pnpm-lock.yaml ./webcompo
 COPY ./am-ui/webcomponents/search-webcomponent/package.json ./webcomponents/search-webcomponent/
 COPY ./am-ui/webcomponents/search-webcomponent/pnpm-lock.yaml ./webcomponents/search-webcomponent/
 
-RUN pnpm install
-
 # Add the source code to app
 COPY ./api.yaml /usr/local/app/
 COPY ./am-ui ./
 
 # Generate the build of the application
+RUN npm install -g pnpm
 RUN pnpm build
 
 # Stage 2: Serve app with nginx server
