@@ -28,6 +28,7 @@ COPY ./am-ui ./
 
 # Generate the build of the application
 RUN npm install -g pnpm
+RUN pnpm install
 RUN pnpm build
 
 # Stage 2: Serve app with nginx server
