@@ -39,6 +39,8 @@
             class="flex-1"
             [appLanguage]="appLanguage"
             (submitEvent)="relayToContainer($event)"
+            (startLoadingEvent)="onStartSearchEvent()"
+            (endLoadingEvent)="onEndSearchEvent()"
           ></mp-search-form>
         </div>
       </div>

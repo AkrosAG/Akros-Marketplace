@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:prod": "vite build",
-    "prebuild": "npm run openapi-gen",
-    "prebuild:prod": "npm run openapi-gen",
+    "build": "pnpm prebuild && vite build",
+    "build:prod": "pnpm prebuild:prod && vite build",
+    "prebuild": "pnpm openapi-gen",
+    "prebuild:prod": "pnpm openapi-gen",
     "preview": "vite preview",
     "openapi-gen": "openapi-generator-cli generate -g javascript -i ../../../api.yaml -o ./src/api",
     "package": "node package-script.js",
@@ -47,6 +47,7 @@
     "eslint-plugin-eslint-plugin": "^4.1.0",
     "eslint-plugin-vue": "^8.5.0",
     "jest": "^27.0.5",
+    "sass": "^1.54.5",
     "vite": "^2.8.0",
     "vue": "^3.2.25"
   },

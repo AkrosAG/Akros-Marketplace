@@ -50,6 +50,7 @@ const { bearerToken } = toRefs(props);
 const { userId } = toRefs(props);
 
 onMounted(() => {
+  sendLoadingEvent(true);
   categoriesApi.categoriesCreateGet(true, getCategories);
 });
 
@@ -60,6 +61,7 @@ onMounted(() => {
  * @param {String} _response - contains the whole response
  */
 function getCategories(_error, data, _response) {
+  sendLoadingEvent(false);
   categories.value = data.categories;
   updateSubCategories();
 }
@@ -149,17 +151,19 @@ function submit(data, images, thumbnail) {
     data,
     userId.value
   );
-
+  sendLoadingEvent(true);
   createTopic.topicsPost(imagesToUpload, topics, thumbnailImage).then(
     () => {
       createAddSuccess = true;
       previewAd.value = false;
       confirmAd.value = true;
+      sendLoadingEvent(false);
     },
     (err) => {
       createAddSuccess = false;
       previewAd.value = false;
       confirmAd.value = true;
+      sendLoadingEvent(false);
       console.error(err);
     }
   );
@@ -192,6 +196,19 @@ function back(fields) {
   showDropdown.value = true;
   previewAd.value = false;
   fieldsToShow.value = fields;
+}
+
+/**
+ * @description Sends a window event to which the loading service in main App is listening to in order to display
+ * or hide the loading animation.
+ * @param {boolean} loading - Boolean value to display or hide
+ */
+function sendLoadingEvent(loading) {
+  window.dispatchEvent(
+    new CustomEvent('setLoadingEvent', {
+      detail: loading
+    })
+  );
 }
 
 defineExpose({

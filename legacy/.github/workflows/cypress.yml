@@ -175,13 +175,17 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
-          cache-dependency-path: am-ui/package-lock.json
-      - run: npm ci
+      - uses: pnpm/action-setup@v2.0.1
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+      - run: pnpm install --frozen-lockfile
         working-directory: ./am-ui
-      - run: npm run build:webcomponents
+      - run: pnpm build:webcomponents
         working-directory: ./am-ui
-      - run: npm run e2e:headless
+      - run: pnpm e2e:headless
         working-directory: ./am-ui
       - name: Stop containers
         working-directory: ./infrastructure/start_all_local

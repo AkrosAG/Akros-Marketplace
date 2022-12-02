@@ -7,12 +7,12 @@ This directory contains all the webcomponents for the UI.
 
 ## Build
 
-Run `npm run build` to build the every webcomponent. The build artifacts will be stored in its respective `dist/` directory. Running the same command in the root directory of am-ui will also run this command and build the webcomponents through the prebuild.
+Run `pnpm build` to build the every webcomponent. The build artifacts will be stored in its respective `dist/` directory. Running the same command in the root directory of am-ui will also run this command and build the webcomponents through the prebuild.
 
 ## Running unit tests
 
-Run `npm run test` to execute the tests with its respective command in each webcomponent.
+Run `pnpm test` to execute the tests with its respective command in each webcomponent.
 
 ## Lint
 
-Run `npm run test` to lint each webcomponent with its respective command.
+Run `pnpm test` to lint each webcomponent with its respective command.

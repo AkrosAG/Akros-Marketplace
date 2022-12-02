@@ -69,12 +69,6 @@ describe('HomeComponent', () => {
       expect(component).toBeTruthy();
     });
 
-    it('subscription should be closed after calling OnDestroy', () => {
-      expect(component.subscription.closed).toBeFalsy();
-      component.ngOnDestroy();
-      expect(component.subscription.closed).toBeTruthy();
-    });
-
     it('should attempt call router with create value', inject(
       [Router],
       (router: Router) => {
