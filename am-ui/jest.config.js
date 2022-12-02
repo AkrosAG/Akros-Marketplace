@@ -3,6 +3,7 @@ module.exports = {
   preset: 'jest-preset-angular',
   testPathIgnorePatterns: ['<rootDir>/cypress/', '<rootDir>/webcomponents/'],
   setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
+  moduleDirectories: ['node_modules', '<rootDir>'],
   coverageThreshold: {
     global: {
       branches: 80,
