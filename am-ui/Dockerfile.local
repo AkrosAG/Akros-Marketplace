@@ -14,7 +14,6 @@ COPY ./am-ui/.npmrc ./
 COPY ./am-ui/build_scripts ./build_scripts/
 COPY ./am-ui/webcomponents/build_scripts ./webcomponents/build_scripts/
 COPY ./am-ui/webcomponents/package.json ./webcomponents/
-COPY ./am-ui/webcomponents/pnpm-lock.yaml ./webcomponents/
 COPY ./am-ui/webcomponents/create-ad-webcomponent/package.json ./webcomponents/create-ad-webcomponent/
 COPY ./am-ui/webcomponents/create-ad-webcomponent/pnpm-lock.yaml ./webcomponents/create-ad-webcomponent/
 COPY ./am-ui/webcomponents/search-results-webcomponent/package.json ./webcomponents/search-results-webcomponent/
@@ -28,6 +27,7 @@ COPY ./am-ui ./
 
 # Generate the build of the application
 RUN npm install -g pnpm
+RUN pnpm install
 RUN pnpm build
 
 # Stage 2: Serve app with nginx server
