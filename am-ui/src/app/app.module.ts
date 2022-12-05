@@ -16,13 +16,6 @@ import {
 } from '@ngx-translate/core';
 import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 import {
-  MSAL_INSTANCE,
-  MSAL_INTERCEPTOR_CONFIG,
-  MsalInterceptor,
-  MsalInterceptorConfiguration,
-  MsalService,
-} from '@azure/msal-angular';
-import {
   BrowserCacheLocation,
   InteractionType,
   IPublicClientApplication,
@@ -81,15 +74,6 @@ export const MsalInstanceFactory: () => IPublicClientApplication = () => {
   });
 };
 
-export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
-  const protectedResourceMap = new Map<string, Array<string>>();
-  // TODO Put protected resources here, once the application is registered
-  return {
-    interactionType: InteractionType.Popup,
-    protectedResourceMap,
-  };
-}
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -142,20 +126,6 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     {
       provide: LOCALE_ID,
       useValue: 'de-ch',
-    },
-    {
-      provide: MSAL_INSTANCE,
-      useFactory: MsalInstanceFactory,
-    },
-    MsalService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: MsalInterceptor,
-      multi: true,
-    },
-    {
-      provide: MSAL_INTERCEPTOR_CONFIG,
-      useFactory: MsalInterceptorConfigFactory,
     },
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
