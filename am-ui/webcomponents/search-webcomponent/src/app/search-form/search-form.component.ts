@@ -134,7 +134,6 @@ export class SearchFormComponent implements OnInit {
       }
     }
 
-
     // is furnished ?
     if(this.isFurnished.value){
       this.payLoad.search_values.push({
@@ -142,11 +141,15 @@ export class SearchFormComponent implements OnInit {
         value: this.isFurnished.value
       });
     }
-
-    const res = await lastValueFrom(
-      this.topicsService.topicsSearchesPost({body: this.payLoad})
-    );
-    this.submitEvent.emit(res);
-    this.endLoadingEvent.emit(true);
+    try {
+      const res = await lastValueFrom(
+        this.topicsService.topicsSearchesPost({body: this.payLoad})
+      );
+      this.submitEvent.emit(res);
+    } catch (e) {
+        console.error(e);
+    } finally {
+      this.endLoadingEvent.emit(true);
+    }
   }
 }
