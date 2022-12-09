@@ -5,9 +5,9 @@ To build the local environment the follow steps must be followed.
 1. Docker containers must be started. They are used to start and configure the databases and the authentication services.
 The command bellow should be executed from the start_dev folder
    ```
-   #UNIX based
+   # UNIX based
    sh start_dev.sh
-   #Windows
+   # Windows
    ./ start_dev.sh
    ```
 
