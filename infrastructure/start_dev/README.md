@@ -47,7 +47,7 @@ Keyclock database credentials: - database: keycloakdb username: keycloakdb
   The first picture bellow shows how a problem with the permissions might look.
 
   <p align="center">
-   <img align="center" alt="Problem with permissions" src="/Users/atanasatanasov/Code/Akros-Marketplace/infrastructure/start_dev/docs_images/permissionsProblem.png"/>
+   <img align="center" alt="Problem with permissions" src="/docs_images/permissionsProblem.png"/>
   </p>
   <br/>
   The second picture shows how the permissions problem were fixed.
