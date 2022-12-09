@@ -26,7 +26,7 @@ The market-place database is named: _postgres_am_db_ and it runs on port 5432. T
 Example for login via pgadmin:
 
 <p align="center">
-   <img align="center" alt="Pg admin logo" src="/Users/atanasatanasov/Code/Akros-Marketplace/infrastructure/start_dev/docs_images/pgAdminLogin.png"/>
+   <img align="center" alt="Pg admin logo" src="./docs_images/pgAdminLogin.png"/>
 </p>
 
 Marketplace database credentials - database: am username: am
@@ -47,12 +47,12 @@ Keyclock database credentials: - database: keycloakdb username: keycloakdb
   The first picture bellow shows how a problem with the permissions might look.
 
   <p align="center">
-   <img align="center" alt="Problem with permissions" src="/docs_images/permissionsProblem.png"/>
+   <img align="center" alt="Problem with permissions" src="./docs_images/permissionsProblem.png"/>
   </p>
   <br/>
   The second picture shows how the permissions problem were fixed.
    <p align="center">
-   <img align="center" alt="Permissions fixed" src="/Users/atanasatanasov/Code/Akros-Marketplace/infrastructure/start_dev/docs_images/permissionsFixed.png"/>
+   <img align="center" alt="Permissions fixed" src="./docs_images/permissionsFixed.png"/>
   </p>
 
 
