@@ -10,7 +10,7 @@
     "prepackage": "npm run build",
     "package": "node package-script.js",
     "export": "npm run build && npm run package",
-    "lint": "eslint . --ext .jsx",
+    "lint": "eslint . --ext .jsx --no-fix",
     "fix": "eslint . --ext .jsx --fix",
     "test": "jest"
   },
