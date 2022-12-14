@@ -16,18 +16,18 @@ fs.readdirSync(path).forEach(function (mod) {
   }
 
   // npm binary based on OS
-  const npmCmd = os.platform().startsWith('win') ? 'pnpm.cmd' : 'pnpm';
+  const npmCmd = os.platform().startsWith('win') ? 'npm.cmd' : 'npm';
   const isProduction = process.argv[2] === '--prod';
   let cp;
 
   if (isProduction) {
-    cp = spawn(npmCmd, ['build:prod'], {
+    cp = spawn(npmCmd, ['run', 'build:prod'], {
       env: process.env,
       cwd: modPath,
       stdio: 'inherit',
     });
   } else {
-    cp = spawn(npmCmd, ['build'], {
+    cp = spawn(npmCmd, ['run', 'build'], {
       env: process.env,
       cwd: modPath,
       stdio: 'inherit',
