@@ -75,6 +75,66 @@ services:
       timeout: 5s
       retries: 5
 
+  client-ui:
+    container_name: client-ui
+    build:
+      context: ../..
+      dockerfile: ./am-ui/Dockerfile.local
+    ports:
+      - 4200:443
+    profiles: [ "local" ]
+    networks:
+      marketplacenet:
+    depends_on:
+      marketplace-service:
+        condition: service_started
+      auth-service:
+        condition: service_healthy
+
+  marketplace-service:
+    container_name: marketplace-service
+    build:
+      context: ../..
+      dockerfile: ./marketplace-service/Dockerfile.local
+    ports:
+      - 8443:8443
+      - 5005:5005
+    environment:
+      - POSTGRES_AM_DB_URL=jdbc:postgresql://postgres_am_db:5432/am
+      - POSTGRES_AM_DB_USERNAME=am
+      - POSTGRES_AM_DB_PASSWORD=am
+    profiles: [ "local" ]
+    networks:
+      marketplacenet:
+    depends_on:
+      auth-service:
+        condition: service_healthy
+      postgres_am_db:
+        condition: service_healthy
+
+  prometheus:
+    image: prom/prometheus:v2.39.1
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - '9091:9090'
+    profiles: ["monitoring"]
+
+  grafana:
+    image: grafana/grafana:9.2.2
+    container_name: grafana
+    environment:
+      - GF_AUTH_PROXY_ENABLED=true
+      - GF_PATHS_PROVISIONING=/var/lib/grafana/provisioning/
+    depends_on:
+      - prometheus
+    ports:
+      - "3002:3000"
+    profiles: ["monitoring"]
+
 networks:
   marketplacenet:
 volumes:

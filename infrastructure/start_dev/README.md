@@ -1,20 +1,34 @@
-## Local development guide (Fullstack) - Marketplace
+## Local development setup guide (Fullstack) - Marketplace
 
 ### Getting started 
 To build the local environment the following steps must be followed.
-1. Docker containers must be started. They are used to start and configure the databases and the authentication services.
-The command below should be executed from the start_dev folder
+1. For a clean start, all local docker images, containers, and volumes must be removed first. 
+This can be easily achieved using the command below. The command should be executed from the start_dev folder.
    ```
    # UNIX based
-   sh start_dev.sh
+   sh delete_all_local.sh
    
    # Windows
-   ./ start_dev.sh
+   ./ delete_all_local.sh
    ```
+2. Then docker containers must be started. They are used to start and configure the databases and the authentication services.
+   The application can be started in two different ways - one for development and one for testing the functionality of
+   the entire system (frontend + backend).
 
-2. Starting the backend(marketplace-service) - If containers are set correctly, the backend should be started from the 
+- For starting the **entire** system the command below should be executed and the next steps must be **ignored**. 
+   The frontend will be accessible from the following link: https://localhost:4200 and the backend: https://localhost:8443
+
+   ```
+    docker-compose --profile local up -d --build
+   ```
+- For configuring the local development the command below should be executed and the next steps from the README should be followed.
+
+   ```
+    docker-compose up -d --build
+   ```
+3. Starting the backend(marketplace-service) - If containers are set correctly, the backend should be started from the 
 IDE. The application should be accessible from the following link: https://localhost:8443
-3. Starting the frontend(am-ui) - Navigate to the frontend folder and execute the following commands:
+4. Starting the frontend(am-ui) - Navigate to the frontend folder and execute the following commands:
    ```
    npm install
    ```
