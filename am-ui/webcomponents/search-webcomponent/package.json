@@ -13,7 +13,7 @@
     "package": "node package-script.js",
     "export": "npm run build && npm run package",
     "lint": "npm run lint:angular && npm run lint:typescript && npm run lint:style",
-    "lint:angular": "ng lint --no-fix",
+    "lint:angular": "ng lint",
     "lint:typescript": "gts lint",
     "lint:style": "npx stylelint \"**/*.scss\"",
     "fix": "npm run fix:angular && npm run fix:typescript && npm run fix:style",

@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import {useTranslation} from 'react-i18next';
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import SearchResultItem from './SearchResultItem.jsx';
 import PropTypes from 'prop-types';
 
 function SearchResultList(props) {
-
   const [results, setResults] = useState([]);
-  const {t, i18n} = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useState(props.language);
   useEffect(() => {
@@ -33,16 +32,17 @@ function SearchResultList(props) {
   const onUpdateSortSelect = (event) => {
     sortResult(event.target.value, results);
     window.history.replaceState(
-      Object.assign({}, window.history.state, {order: event.target.value}),
-      "push sort order");
+      Object.assign({}, window.history.state, { order: event.target.value }),
+      'push sort order'
+    );
   };
 
   const sortTypes = [
-    {value: 'location', label: t('location')},
-    {value: 'byPriceLowToHigh', label: t('byPriceLowToHigh')},
-    {value: 'byPriceHighToLow', label: t('byPriceHighToLow')},
-    {value: 'byDateNewToOld', label: t('byDateNewToOld')},
-    {value: 'byDateOldToNew', label: t('byDateOldToNew')},
+    { value: ' location', label: t('location') },
+    { value: ' byPriceLowToHigh', label: t('byPriceLowToHigh') },
+    { value: ' byPriceHighToLow', label: t('byPriceHighToLow') },
+    { value: ' byDateNewToOld', label: t('byDateNewToOld') },
+    { value: ' byDateOldToNew', label: t('byDateOldToNew') }
   ];
 
   /**
@@ -52,41 +52,56 @@ function SearchResultList(props) {
    * @param {Array} resultsArray refers to the result list
    */
   const sortResult = (sortType, resultsArray) => {
-
-    let sortedList = [...resultsArray];
+    const sortedList = [...resultsArray];
 
     switch (sortType) {
-      case 'byPriceLowToHigh' :
-        sortedList.sort((a, b) =>
-          (a["topic_values"].find(x => x.key === 'price')["value"] -
-            b["topic_values"].find(x => x.key === 'price')["value"]));
+      case 'byPriceLowToHigh':
+        sortedList.sort(
+          (a, b) =>
+            a['topic_values'].find((x) => x.key === 'price')['value'] -
+            b['topic_values'].find((x) => x.key === 'price')['value']
+        );
         break;
-      case 'byPriceHighToLow' :
-        sortedList.sort((a, b) =>
-          (b["topic_values"].find(x => x.key === 'price')["value"] -
-            a["topic_values"].find(x => x.key === 'price')["value"]));
+      case 'byPriceHighToLow':
+        sortedList.sort(
+          (a, b) =>
+            b['topic_values'].find((x) => x.key === 'price')['value'] -
+            a['topic_values'].find((x) => x.key === 'price')['value']
+        );
         break;
-      case 'byDateNewToOld' :
+      case 'byDateNewToOld':
         sortedList.sort((a, b) =>
-          (a["topic_values"].find(x => x.key === 'date')["value"] <
-            b["topic_values"].find(x => x.key === 'date')["value"]) ? -1 :
-            (a["topic_values"].find(x => x.key === 'date')["value"] >
-              b["topic_values"].find(x => x.key === 'date')["value"]) ? 1 : 0);
+          a['topic_values'].find((x) => x.key === 'date')['value'] <
+          b['topic_values'].find((x) => x.key === 'date')['value']
+            ? -1
+            : a['topic_values'].find((x) => x.key === 'date')['value'] >
+              b['topic_values'].find((x) => x.key === 'date')['value']
+            ? 1
+            : 0
+        );
         break;
-      case 'byDateOldToNew' :
+      case 'byDateOldToNew':
         sortedList.sort((a, b) =>
-          (b["topic_values"].find(x => x.key === 'date')["value"] <
-            a["topic_values"].find(x => x.key === 'date')["value"]) ? -1 :
-            (b["topic_values"].find(x => x.key === 'date')["value"] >
-              a["topic_values"].find(x => x.key === 'date')["value"]) ? 1 : 0);
+          b['topic_values'].find((x) => x.key === 'date')['value'] <
+          a['topic_values'].find((x) => x.key === 'date')['value']
+            ? -1
+            : b['topic_values'].find((x) => x.key === 'date')['value'] >
+              a['topic_values'].find((x) => x.key === 'date')['value']
+            ? 1
+            : 0
+        );
         break;
-      case 'location' :
+      case 'location':
       default:
         sortedList.sort((a, b) =>
-          (a["topic_values"].find(x => x.key === 'region')["value"] <
-            b["topic_values"].find(x => x.key === 'region')["value"]) ? -1 :
-            (a["topic_values"].find(x => x.key === 'region')["value"] >
-              b["topic_values"].find(x => x.key === 'region')["value"]) ? 1 : 0);
+          a['topic_values'].find((x) => x.key === 'region')['value'] <
+          b['topic_values'].find((x) => x.key === 'region')['value']
+            ? -1
+            : a['topic_values'].find((x) => x.key === 'region')['value'] >
+              b['topic_values'].find((x) => x.key === 'region')['value']
+            ? 1
+            : 0
+        );
         break;
     }
     setResults(sortedList);
@@ -98,21 +113,21 @@ function SearchResultList(props) {
     <div>
       <div>
         <label form="sortBy">{t('sortBy')}</label>
-        <select id="sortBy"
-                className="filter-select"
-                onChange={onUpdateSortSelect}
-                defaultValue={history.state.order}>
-          {sortTypes.map((option, index) =>
-            <option data-testid="select-option"
-                    key={index}
-                    value={option.value}>
+        <select
+          id="sortBy"
+          className="filter-select"
+          onChange={onUpdateSortSelect}
+          defaultValue={history.state.order}
+        >
+          {sortTypes.map((option, index) => (
+            <option data-testid="select-option" key={index} value={option.value}>
               {option.label}
             </option>
-          )}
+          ))}
         </select>
       </div>
       <div>
-        <SearchResultItem handleClick={props.handleEvent} results={results}/>
+        <SearchResultItem handleClick={props.handleEvent} results={results} />
       </div>
     </div>
   );
