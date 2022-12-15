@@ -2072,7 +2072,7 @@
     "clientOfflineSessionIdleTimeout" : "0",
     "cibaInterval" : "5"
   },
-  "keycloakVersion" : "18.0.0",
+  "keycloakVersion" : "20.0.1",
   "userManagedAccessAllowed" : false,
   "clientProfiles" : {
     "profiles" : [ ]
@@ -4270,7 +4270,7 @@
     "clientSessionMaxLifespan" : "0",
     "frontendUrl" : ""
   },
-  "keycloakVersion" : "18.0.0",
+  "keycloakVersion" : "20.0.1",
   "userManagedAccessAllowed" : true,
   "clientProfiles" : {
     "profiles" : [ ]
