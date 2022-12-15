@@ -1,4 +1,4 @@
-import {CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
@@ -56,6 +56,7 @@ import {AdsService} from './components/ads/ads.service';
 import {SpinnerComponent} from './components/shared/spinner/spinner.component';
 import {HttpLoaderInterceptor} from './components/shared/spinner/httpLoaderInterceptor.service';
 import {LoadingService} from './components/shared/spinner/loading.service';
+import { AppInitService } from './app-init.service';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -64,8 +65,8 @@ export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 export const MsalInstanceFactory: () => IPublicClientApplication = () => {
   return new PublicClientApplication({
     auth: {
-      clientId: environment.signOn.clientId,
-      authority: environment.signOn.authority,
+      clientId: environment.signOnClientID,
+      authority: environment.signOnAuthority,
       redirectUri: environment.ownUrl,
     },
     cache: {
@@ -74,6 +75,9 @@ export const MsalInstanceFactory: () => IPublicClientApplication = () => {
   });
 };
 
+export function init_app(appInitService: AppInitService) {
+  return () => appInitService.init();
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -139,6 +143,13 @@ export const MsalInstanceFactory: () => IPublicClientApplication = () => {
       multi: true,
     },
     LoadingService,
+    AppInitService, 
+    {
+      provide: APP_INITIALIZER,
+      useFactory: init_app,
+      deps: [AppInitService],
+      multi: true      
+    }
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],

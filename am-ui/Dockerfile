@@ -42,5 +42,10 @@ COPY --from=build /usr/local/app/am-ui/dist/marketplace-ui /usr/share/nginx/html
 COPY ./am-ui/src/cert.pem /usr/share/nginx/cert.pem
 COPY ./am-ui/src/cert.key /usr/share/nginx/cert.key
 COPY ./am-ui/nginx-prod.conf /etc/nginx/nginx.conf
+COPY ./am-ui/run.sh /usr/local/app/run.sh
+RUN chmod +x run.sh
+
 # Expose port 80
 EXPOSE 80
+
+CMD [ "./run.sh" ]
