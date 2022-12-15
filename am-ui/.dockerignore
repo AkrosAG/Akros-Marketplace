@@ -1,0 +1,50 @@
+# Items that don't need to be in a Docker image.
+# Anything not used by the build system should go here.
+Dockerfile
+.dockerignore
+.gitignore
+README.md
+
+# Artifacts that will be built during image creation.
+# This should contain all files created during `npm run build`.
+build
+**/node_modules
+
+### Code ###
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+*.code-workspace
+
+# cask packages
+.cask/
+dist/
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+### Node ###
+# Logs
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+
+jspm_packages/
+
+# TypeScript v1 declaration files
+typings/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
