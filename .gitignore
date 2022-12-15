@@ -22,14 +22,13 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-.project
-.idea/
-
-# VS Code Files
+# VS Code files
 .vscode/
-
 **/node_modules
 
+# macOS files
 *.DS_Store
 
+# other files
 .project
+.idea/
