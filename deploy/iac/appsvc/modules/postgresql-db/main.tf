@@ -19,10 +19,10 @@ resource "azurerm_postgresql_flexible_server" "postgres_db_server" {
   zone                   = var.psql_svr_availability_zone
 
   backup_retention_days = var.psql_svr_backup_retention_days
-  create_mode = "Default"
+  create_mode           = "Default"
 
   timeouts {
-    read = "20m"
+    read   = "20m"
     create = "20m"
   }
 }

@@ -1,8 +1,12 @@
 
 locals {
-  keycloak_appsvc_name = "${var.env_name}-am-keycloak"
+  keycloak_appsvc_name               = "${var.env_name}-am-keycloak"
   am_marketplace_service_appsvc_name = "${var.env_name}-am-marketplace-service"
-  keyvault_key_permissions = [ "Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"] 
+  am_ui_appsvc_name                  = "${var.env_name}-am-ui"
+  am_grafana_appsvc_name             = "${var.env_name}-am-monitoring-service"
+  am_prometheus_appsvc_name          = "${var.env_name}-am-prometheus"
+  keyvault_key_permissions           = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"]
+  azure_appsvc_server                = "azurewebsites.net"
 }
 
 resource "azurerm_resource_group" "rg" {
@@ -13,10 +17,10 @@ resource "azurerm_resource_group" "rg" {
 data "azurerm_client_config" "current_user" {}
 
 resource "azurerm_key_vault" "key_vault" {
-  name                        = "${var.env_name}-${var.am_key_vault_name}"
-  location                    = azurerm_resource_group.rg.location
-  resource_group_name         = azurerm_resource_group.rg.name
-  tenant_id                   = data.azurerm_client_config.current_user.tenant_id
+  name                = "${var.env_name}-${var.am_key_vault_name}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  tenant_id           = data.azurerm_client_config.current_user.tenant_id
 
   soft_delete_retention_days  = 7
   purge_protection_enabled    = false
@@ -68,48 +72,81 @@ resource "azurerm_role_assignment" "container_registry_role_assignment" {
 }
 
 module "am_postgresql_server" {
-  source = "./modules/postgresql-db"
-  psql_svr_location = azurerm_resource_group.rg.location
+  source                       = "./modules/postgresql-db"
+  psql_svr_location            = azurerm_resource_group.rg.location
   psql_svr_resource_group_name = azurerm_resource_group.rg.name
-  psql_db_name = "amdb"
-  psql_svr_name = "${var.env_name}-${var.am_postgresql_server_name}"
-  psql_svr_availability_zone = 3
-  psql_svr_admin_password = var.postgresql_server_admin_password
-  psql_svr_admin_username = var.postgresql_server_admin_username
+  psql_db_name                 = "amdb"
+  psql_svr_name                = "${var.env_name}-${var.am_postgresql_server_name}"
+  psql_svr_availability_zone   = 3
+  psql_svr_admin_password      = var.postgresql_server_admin_password
+  psql_svr_admin_username      = var.postgresql_server_admin_username
 }
 
 module "keycloak_postgresql_server" {
-  source = "./modules/postgresql-db"
-  psql_svr_location = azurerm_resource_group.rg.location
+  source                       = "./modules/postgresql-db"
+  psql_svr_location            = azurerm_resource_group.rg.location
   psql_svr_resource_group_name = azurerm_resource_group.rg.name
-  psql_db_name = "keycloakdb"
-  psql_svr_name = "${var.env_name}-${var.keycloak_postgresql_server_name}" 
-  psql_svr_availability_zone = 3
-  psql_svr_admin_password = var.postgresql_server_admin_password
-  psql_svr_admin_username = var.postgresql_server_admin_username
+  psql_db_name                 = "keycloakdb"
+  psql_svr_name                = "${var.env_name}-${var.keycloak_postgresql_server_name}"
+  psql_svr_availability_zone   = 3
+  psql_svr_admin_password      = var.postgresql_server_admin_password
+  psql_svr_admin_username      = var.postgresql_server_admin_username
 }
 
 module "am_keycloak_app_service" {
-  source                                               = "./modules/app-service"
-  appsvc_resource_group                                = azurerm_resource_group.rg.name
-  appsvc_location                                      = azurerm_resource_group.rg.location
+  source                = "./modules/app-service"
+  appsvc_resource_group = azurerm_resource_group.rg.name
+  appsvc_location       = azurerm_resource_group.rg.location
 
-  appsvc_plan_name        = "${var.env_name}-am-keycloak-plan"
-  appsvc_names             = [local.keycloak_appsvc_name]
-  appsvc_docker_images     = ["${data.azurerm_container_registry.data_container_registry.login_server}/${var.am_keycloak_image}"]
-  appsvc_docker_image_tags = [var.am_keycloak_image_tag]
-  appsvc_user_assigned_identity_id = data.azurerm_user_assigned_identity.data_user_assigned_identity.id
+  appsvc_plan_name                                     = "${local.keycloak_appsvc_name}-plan"
+  appsvc_names                                         = [local.keycloak_appsvc_name]
+  appsvc_docker_images                                 = ["${data.azurerm_container_registry.data_container_registry.login_server}/${var.am_keycloak_image}"]
+  appsvc_docker_image_tags                             = [var.am_keycloak_image_tag]
+  appsvc_user_assigned_identity_id                     = data.azurerm_user_assigned_identity.data_user_assigned_identity.id
   appsvc_container_registry_managed_identity_client_id = azurerm_user_assigned_identity.user_assigned_identity.client_id
-  appsvc_acr_login_server = data.azurerm_container_registry.data_container_registry.login_server
-
-  appsvc_website_ports = [7579]
 
   appsvc_remote_debugging_enabled = var.debugging_enabled
-  appsvc_enabled = var.enable_app_services
-  
+  appsvc_enabled                  = var.enable_app_services
+
+  appsvc_appsettings = [
+    {
+      "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
+      "DOCKER_REGISTRY_SERVER_URL"          = data.azurerm_container_registry.data_container_registry.login_server
+      "WEBSITES_PORT"                       = 7579
+    }
+  ]
+
   depends_on = [
     module.container_registry,
     module.keycloak_postgresql_server
+  ]
+}
+
+module "am_marketplace_service_app_service" {
+  source                = "./modules/app-service"
+  appsvc_resource_group = azurerm_resource_group.rg.name
+  appsvc_location       = azurerm_resource_group.rg.location
+
+  appsvc_plan_name                                     = "${local.am_marketplace_service_appsvc_name}-plan"
+  appsvc_names                                         = [local.am_marketplace_service_appsvc_name]
+  appsvc_docker_images                                 = ["${data.azurerm_container_registry.data_container_registry.login_server}/${var.am_marketplace_service_image}"]
+  appsvc_docker_image_tags                             = [var.am_marketplace_service_image_tag]
+  appsvc_user_assigned_identity_id                     = data.azurerm_user_assigned_identity.data_user_assigned_identity.id
+  appsvc_container_registry_managed_identity_client_id = azurerm_user_assigned_identity.user_assigned_identity.client_id
+
+  appsvc_appsettings = [
+    {
+      "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
+      "DOCKER_REGISTRY_SERVER_URL"          = data.azurerm_container_registry.data_container_registry.login_server
+      "WEBSITES_PORT"                       = 80
+    }
+  ]
+
+  appsvc_enabled                  = var.enable_app_services
+  appsvc_remote_debugging_enabled = var.debugging_enabled
+
+  depends_on = [
+    module.container_registry
   ]
 }
 
@@ -117,17 +154,33 @@ module "am_ui_app_service" {
   source                                               = "./modules/app-service"
   appsvc_resource_group                                = azurerm_resource_group.rg.name
   appsvc_location                                      = azurerm_resource_group.rg.location
-
-  appsvc_plan_name        = "${var.env_name}-am-ui-plan"
-  appsvc_names             = ["${var.env_name}-am-ui"]
-  appsvc_docker_images     = ["${data.azurerm_container_registry.data_container_registry.login_server}/${var.am_ui_image}"]
-  appsvc_docker_image_tags = [var.am_ui_image_tag]
-  appsvc_user_assigned_identity_id = data.azurerm_user_assigned_identity.data_user_assigned_identity.id
+  appsvc_plan_name                                     = "${local.am_ui_appsvc_name}-plan"
+  appsvc_names                                         = [local.am_ui_appsvc_name]
+  appsvc_docker_images                                 = ["${data.azurerm_container_registry.data_container_registry.login_server}/${var.am_ui_image}"]
+  appsvc_docker_image_tags                             = [var.am_ui_image_tag]
+  appsvc_user_assigned_identity_id                     = data.azurerm_user_assigned_identity.data_user_assigned_identity.id
   appsvc_container_registry_managed_identity_client_id = azurerm_user_assigned_identity.user_assigned_identity.client_id
-  appsvc_acr_login_server = data.azurerm_container_registry.data_container_registry.login_server
 
-  appsvc_website_ports = [8001]
-  appsvc_enabled = var.enable_app_services
+  appsvc_appsettings = [
+    {
+      "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
+      "DOCKER_REGISTRY_SERVER_URL"          = data.azurerm_container_registry.data_container_registry.login_server
+      "WEBSITES_PORT"                       = 443
+      "OWN_URL"                             = "https://${local.am_ui_appsvc_name}.${local.azure_appsvc_server}"
+      "MARKETPLACE_SERVICE"                 = "https://${local.am_marketplace_service_appsvc_name}.${local.azure_appsvc_server}"
+      "AUTH_SERVICE"                        = "https://${local.keycloak_appsvc_name}.${local.azure_appsvc_server}"
+      "MONITORING_SERVICE"                  = "https://${local.am_grafana_appsvc_name}.${local.azure_appsvc_server}"
+      "USERS_MANAGEMENT_SERVICE"            = "https://${local.keycloak_appsvc_name}.${local.azure_appsvc_server}"
+      "SIGNON_AUTHORITY"                    = "https://login.microsoftonline.com/45a8141c-94c3-4fde-9cf3-0cfcc10ad529"
+      "SIGNON_CLIENT_ID"                    = "9f9965aa-840d-4c88-8121-eac081ee2dd8"
+      "KEYCLOAK_ISSUER"                     = "https://${local.keycloak_appsvc_name}.${local.azure_appsvc_server}/realms/akros-marketplace"
+      "KEYCLOAK_REFRESH_REDIRECT_URI"       = "https://${local.am_ui_appsvc_name}.${local.azure_appsvc_server}/assets/silent-refresh.html"
+      "KEYCLOAK_CLIENT_ID"                  = "marketplace"
+      "KEYCLOAK_DUMMY_CLIENT_SECRET"        = "XP0knCLKLhJK8uaEZQg8RRqsENzlywe1"
+    }
+  ]
+
+  appsvc_enabled                  = var.enable_app_services
   appsvc_remote_debugging_enabled = var.debugging_enabled
 
   depends_on = [
@@ -136,44 +189,34 @@ module "am_ui_app_service" {
   ]
 }
 
-module "am_marketplace_service_app_service" {
-  source                                               = "./modules/app-service"
-  appsvc_resource_group                                = azurerm_resource_group.rg.name
-  appsvc_location                                      = azurerm_resource_group.rg.location
-
-  appsvc_plan_name        = "${var.env_name}-am-marketplace-service-plan"
-  appsvc_names             = [local.am_marketplace_service_appsvc_name]
-  appsvc_docker_images     = ["${data.azurerm_container_registry.data_container_registry.login_server}/${var.am_marketplace_service_image}"]
-  appsvc_docker_image_tags = [var.am_marketplace_service_image_tag]
-  appsvc_user_assigned_identity_id = data.azurerm_user_assigned_identity.data_user_assigned_identity.id
-  appsvc_container_registry_managed_identity_client_id = azurerm_user_assigned_identity.user_assigned_identity.client_id
-  appsvc_acr_login_server = data.azurerm_container_registry.data_container_registry.login_server
-
-  appsvc_website_ports = [80]
-  appsvc_enabled = var.enable_app_services
-  appsvc_remote_debugging_enabled = var.debugging_enabled
-
-  depends_on = [
-    module.container_registry
-  ]
-}
 
 module "am_monitoring_app_service" {
-  source                                               = "./modules/app-service"
-  appsvc_resource_group                                = azurerm_resource_group.rg.name
-  appsvc_location                                      = azurerm_resource_group.rg.location
+  source                = "./modules/app-service"
+  appsvc_resource_group = azurerm_resource_group.rg.name
+  appsvc_location       = azurerm_resource_group.rg.location
 
-  appsvc_plan_name        = "${var.env_name}-am-monitoring-plan"
-  appsvc_names             = ["${var.env_name}-am-prometheus", "${var.env_name}-am-monitoring-service"]
-  appsvc_docker_images     = ["${data.azurerm_container_registry.data_container_registry.login_server}/${var.am_prometheus_image}", "${data.azurerm_container_registry.data_container_registry.login_server}/${var.am_grafana_image}"]
-  appsvc_docker_image_tags = [var.am_prometheus_image_tag, var.am_grafana_image_tag]
-  appsvc_user_assigned_identity_id = data.azurerm_user_assigned_identity.data_user_assigned_identity.id
+  appsvc_plan_name                                     = "${var.env_name}-am-monitoring-plan"
+  appsvc_names                                         = [local.am_prometheus_appsvc_name, local.am_grafana_appsvc_name]
+  appsvc_docker_images                                 = ["${data.azurerm_container_registry.data_container_registry.login_server}/${var.am_prometheus_image}", "${data.azurerm_container_registry.data_container_registry.login_server}/${var.am_grafana_image}"]
+  appsvc_docker_image_tags                             = [var.am_prometheus_image_tag, var.am_grafana_image_tag]
+  appsvc_user_assigned_identity_id                     = data.azurerm_user_assigned_identity.data_user_assigned_identity.id
   appsvc_container_registry_managed_identity_client_id = azurerm_user_assigned_identity.user_assigned_identity.client_id
-  appsvc_acr_login_server = data.azurerm_container_registry.data_container_registry.login_server
 
-  appsvc_website_ports = [80, 80]
+  appsvc_appsettings = [
+    {
+      "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
+      "DOCKER_REGISTRY_SERVER_URL"          = data.azurerm_container_registry.data_container_registry.login_server
+      "WEBSITES_PORT"                       = 80
+    },
+    {
+      "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
+      "DOCKER_REGISTRY_SERVER_URL"          = data.azurerm_container_registry.data_container_registry.login_server
+      "WEBSITES_PORT"                       = 80
+    }
+  ]
+
   appsvc_remote_debugging_enabled = var.debugging_enabled
-  appsvc_enabled = var.enable_app_services
+  appsvc_enabled                  = var.enable_app_services
 
   depends_on = [
     module.container_registry
@@ -220,7 +263,7 @@ data "azurerm_linux_web_app" "data_keycloak_webapp" {
 }
 
 resource "azurerm_key_vault_access_policy" "keycloak_keyvault_access_policy" {
-  tenant_id    = data.azurerm_client_config.current_user.tenant_id
+  tenant_id = data.azurerm_client_config.current_user.tenant_id
 
   key_vault_id = azurerm_key_vault.key_vault.id
   object_id    = data.azurerm_linux_web_app.data_keycloak_webapp.identity[0].principal_id
@@ -228,7 +271,7 @@ resource "azurerm_key_vault_access_policy" "keycloak_keyvault_access_policy" {
   key_permissions = local.keyvault_key_permissions
 
   depends_on = [
-    azurerm_key_vault.key_vault    
+    azurerm_key_vault.key_vault
   ]
 }
 
@@ -242,7 +285,7 @@ data "azurerm_linux_web_app" "data_marketplace_service_webapp" {
 }
 
 resource "azurerm_key_vault_access_policy" "am_marketplace_service_keyvault_access_policy" {
-  tenant_id    = data.azurerm_client_config.current_user.tenant_id
+  tenant_id = data.azurerm_client_config.current_user.tenant_id
 
   key_vault_id = azurerm_key_vault.key_vault.id
   object_id    = data.azurerm_linux_web_app.data_marketplace_service_webapp.identity[0].principal_id
@@ -250,6 +293,7 @@ resource "azurerm_key_vault_access_policy" "am_marketplace_service_keyvault_acce
   key_permissions = local.keyvault_key_permissions
 
   depends_on = [
-    azurerm_key_vault.key_vault    
+    azurerm_key_vault.key_vault
   ]
 }
+

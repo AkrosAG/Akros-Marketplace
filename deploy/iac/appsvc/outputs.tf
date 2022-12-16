@@ -16,31 +16,31 @@ output "acr_admin_username" {
 }
 
 output "am_ui_appsvc_name" {
-  value = module.am_ui_app_service.app_service_name
+  value     = module.am_ui_app_service.app_service_name
   sensitive = false
 }
 
 output "am_market_place_service_appsvc_name" {
-  value = module.am_marketplace_service_app_service.app_service_name
+  value     = module.am_marketplace_service_app_service.app_service_name
   sensitive = false
 }
 
 output "am_keycloak_app_service_name" {
-  value = module.am_keycloak_app_service.app_service_name
+  value     = module.am_keycloak_app_service.app_service_name
   sensitive = false
 }
 
 output "am_monitoring_prometheus_app_service_name" {
-  value = module.am_monitoring_app_service.app_service_name
+  value     = module.am_monitoring_app_service.app_service_name
   sensitive = false
 }
 
 output "am_monitoring_grafana_app_service_name" {
-  value = module.am_monitoring_app_service.app_service_name
+  value     = module.am_monitoring_app_service.app_service_name
   sensitive = false
 }
 
 output "am_resource_group_name" {
-  value = azurerm_resource_group.rg.name
+  value     = azurerm_resource_group.rg.name
   sensitive = false
 }

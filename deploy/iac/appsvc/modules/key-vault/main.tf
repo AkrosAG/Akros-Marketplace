@@ -10,10 +10,10 @@ terraform {
 
 
 resource "azurerm_key_vault" "key_vault" {
-  name                        = var.key_vault_name
-  location                    = var.key_vault_location
-  resource_group_name         = var.key_vault_resource_group_name
-  tenant_id                   = var.key_vault_tenant_id
+  name                = var.key_vault_name
+  location            = var.key_vault_location
+  resource_group_name = var.key_vault_resource_group_name
+  tenant_id           = var.key_vault_tenant_id
 
   soft_delete_retention_days  = 7
   purge_protection_enabled    = false

@@ -45,13 +45,13 @@ variable "psql_svr_availability_zone" {
 }
 
 variable "psql_svr_backup_retention_days" {
-  type = number
+  type        = number
   description = "how long (in days) are the backups kept"
-  default = 7
+  default     = 7
 }
 
 variable "psql_db_name" {
   type        = string
   description = "specifies the name of the database"
-  default = "am_demo_db"
+  default     = "am_demo_db"
 }
