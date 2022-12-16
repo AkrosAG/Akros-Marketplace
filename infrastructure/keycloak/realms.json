@@ -3428,7 +3428,7 @@
         "enabled": true,
         "alwaysDisplayInConsole": false,
         "clientAuthenticatorType": "client-secret",
-        "secret": "b1VAmizvmfYteaMRzO1tHfEihOEX0v0W",
+        "secret": "XP0knCLKLhJK8uaEZQg8RRqsENzlywe1",
         "redirectUris": [
           "https://localhost:4200"
         ],
