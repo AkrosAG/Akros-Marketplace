@@ -63,7 +63,7 @@ import {AdsService} from './components/ads/ads.service';
 import {SpinnerComponent} from './components/shared/spinner/spinner.component';
 import {HttpLoaderInterceptor} from './components/shared/spinner/httpLoaderInterceptor.service';
 import {LoadingService} from './components/shared/spinner/loading.service';
-import { AppInitService } from './app-init.service';
+import { ConfigReaderService } from './config/configReader.service';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -82,7 +82,7 @@ export const MsalInstanceFactory: () => IPublicClientApplication = () => {
   });
 };
 
-export function init_app(appInitService: AppInitService) {
+export function init_app(appInitService: ConfigReaderService) {
   return () => appInitService.init();
 }
 export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
@@ -173,11 +173,11 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
       multi: true,
     },
     LoadingService,
-    AppInitService, 
+    ConfigReaderService, 
     {
       provide: APP_INITIALIZER,
       useFactory: init_app,
-      deps: [AppInitService],
+      deps: [ConfigReaderService],
       multi: true      
     }
   ],

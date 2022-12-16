@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AppInitService } from './app-init.service';
+import { ConfigReaderService } from './configReader.service';
 
-describe('AppInitService', () => {
-  let service: AppInitService;
+describe('ConfigReaderService', () => {
+  let service: ConfigReaderService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AppInitService);
+    service = TestBed.inject(ConfigReaderService);
   });
 
   it('should be created', () => {
