@@ -7,7 +7,7 @@ declare var window: any;
 @Injectable({
   providedIn: 'root'
 })
-export class AppInitService {
+export class ConfigReaderService {
 
   constructor() { }
 
