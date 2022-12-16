@@ -8,19 +8,19 @@ Currently the application is composed of a main Angular application hosting the 
 
 ## Development server
 
-Run `pnpm start_ssl` for a dev server with a SSL certificate. This will go through a prebuild command that will build the webcomponents by `build:webcomponents`. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files, however this does not apply to changes being made inside the webcomponents, in order to see changes in the webcomponents it will be required to run the command again. `pnpm start_ssl` can also be used to launch the application under secure protocol.
+Run `npm run start_ssl` for a dev server with a SSL certificate. This will go through a prebuild command that will build the webcomponents by `build:webcomponents`. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files, however this does not apply to changes being made inside the webcomponents, in order to see changes in the webcomponents it will be required to run the command again. `npm run start_ssl` can also be used to launch the application under secure protocol.
 
 ## Build
 
-Run `pnpm build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Running unit tests
 
-Run `pnpm test` to execute the unit tests via [Jest](https://jestjs.io). Configuration for the unit tests can be found in the file `jest.config.js`.
+Run `npm run test` to execute the unit tests via [Jest](https://jestjs.io). Configuration for the unit tests can be found in the file `jest.config.js`.
 
 ## Lint
 
-Run `pnpm lint` to lint the project via [Angular-Eslint](https://github.com/angular-eslint/angular-eslint), [GTS](https://github.com/google/gts) and [Stylelint](https://stylelint.io). This will run the lint for angular, typescript and style. Individual linting can be performed using the commands `pnpm lint:angular`, `pnpm lint:typescript`, `pnpm lint:style`. `pnpm fix` can be used as well with the same logic as for lint to attempt to fix automatically certain linting problems.
+Run `npm run lint` to lint the project via [Angular-Eslint](https://github.com/angular-eslint/angular-eslint), [GTS](https://github.com/google/gts) and [Stylelint](https://stylelint.io). This will run the lint for angular, typescript and style. Individual linting can be performed using the commands `npm run lint:angular`, `npm run lint:typescript`, `npm run lint:style`. `npm run fix` can be used as well with the same logic as for lint to attempt to fix automatically certain linting problems.
 
 ## Translations
 

@@ -31,27 +31,23 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - uses: pnpm/action-setup@v2.0.1
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: 7
-          run_install: false
+          cache: "npm"
+          cache-dependency-path: am-ui/package-lock.json
       - name: Install UI
-        run: pnpm install --frozen-lockfile
+        run: npm ci
       - name: Build UI and Webcomponents
-        run: pnpm build
+        run: npm run build
       - name: Lint UI
-        run: pnpm lint
+        run: npm run lint
       - name: Test UI
-        run: pnpm test
+        run: npm run test
 
       - name: Lint Webcomponents
         working-directory: ./am-ui/webcomponents
-        run: pnpm lint
+        run: npm run lint
       - name: Test Webcomponents
         working-directory: ./am-ui/webcomponents
-        run: pnpm test
+        run: npm run test
   deploy:
     needs: build
     if: github.ref == 'refs/heads/main'
