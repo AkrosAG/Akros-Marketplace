@@ -47,36 +47,36 @@ import javax.persistence.EntityNotFoundException;
 @Slf4j
 public class TopicService {
 
-  private static final String LAT_LON_API_SEARCH_URL = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=";
-  private final FieldRepository fieldRepository;
-  private final TopicRepository topicRepository;
-  private final TopicValueRepository topicValueRepository;
+    private static final String LAT_LON_API_SEARCH_URL = "https://nominatim.openstreetmap.org/search?format=json&limit=3&q=";
+    private final FieldRepository fieldRepository;
+    private final TopicRepository topicRepository;
+    private final TopicValueRepository topicValueRepository;
 
-  private final TopicImageRepository topicImageRepository;
-  private final SubCategoryRepository subCategoryRepository;
+    private final TopicImageRepository topicImageRepository;
+    private final SubCategoryRepository subCategoryRepository;
 
-  private final int SIZE = 8;
-  private final int PRICE = 6;
-  private final int FROM_SIZE = 25;
-  private final int TO_PRICE = 24;
+    private final int SIZE = 8;
+    private final int PRICE = 6;
+    private final int FROM_SIZE = 25;
+    private final int TO_PRICE = 24;
 
-  private final int DATE = 15;
-  private final int FROM_DATE = 19;
+    private final int DATE = 15;
+    private final int FROM_DATE = 19;
 
-  private final int FURNISHED = 14;
+    private final int FURNISHED = 14;
 
-  public TopicService(
-      FieldRepository fieldRepository,
-      TopicRepository topicRepository,
-      SubCategoryRepository subCategoryRepository,
-      TopicImageRepository topicImageRepository,
-      TopicValueRepository topicValueRepository) {
-    this.fieldRepository = fieldRepository;
-    this.topicRepository = topicRepository;
-    this.subCategoryRepository = subCategoryRepository;
-    this.topicImageRepository = topicImageRepository;
-    this.topicValueRepository = topicValueRepository;
-  }
+    public TopicService(
+            FieldRepository fieldRepository,
+            TopicRepository topicRepository,
+            SubCategoryRepository subCategoryRepository,
+            TopicImageRepository topicImageRepository,
+            TopicValueRepository topicValueRepository) {
+        this.fieldRepository = fieldRepository;
+        this.topicRepository = topicRepository;
+        this.subCategoryRepository = subCategoryRepository;
+        this.topicImageRepository = topicImageRepository;
+        this.topicValueRepository = topicValueRepository;
+    }
 
     public List<FieldResponseDTO> listTopicFieldTypes(Long categoryId, String requestOrOffer) {
         return fieldRepository.listTopicSearchFields(categoryId, "REQUEST".equals(requestOrOffer))
@@ -186,7 +186,7 @@ public class TopicService {
         URL url;
         HttpURLConnection con = null;
         try {
-            url =  new URL(LAT_LON_API_SEARCH_URL + formattedAddress);
+            url = new URL(LAT_LON_API_SEARCH_URL + formattedAddress);
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Content-Type", "application/json; charset=utf-8");
@@ -266,6 +266,18 @@ public class TopicService {
         return result;
     }
 
+    @Transactional
+    public void deleteTopicsForUser(String userId) {
+        List<Topic> topics = topicRepository.findAllByUserId(userId);
+
+        topics.forEach(topic -> {
+            topicImageRepository.deleteTopicImagesByTopic(topic);
+            topicValueRepository.deleteTopicValuesByTopic(topic);
+        });
+
+        topics.forEach(topicRepository::delete);
+    }
+
     private List<TopicImageDTO> getTopicImageDtosFromImages(List<TopicImage> topicImages) {
         List<TopicImageDTO> topicImageDTOS = new ArrayList<>();
         for (TopicImage image : topicImages) {
@@ -296,10 +308,10 @@ public class TopicService {
 
     @Transactional
     public void deleteTopic(Long topicId) {
-      Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new EntityNotFoundException("No topic with ID: " + topicId));
-      topicImageRepository.deleteTopicImagesByTopic(topic);
-      topicValueRepository.deleteTopicValuesByTopic(topic);
-      topicRepository.delete(topic);
+        Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new EntityNotFoundException("No topic with ID: " + topicId));
+        topicImageRepository.deleteTopicImagesByTopic(topic);
+        topicValueRepository.deleteTopicValuesByTopic(topic);
+        topicRepository.delete(topic);
     }
 
     /**
@@ -310,11 +322,10 @@ public class TopicService {
      *
      * @param topicSearchRequestDTO has multiple search parameters. One of them is topic_values,
      *                              which it is optional and contains search fields: from_size, to_price and radius.
-     *
      * @return List of filtered
      */
     @Transactional
-  public TopicSearchListResponseDTO searchTopic(TopicSearchRequestDTO topicSearchRequestDTO) {
+    public TopicSearchListResponseDTO searchTopic(TopicSearchRequestDTO topicSearchRequestDTO) {
         TopicSearchListResponseDTO result = new TopicSearchListResponseDTO();
 
         List<TopicValue> topicValues = Collections.emptyList();
@@ -354,7 +365,7 @@ public class TopicService {
             }
 
             if (topicValue.getTopicValueId() == FURNISHED) {
-                topicList = filterTopicsByFurnished (topicValue.getValue(), topicList);
+                topicList = filterTopicsByFurnished(topicValue.getValue(), topicList);
             }
         }
 
@@ -398,18 +409,18 @@ public class TopicService {
         return topicList;
     }
 
-    private List<TopicSearchResponseDTO> filterTopicsByFromDate(String topicValueFromDate, 
-                   List<TopicSearchResponseDTO> topicList) {
-        
+    private List<TopicSearchResponseDTO> filterTopicsByFromDate(String topicValueFromDate,
+                                                                List<TopicSearchResponseDTO> topicList) {
+
         LocalDate fromDate = LocalDate.parse(topicValueFromDate);
         try {
             return topicList
-            .stream()
-            .filter(topic -> topic.getTopicValues()
-            .stream()
-            .filter(topicValue -> topicValue.getFieldId() == DATE)
-            .anyMatch(topicValue -> LocalDate.parse(topicValue.getValue()).compareTo(fromDate) >= 0))
-            .collect(Collectors.toList());
+                    .stream()
+                    .filter(topic -> topic.getTopicValues()
+                            .stream()
+                            .filter(topicValue -> topicValue.getFieldId() == DATE)
+                            .anyMatch(topicValue -> LocalDate.parse(topicValue.getValue()).compareTo(fromDate) >= 0))
+                    .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
             log.error(e.getMessage(), e);
         }
@@ -417,16 +428,16 @@ public class TopicService {
     }
 
     private List<TopicSearchResponseDTO> filterTopicsByFurnished(String topicValueIsFurnished,
-                       List<TopicSearchResponseDTO> topicList) {
+                                                                 List<TopicSearchResponseDTO> topicList) {
         try {
             boolean isFurnished = Boolean.parseBoolean(topicValueIsFurnished);
             return topicList
-            .stream()
-            .filter(topic -> topic.getTopicValues()
-            .stream()
-            .filter(topicValue -> topicValue.getFieldId() == FURNISHED)
-            .anyMatch(topicValue -> Boolean.parseBoolean(topicValue.getValue()) == isFurnished))
-            .collect(Collectors.toList());
+                    .stream()
+                    .filter(topic -> topic.getTopicValues()
+                            .stream()
+                            .filter(topicValue -> topicValue.getFieldId() == FURNISHED)
+                            .anyMatch(topicValue -> Boolean.parseBoolean(topicValue.getValue()) == isFurnished))
+                    .collect(Collectors.toList());
         } catch (IllegalArgumentException e) {
             log.error(e.getMessage(), e);
         }

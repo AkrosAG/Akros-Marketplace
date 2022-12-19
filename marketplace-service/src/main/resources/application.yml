@@ -25,6 +25,9 @@ spring:
     multipart:
       max-file-size: 500KB
       max-request-size: 10MB
+  keycloak_client:
+    client_id: marketplace
+    grant_type: client_credentials
 
 server:
   ssl:
