@@ -60,7 +60,7 @@ Keyclock database credentials: - database: keycloakdb username: keycloakdb
   extension _.sh_ have **read, write** and **execute** permissions. This can be checked in the directory of the file with
   the command ``` ls -ll```. The second, third and fourth characters should look similar to the output below (**rwx**):
   ```
-  -rwxr-xr-x@  1 atanasatanasov  staff  254 Dec  9 11:23 01-init-keycloak.sh
+  -rwxr-xr-x@  1 username  staff  254 Dec  9 11:23 01-init-keycloak.sh
   ```
   The first picture below shows how a problem with the permissions might look.
 
