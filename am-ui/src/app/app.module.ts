@@ -63,6 +63,7 @@ import {AdsService} from './components/ads/ads.service';
 import {SpinnerComponent} from './components/shared/spinner/spinner.component';
 import {HttpLoaderInterceptor} from './components/shared/spinner/httpLoaderInterceptor.service';
 import {LoadingService} from './components/shared/spinner/loading.service';
+import {ModalComponent} from './components/shared/modal/modal.component';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -106,6 +107,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     BackButtonDirective,
     SwiperComponent,
     SpinnerComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,

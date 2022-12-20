@@ -1,0 +1,24 @@
+<div class="modal" tabindex="-1" *ngIf="isModalVisible">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ modalTitleI18n | translate }}</h5>
+      </div>
+      <p *ngIf="modalBodyI18n">{{ modalBodyI18n | translate }}</p>
+      <div class="modal-body">
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="modalCloseEvent.emit()"
+          >
+            {{ modalCloseButtonI18n | translate }}
+          </button>
+          <button type="button" class="btn btn-primary">
+            {{ modalPrimaryButtonI18n | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

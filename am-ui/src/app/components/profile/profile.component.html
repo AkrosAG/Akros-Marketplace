@@ -1,36 +1,36 @@
 <div class="profile-wrapper">
   <h1>
-    {{welcome}}
+    {{ welcome }}
   </h1>
   <div class="content-wrapper">
     <div class="form-wrapper">
       <form [formGroup]="formGroup">
         <div class="form-field">
           <input
-          [formControlName]="'firstName'"
-          class="w-full"
-          placeholder="{{ 'profile.form.firstName' | translate }}"
+            [formControlName]="'firstName'"
+            class="w-full"
+            placeholder="{{ 'profile.form.firstName' | translate }}"
+          />
+        </div>
+        <div class="form-field">ß
+          <input
+            [formControlName]="'lastName'"
+            class="w-full"
+            placeholder="{{ 'profile.form.lastName' | translate }}"
           />
         </div>
         <div class="form-field">
           <input
-          [formControlName]="'lastName'"
-          class="w-full"
-          placeholder="{{ 'profile.form.lastName' | translate }}"
+            [formControlName]="'email'"
+            class="w-full"
+            placeholder="{{ 'profile.form.email' | translate }}"
           />
         </div>
         <div class="form-field">
           <input
-          [formControlName]="'email'"
-          class="w-full"
-          placeholder="{{ 'profile.form.email' | translate }}"
-          />
-        </div>
-        <div class="form-field">
-          <input
-          [formControlName]="'phoneNumber'"
-          class="w-full"
-          placeholder="{{ 'profile.form.phone' | translate }}"
+            [formControlName]="'phoneNumber'"
+            class="w-full"
+            placeholder="{{ 'profile.form.phone' | translate }}"
           />
         </div>
       </form>
@@ -39,9 +39,34 @@
           {{ 'save' | translate }}</a
         >
       </div>
+
+      <button
+        *ngIf="!showModal"
+        type="button"
+        class="btn btn-primary"
+        (click)="showDeleteProfileModal()"
+      >
+        {{ 'profile.deleteProfile' | translate }}
+      </button>
+
+      <app-modal
+        [isModalVisible]="showModal"
+        modalTitleI18n="profile.modal.title"
+        modalBodyI18n="profile.modal.body"
+        modalPrimaryButtonI18n="ad.delete"
+        (modalCloseEvent)="onModalClose()"
+        (modalSubmitEvent)="onDeleteProfile()"
+      >
+      </app-modal>
     </div>
-    <div class="result-banner" *ngIf="saveAction" [ngClass]="{error: saveError}">
-      <p *ngIf="saveAction && !saveError">{{ 'profile.success' | translate }}</p>
+    <div
+      class="result-banner"
+      *ngIf="saveAction"
+      [ngClass]="{error: saveError}"
+    >
+      <p *ngIf="saveAction && !saveError">
+        {{ 'profile.success' | translate }}
+      </p>
       <p *ngIf="saveAction && saveError">{{ 'profile.error' | translate }}</p>
     </div>
   </div>

@@ -22,6 +22,8 @@ export class ProfileComponent implements OnInit {
   public saveError = false;
   private userId!: string;
   private username!: string;
+  public showModal = false;
+  public deleteModalId = 'deleteProfileModal';
 
   constructor(
     private auth: AuthStore,
@@ -40,6 +42,8 @@ export class ProfileComponent implements OnInit {
         user: `${name} ${lastName}`,
       });
       this.userId = user?.sub || '';
+      console.log('userId', this.userId);
+
       this.username = user?.preferred_username || '';
       if (name && lastName && email) {
         this.formGroup = this.buildForm(name, lastName, email, phoneNumber);
@@ -73,6 +77,18 @@ export class ProfileComponent implements OnInit {
           this.saveError = true;
         }
       );
+  }
+
+  showDeleteProfileModal() {
+    this.showModal = true;
+  }
+
+  onDeleteProfile() {
+    console.log('delete');
+  }
+
+  onModalClose() {
+    this.showModal = false;
   }
 
   private buildForm(

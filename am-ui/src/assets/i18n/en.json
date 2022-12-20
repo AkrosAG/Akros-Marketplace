@@ -1,6 +1,7 @@
 {
   "back": "Back",
   "save": "Save",
+  "submit": "Submit",
   "home": {
     "information": "Post Your Advertisement for Free",
     "find": "Find what You are looking for",
@@ -92,6 +93,11 @@
       "email": "E-Mail",
       "phone": "Phone number"
     },
+    "modal": {
+      "title": "Delete profile permanently",
+      "body": "Are you sure you want to delete your profile?"
+    },
+    "deleteProfile": "Delete my profile and all data",
     "success": "Changed were successfully saved",
     "error": "There has been an error"
   }

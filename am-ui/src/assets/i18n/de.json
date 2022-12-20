@@ -1,6 +1,7 @@
 {
   "back": "Zurück",
   "save": "Speichern",
+  "submit": "Senden",
   "home": {
     "information": "Erstellen Sie einen kostenloses Inserat",
     "find": "Finde was Du suchst",
@@ -17,7 +18,7 @@
     "logout": "Ausloggen"
   },
   "categories": {
-    "addCategory": "Categorie",
+    "addCategory": "Categorie",ß
     "accomodation": {
       "title": "Unterkünfte",
       "types": {
@@ -92,6 +93,11 @@
       "email": "E-Mail",
       "phone": "Telefonnummer"
     },
+    "modal": {
+      "title": "Profil endgültig löschen",
+      "body": "Sind Sie sicher, dass Sie Ihr Profil löschen möchten?"
+    },
+    "deleteProfile": "Mein Profil und alle Daten löschen",
     "success": "Änderungen wurden erfolgreich geändert",
     "error": "Es ist ein Fehler aufgetreten"
   }
