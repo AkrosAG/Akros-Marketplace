@@ -25,7 +25,7 @@ RUN npm install
 
 # Add the source code to app
 COPY ./api.yaml /usr/local/app/
-COPY ./am-ui ./
+COPY ./am-ui/ ./
 
 # Install all the dependencies
 RUN npm install

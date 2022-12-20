@@ -1,40 +1,6 @@
 version: "3.9"
 
 services:
-  client-ui:
-    container_name: client-ui
-    build:
-      context: ../..
-      dockerfile: ./am-ui/Dockerfile.local
-    ports:
-      - 4200:443
-    networks:
-      marketplacenet:
-    depends_on:
-      marketplace-service:
-        condition: service_started
-      auth-service:
-        condition: service_healthy
-  marketplace-service:
-    container_name: marketplace-service
-    build:
-      context: ../..
-      dockerfile: ./marketplace-service/Dockerfile.local
-    ports:
-      - 8443:8443
-      - 5005:5005
-    environment:
-      - POSTGRES_AM_DB_URL=jdbc:postgresql://postgres_am_db:5432/am
-      - POSTGRES_AM_DB_USERNAME=am
-      - POSTGRES_AM_DB_PASSWORD=am
-    networks:
-      marketplacenet:
-    depends_on:
-      auth-service:
-        condition: service_healthy
-      postgres_am_db:
-        condition: service_healthy
-
   auth-service:
     container_name: auth-service
     build:
@@ -109,7 +75,43 @@ services:
       timeout: 5s
       retries: 5
 
-  # Use the command "docker-compose --profile monitoring up -d" to start prometheus and grafana services for monitoring
+  client-ui:
+    container_name: client-ui
+    build:
+      context: ../..
+      dockerfile: ./am-ui/Dockerfile.local
+    ports:
+      - 4200:443
+    profiles: [ "local" ]
+    networks:
+      marketplacenet:
+    depends_on:
+      marketplace-service:
+        condition: service_started
+      auth-service:
+        condition: service_healthy
+
+  marketplace-service:
+    container_name: marketplace-service
+    build:
+      context: ../..
+      dockerfile: ./marketplace-service/Dockerfile.local
+    ports:
+      - 8443:8443
+      - 5005:5005
+    environment:
+      - POSTGRES_AM_DB_URL=jdbc:postgresql://postgres_am_db:5432/am
+      - POSTGRES_AM_DB_USERNAME=am
+      - POSTGRES_AM_DB_PASSWORD=am
+    profiles: [ "local" ]
+    networks:
+      marketplacenet:
+    depends_on:
+      auth-service:
+        condition: service_healthy
+      postgres_am_db:
+        condition: service_healthy
+
   prometheus:
     image: prom/prometheus:v2.39.1
     container_name: prometheus
@@ -130,7 +132,7 @@ services:
     depends_on:
       - prometheus
     ports:
-      - "3000:3000"
+      - "3002:3000"
     profiles: ["monitoring"]
 
 networks:
