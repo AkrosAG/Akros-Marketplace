@@ -65,10 +65,10 @@ Keyclock database credentials: - database: keycloakdb username: keycloakdb
   The first picture below shows how a problem with the permissions might look.
 
   <p align="center">
-   <img align="center" alt="Problem with permissions" src="./docs_images/permissionsProblem.png"/>
+   <img align="center" alt="Problem with permissions" src="./docs_images/permissionsProblem.jpg"/>
   </p>
   <br/>
   The second picture shows how the permissions problem was fixed.
    <p align="center">
-   <img align="center" alt="Permissions fixed" src="./docs_images/permissionsFixed.png"/>
+   <img align="center" alt="Permissions fixed" src="./docs_images/permissionsFixed.jpg"/>
   </p>
