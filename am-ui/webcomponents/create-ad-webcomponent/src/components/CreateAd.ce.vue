@@ -70,8 +70,12 @@ function getCategories(_error, data, _response) {
  * Selects which fields to show based on the selected category.
  */
 function updateSubCategories() {
+  // Forcing accomodation as only option
+  // see https://github.com/AkrosAG/Akros-Marketplace/issues/262
+  selectedCategoryKey.value = 'accomodation';
   const selectedCategory = categories.value.find(
-    (category) => category.key === selectedCategoryKey.value
+    // (category) => category.key === selectedCategoryKey.value
+    (category) => category.key === 'accomodation'
   );
   showAdFields.value = false;
 
