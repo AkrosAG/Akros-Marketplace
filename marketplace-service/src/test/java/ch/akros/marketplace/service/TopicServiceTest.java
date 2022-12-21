@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-public class TopicServiceTest {
+class TopicServiceTest {
 
     private TopicService topicService;
     @Mock
@@ -64,7 +64,9 @@ public class TopicServiceTest {
     final private String FIELD_VALUE_200 = "200";
     final private String FIELD_VALUE_150 = "150";
 
+
     final private String USER_ID = "user-id";
+
     @BeforeEach
     public void beforeEach() {
         MockitoAnnotations.openMocks(this);
@@ -83,7 +85,7 @@ public class TopicServiceTest {
     }
 
     private Topic expectedTopicCreator(String requestOrOfferValue, Long topicIdValue, Long subCategoryIdValue,
-                                        Long topicFieldIdValue, String valueValue, String userId) {
+                                       Long topicFieldIdValue, String valueValue, String userId) {
         field.setFieldId(topicFieldIdValue);
 
         return Topic.builder()
@@ -98,11 +100,14 @@ public class TopicServiceTest {
                         .value(valueValue)
                         .field(field)
                         .build()))
+                .topicImages(List.of(TopicImage.builder()
+                        .topic(Topic.builder().build())
+                        .build()))
                 .build();
     }
 
     @Test
-    public void searchTopic_NoInput_Test(){
+    void searchTopic_NoInput_Test() {
         // given
         TopicSearchRequestDTO inputTopicSearchRequestDTO = new TopicSearchRequestDTO();
 
@@ -143,7 +148,7 @@ public class TopicServiceTest {
     }
 
     @Test
-    public void searchTopic_BySubCategoryId_Test() {
+    void searchTopic_BySubCategoryId_Test() {
         // given
         TopicSearchRequestDTO inputTopicSearchRequestDTO = new TopicSearchRequestDTO();
 
@@ -188,7 +193,7 @@ public class TopicServiceTest {
     }
 
     @Test
-    public void searchTopic_AllWithRequests_Test() {
+    void searchTopic_AllWithRequests_Test() {
         // given
         TopicSearchRequestDTO inputTopicSearchRequestDTO = new TopicSearchRequestDTO();
 
@@ -227,7 +232,7 @@ public class TopicServiceTest {
     }
 
     @Test
-    public void searchTopic_searchValuesSize_Test() {
+    void searchTopic_searchValuesSize_Test() {
 
         // given
         TopicSearchRequestDTO inputTopicSearchRequestDTO = new TopicSearchRequestDTO();
@@ -278,7 +283,7 @@ public class TopicServiceTest {
     }
 
     @Test
-    public void searchTopic_searchValuesPrice_Test() {
+    void searchTopic_searchValuesPrice_Test() {
 
         // given
         TopicSearchRequestDTO inputTopicSearchRequestDTO = new TopicSearchRequestDTO();
@@ -325,7 +330,7 @@ public class TopicServiceTest {
     }
 
     @Test
-    public void convertTopicToTopicLoadResponseDTO() {
+    void convertTopicToTopicLoadResponseDTO() {
         Topic topic = firstExpectedTopic;
         TopicLoadResponseDTO dto = new TopicLoadResponseDTO();
         dto.setTopicId(topic.getTopicId());
@@ -362,7 +367,7 @@ public class TopicServiceTest {
         public boolean matches(Example<Topic> right) {
 
             return left.getProbe().getSubCategory().getSubCategoryId()
-                            .equals(right.getProbe().getSubCategory().getSubCategoryId()) &&
+                    .equals(right.getProbe().getSubCategory().getSubCategoryId()) &&
                     left.getProbe().getRequestOrOffer()
                             .equals(right.getProbe().getRequestOrOffer());
         }

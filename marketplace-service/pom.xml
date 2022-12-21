@@ -26,6 +26,7 @@
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.release>11</maven.compiler.release>
 		<azure.version>3.13.0</azure.version>
+		<jacoco.version>0.8.6</jacoco.version>
 	</properties>
 
 	<profiles>
@@ -196,16 +197,6 @@
 						<skipRule>SecureAllEndpointsWithScopesRule</skipRule>
 						<skipRule>NoVersionInUriRule</skipRule>
 					</skipRules>
-					<ruleConfig>
-						<!-- NOTE: The rule elements' content can be written in JSON or YAML -->
-						<PluralizeResourceNamesRule>
-							whitelist:
-							- current
-							- self
-						</PluralizeResourceNamesRule>
-					</ruleConfig>
-					<!-- Write the result of the validation to file. Optional-->
-					<resultFile>target/api_validation_result.yaml</resultFile>
 				</configuration>
 				<executions>
 					<execution>
@@ -316,6 +307,26 @@
 				<version>3.7.1</version>
 			</plugin>
 
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<executions>
+					<execution>
+						<id>jacoco-initialize</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>jacoco-site</id>
+						<phase>package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>
