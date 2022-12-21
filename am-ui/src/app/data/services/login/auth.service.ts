@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
 import {OAuthUser} from '../../../shared/types/oauthuser.type';
 import {AuthConfig, OAuthService} from 'angular-oauth2-oidc';
 import {OAuthUserInfo} from '../../../shared/types/oauthuserinfo.type';
-import {environment} from '../../../../environments/environment';
+import {AppRuntimeConfig} from '../../../config/appRuntimeConfig.service';
 
 @Injectable({providedIn: 'root'})
 export class AuthStore {
@@ -17,13 +17,15 @@ export class AuthStore {
   isLoggedIn$: Observable<boolean>;
   isLoggedOut$: Observable<boolean>;
   loggedInUserName$: Observable<String>;
-  private keycloakConfig: AuthConfig = environment.keycloakConfig;
+  private keycloakConfig: AuthConfig;
 
   constructor(
     private userLocalStorageService: UserLocalStorageService,
     private router: Router,
-    private oAuthService: OAuthService
+    private oAuthService: OAuthService,
+    private runtimeConfig: AppRuntimeConfig
   ) {
+    this.keycloakConfig = runtimeConfig.keycloakConfig;
     this.isLoggedIn$ = this.user$.pipe(map(user => !!user));
 
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));

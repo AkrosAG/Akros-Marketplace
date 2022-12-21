@@ -11,13 +11,13 @@ services:
     environment:
       - OWN_URL=https://client-ui:4200
       - MARKETPLACE_SERVICE=https://marketplace-service:8443
-      - AUTH_SERVICE=https://auth-service:9090
+      - AUTH_SERVICE=http://auth-service:9090
       - MONITORING_SERVICE=http://grafana:3000
-      - USERS_MANAGEMENT_SERVICE=https://auth-service:9090
+      - USERS_MANAGEMENT_SERVICE=http://auth-service:9090
       - SIGNON_AUTHORITY=https://login.microsoftonline.com/45a8141c-94c3-4fde-9cf3-0cfcc10ad529
       - SIGNON_CLIENT_ID=9f9965aa-840d-4c88-8121-eac081ee2dd8
-      - KEYCLOAK_ISSUER=https://auth-service:9090/realms/akros-marketplace
-      - KEYCLOAK_REFRESH_REDIRECT_URI=https://localhost/assets/silent-refresh.html
+      - KEYCLOAK_ISSUER=http://localhost:9090/realms/akros-marketplace
+      - KEYCLOAK_REFRESH_REDIRECT_URI=https://client-ui:4200/assets/silent-refresh.html
       - KEYCLOAK_CLIENT_ID=marketplace
       - KEYCLOAK_DUMMY_CLIENT_SECRET=XP0knCLKLhJK8uaEZQg8RRqsENzlywe1
     networks:

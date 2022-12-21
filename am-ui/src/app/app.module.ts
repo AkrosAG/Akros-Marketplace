@@ -1,4 +1,5 @@
-import {CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, APP_INITIALIZER, NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule} from '@angular/core';
+
 import {BrowserModule} from '@angular/platform-browser';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
@@ -63,18 +64,23 @@ import {AdsService} from './components/ads/ads.service';
 import {SpinnerComponent} from './components/shared/spinner/spinner.component';
 import {HttpLoaderInterceptor} from './components/shared/spinner/httpLoaderInterceptor.service';
 import {LoadingService} from './components/shared/spinner/loading.service';
-import { ConfigReaderService } from './config/configReader.service';
+import {
+  AppRuntimeConfig,
+  APP_RUNTIME_CONFIG,
+} from './config/appRuntimeConfig.service';
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
 
-export const MsalInstanceFactory: () => IPublicClientApplication = () => {
+export const MsalInstanceFactory: (
+  runtimeConfig: AppRuntimeConfig
+) => IPublicClientApplication = (runtimeConfig: AppRuntimeConfig) => {
   return new PublicClientApplication({
     auth: {
-      clientId: environment.signOnClientID,
-      authority: environment.signOnAuthority,
-      redirectUri: environment.ownUrl,
+      clientId: runtimeConfig.signOnClientID,
+      authority: runtimeConfig.signOnAuthority,
+      redirectUri: runtimeConfig.ownUrl,
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage,
@@ -82,9 +88,6 @@ export const MsalInstanceFactory: () => IPublicClientApplication = () => {
   });
 };
 
-export function init_app(appInitService: ConfigReaderService) {
-  return () => appInitService.init();
-}
 export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
   const protectedResourceMap = new Map<string, Array<string>>();
   // TODO Put protected resources here, once the application is registered
@@ -138,6 +141,11 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     SwiperModule,
   ],
   providers: [
+    {
+      provide: AppRuntimeConfig,
+      useFactory: (config: AppRuntimeConfig) => config,
+      deps: [APP_RUNTIME_CONFIG],
+    },
     RestHelperService,
     UserService,
     SearchResultDetailsService,
@@ -150,6 +158,7 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     {
       provide: MSAL_INSTANCE,
       useFactory: MsalInstanceFactory,
+      deps: [AppRuntimeConfig],
     },
     MsalService,
     {
@@ -173,13 +182,6 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
       multi: true,
     },
     LoadingService,
-    ConfigReaderService, 
-    {
-      provide: APP_INITIALIZER,
-      useFactory: init_app,
-      deps: [ConfigReaderService],
-      multi: true      
-    }
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
