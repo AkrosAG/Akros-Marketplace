@@ -2,9 +2,9 @@
 
 import {AuthStore} from './../login/auth.service';
 import {User} from './../../models/User';
-import {environment} from './../../../../environments/environment';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {AppRuntimeConfig} from '../../../config/appRuntimeConfig.service';
 
 export interface UserDataModel {
   username: string;
@@ -21,7 +21,11 @@ export interface UserDataModel {
 
 @Injectable({providedIn: 'root'})
 export class UserService {
-  constructor(private http: HttpClient, private auth: AuthStore) {}
+  constructor(
+    private http: HttpClient,
+    private auth: AuthStore,
+    private runtimeConfig: AppRuntimeConfig
+  ) {}
 
   changeUserData(id: string, userData: UserDataModel) {
     const token = 'Bearer ' + this.auth.accessToken.replace(/"/g, '');
@@ -32,7 +36,7 @@ export class UserService {
       }),
     };
     return this.http.put<User>(
-      `${environment.usersManagementUrl}/admin/realms/akros-marketplace/users/${id}`,
+      `${this.runtimeConfig.usersManagementUrl}/admin/realms/akros-marketplace/users/${id}`,
       userData,
       httpOptions
     );

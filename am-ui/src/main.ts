@@ -1,13 +1,28 @@
 import {enableProdMode} from '@angular/core';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-
 import {AppModule} from './app/app.module';
 import {environment} from './environments/environment';
+import {
+  AppRuntimeConfig,
+  APP_RUNTIME_CONFIG,
+} from './app/config/appRuntimeConfig.service';
 
-if (environment.production) {
-  enableProdMode();
-}
+fetch('assets/runtime-configs/app-config.json')
+  .then(response => response.json())
+  .then(config => {
+    if (environment.production) {
+      enableProdMode();
+    }
 
-platformBrowserDynamic()
-  .bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+    const runtimeConfig: AppRuntimeConfig = new AppRuntimeConfig();
+    runtimeConfig.setConfig(config);
+
+    platformBrowserDynamic([
+      {
+        provide: APP_RUNTIME_CONFIG,
+        useValue: runtimeConfig,
+      },
+    ])
+      .bootstrapModule(AppModule)
+      .catch(err => console.error(err));
+  });

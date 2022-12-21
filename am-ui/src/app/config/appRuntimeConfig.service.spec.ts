@@ -1,12 +1,12 @@
 import {TestBed} from '@angular/core/testing';
-import {ConfigReaderService} from './configReader.service';
+import {AppRuntimeConfig} from './appRuntimeConfig.service';
 
 describe('ConfigReaderService', () => {
-  let service: ConfigReaderService;
+  let service: AppRuntimeConfig;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ConfigReaderService);
+    service = TestBed.inject(AppRuntimeConfig);
   });
 
   it('should be created', () => {
