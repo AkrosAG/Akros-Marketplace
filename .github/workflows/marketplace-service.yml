@@ -5,8 +5,6 @@ on:
     paths:
       - "marketplace-service/**"
       - ".github/workflows/marketplace-service.yml"
-    branches:
-      - main
 
 jobs:
   deploy:
