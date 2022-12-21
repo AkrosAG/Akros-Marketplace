@@ -43,7 +43,7 @@
     font-weight: 500;
     background-color: #938c83;
     border-radius: 1em !important;
-    cursor: pointer;
+    cursor: default;
     color: #fff;
 
     &:not(.collapsed).selected {
@@ -65,6 +65,9 @@
         transform: rotate(-180deg);
         position: relative;
         top: -4px;
+        // Arrow which indicates expansion/collapse of categories accordeon. Currently disabled due to one category
+       // see https://github.com/AkrosAG/Akros-Marketplace/issues/262
+        display: none;
       }
     }
 

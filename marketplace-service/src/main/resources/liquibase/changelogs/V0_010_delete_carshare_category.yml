@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: V0.010/1
+      author: ayercr
+      comment: Delete the category carShare
+      changes:
+        - delete:
+            tableName: subcategory_field
+            where: field_id=27
+        - delete:
+            tableName: field
+            where: field_id=27
+        - delete:
+            tableName: subcategory
+            where: key='share'
+        - delete:
+            tableName: category
+            where: key='carShare'
