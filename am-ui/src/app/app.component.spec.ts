@@ -7,12 +7,20 @@ import {
   TranslateService,
 } from '@ngx-translate/core';
 import {AppComponent} from './app.component';
+import {SpinnerComponent} from './components/shared/spinner/spinner.component';
+import {NavbarComponent} from './components/shared/navbar/navbar.component';
+import {FooterComponent} from './components/shared/footer/footer.component';
+import {AuthStore} from './data/services/login/auth.service';
+import {HttpClientModule} from '@angular/common/http';
+
+jest.mock('./data/services/login/auth.service');
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
+        HttpClientModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
@@ -20,8 +28,13 @@ describe('AppComponent', () => {
           },
         }),
       ],
-      declarations: [AppComponent],
-      providers: [TranslateService],
+      declarations: [
+        AppComponent,
+        SpinnerComponent,
+        NavbarComponent,
+        FooterComponent,
+      ],
+      providers: [TranslateService, AuthStore],
     }).compileComponents();
   });
 
