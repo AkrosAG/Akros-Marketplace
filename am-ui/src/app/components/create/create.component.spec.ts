@@ -28,6 +28,7 @@ class Mocki18nHost {
 /*eslint-disable-next-line*/
 class MockCreateAdWebcomponent {
   @Input() bearerToken: string;
+  @Input() userId: string;
 }
 
 class MockStore {

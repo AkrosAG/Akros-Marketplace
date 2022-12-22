@@ -5,8 +5,10 @@ import {
 } from './../../data/services/login/user.service';
 import {ProfileComponent} from './profile.component';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {AuthStore} from '../../data/services/login/auth.service';
+import {OAuthUserInfo} from '../../shared/types/oauthuserinfo.type';
+
 import {
   TranslatePipe,
   TranslateFakeLoader,
@@ -14,7 +16,7 @@ import {
   TranslateModule,
   TranslateLoader,
 } from '@ngx-translate/core';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
 
 class MockUserService {
   public user: unknown = {
@@ -90,13 +92,14 @@ describe('ProfileComponent', () => {
             useClass: TranslateFakeLoader,
           },
         }),
+        ReactiveFormsModule,
       ],
       providers: [
         TranslatePipe,
         TranslateService,
         FormBuilder,
-        {provide: AuthStore, useClass: MockStore},
         {provide: UserService, useClass: MockUserService},
+        {provide: AuthStore, useClass: MockStore},
       ],
     }).compileComponents();
   });
