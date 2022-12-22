@@ -2,11 +2,11 @@ import {Injectable, InjectionToken} from '@angular/core';
 import {ConfigData, RuntimeConfig} from './model';
 import {AuthConfig} from 'angular-oauth2-oidc';
 
-const defaultKeycloakConfigRedirectUri = 'window.location.origin';
-const defaultKeycloakConfigScope = 'openid profile email offline_access';
-const defaultKeycloakConfigResponseType = 'code';
-const defaultKeycloakConfigUseSilentRefresh = true;
-const defaultKeycloakConfigRequireHTTPs = false;
+export const defaultKeycloakConfigRedirectUri = 'window.location.origin';
+export const defaultKeycloakConfigScope = 'openid profile email offline_access';
+export const defaultKeycloakConfigResponseType = 'code';
+export const defaultKeycloakConfigUseSilentRefresh = true;
+export const defaultKeycloakConfigRequireHTTPs = false;
 
 @Injectable({
   providedIn: 'root',
