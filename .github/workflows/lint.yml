@@ -13,7 +13,14 @@ jobs:
   run-linters:
     name: Run linters
     runs-on: ubuntu-latest
-
+    
+    strategy:
+      matrix:
+        node-version: [18.x]
+    defaults:
+      run:
+        working-directory: ./am-ui
+        
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
