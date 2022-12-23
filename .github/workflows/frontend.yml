@@ -42,8 +42,38 @@ jobs:
       - name: Test Webcomponents
         working-directory: ./am-ui/webcomponents
         run: npm run test
-  deploy:
+        
+  run-linters:
     needs: build
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x]
+    defaults:
+      run:
+        working-directory: ./am-ui
+        
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: am-ui/package-lock.json
+      - name: Install Node.js dependencies
+        run: npm ci
+      - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: true
+          prettier: true
+  
+  
+  deploy:
+    needs: run-linters
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
