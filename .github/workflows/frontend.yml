@@ -68,8 +68,9 @@ jobs:
       - name: Run linters
         uses: sibiraj-s/action-eslint@v2
         with:
-          eslint: true
-          prettier: true
+          eslint-args: '--ignore-path=.gitignore --quiet'
+          extensions: 'js,jsx,ts,tsx'
+          annotations: true
   
   
   deploy:
