@@ -37,14 +37,8 @@ jobs:
         run: npm ci
       - name: Build UI and Webcomponents
         run: npm run build
-      - name: Lint UI
-        run: npm run lint
       - name: Test UI
         run: npm run test
-
-      - name: Lint Webcomponents
-        working-directory: ./am-ui/webcomponents
-        run: npm run lint
       - name: Test Webcomponents
         working-directory: ./am-ui/webcomponents
         run: npm run test

@@ -17,16 +17,21 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
         with:
-          node-version: 12
-
-      - name: Install Node.js dependencies
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: am-ui/package-lock.json
+      - name: Install UI
         run: npm ci
-
       - name: Run linters
+        uses: wearerequired/lint-action@v2
+        with:
+          eslint: true
+          prettier: true
+      - name: Lint Webcomponents
+        working-directory: ./am-ui/webcomponents
         uses: wearerequired/lint-action@v2
         with:
           eslint: true
