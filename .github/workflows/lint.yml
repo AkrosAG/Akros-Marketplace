@@ -30,8 +30,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
           cache-dependency-path: am-ui/package-lock.json
-      - name: Install UI
-        run: npm ci
+      - name: Install Node.js dependencies
+        run: npm install
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
