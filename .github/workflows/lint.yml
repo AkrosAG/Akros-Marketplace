@@ -31,8 +31,8 @@ jobs:
           eslint: true
           prettier: true
       - name: Lint Webcomponents
-        working-directory: ./am-ui/webcomponents
         uses: wearerequired/lint-action@v2
+        working-directory: ./am-ui/webcomponents
         with:
           eslint: true
           prettier: true
