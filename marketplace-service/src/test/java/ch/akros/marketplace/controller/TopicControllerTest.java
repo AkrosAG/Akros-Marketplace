@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class TopicControllerTest {
+ class TopicControllerTest {
     @Mock
     private MeterRegistry registry;
 
@@ -33,7 +33,7 @@ public class TopicControllerTest {
     }
 
     @Test
-    public void counterMetricIncrementsTest() {
+     void counterMetricIncrementsTest() {
         // given
         Counter counterForLoadTopic = mock(Counter.class);
         when(registry.counter("counter_for_load_topic")).thenReturn(counterForLoadTopic);
@@ -45,16 +45,16 @@ public class TopicControllerTest {
 
         // then
         assertTrue(response.hasBody());
-        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(response.getBody(), topicLoadResponseDTO);
         verify(counterForLoadTopic).increment();
-        verify(registry).counter(eq("counter_for_load_topic"));
-        verify(topicService).loadTopic(eq(1L));
+        verify(registry).counter("counter_for_load_topic");
+        verify(topicService).loadTopic(1L);
         verifyNoMoreInteractions(counterForLoadTopic, registry, topicService);
     }
 
     @Test
-    public void counterMetricNotIncrementsTest() {
+     void counterMetricNotIncrementsTest() {
         // given
         Counter counterForLoadTopic = mock(Counter.class);
         when(registry.counter("counter_for_load_topic")).thenReturn(counterForLoadTopic);
@@ -66,7 +66,7 @@ public class TopicControllerTest {
 
         // then
         assertFalse(response.hasBody());
-        assertEquals(response.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode()) ;
         verifyNoInteractions(counterForLoadTopic);
     }
 
