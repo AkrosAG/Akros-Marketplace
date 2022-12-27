@@ -66,7 +66,7 @@ class SearchResultList extends React.Component {
    */
   sortResult(sortType, resultsArray) {
     if (resultsArray) {
-      let sortedList = [...resultsArray];
+      const sortedList = [...resultsArray];
 
       switch (sortType) {
         case 'byPriceLowToHigh':
