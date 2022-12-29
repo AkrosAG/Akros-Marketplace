@@ -250,15 +250,31 @@
       }"
       >{{ t('preview') }}
     </a>
-    <a
-      class="btn"
-      v-on:click="emit('back', 0, images, thumbnail)"
-      v-bind:class="{
-        disabled: formHasErrors
-      }"
-      >{{ t('back') }}
-    </a>
+    <a class="btn" v-on:click="showModal = true">{{ t('cancel') }}</a>
   </p>
+  <div class="modal-backdrop" v-if="showModal">
+    <div class="modal">
+      <section class="modal-body">
+        <slot name="body">
+          {{ t('confirmation') }}
+        </slot>
+      </section>
+
+      <footer class="modal-footer">
+        <p class="submit-row center">
+          <a class="btn il" v-on:click="goBack">{{ t('affirmative') }}</a>
+          <a
+            class="btn il"
+            v-on:click="showModal = false"
+            v-bind:class="{
+              disabled: formHasErrors
+            }"
+            >{{ t('negative') }}
+          </a>
+        </p>
+      </footer>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -288,6 +304,7 @@ const errors = ref([]);
 const counterOptions = ref([1, 2, 3, 4, 5, 6, 7, 8]);
 const { t } = useI18n(i18n.global.messages.value);
 let formHasErrors = ref(true);
+let showModal = ref(false);
 const hasSpecificDate = ref(false);
 let images = [];
 let thumbnail = [];
@@ -509,9 +526,16 @@ function updateFormHasErrors() {
 }
 
 /**
+ * @description Method to navigate home
+ */
+function goBack() {
+  showModal = false;
+  document.getElementById('logoImg').click();
+}
+
+/**
  * @description Method to emit the submit event to parent component with the values filled in the fields.
  * Performs a second validation to not allow send POST event if some fields have not been filled.
- * TODO improve this logic, currently only supporting accomodation
  * @param {Number} fieldId - Id of the field to find its reference in the array of field values and erros
  * @param {String} fieldKey - Key string value of the edited field
  */
