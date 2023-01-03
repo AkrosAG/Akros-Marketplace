@@ -98,6 +98,8 @@
       "body": "Are you sure you want to delete your profile?"
     },
     "deleteProfile": "Delete my profile and all data",
+    "deleteSuccess": "The profile and data are successfully deleted.",
+    "deleteError": "The profile and data cannot be deleted. Please try again later.",
     "success": "Changed were successfully saved",
     "error": "There has been an error"
   }

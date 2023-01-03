@@ -23,8 +23,8 @@ public class UserController {
     public ResponseEntity deleteUser(@PathVariable UUID id) {
         log.debug("UserController.deleteUser() with id " + id + " called");
 
-        String userId = id.toString();
         try {
+            String userId = id.toString();
             userService.deleteUser(userId);
             return ResponseEntity.noContent().build();
         } catch (NotFoundException e) {

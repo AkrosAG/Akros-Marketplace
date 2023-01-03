@@ -1,11 +1,11 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 
 @Component({
-  selector: 'app-modal',
+  selector: 'custom-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent {
   @Input() modalTitleI18n: string;
   @Input() modalBodyI18n?: string;
   @Input() modalPrimaryButtonI18n: string;
@@ -18,5 +18,4 @@ export class ModalComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
 }

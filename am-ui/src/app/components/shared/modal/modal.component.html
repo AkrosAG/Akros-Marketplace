@@ -7,16 +7,22 @@
       <p *ngIf="modalBodyI18n">{{ modalBodyI18n | translate }}</p>
       <div class="modal-body">
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            (click)="modalCloseEvent.emit()"
-          >
-            {{ modalCloseButtonI18n | translate }}
-          </button>
-          <button type="button" class="btn btn-primary">
-            {{ modalPrimaryButtonI18n | translate }}
-          </button>
+          <div class="flex-buttons-wrapper">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="modalCloseEvent.emit()"
+            >
+              {{ modalCloseButtonI18n | translate }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="modalSubmitEvent.emit()"
+            >
+              {{ modalPrimaryButtonI18n | translate }}
+            </button>
+          </div>
         </div>
       </div>
     </div>

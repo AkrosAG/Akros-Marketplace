@@ -37,4 +37,19 @@ export class UserService {
       httpOptions
     );
   }
+
+  deleteUser(userId: string) {
+    const token = 'Bearer ' + this.auth.accessToken.replace(/"/g, '');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: token,
+      }),
+    };
+
+    return this.http.delete<void>(
+      `${environment.apiUrl}/users/${userId}`,
+      httpOptions
+    );
+  }
 }

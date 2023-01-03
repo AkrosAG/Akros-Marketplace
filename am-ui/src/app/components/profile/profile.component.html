@@ -12,7 +12,7 @@
             placeholder="{{ 'profile.form.firstName' | translate }}"
           />
         </div>
-        <div class="form-field">ß
+        <div class="form-field">
           <input
             [formControlName]="'lastName'"
             class="w-full"
@@ -39,26 +39,40 @@
           {{ 'save' | translate }}</a
         >
       </div>
-
-      <button
-        *ngIf="!showModal"
-        type="button"
-        class="btn btn-primary"
-        (click)="showDeleteProfileModal()"
-      >
-        {{ 'profile.deleteProfile' | translate }}
-      </button>
-
-      <app-modal
-        [isModalVisible]="showModal"
-        modalTitleI18n="profile.modal.title"
-        modalBodyI18n="profile.modal.body"
-        modalPrimaryButtonI18n="ad.delete"
-        (modalCloseEvent)="onModalClose()"
-        (modalSubmitEvent)="onDeleteProfile()"
-      >
-      </app-modal>
     </div>
+
+    <div class="flex-container-wrapper">
+      <div>
+        <button
+          *ngIf="!showModal"
+          type="button"
+          class="btn btn-primary"
+          (click)="showDeleteProfileModal()"
+        >
+          {{ 'profile.deleteProfile' | translate }}
+        </button>
+      </div>
+      <div>
+        <custom-modal
+          [isModalVisible]="showModal"
+          modalTitleI18n="profile.modal.title"
+          modalBodyI18n="profile.modal.body"
+          modalPrimaryButtonI18n="ad.delete"
+          (modalCloseEvent)="hideDeleteProfileModal()"
+          (modalSubmitEvent)="onDeleteProfile()"
+        >
+        </custom-modal>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showDeleteUserAlert"
+      class="result-banner"
+      [ngClass]="deleteUserAlertCssClassesArray"
+    >
+      {{ deleteUserAlertText }}
+    </div>
+
     <div
       class="result-banner"
       *ngIf="saveAction"
