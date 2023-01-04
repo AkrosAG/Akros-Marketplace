@@ -82,20 +82,19 @@ export class ProfileComponent implements OnInit {
   }
 
   onDeleteProfile() {
-    console.log('delete', this.userId);
     this.userService.deleteUser(this.userId).subscribe(
       data => {
         this.deleteUserAlertText = this.translatePipe.transform(
           'profile.deleteSuccess'
         );
+        this.deleteUserAlertCssClassesArray = [];
         this.showDeleteUserAlert = true;
         this.hideDeleteProfileModal();
 
         setTimeout(() => {
           this.showDeleteUserAlert = false;
-          this.deleteUserAlertCssClassesArray = [];
           this.auth.logout();
-        }, 2500);
+        }, 3000);
       },
       err => {
         this.deleteUserAlertText = this.translatePipe.transform(

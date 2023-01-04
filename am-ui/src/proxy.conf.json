@@ -14,5 +14,9 @@
   "/api/auth": {
     "target": "https://localhost:9443",
     "secure": false
-  }
+  },
+  "/users/**": {
+    "target": "https://localhost:8443",
+    "secure": false
+  }  
 }

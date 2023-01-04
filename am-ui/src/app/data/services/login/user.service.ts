@@ -1,10 +1,10 @@
 /* istanbul ignore file */
 
-import {AuthStore} from './../login/auth.service';
-import {User} from './../../models/User';
-import {environment} from './../../../../environments/environment';
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from './../../../../environments/environment';
+import { User } from './../../models/User';
+import { AuthStore } from './../login/auth.service';
 
 export interface UserDataModel {
   username: string;
@@ -39,17 +39,14 @@ export class UserService {
   }
 
   deleteUser(userId: string) {
-    const token = 'Bearer ' + this.auth.accessToken.replace(/"/g, '');
+    const token = this.auth.accessToken.replace(/"/g, '');
+
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: token,
+        Authorization: 'Bearer ' + token,
       }),
     };
 
-    return this.http.delete<void>(
-      `${environment.apiUrl}/users/${userId}`,
-      httpOptions
-    );
+    return this.http.delete<void>(`/users/${userId}`, httpOptions);
   }
 }
