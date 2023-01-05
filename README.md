@@ -24,17 +24,14 @@ The application should serve
 
 ## Running the application
 
-### Docker-Compose
+The easiest way to run the application is to start the docker-compose for the entire application. This requires a docker installation.
+To do so, run the command below **inside** the  `./infrastructure/start_local` folder. The frontend will be running on the following link: https://localhost:4200 and the backend on https://localhost:8443
 
-The easiest way to just run the application is to start the docker-compose for the entire application. This requires a docker-installation.
-To do so, run the docker-compose file in `./infrastructure/start_all_local` or run the `clean_startup.sh`-script in the same folder.
-
-### Without Docker
-
-Alternatively you can run both the `am-ui` and `marketplace-service` without the docker-compose. This is probably preferred for development.
-
-- You can run the backend in IntelliJ with the provided `Backend`-run-config in the `./.run` directory.
-- Run `npm run start_ssl` in `./am-ui` to start the frontend, including all the webcomponents
+   ```
+    docker-compose --profile local up -d --build
+   ```
+   
+For more information and for local development setup, check the `README` file in the folder `./infrastructure/start_local`.
 
 ## Folder Organisation
 

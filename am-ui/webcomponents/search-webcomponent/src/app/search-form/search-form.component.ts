@@ -36,7 +36,7 @@ export class SearchFormComponent implements OnInit {
   currentSubCategoryKey: string;
   offer = true;
 
-  categoryKeyList = ["accomodation","carShare"];
+  categoryKeyList = ["accomodation"];
   isFurnished = new FormControl(false);
 
   get isFieldVisible ():boolean{

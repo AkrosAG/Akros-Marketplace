@@ -55,15 +55,15 @@ public class TopicService {
     private final TopicImageRepository topicImageRepository;
     private final SubCategoryRepository subCategoryRepository;
 
-    private final int SIZE = 8;
-    private final int PRICE = 6;
-    private final int FROM_SIZE = 25;
-    private final int TO_PRICE = 24;
+    private static final int SIZE = 8;
+    private static final int PRICE = 6;
+    private static final int FROM_SIZE = 25;
+    private static final int TO_PRICE = 24;
 
-    private final int DATE = 15;
-    private final int FROM_DATE = 19;
+    private static final int DATE = 15;
+    private static final int FROM_DATE = 19;
 
-    private final int FURNISHED = 14;
+    private static final int FURNISHED = 14;
 
     public TopicService(
             FieldRepository fieldRepository,
@@ -264,18 +264,6 @@ public class TopicService {
             result.add(topicLoadResponseDTO);
         }
         return result;
-    }
-
-    @Transactional
-    public void deleteTopicsForUser(String userId) {
-        List<Topic> topics = topicRepository.findAllByUserId(userId);
-
-        topics.forEach(topic -> {
-            topicImageRepository.deleteTopicImagesByTopic(topic);
-            topicValueRepository.deleteTopicValuesByTopic(topic);
-        });
-
-        topics.forEach(topicRepository::delete);
     }
 
     private List<TopicImageDTO> getTopicImageDtosFromImages(List<TopicImage> topicImages) {
@@ -493,7 +481,7 @@ public class TopicService {
 
     private List<TopicImageDTO> generateTopicImages(List<TopicImage> topicImages) {
         List<TopicImageDTO> topicImageList = new ArrayList<>();
-        if (topicImages.size() == 0) {
+        if (topicImages.isEmpty()) {
             return topicImageList;
         }
         for (TopicImage image : topicImages) {

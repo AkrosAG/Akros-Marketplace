@@ -70,8 +70,12 @@ function getCategories(_error, data, _response) {
  * Selects which fields to show based on the selected category.
  */
 function updateSubCategories() {
+  // Forcing accomodation as only option
+  // see https://github.com/AkrosAG/Akros-Marketplace/issues/262
+  selectedCategoryKey.value = 'accomodation';
   const selectedCategory = categories.value.find(
-    (category) => category.key === selectedCategoryKey.value
+    // (category) => category.key === selectedCategoryKey.value
+    (category) => category.key === 'accomodation'
   );
   showAdFields.value = false;
 
@@ -481,11 +485,20 @@ select {
     pointer-events: none;
     opacity: 0.65;
   }
+
+  &.il {
+    display: inline;
+    margin-right: 6px;
+  }
 }
 
 .btn:hover {
   color: #fff;
   background-color: $akros-red;
+}
+
+.center {
+  margin: auto;
 }
 
 .form-wrap {
@@ -680,5 +693,42 @@ select {
 /*                              1536px
 --------------------------------------------------------------------- */
 @media screen and (min-width: 1536px) {
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: #ffffff;
+  box-shadow: 2px 2px 20px 1px;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header,
+.modal-footer {
+  padding: 15px;
+  display: flex;
+}
+
+.modal-footer {
+  border-top: 1px solid #eeeeee;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.modal-body {
+  position: relative;
+  padding: 20px 10px;
 }
 </style>
