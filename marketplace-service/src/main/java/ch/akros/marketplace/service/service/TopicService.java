@@ -266,6 +266,18 @@ public class TopicService {
         return result;
     }
 
+    @Transactional
+    public void deleteTopicsForUser(String userId) {
+        List<Topic> topics = topicRepository.findAllByUserId(userId);
+
+        topics.forEach(topic -> {
+            topicImageRepository.deleteTopicImagesByTopic(topic);
+            topicValueRepository.deleteTopicValuesByTopic(topic);
+        });
+
+        topics.forEach(topicRepository::delete);
+    }
+
     private List<TopicImageDTO> getTopicImageDtosFromImages(List<TopicImage> topicImages) {
         List<TopicImageDTO> topicImageDTOS = new ArrayList<>();
         for (TopicImage image : topicImages) {
