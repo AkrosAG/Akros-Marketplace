@@ -58,7 +58,7 @@ public class TopicController implements TopicsApi {
     // @Timed annotation metric records the execution time of the create method,
     // from the start and until it exits normally or exceptionally.
     @Timed(value = "create.topic.time", description = "Time taken to return topic")
-    @PostMapping(value = "/topics", consumes = { "multipart/form-data" })
+    @PostMapping(value = "/topics", consumes = {"multipart/form-data"})
     public ResponseEntity<Void> createTopic(@RequestPart("topics") String topicSaveRequestDTO,
                                             @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
                                             @RequestPart(value = "images", required = false) MultipartFile[] images) {
@@ -84,27 +84,27 @@ public class TopicController implements TopicsApi {
         }
     }
 
-  @Override
-  public ResponseEntity<TopicSearchListResponseDTO> topicsSearchesPost(TopicSearchRequestDTO topicSearchRequestDTO) {
-    try {
-      log.debug("TopicController.topicsSearchPost() called");
-      TopicSearchListResponseDTO topicSearchListResponseDTO = topicService.searchTopic(topicSearchRequestDTO);
-      return ResponseEntity.status(HttpStatus.OK).body(topicSearchListResponseDTO);
-    } catch (Exception ex) {
-      log.error(ex.getMessage(), ex);
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    @Override
+    public ResponseEntity<TopicSearchListResponseDTO> topicsSearchesPost(TopicSearchRequestDTO topicSearchRequestDTO) {
+        try {
+            log.debug("TopicController.topicsSearchPost() called");
+            TopicSearchListResponseDTO topicSearchListResponseDTO = topicService.searchTopic(topicSearchRequestDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(topicSearchListResponseDTO);
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
-  }
 
-  @Override
-  public ResponseEntity<TopicSearchListResponseDTO> topicsSearchesGet() {
-    try {
-      log.debug("TopicController.topicsSearchesGet() called");
-      TopicSearchListResponseDTO topics = topicService.findAllTopics();
-      return ResponseEntity.status(HttpStatus.OK).body(topics);
-    } catch(Exception e) {
-      log.error(e.getMessage(), e);
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    @Override
+    public ResponseEntity<TopicSearchListResponseDTO> topicsSearchesGet() {
+        try {
+            log.debug("TopicController.topicsSearchesGet() called");
+            TopicSearchListResponseDTO topics = topicService.findAllTopics();
+            return ResponseEntity.status(HttpStatus.OK).body(topics);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
-  }
 }
