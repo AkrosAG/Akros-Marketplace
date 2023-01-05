@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 
 @Component({
-  selector: 'custom-modal',
+  selector: 'mp-custom-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
 })
@@ -17,5 +17,4 @@ export class ModalComponent {
   @Output() modalSubmitEvent: EventEmitter<void> = new EventEmitter();
 
   constructor() {}
-
 }

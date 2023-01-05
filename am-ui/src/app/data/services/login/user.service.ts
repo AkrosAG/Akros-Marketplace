@@ -1,10 +1,10 @@
 /* istanbul ignore file */
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { environment } from './../../../../environments/environment';
-import { User } from './../../models/User';
-import { AuthStore } from './../login/auth.service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {environment} from './../../../../environments/environment';
+import {User} from './../../models/User';
+import {AuthStore} from './../login/auth.service';
 
 export interface UserDataModel {
   username: string;
