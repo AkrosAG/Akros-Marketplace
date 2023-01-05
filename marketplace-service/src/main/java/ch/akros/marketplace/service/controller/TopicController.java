@@ -59,9 +59,7 @@ public class TopicController implements TopicsApi {
     // from the start and until it exits normally or exceptionally.
     @Timed(value = "create.topic.time", description = "Time taken to return topic")
     @PostMapping(value = "/topics", consumes = {"multipart/form-data"})
-    public ResponseEntity<Void> createTopic(@RequestPart("topics") String topicSaveRequestDTO,
-                                            @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
-                                            @RequestPart(value = "images", required = false) MultipartFile[] images) {
+    public ResponseEntity<Void> createTopic(@RequestPart("topics") String topicSaveRequestDTO, @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail, @RequestPart(value = "images", required = false) MultipartFile[] images) {
         try {
             log.debug("TopicController.topicsPost() called");
             topicService.saveTopic(topicSaveRequestDTO, images, thumbnail);
