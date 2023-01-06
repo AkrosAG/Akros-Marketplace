@@ -21,6 +21,9 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
   private static final String ANY_TOPICS_SEARCHES = "/topics/searches/**";
   private static final String ANY_CATEGORIES_URI = "/categories/**";
 
+  private static final String ANY_USERS_URI = "/users/**";
+
+
   @Bean
   public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
     return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
@@ -54,8 +57,8 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     http
       .authorizeRequests()
       .antMatchers(HttpMethod.GET, TOPICS_URI, ANY_CATEGORIES_URI, ANY_TOPICS_SEARCHES).permitAll()
-      .antMatchers(HttpMethod.POST, TOPICS_URI).hasAnyAuthority("ADMIN", "USER")
-      .antMatchers(HttpMethod.DELETE, TOPICS_URI).hasAnyAuthority("ADMIN", "USER")
+      .antMatchers(HttpMethod.POST, TOPICS_URI).hasAnyAuthority("admin", "user")
+      .antMatchers(HttpMethod.DELETE, TOPICS_URI, ANY_USERS_URI).hasAnyAuthority("admin", "user")
       .anyRequest().permitAll()
       .and().csrf().disable();
   }
