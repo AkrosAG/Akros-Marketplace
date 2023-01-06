@@ -2619,7 +2619,8 @@
             "realm": [
               "offline_access",
               "default-roles-akros-marketplace",
-              "uma_authorization"
+              "uma_authorization",
+              "user"
             ],
             "client": {
               "account": [
@@ -2649,6 +2650,13 @@
           "clientRole": false,
           "containerId": "64af5f4a-b56e-4f85-acfa-b488282260e1",
           "attributes": {}
+        },
+        {
+          "id": "7cc814f9-c4c4-44d1-8c39-9128465da664",
+          "name": "user",
+          "composite": false,
+          "clientRole": false,
+          "containerId": "64af5f4a-b56e-4f85-acfa-b488282260e1"
         }
       ],
       "client": {
