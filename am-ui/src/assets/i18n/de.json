@@ -98,8 +98,8 @@
       "body": "Sind Sie sicher, dass Sie Ihr Profil löschen möchten?"
     },
     "deleteProfile": "Mein Profil und alle Daten löschen",
-    "deleteSuccess": "Das Profil und die Daten sind erfolgreich gelöscht.",
-    "deleteError": "Das Profil und die Daten können nicht gelöscht werden. Bitte versuchen Sie es später noch einmal.",
+    "deleteSuccess": "Das Profil und die Daten sind erfolgreich gelöscht",
+    "deleteError": "Das Profil und die Daten können nicht gelöscht werden. Bitte versuchen Sie es später noch einmal",
     "success": "Änderungen wurden erfolgreich geändert",
     "error": "Es ist ein Fehler aufgetreten"
   }

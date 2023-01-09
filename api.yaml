@@ -138,8 +138,8 @@ paths:
     delete:
       tags:
         - Users
-      summary: Delete an user
-      description: Delete an user by id
+      summary: Delete a user
+      description: Delete a user by id
       parameters:
         - name: userId
           in: path

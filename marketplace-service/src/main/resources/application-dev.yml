@@ -14,7 +14,6 @@ spring:
 keycloak:
   realm: akros-marketplace
   bearer-only: true
-  # https://stackoverflow.com/a/72333847
   auth-server-url: http://127.0.0.1:9090
   resource: marketplace
   ssl-required: none

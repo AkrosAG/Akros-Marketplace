@@ -16,6 +16,8 @@ import org.webjars.NotFoundException;
 
 import java.util.Optional;
 
+import static ch.akros.marketplace.service.constants.BaseConstants.*;
+
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,16 +25,24 @@ public class UserServiceImpl implements UserService {
     private final TopicService topicService;
     private final WebClient keycloakClient;
 
-    @Value("${spring.keycloak_client.client_id}")
-    private String keycloakClientId;
-    @Value("${spring.keycloak_client.grant_type}")
-    private String keycloakGrantType;
-    @Value("${spring.keycloak_client.client_secret}")
-    private String keycloakClientSecret;
+    private final String keycloakClientId;
+    private final String keycloakGrantType;
+    private final String keycloakClientSecret;
 
-    public UserServiceImpl(WebClient keycloakClient, TopicService topicService) {
+    private static final String KEYCLOAK_USERS_URL = "/admin/realms/akros-marketplace/users";
+    private static final String KEYCLOAK_ACCESS_TOKEN_URL = "/realms/akros-marketplace/protocol/openid-connect/token";
+
+
+    public UserServiceImpl(WebClient keycloakClient,
+                           TopicService topicService,
+                           @Value("${spring.keycloak_client.client_id}") String keycloakClientId,
+                           @Value("${spring.keycloak_client.grant_type}") String keycloakGrantType,
+                           @Value("${spring.keycloak_client.client_secret}") String keycloakClientSecret) {
         this.keycloakClient = keycloakClient;
         this.topicService = topicService;
+        this.keycloakClientId = keycloakClientId;
+        this.keycloakGrantType = keycloakGrantType;
+        this.keycloakClientSecret = keycloakClientSecret;
     }
 
     @Transactional
@@ -40,21 +50,19 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(String userId) throws NotFoundException {
         log.debug("UserServiceImpl.deleteUser() called");
 
-        String requestUrl = String.format("/admin/realms/akros-marketplace/users/%s", userId);
-        String authToken = getAccessToken().orElse("");
-        String authHeader = "Bearer " + authToken;
+        String requestUrl = KEYCLOAK_USERS_URL + "/" + userId;
+        String authHeader = HTTP_BEARER_AUTHENTICATION_HEADER + " " + getAccessToken().orElse("");
 
         try {
+            this.topicService.deleteTopicsForUser(userId);
+
             keycloakClient.delete()
                     .uri(requestUrl)
-                    .header("Authorization", authHeader)
+                    .header(HTTP_AUTHORIZATION_HEADER, authHeader)
                     .accept(MediaType.APPLICATION_JSON)
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
-
-            this.topicService.deleteTopicsForUser(userId);
-
         } catch (WebClientResponseException.NotFound notFoundEx) {
             log.error("UserServiceImpl.deleteUser() user with id " + userId + " not found.");
             throw new NotFoundException("User not found");
@@ -66,19 +74,19 @@ public class UserServiceImpl implements UserService {
     private Optional<String> getAccessToken() {
         log.debug("UserServiceImpl.getAccessToken called");
         MultiValueMap<String, String> bodyValues = new LinkedMultiValueMap<>();
-        bodyValues.add("client_id", keycloakClientId);
-        bodyValues.add("grant_type", keycloakGrantType);
-        bodyValues.add("client_secret", keycloakClientSecret);
+        bodyValues.add(KEYCLOAK_CLIENT_ID, keycloakClientId);
+        bodyValues.add(KEYCLOAK_GRANT_TYPE, keycloakGrantType);
+        bodyValues.add(KEYCLOAK_CLIENT_SECRET, keycloakClientSecret);
 
         try {
-            JSONObject jsonResponse = keycloakClient.post().uri("/realms/akros-marketplace/protocol/openid-connect/token")
+            JSONObject jsonResponse = keycloakClient.post().uri(KEYCLOAK_ACCESS_TOKEN_URL)
                     .accept(MediaType.APPLICATION_JSON)
                     .bodyValue(bodyValues)
                     .retrieve()
                     .bodyToMono(JSONObject.class)
                     .block();
 
-            return Optional.of(jsonResponse.get("access_token").toString());
+            return Optional.of(jsonResponse.get(HTTP_ACCESS_TOKEN).toString());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

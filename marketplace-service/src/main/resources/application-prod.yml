@@ -12,8 +12,8 @@ spring:
   liquibase:
     enabled: false
   keycloak_client:
-    base_url: * # TODO add client_secret for prod
-    client_secret: : * # TODO add client_secret for prod
+    base_url: *
+    client_secret: : *
 
 keycloak:
   realm: akros-marketplace
