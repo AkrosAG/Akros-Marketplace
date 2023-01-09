@@ -12,8 +12,8 @@ spring:
   liquibase:
     enabled: false
   keycloak_client:
-    base_url: *
-    client_secret: : *
+    base_url: https://am-keycloak.azurewebsites.net
+    client_secret: : dIaYUsn6MrNIaHhGuciT6bgplIE2vlOi
 
 keycloak:
   realm: akros-marketplace
