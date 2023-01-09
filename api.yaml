@@ -134,6 +134,34 @@ paths:
               schema:
                 $ref: "#/components/schemas/Problem"
 
+  /users/{userId}:
+    delete:
+      tags:
+        - Users
+      summary: Delete a user
+      description: Delete a user by id
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The user uuid.
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          description: Successfully deleted user
+        404:
+          description: User not found
+        400:
+          description: invalid UUID
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: "#/components/schemas/Problem"
+
 components:
   securitySchemes:
     bearerAuth:

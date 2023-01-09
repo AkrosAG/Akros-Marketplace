@@ -1,14 +1,14 @@
 /* istanbul ignore file */
 
-import {
-  UserService,
-  UserDataModel,
-} from './../../data/services/login/user.service';
-import {FormBuilder, FormGroup, FormControl} from '@angular/forms';
-import {AuthStore} from '../../data/services/login/auth.service';
 import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {TranslatePipe} from '@ngx-translate/core';
+import {AuthStore} from '../../data/services/login/auth.service';
+import {
+  UserDataModel,
+  UserService,
+} from './../../data/services/login/user.service';
 @UntilDestroy()
 @Component({
   selector: 'mp-profile',
@@ -22,6 +22,11 @@ export class ProfileComponent implements OnInit {
   public saveError = false;
   private userId!: string;
   private username!: string;
+  public showModal = false;
+  public deleteModalId = 'deleteProfileModal';
+  public showDeleteUserAlert = false;
+  public deleteUserAlertCssClassesArray: string[] = ['error'];
+  public deleteUserAlertText: string;
 
   constructor(
     private auth: AuthStore,
@@ -40,6 +45,7 @@ export class ProfileComponent implements OnInit {
         user: `${name} ${lastName}`,
       });
       this.userId = user?.sub || '';
+
       this.username = user?.preferred_username || '';
       if (name && lastName && email) {
         this.formGroup = this.buildForm(name, lastName, email, phoneNumber);
@@ -73,6 +79,45 @@ export class ProfileComponent implements OnInit {
           this.saveError = true;
         }
       );
+  }
+
+  onDeleteProfile() {
+    this.userService.deleteUser(this.userId).subscribe(
+      data => {
+        this.deleteUserAlertText = this.translatePipe.transform(
+          'profile.deleteSuccess'
+        );
+        this.deleteUserAlertCssClassesArray = [];
+        this.showDeleteUserAlert = true;
+        this.hideDeleteProfileModal();
+
+        setTimeout(() => {
+          this.showDeleteUserAlert = false;
+          this.auth.logout();
+        }, 3000);
+      },
+      err => {
+        this.deleteUserAlertText = this.translatePipe.transform(
+          'profile.deleteError'
+        );
+        this.deleteUserAlertCssClassesArray.push('error');
+        this.showDeleteUserAlert = true;
+        this.hideDeleteProfileModal();
+
+        setTimeout(() => {
+          this.showDeleteUserAlert = false;
+          this.deleteUserAlertCssClassesArray = [];
+        }, 2500);
+      }
+    );
+  }
+
+  showDeleteProfileModal() {
+    this.showModal = true;
+  }
+
+  hideDeleteProfileModal() {
+    this.showModal = false;
   }
 
   private buildForm(

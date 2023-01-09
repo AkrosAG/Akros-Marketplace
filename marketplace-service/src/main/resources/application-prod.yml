@@ -11,6 +11,10 @@ spring:
     password: am
   liquibase:
     enabled: false
+  keycloak_client:
+    base_url: *
+    client_secret: : *
+
 keycloak:
   realm: akros-marketplace
   bearer-only: true

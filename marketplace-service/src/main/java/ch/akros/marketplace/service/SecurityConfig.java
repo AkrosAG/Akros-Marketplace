@@ -15,48 +15,54 @@ import org.springframework.security.web.authentication.session.RegisterSessionAu
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
+import static ch.akros.marketplace.service.constants.BaseConstants.USER_ROLE_ADMIN;
+import static ch.akros.marketplace.service.constants.BaseConstants.USER_ROLE_USER;
+
 @Configuration
 public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
-  private static final String TOPICS_URI = "/topics";
-  private static final String ANY_TOPICS_SEARCHES = "/topics/searches/**";
-  private static final String ANY_CATEGORIES_URI = "/categories/**";
+    private static final String TOPICS_URI = "/topics";
+    private static final String ANY_TOPICS_SEARCHES = "/topics/searches/**";
+    private static final String ANY_CATEGORIES_URI = "/categories/**";
 
-  @Bean
-  public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
-    return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
-  }
+    private static final String ANY_USERS_URI = "/users/**";
 
-  /**
-   * Registers the KeycloakAuthenticationProvider with the authentication manager.
-   */
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) {
-    auth.authenticationProvider(keycloakAuthenticationProvider());
-  }
 
-  /**
-   * Defines the session authentication strategy.
-   */
-  @Bean
-  @Override
-  protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-    return new RegisterSessionAuthenticationStrategy(buildSessionRegistry());
-  }
+    @Bean
+    public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+        return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
+    }
 
-  @Bean
-  protected SessionRegistry buildSessionRegistry() {
-    return new SessionRegistryImpl();
-  }
+    /**
+     * Registers the KeycloakAuthenticationProvider with the authentication manager.
+     */
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(keycloakAuthenticationProvider());
+    }
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    super.configure(http);
-    http
-      .authorizeRequests()
-      .antMatchers(HttpMethod.GET, TOPICS_URI, ANY_CATEGORIES_URI, ANY_TOPICS_SEARCHES).permitAll()
-      .antMatchers(HttpMethod.POST, TOPICS_URI).hasAnyAuthority("ADMIN", "USER")
-      .antMatchers(HttpMethod.DELETE, TOPICS_URI).hasAnyAuthority("ADMIN", "USER")
-      .anyRequest().permitAll()
-      .and().csrf().disable();
-  }
+    /**
+     * Defines the session authentication strategy.
+     */
+    @Bean
+    @Override
+    protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
+        return new RegisterSessionAuthenticationStrategy(buildSessionRegistry());
+    }
+
+    @Bean
+    protected SessionRegistry buildSessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        super.configure(http);
+        http
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, TOPICS_URI, ANY_CATEGORIES_URI, ANY_TOPICS_SEARCHES).permitAll()
+                .antMatchers(HttpMethod.POST, TOPICS_URI).hasAnyAuthority(USER_ROLE_ADMIN, USER_ROLE_USER)
+                .antMatchers(HttpMethod.DELETE, TOPICS_URI, ANY_USERS_URI).hasAnyAuthority(USER_ROLE_ADMIN, USER_ROLE_USER)
+                .anyRequest().permitAll()
+                .and().csrf().disable();
+    }
 }
