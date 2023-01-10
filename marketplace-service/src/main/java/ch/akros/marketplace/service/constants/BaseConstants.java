@@ -13,7 +13,7 @@ public class BaseConstants {
     public static final String HTTP_BEARER_AUTHENTICATION_HEADER = "Bearer";
     public static final String HTTP_ACCESS_TOKEN = "access_token";
 
-    public static final String USER_ROLE_ADMIN = "admin";
-    public static final String USER_ROLE_USER = "user";
+    public static final String USER_ROLE_ADMIN = "ADMIN";
+    public static final String USER_ROLE_USER = "USER";
 
 }
