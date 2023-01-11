@@ -7,6 +7,7 @@ import {TranslateService} from '@ngx-translate/core';
 
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {delay} from 'rxjs/operators';
+import { AppRuntimeConfig } from './config/appRuntimeConfig.service';
 
 @UntilDestroy()
 @Component({
@@ -22,7 +23,8 @@ export class AppComponent implements OnInit {
   /* istanbul ignore next */
   constructor(
     private translate: TranslateService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private runtimeConfig: AppRuntimeConfig,
   ) {
     this.subscription = this.translate.onLangChange.subscribe(appLanguage => {
       translate.use(appLanguage.lang);

@@ -1,4 +1,6 @@
+//
 import {TestBed} from '@angular/core/testing';
+
 import {
   AppRuntimeConfig,
   defaultKeycloakConfigRedirectUri,
@@ -40,13 +42,47 @@ const configPart: ConfigData = {
   },
 };
 
+const configFullJson = `{
+  "ownUrl": "ownUrl",
+  "apiUrl": "apiUrl",
+  "authUrl": "authUrl",
+  "usersManagementUrl": "usersManagementUrl",
+  "signOn": {"authority": "authority", "clientId": "clientId"},
+  "keycloakConfig": {
+    "issuer": "issuer",
+    "silentRefreshRedirectUri": "silentRefreshRedirectUri",
+    "clientId": "clientId",
+    "dummyClientSecret": "dummyClientSecret",
+    "redirectUri": "redirectUri",
+    "scope": "scope",
+    "responseType": "responseType",
+    "useSilentRefresh": true,
+    "requireHTTPs: false
+  }
+}`;
+
+const configPartJson = `{
+  "ownUrl": "ownUrl",
+  "apiUrl": "apiUrl",
+  "authUrl": "authUrl",
+  "usersManagementUrl": "usersManagementUrl",
+  "signOn": {"authority": "authority", "clientId": "clientId"},
+  "keycloakConfig": {
+    "issuer": "issuer",
+    "silentRefreshRedirectUri": "silentRefreshRedirectUri",
+    "clientId": "clientId",
+    "dummyClientSecret": "dummyClientSecret"
+  }
+}`;
+
 describe('ConfigReaderService With full Config', () => {
   let service: AppRuntimeConfig;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(AppRuntimeConfig);
-    service.setConfig(configFull);
+    service.loadRuntimeConfig('DontCare');
+    console.log(service);
   });
 
   it('should be created', () => {
@@ -99,10 +135,22 @@ describe('ConfigReaderService With full Config', () => {
 describe('ConfigReaderService: Config with missing field', () => {
   let service: AppRuntimeConfig;
 
+  beforeAll(() => {
+    jest.spyOn(window, 'fetch').mockReturnValue(
+      new Promise<Response>(
+        () =>
+          new Response(JSON.stringify(configPart), {
+            status: 200,
+            statusText: 'OK',
+          })
+      )
+    );
+  });
+
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(AppRuntimeConfig);
-    service.setConfig(configPart);
+    service.loadRuntimeConfig('DontCare');
   });
 
   it('should be created', () => {

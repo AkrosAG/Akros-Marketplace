@@ -1,4 +1,9 @@
-import {CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule} from '@angular/core';
+import {
+  APP_INITIALIZER,
+  CUSTOM_ELEMENTS_SCHEMA,
+  LOCALE_ID,
+  NgModule,
+} from '@angular/core';
 
 import {BrowserModule} from '@angular/platform-browser';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
@@ -64,10 +69,12 @@ import {AdsService} from './components/ads/ads.service';
 import {SpinnerComponent} from './components/shared/spinner/spinner.component';
 import {HttpLoaderInterceptor} from './components/shared/spinner/httpLoaderInterceptor.service';
 import {LoadingService} from './components/shared/spinner/loading.service';
-import {
-  AppRuntimeConfig,
-  APP_RUNTIME_CONFIG,
-} from './config/appRuntimeConfig.service';
+import {AppRuntimeConfig} from './config/appRuntimeConfig.service';
+
+export function initializeAppRuntimeConfig(runtimeConfig: AppRuntimeConfig) {
+  return () =>
+    runtimeConfig.loadRuntimeConfig('assets/runtime-configs/app-config.json');
+}
 
 export function httpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -141,10 +148,12 @@ export function MsalInterceptorConfigFactory(): MsalInterceptorConfiguration {
     SwiperModule,
   ],
   providers: [
+    AppRuntimeConfig,
     {
-      provide: AppRuntimeConfig,
-      useFactory: (config: AppRuntimeConfig) => config,
-      deps: [APP_RUNTIME_CONFIG],
+      provide: APP_INITIALIZER,
+      useFactory: initializeAppRuntimeConfig,
+      deps: [AppRuntimeConfig],
+      multi: true,
     },
     RestHelperService,
     UserService,

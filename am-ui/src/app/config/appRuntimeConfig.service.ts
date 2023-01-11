@@ -18,8 +18,12 @@ export class AppRuntimeConfig {
     this.runtimeConfig = new RuntimeConfig();
   }
 
-  public setConfig(config: ConfigData) {
-    this.runtimeConfig.config = config;
+  public loadRuntimeConfig(configPath: string): Promise<AppRuntimeConfig> {
+    return fetch(configPath)
+      .then(response => response.json())
+      .then(config => {
+        this.runtimeConfig.config = config;
+      }) as Promise<AppRuntimeConfig>;
   }
 
   public get ownUrl(): string {
@@ -78,7 +82,3 @@ export class AppRuntimeConfig {
     return auth;
   }
 }
-
-export const APP_RUNTIME_CONFIG = new InjectionToken<AppRuntimeConfig>(
-  'APP_RUNTIME_CONFIG'
-);

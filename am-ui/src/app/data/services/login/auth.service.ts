@@ -25,7 +25,7 @@ export class AuthStore {
     private oAuthService: OAuthService,
     private runtimeConfig: AppRuntimeConfig
   ) {
-    this.keycloakConfig = runtimeConfig.keycloakConfig;
+    this.keycloakConfig = this.runtimeConfig.keycloakConfig;
     this.isLoggedIn$ = this.user$.pipe(map(user => !!user));
 
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
