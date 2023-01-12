@@ -1,5 +1,6 @@
 //
 import {TestBed} from '@angular/core/testing';
+import fetchMock from "jest-fetch-mock";
 
 import {
   AppRuntimeConfig,
@@ -78,9 +79,13 @@ const configPartJson = `{
 describe('ConfigReaderService With full Config', () => {
   let service: AppRuntimeConfig;
 
+  fetchMock.enableMocks();
+
   beforeEach(() => {
+    fetchMock.resetMocks();
     TestBed.configureTestingModule({});
     service = TestBed.inject(AppRuntimeConfig);
+    fetchMock.mockResponse( JSON.stringify(configFull));
     service.loadRuntimeConfig('DontCare');
     console.log(service);
   });
