@@ -58,7 +58,6 @@
               "create-realm",
               "default-roles-master",
               "offline_access",
-              "ADMIN",
               "uma_authorization"
             ],
             "client": {
@@ -83,7 +82,7 @@
         },
         {
           "id": "dd1ddea9-4f61-4068-af6e-1d48304a7b00",
-          "name": "ADMIN",
+          "name": "admin",
           "description": "${role_admin}",
           "composite": true,
           "composites": {
@@ -2657,6 +2656,13 @@
           "composite": false,
           "clientRole": false,
           "containerId": "64af5f4a-b56e-4f85-acfa-b488282260e1"
+        },
+        {
+          "id": "1c10156e-91c5-11ed-a1eb-0242ac120002",
+          "name": "ADMIN",
+          "composite": false,
+          "clientRole": false,
+          "containerId": "64af5f4a-b56e-4f85-acfa-b488282260e1"
         }
       ],
       "client": {
@@ -3046,7 +3052,8 @@
         "realmRoles": [
           "uma_authorization",
           "default-roles-akros-marketplace",
-          "offline_access"
+          "offline_access",
+          "ADMIN"
         ],
         "clientRoles": {
           "realm-management": [

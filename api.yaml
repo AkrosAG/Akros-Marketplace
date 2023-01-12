@@ -151,6 +151,8 @@ paths:
       responses:
         204:
           description: Successfully deleted user
+        403:
+          description: User is not authorized to delete the user with the given id
         404:
           description: User not found
         400:
