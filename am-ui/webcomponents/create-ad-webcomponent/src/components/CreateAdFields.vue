@@ -286,6 +286,7 @@
  * @param {Array} fieldsToShow - Array of the fields to be rendered as one input type or another
  * based on the field_type_id and the HTML logic.
  * @param {String} selectedCategory - Key string value of the selected category
+ * @param {Object} oldTopic
  */
 import { onMounted, ref, toRaw } from 'vue';
 import { useI18n } from './useI18n';
@@ -295,7 +296,8 @@ const props = defineProps({
   fieldsToShow: Array,
   images: Array,
   thumbnail: Array,
-  selectedCategory: String
+  selectedCategory: String,
+  oldTopic: Object
 });
 const emit = defineEmits(['preview', 'back']);
 const fieldValues = ref([]);
@@ -590,5 +592,8 @@ onMounted(() => {
     fieldKeys.value[field.field_id] = field.key;
     errors.value[field.field_id] = { hasError: false, reason: null };
   });
+  //TODO we need to have the data of the oldTopic ready here to modify the
+  //values. For example
+  fieldValues.value[1] = 'oldTitle'
 });
 </script>

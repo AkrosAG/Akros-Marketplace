@@ -35,4 +35,8 @@ export class AdComponent {
     await this.adsService.deleteTopic(this.ad.topic_id);
     this.deleteTopicEvent.emit(this.ad);
   }
+
+  openUpdateAdView(topicId: number) {
+    this.router.navigate(['create/' + topicId]);
+  }
 }

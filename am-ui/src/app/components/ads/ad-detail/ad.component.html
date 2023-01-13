@@ -41,7 +41,7 @@
                 </div>
             </a>
             <div class="button-container">
-                <button class="update-button">
+                <button class="update-button" (click)="openUpdateAdView(ad.topic_id)">
                     {{ 'ad.update' | translate }}
                 </button>
                 <button type="button" class="delete-button" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + ad.topic_id">

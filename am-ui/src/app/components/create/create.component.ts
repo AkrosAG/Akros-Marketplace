@@ -3,6 +3,7 @@ import {Subscription} from 'rxjs';
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {AuthStore} from '../../data/services/login/auth.service';
 import {OAuthService} from 'angular-oauth2-oidc';
+import {ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'mp-create',
@@ -12,6 +13,7 @@ import {OAuthService} from 'angular-oauth2-oidc';
 export class CreateComponent implements OnInit, OnDestroy {
   public appLanguage: String;
   public subscription: Subscription;
+  public topicId: Number;
 
   /**
    * @description Component which hosts the webcomponent for ads creation
@@ -23,8 +25,11 @@ export class CreateComponent implements OnInit, OnDestroy {
   constructor(
     private translate: TranslateService,
     private auth: AuthStore,
-    private oAuthService: OAuthService
-  ) {}
+    private oAuthService: OAuthService,
+    private route: ActivatedRoute
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.appLanguage = history.state.appLanguage;
@@ -32,9 +37,19 @@ export class CreateComponent implements OnInit, OnDestroy {
       this.appLanguage = appLanguage.lang;
     });
 
+   this.route.params.subscribe(
+     (params: Params) => {
+         this.topicId = +params['topicId'];
+     }
+   );
+
     // refresh token on start of edit, so page is not refreshed
     // during the automatic token refresh(triggered at 75% of token life passing)
     this.oAuthService.refreshToken();
+  }
+
+  getTopicId(): Number {
+    return this.topicId;
   }
 
   getOauthToken(): string | null {

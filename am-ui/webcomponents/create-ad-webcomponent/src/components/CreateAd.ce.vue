@@ -6,7 +6,7 @@
  * from child component and form has been correctly filled.
  * Contains the styles of the module.
  */
-import { onMounted, ref, toRefs } from 'vue';
+import { onMounted, ref, toRefs, unref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import CategoriesApi from '../api/src/api/CategoriesApi';
 import ApiClient from '../api/src/ApiClient';
@@ -42,17 +42,39 @@ const props = defineProps({
     type: String
   },
   userId: String,
-  bearerToken: String
+  bearerToken: String,
+  topicId: Number
 });
 
 const { t } = useI18n({ useScope: 'global' });
 const { bearerToken } = toRefs(props);
 const { userId } = toRefs(props);
+const { topicId } = toRefs(props);
+let oldTopic = null
 
 onMounted(() => {
   sendLoadingEvent(true);
   categoriesApi.categoriesCreateGet(true, getCategories);
+  getOldTopic(topicId, bearerToken)
+  console.log('oldTopic', oldTopic)
 });
+
+function getOldTopic(inputTopicId, inputBearerToken) {
+//FIXME used this setTimeout as workaround since it was not filling in the data from the backend in time
+  setTimeout(() => {
+    const topicId = unref(inputTopicId);
+    const bearerToken = unref(inputBearerToken);
+    if (topicId !== undefined && bearerToken !== undefined) {
+      // TODO: get the complete Topic
+      createTopic.topicsGet(topicId, bearerToken)
+      .then(data => {
+        console.log('data', data)
+        oldTopic = data
+      });
+      // Todo: add data to the correct variable (probably it is not working because I have no clue how it works with vueJs.)
+    }
+  }, 500);
+}
 
 /**
  * Retrieves the categories from the api response and triggers update of the fields.
@@ -295,6 +317,7 @@ defineExpose({
         :fields-to-modify="fieldsToPreview"
         :images="images"
         :thumbnail="thumbnail"
+        :oldTopic="oldTopic"
         @preview="preview"
       />
       <PreviewAd

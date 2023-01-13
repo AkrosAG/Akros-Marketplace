@@ -32,4 +32,15 @@ export default class CreateTopic {
 
   }
 
+  topicsGet(topicId, token) {
+    return axios
+    .get("/topics/"+topicId, {
+        headers: {
+          "Authorization": "Bearer " + token
+        },
+    })
+    .then((r)=> { return r.data })
+    .catch((e) => { console.log('error caught topicsGet', e) })
+}
+
 }

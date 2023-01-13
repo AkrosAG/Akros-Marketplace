@@ -26,6 +26,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: CreateComponent,
   },
+  {
+    path: 'create/:topicId',
+    canActivate: [AuthGuard],
+    component: CreateComponent,
+  },
   {path: 'search-results', component: SearchResultsComponent},
   {path: 'search-result-details/:id', component: SearchResultDetailsComponent},
 ];

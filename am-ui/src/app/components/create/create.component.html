@@ -8,8 +8,10 @@
     <div class="text-block">
       <i18n-host [locale]="appLanguage">
         <create-ad-webcomponent
+            [topicId]="getTopicId()"
             [userId]="getUserId()"
-            [bearerToken]="getOauthToken()"></create-ad-webcomponent>
+            [bearerToken]="getOauthToken()">
+        </create-ad-webcomponent>
       </i18n-host>
     </div>
   </div>
