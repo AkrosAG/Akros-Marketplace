@@ -4,7 +4,7 @@
   </h1>
   <div class="content-wrapper">
     <div class="form-wrapper">
-      <form [formGroup]="formGroup">
+      <form [formGroup]="formGroup" *ngIf="formGroup">
         <div class="form-field">
           <input
             [formControlName]="'firstName'"
