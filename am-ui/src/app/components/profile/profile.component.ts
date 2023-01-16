@@ -83,7 +83,7 @@ export class ProfileComponent implements OnInit {
 
   onDeleteProfile() {
     this.userService.deleteUser(this.userId).subscribe(
-      data => {
+      () => {
         this.deleteUserAlertText = this.translatePipe.transform(
           'profile.deleteSuccess'
         );
@@ -96,7 +96,7 @@ export class ProfileComponent implements OnInit {
           this.auth.logout();
         }, 3000);
       },
-      err => {
+      () => {
         this.deleteUserAlertText = this.translatePipe.transform(
           'profile.deleteError'
         );

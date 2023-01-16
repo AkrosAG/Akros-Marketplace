@@ -15,7 +15,7 @@
     "test": "jest --coverage",
     "clear_jest": "jest --clearCache",
     "lint": "npm run lint:angular && npm run lint:typescript && npm run lint:style",
-    "lint:angular": "ng lint",
+    "lint:angular": "ng lint --max-warnings 0",
     "lint:typescript": "gts lint",
     "lint:style": "npx stylelint \"**/*.scss\"",
     "fix": "npm run fix:angular && npm run fix:typescript && npm run fix:style",
