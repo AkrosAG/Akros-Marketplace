@@ -5,10 +5,10 @@ echo "------------------------ START  ----------------------"
 echo "------------------------------------------------------"
 set -e
 DIN_CONF_DIR="/usr/share/nginx/html/assets/runtime-configs"
-envsubst < ${DIN_CONF_DIR}/app-config.env.json > ${DIN_CONF_DIR}/app-config.json
+envsubst < ${DIN_CONF_DIR}/app-config.json.env > ${DIN_CONF_DIR}/app-config.json
 
 envsubst '$NGINX_UPSTREAM_MARKETPLACE_SERVICE,$NGINX_UPSTREAM_MONITORING_SERVICE,$NGINX_UPSTREAM_AUTH_SERVICE' \
-    < /etc/nginx/nginx.env.conf > /etc/nginx/conf.d/default.conf 
+    < /etc/nginx/nginx.conf.env > /etc/nginx/conf.d/default.conf 
 
 #for debugging purpose only
 echo "----------- /etc/nginx/conf.d/default.conf--------------"
