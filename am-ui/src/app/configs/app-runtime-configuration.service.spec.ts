@@ -88,9 +88,7 @@ describe('ConfigReaderService With full Config', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(AppRuntimeConfig);
-    service
-      .loadRuntimeConfig('DontCare')
-      .then(() => console.log(service.apiUrl));
+    service.loadRuntimeConfig('DontCare').then(() => {});
   });
 
   it('should be created', () => {
@@ -154,9 +152,7 @@ describe('ConfigReaderService: Config with missing field', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(AppRuntimeConfig);
-    service
-      .loadRuntimeConfig('DontCare')
-      .then(() => console.log(service.apiUrl));
+    service.loadRuntimeConfig('DontCare').then(() => {});
   });
 
   it('should be created', () => {
