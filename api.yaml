@@ -549,11 +549,13 @@ components:
         first_name:
           type: string
           nullable: false
-          minLength: 3
+          minLength: 1
+          pattern: ^(?!\s*$).+
         last_name:
           type: string
           nullable: false
-          minLength: 3
+          minLength: 1
+          pattern: ^(?!\s*$).+
         email:
           type: string
           format: email
