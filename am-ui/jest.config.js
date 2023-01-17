@@ -5,7 +5,6 @@ module.exports = {
     '<rootDir>/cypress/',
     '<rootDir>/webcomponents/',
     "<rootDir>/node_modules/",
-    "<rootDir>/jest-global-mocks.ts",
 ],
   setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
   coverageThreshold: {
