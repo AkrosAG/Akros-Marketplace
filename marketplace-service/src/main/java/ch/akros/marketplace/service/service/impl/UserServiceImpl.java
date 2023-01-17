@@ -1,7 +1,8 @@
 package ch.akros.marketplace.service.service.impl;
 
+import ch.akros.marketplace.api.model.UserDTO;
+import ch.akros.marketplace.api.model.UserResponseDTO;
 import ch.akros.marketplace.service.converters.UserConverter;
-import ch.akros.marketplace.service.model.UserDto;
 import ch.akros.marketplace.service.service.TopicService;
 import ch.akros.marketplace.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +15,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-import org.webjars.NotFoundException;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static ch.akros.marketplace.service.constants.BaseConstants.*;
 
@@ -50,14 +51,18 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void deleteUser(String userId) throws NotFoundException {
+    public void deleteUser(UUID userId) throws WebClientResponseException.Unauthorized,
+            WebClientResponseException.Forbidden,
+            WebClientResponseException.NotFound,
+            WebClientResponseException.InternalServerError,
+            WebClientResponseException.ServiceUnavailable {
         log.debug("UserServiceImpl.deleteUser() called");
 
         String requestUrl = KEYCLOAK_USERS_URL + "/" + userId;
         String authHeader = HTTP_BEARER_AUTHENTICATION_HEADER + " " + getAccessToken().orElse("");
 
         try {
-            this.topicService.deleteTopicsForUser(userId);
+            this.topicService.deleteTopicsForUser(userId.toString());
 
             keycloakClient.delete()
                     .uri(requestUrl)
@@ -67,28 +72,31 @@ public class UserServiceImpl implements UserService {
                     .bodyToMono(String.class)
                     .block();
 
-        } catch (WebClientResponseException.Unauthorized unauthorizedEx) {
+        } catch (WebClientResponseException.Unauthorized ex) {
             log.error("UserServiceImpl.deleteUser() user with id " + userId + "unauthorized access token " + authHeader);
-
-        } catch (WebClientResponseException.Forbidden forbiddenEx) {
+            throw ex;
+        } catch (WebClientResponseException.Forbidden ex) {
             log.error("UserServiceImpl.deleteUser() user with id " + userId + "forbidden access token " + authHeader);
-
-        } catch (WebClientResponseException.NotFound notFoundEx) {
+            throw ex;
+        } catch (WebClientResponseException.NotFound ex) {
             log.error("UserServiceImpl.deleteUser() user with id " + userId + " not found.");
-            throw new NotFoundException("User not found");
-
-        } catch (WebClientResponseException.InternalServerError internalServerError) {
+            throw ex;
+        } catch (WebClientResponseException.InternalServerError ex) {
             log.error("UserServiceImpl.deleteUser() user with id " + userId + " Keycloak 500 error");
-        } catch (Exception e) {
-
-            log.error(e.getMessage(), e);
-            throw e;
+            throw ex;
+        } catch (WebClientResponseException.ServiceUnavailable ex) {
+            log.error("UserServiceImpl.deleteUser() user with id " + userId + " Keycloak 503 error");
+            throw ex;
         }
     }
 
     @Override
-    public void updateUser(String userId, UserDto userDto) throws NotFoundException {
-        log.debug("UserServiceImpl.updateUser() called");
+    public UserResponseDTO updateUser(UUID userId, UserDTO userDto) throws WebClientResponseException.Unauthorized,
+            WebClientResponseException.Forbidden,
+            WebClientResponseException.NotFound,
+            WebClientResponseException.InternalServerError,
+            WebClientResponseException.ServiceUnavailable {
+        log.debug("UserServiceImpl.updateUser() called " + userDto.toString());
 
         String requestUrl = KEYCLOAK_USERS_URL + "/" + userId;
         String authHeader = HTTP_BEARER_AUTHENTICATION_HEADER + " " + getAccessToken().orElse("");
@@ -105,11 +113,23 @@ public class UserServiceImpl implements UserService {
                     .bodyToMono(Void.class)
                     .block();
 
-        } catch (Exception e) {
-
+            return userConverter.convertUserDtoToUserResponseDto(userDto, userId);
+        } catch (WebClientResponseException.Unauthorized ex) {
+            log.error("UserServiceImpl.updateUser() user with id " + userId + "unauthorized access token " + authHeader);
+            throw ex;
+        } catch (WebClientResponseException.Forbidden ex) {
+            log.error("UserServiceImpl.updateUser() user with id " + userId + "forbidden access token " + authHeader);
+            throw ex;
+        } catch (WebClientResponseException.NotFound ex) {
+            log.error("UserServiceImpl.updateUser() user with id " + userId + " not found.");
+            throw ex;
+        } catch (WebClientResponseException.InternalServerError ex) {
+            log.error("UserServiceImpl.updateUser() user with id " + userId + " Keycloak 500 error");
+            throw ex;
+        } catch (WebClientResponseException.ServiceUnavailable ex) {
+            log.error("UserServiceImpl.updateUser() user with id " + userId + " Keycloak 503 error");
+            throw ex;
         }
-
-
     }
 
     private Optional<String> getAccessToken() {

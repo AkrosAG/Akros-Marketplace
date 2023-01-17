@@ -62,6 +62,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, TOPICS_URI, ANY_CATEGORIES_URI, ANY_TOPICS_SEARCHES).permitAll()
                 .antMatchers(HttpMethod.POST, TOPICS_URI).hasAnyAuthority(USER_ROLE_ADMIN, USER_ROLE_USER)
                 .antMatchers(HttpMethod.DELETE, TOPICS_URI, ANY_USERS_URI).hasAnyAuthority(USER_ROLE_ADMIN, USER_ROLE_USER)
+                .antMatchers(HttpMethod.PUT, ANY_USERS_URI).hasAnyAuthority(USER_ROLE_ADMIN, USER_ROLE_USER)
                 .anyRequest().permitAll()
                 .and().csrf().disable();
     }
