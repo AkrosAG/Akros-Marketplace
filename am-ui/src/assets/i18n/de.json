@@ -100,6 +100,8 @@
     "deleteProfile": "Mein Profil und alle Daten löschen",
     "deleteSuccess": "Das Profil und die Daten sind erfolgreich gelöscht",
     "deleteError": "Das Profil und die Daten können nicht gelöscht werden. Bitte versuchen Sie es später noch einmal",
+    "updateProfileSuccess": "Das Profil und die Daten sind erfolgreich aktualisiert",
+    "updateProfileError": "Das Profil und die Daten können nicht aktualisiert werden. Bitte versuchen Sie es später noch einmal",
     "success": "Änderungen wurden erfolgreich geändert",
     "error": "Es ist ein Fehler aufgetreten"
   }

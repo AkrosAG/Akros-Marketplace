@@ -35,10 +35,9 @@ public class UserConverter {
         userResponseDTO.setId(uuuid);
         userResponseDTO.setFirstName(userDto.getFirstName());
         userResponseDTO.setLastName(userDto.getLastName());
-        userResponseDTO.setEmail(userDto.getLastName());
+        userResponseDTO.setEmail(userDto.getEmail());
         userResponseDTO.setPhoneNumber(userDto.getPhoneNumber());
 
-        System.out.println();
         return userResponseDTO;
     }
 }

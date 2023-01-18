@@ -35,7 +35,9 @@
         </div>
       </form>
       <div class="form-field">
-        <a class="btn submit-btn" (click)="changeUserData()">
+        <!-- <a class="btn submit-btn" (click)="changeUserData()"> -->
+
+        <a class="btn submit-btn" (click)="updateUser()">
           {{ 'save' | translate }}</a
         >
       </div>
@@ -66,22 +68,12 @@
     </div>
 
     <div
-      *ngIf="showDeleteUserAlert"
-      class="result-banner"
-      [ngClass]="deleteUserAlertCssClassesArray"
-    >
-      {{ deleteUserAlertText }}
-    </div>
+    *ngIf="showAlert"
+    class="result-banner"
+    [ngClass]="alertCssClassesArray"
+  >
+    {{ alertTextI18n | translate }}
+  </div>
 
-    <div
-      class="result-banner"
-      *ngIf="saveAction"
-      [ngClass]="{error: saveError}"
-    >
-      <p *ngIf="saveAction && !saveError">
-        {{ 'profile.success' | translate }}
-      </p>
-      <p *ngIf="saveAction && saveError">{{ 'profile.error' | translate }}</p>
-    </div>
   </div>
 </div>

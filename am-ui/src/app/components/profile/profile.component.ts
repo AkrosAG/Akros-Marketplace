@@ -4,11 +4,10 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {TranslatePipe} from '@ngx-translate/core';
+import {UserDto} from 'src/app/data/models/UserDto';
+import {OAuthUserInfo} from 'src/app/shared/types/oauthuserinfo.type';
 import {AuthStore} from '../../data/services/login/auth.service';
-import {
-  UserDataModel,
-  UserService,
-} from './../../data/services/login/user.service';
+import {UserService} from './../../data/services/login/user.service';
 @UntilDestroy()
 @Component({
   selector: 'mp-profile',
@@ -18,15 +17,14 @@ import {
 export class ProfileComponent implements OnInit {
   public welcome!: String;
   public formGroup!: FormGroup;
-  public saveAction = false;
-  public saveError = false;
   private userId!: string;
   private username!: string;
   public showModal = false;
   public deleteModalId = 'deleteProfileModal';
-  public showDeleteUserAlert = false;
-  public deleteUserAlertCssClassesArray: string[] = ['error'];
-  public deleteUserAlertText: string;
+
+  public showAlert = false;
+  public alertTextI18n: string;
+  public alertCssClassesArray: string[];
 
   constructor(
     private auth: AuthStore,
@@ -53,60 +51,75 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  changeUserData() {
-    const newUserData: UserDataModel = {
+  updateUser() {
+    const userDto: UserDto = {
+      first_name: this.formGroup.get('firstName')?.value,
+      last_name: this.formGroup.get('lastName')?.value,
       email: this.formGroup.get('email')?.value,
-      firstName: this.formGroup.get('firstName')?.value,
-      lastName: this.formGroup.get('lastName')?.value,
-      attributes: {
-        phoneNumber: [this.formGroup.get('phoneNumber')?.value],
-      },
-      username: this.username,
-      enabled: true,
-      emailVerified: false,
-      requiredActions: [],
+      phone_number: this.formGroup.get('phoneNumber')?.value,
     };
-    this.userService
-      .changeUserData(this.userId, newUserData)
-      .pipe(untilDestroyed(this))
-      .subscribe(
-        () => {
-          this.saveAction = true;
-          this.saveError = false;
-        },
-        () => {
-          this.saveAction = true;
-          this.saveError = true;
+
+    console.log(userDto);
+
+    this.userService.updateUser(this.userId, userDto).subscribe(
+      data => {
+        this.alertCssClassesArray = [];
+        this.showAlert = true;
+        this.alertTextI18n = 'profile.updateProfileSuccess';
+
+        const updatedUser: UserDto = data;
+        const updateAuthUser: OAuthUserInfo = {
+          ...(this.auth.userSubject$.getValue() as OAuthUserInfo),
+          email: updatedUser.email,
+          given_name: updatedUser.first_name,
+          family_name: updatedUser.last_name,
+          phone_number: updatedUser.phone_number,
+          name: `${updatedUser.first_name} ${updatedUser.last_name}`,
+        };
+        this.auth.updateUser(updateAuthUser);
+
+        setTimeout(() => {
+          this.showAlert = false;
+        }, 2500);
+      },
+      err => {
+        if (err) {
+          this.alertCssClassesArray = ['error'];
+          this.showAlert = true;
+          this.alertTextI18n = 'profile.updateProfileError';
+
+          setTimeout(() => {
+            this.showAlert = false;
+            this.alertCssClassesArray = [];
+          }, 2500);
         }
-      );
+      }
+    );
   }
 
   onDeleteProfile() {
     this.userService.deleteUser(this.userId).subscribe(
-      data => {
-        this.deleteUserAlertText = this.translatePipe.transform(
-          'profile.deleteSuccess'
-        );
-        this.deleteUserAlertCssClassesArray = [];
-        this.showDeleteUserAlert = true;
+      () => {
+        this.alertCssClassesArray = [];
+        this.showAlert = true;
+        this.alertTextI18n = 'profile.deleteSuccess';
         this.hideDeleteProfileModal();
 
         setTimeout(() => {
-          this.showDeleteUserAlert = false;
+          this.showAlert = false;
           this.auth.logout();
         }, 3000);
       },
-      err => {
-        this.deleteUserAlertText = this.translatePipe.transform(
-          'profile.deleteError'
-        );
-        this.deleteUserAlertCssClassesArray.push('error');
-        this.showDeleteUserAlert = true;
+      () => {
+        this.alertCssClassesArray = ['error'];
+        this.showAlert = true;
+        this.alertTextI18n = 'profile.deleteError';
+
         this.hideDeleteProfileModal();
 
         setTimeout(() => {
-          this.showDeleteUserAlert = false;
-          this.deleteUserAlertCssClassesArray = [];
+          this.showAlert = false;
+          this.alertCssClassesArray = [];
         }, 2500);
       }
     );

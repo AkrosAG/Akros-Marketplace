@@ -29,12 +29,7 @@ export class AuthStore {
     this.isLoggedOut$ = this.isLoggedIn$.pipe(map(loggedIn => !loggedIn));
 
     this.loggedInUserName$ = this.user$.pipe(
-      map(
-        user =>
-          `${user?.given_name} ${user?.family_name}` ||
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (user as any)?.preferred_username
-      )
+      map(user => (user?.name || user?.preferred_username) ?? '')
     );
 
     const user = this.userLocalStorageService.getData();
@@ -90,6 +85,11 @@ export class AuthStore {
 
   login_sso() {
     this.oAuthService.initCodeFlow();
+  }
+
+  public updateUser(user: OAuthUserInfo) {
+    this.userSubject$.next(user);
+    this.userLocalStorageService.storeData(user);
   }
 
   private postLogin(
