@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -24,7 +25,6 @@ public class UserControllerUnitTest {
     private UserService userService;
     private UserController userController;
     private Validator validator;
-
 
     @BeforeEach
     void setUp() {
@@ -63,6 +63,20 @@ public class UserControllerUnitTest {
         } catch (IllegalArgumentException ex) {
             ResponseEntity result = userController.handleException(ex);
             assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        }
+    }
+
+    @Test
+    void testUpdateUser_whenUserIsAuthorized_keycloakErrorForbidden() {
+        UserController spyUserController = spy(userController);
+        String userId = UUID.randomUUID().toString();
+
+        doReturn(true).when(spyUserController).isCurrentUserAuthorized(UUID.fromString(userId));
+        try {
+            spyUserController.deleteUser(userId);
+        } catch (WebClientResponseException ex) {
+            ResponseEntity result = userController.handleException(ex);
+            assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
         }
     }
 
@@ -146,7 +160,7 @@ public class UserControllerUnitTest {
     }
 
     @Test
-    void updateDeleteUser_whenUserIsAuthorized_shouldReturnOk() {
+    void testUpdateUser_whenUserIsAuthorized_shouldReturnOk() {
         UserController spyUserController = spy(userController);
         String userId = UUID.randomUUID().toString();
         UserDTO user = new UserDTO();
@@ -175,5 +189,109 @@ public class UserControllerUnitTest {
         assertEquals(userResponseDTO.getLastName(), result.getBody().getLastName());
         assertEquals(userResponseDTO.getEmail(), result.getBody().getEmail());
         assertEquals(userResponseDTO.getPhoneNumber(), result.getBody().getPhoneNumber());
+    }
+
+    @Test
+    void testUpdateUser_whenUserIsAuthorized_keycloakErrorServiceUnavailable() {
+        UserController spyUserController = spy(userController);
+        String userId = UUID.randomUUID().toString();
+        UserDTO user = new UserDTO();
+
+        String userFirstName = "test";
+        String userLastName = "test";
+        String userEmail = "test@test.ch";
+
+        user.setFirstName(userFirstName);
+        user.setLastName(userLastName);
+        user.setEmail(userEmail);
+
+        doReturn(true).when(spyUserController).isCurrentUserAuthorized(UUID.fromString(userId));
+
+        when(userService.updateUser(UUID.fromString(userId), user))
+                .thenThrow(new WebClientResponseException(503, "", null, null, null));
+        try {
+            ResponseEntity<UserResponseDTO> result = spyUserController.updateUser(userId, user);
+        } catch (WebClientResponseException ex) {
+            ResponseEntity result = userController.handleException(ex);
+            assertEquals(HttpStatus.SERVICE_UNAVAILABLE, result.getStatusCode());
+        }
+    }
+
+    @Test
+    void testUpdateUser_whenUserIsAuthorized_keycloakErrorUnauthorized() {
+        UserController spyUserController = spy(userController);
+        String userId = UUID.randomUUID().toString();
+        UserDTO user = new UserDTO();
+
+        String userFirstName = "test";
+        String userLastName = "test";
+        String userEmail = "test@test.ch";
+
+        user.setFirstName(userFirstName);
+        user.setLastName(userLastName);
+        user.setEmail(userEmail);
+
+        doReturn(true).when(spyUserController).isCurrentUserAuthorized(UUID.fromString(userId));
+
+        when(userService.updateUser(UUID.fromString(userId), user))
+                .thenThrow(new WebClientResponseException(401, "", null, null, null));
+        try {
+            ResponseEntity<UserResponseDTO> result = spyUserController.updateUser(userId, user);
+        } catch (WebClientResponseException ex) {
+            ResponseEntity result = userController.handleException(ex);
+            assertEquals(HttpStatus.SERVICE_UNAVAILABLE, result.getStatusCode());
+        }
+    }
+
+    @Test
+    void testUpdateUser_whenUserIsAuthorized_keycloakErrorUserNotFound() {
+        UserController spyUserController = spy(userController);
+        String userId = UUID.randomUUID().toString();
+        UserDTO user = new UserDTO();
+
+        String userFirstName = "test";
+        String userLastName = "test";
+        String userEmail = "test@test.ch";
+
+        user.setFirstName(userFirstName);
+        user.setLastName(userLastName);
+        user.setEmail(userEmail);
+
+        doReturn(true).when(spyUserController).isCurrentUserAuthorized(UUID.fromString(userId));
+
+        when(userService.updateUser(UUID.fromString(userId), user))
+                .thenThrow(new WebClientResponseException(404, "", null, null, null));
+        try {
+            ResponseEntity<UserResponseDTO> result = spyUserController.updateUser(userId, user);
+        } catch (WebClientResponseException ex) {
+            ResponseEntity result = userController.handleException(ex);
+            assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
+        }
+    }
+
+    @Test
+    void testUpdateUser_whenUserIsAuthorized_keycloakErrorUserBadRequest() {
+        UserController spyUserController = spy(userController);
+        String userId = UUID.randomUUID().toString();
+        UserDTO user = new UserDTO();
+
+        String userFirstName = "test";
+        String userLastName = "test";
+        String userEmail = "test@test.ch";
+
+        user.setFirstName(userFirstName);
+        user.setLastName(userLastName);
+        user.setEmail(userEmail);
+
+        doReturn(true).when(spyUserController).isCurrentUserAuthorized(UUID.fromString(userId));
+
+        when(userService.updateUser(UUID.fromString(userId), user))
+                .thenThrow(new WebClientResponseException(400, "", null, null, null));
+        try {
+            ResponseEntity<UserResponseDTO> result = spyUserController.updateUser(userId, user);
+        } catch (WebClientResponseException ex) {
+            ResponseEntity result = userController.handleException(ex);
+            assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        }
     }
 }

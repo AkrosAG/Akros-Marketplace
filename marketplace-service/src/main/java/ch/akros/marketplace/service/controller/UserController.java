@@ -10,9 +10,7 @@ import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
@@ -34,7 +32,6 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable String id) {
         log.debug("UserController.deleteUser() with id " + id + " called");
-
 
         UUID userId = UUID.fromString(id);
         boolean isUserAuthorized = isCurrentUserAuthorized(userId);
@@ -85,24 +82,26 @@ public class UserController {
         return isAdmin;
     }
 
-    @ExceptionHandler({Exception.class})
+    @ExceptionHandler({WebClientResponseException.class, IllegalArgumentException.class})
     public ResponseEntity handleException(Exception ex) {
         log.debug("Exception handler: ", ex);
-        if (ex instanceof WebClientResponseException.Unauthorized) {
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
-        } else if (ex instanceof WebClientResponseException.Forbidden) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        } else if (ex instanceof WebClientResponseException.NotFound) {
-            return ResponseEntity.notFound().build();
-        } else if (ex instanceof WebClientResponseException.BadRequest || ex instanceof IllegalArgumentException
-                || ex instanceof MethodArgumentNotValidException || ex instanceof HttpMessageNotReadableException) {
+        if (ex instanceof WebClientResponseException) {
+            HttpStatus statusCode = ((WebClientResponseException) ex).getStatusCode();
+            switch (statusCode) {
+                case FORBIDDEN:
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+                case NOT_FOUND:
+                    return ResponseEntity.notFound().build();
+                case BAD_REQUEST:
+                    return ResponseEntity.badRequest().build();
+                case UNAUTHORIZED:
+                case SERVICE_UNAVAILABLE:
+                case INTERNAL_SERVER_ERROR:
+                    return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+            }
+        } else if (ex instanceof IllegalArgumentException) {
             return ResponseEntity.badRequest().build();
-        } else if (ex instanceof WebClientResponseException.ServiceUnavailable) {
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
-        } else if (ex instanceof WebClientResponseException.InternalServerError) {
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
-        } else {
-            return ResponseEntity.internalServerError().build();
         }
+        return ResponseEntity.internalServerError().build();
     }
 }

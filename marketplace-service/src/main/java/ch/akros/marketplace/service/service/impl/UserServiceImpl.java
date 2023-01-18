@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -51,51 +50,25 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void deleteUser(UUID userId) throws WebClientResponseException.Unauthorized,
-            WebClientResponseException.Forbidden,
-            WebClientResponseException.NotFound,
-            WebClientResponseException.InternalServerError,
-            WebClientResponseException.ServiceUnavailable {
+    public void deleteUser(UUID userId) {
         log.debug("UserServiceImpl.deleteUser() called");
 
         String requestUrl = KEYCLOAK_USERS_URL + "/" + userId;
         String authHeader = HTTP_BEARER_AUTHENTICATION_HEADER + " " + getAccessToken().orElse("");
 
-        try {
-            this.topicService.deleteTopicsForUser(userId.toString());
+        this.topicService.deleteTopicsForUser(userId.toString());
 
-            keycloakClient.delete()
-                    .uri(requestUrl)
-                    .header(HTTP_AUTHORIZATION_HEADER, authHeader)
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(String.class)
-                    .block();
-
-        } catch (WebClientResponseException.Unauthorized ex) {
-            log.error("UserServiceImpl.deleteUser() user with id " + userId + "unauthorized access token " + authHeader);
-            throw ex;
-        } catch (WebClientResponseException.Forbidden ex) {
-            log.error("UserServiceImpl.deleteUser() user with id " + userId + "forbidden access token " + authHeader);
-            throw ex;
-        } catch (WebClientResponseException.NotFound ex) {
-            log.error("UserServiceImpl.deleteUser() user with id " + userId + " not found.");
-            throw ex;
-        } catch (WebClientResponseException.InternalServerError ex) {
-            log.error("UserServiceImpl.deleteUser() user with id " + userId + " Keycloak 500 error");
-            throw ex;
-        } catch (WebClientResponseException.ServiceUnavailable ex) {
-            log.error("UserServiceImpl.deleteUser() user with id " + userId + " Keycloak 503 error");
-            throw ex;
-        }
+        keycloakClient.delete()
+                .uri(requestUrl)
+                .header(HTTP_AUTHORIZATION_HEADER, authHeader)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
     }
 
     @Override
-    public UserResponseDTO updateUser(UUID userId, UserDTO userDto) throws WebClientResponseException.Unauthorized,
-            WebClientResponseException.Forbidden,
-            WebClientResponseException.NotFound,
-            WebClientResponseException.InternalServerError,
-            WebClientResponseException.ServiceUnavailable {
+    public UserResponseDTO updateUser(UUID userId, UserDTO userDto) {
         log.debug("UserServiceImpl.updateUser() called " + userDto.toString());
 
         String requestUrl = KEYCLOAK_USERS_URL + "/" + userId;
@@ -103,33 +76,16 @@ public class UserServiceImpl implements UserService {
 
         JSONObject keycloakUser = userConverter.convertUserDtoToKeycloakUser(userDto);
 
-        try {
-            keycloakClient.put()
-                    .uri(requestUrl)
-                    .header(HTTP_AUTHORIZATION_HEADER, authHeader)
-                    .accept(MediaType.APPLICATION_JSON)
-                    .bodyValue(keycloakUser)
-                    .retrieve()
-                    .bodyToMono(Void.class)
-                    .block();
+        keycloakClient.put()
+                .uri(requestUrl)
+                .header(HTTP_AUTHORIZATION_HEADER, authHeader)
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(keycloakUser)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
 
-            return userConverter.convertUserDtoToUserResponseDto(userDto, userId);
-        } catch (WebClientResponseException.Unauthorized ex) {
-            log.error("UserServiceImpl.updateUser() user with id " + userId + "unauthorized access token " + authHeader);
-            throw ex;
-        } catch (WebClientResponseException.Forbidden ex) {
-            log.error("UserServiceImpl.updateUser() user with id " + userId + "forbidden access token " + authHeader);
-            throw ex;
-        } catch (WebClientResponseException.NotFound ex) {
-            log.error("UserServiceImpl.updateUser() user with id " + userId + " not found.");
-            throw ex;
-        } catch (WebClientResponseException.InternalServerError ex) {
-            log.error("UserServiceImpl.updateUser() user with id " + userId + " Keycloak 500 error");
-            throw ex;
-        } catch (WebClientResponseException.ServiceUnavailable ex) {
-            log.error("UserServiceImpl.updateUser() user with id " + userId + " Keycloak 503 error");
-            throw ex;
-        }
+        return userConverter.convertUserDtoToUserResponseDto(userDto, userId);
     }
 
     private Optional<String> getAccessToken() {
