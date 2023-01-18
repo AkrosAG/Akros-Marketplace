@@ -43,7 +43,6 @@ export class ProfileComponent implements OnInit {
       });
       this.userId = user?.sub || '';
 
-      this.username = user?.preferred_username || '';
       if (name && lastName && email) {
         this.formGroup = this.buildForm(name, lastName, email, phoneNumber);
       }
