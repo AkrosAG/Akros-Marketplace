@@ -8,39 +8,6 @@ import {
 } from './app-runtime-configuration.service';
 import {ConfigData} from './model';
 
-//const configFullJson = `{
-//  "ownUrl": "ownUrl",
-//  "apiUrl": "apiUrl",
-//  "authUrl": "authUrl",
-//  "usersManagementUrl": "usersManagementUrl",
-//  "signOn": {"authority": "authority", "clientId": "clientId"},
-//  "keycloakConfig": {
-//    "issuer": "issuer",
-//    "silentRefreshRedirectUri": "silentRefreshRedirectUri",
-//    "clientId": "clientId",
-//    "dummyClientSecret": "dummyClientSecret",
-//    "redirectUri": "redirectUri",
-//    "scope": "scope",
-//    "responseType": "responseType",
-//    "useSilentRefresh": true,
-//    "requireHTTPs: false
-//  }
-//}`;
-//
-//const configPartJson = `{
-//  "ownUrl": "ownUrl",
-//  "apiUrl": "apiUrl",
-//  "authUrl": "authUrl",
-//  "usersManagementUrl": "usersManagementUrl",
-//  "signOn": {"authority": "authority", "clientId": "clientId"},
-//  "keycloakConfig": {
-//    "issuer": "issuer",
-//    "silentRefreshRedirectUri": "silentRefreshRedirectUri",
-//    "clientId": "clientId",
-//    "dummyClientSecret": "dummyClientSecret"
-//  }
-//}`;
-
 const configFull: ConfigData = {
   ownUrl: 'ownUrl',
   apiUrl: 'apiUrl',

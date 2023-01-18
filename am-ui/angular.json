@@ -94,8 +94,8 @@
           "options": {
             "browserTarget": "marketplace-ui:build",
             "proxyConfig": "src/proxy.conf.json",
-            "sslCert": "src/cert.pem",
-            "sslKey": "src/cert.key"
+            "sslCert": "pki/cert.pem",
+            "sslKey": "pki/cert.key"
           },
           "configurations": {
             "production": {
