@@ -35,8 +35,6 @@
         </div>
       </form>
       <div class="form-field">
-        <!-- <a class="btn submit-btn" (click)="changeUserData()"> -->
-
         <a class="btn submit-btn" (click)="updateUser()">
           {{ 'save' | translate }}</a
         >
@@ -68,12 +66,11 @@
     </div>
 
     <div
-    *ngIf="showAlert"
-    class="result-banner"
-    [ngClass]="alertCssClassesArray"
-  >
-    {{ alertTextI18n | translate }}
-  </div>
-
+      *ngIf="showAlert"
+      class="result-banner"
+      [ngClass]="alertCssClassesArray"
+    >
+      {{ alertTextI18n | translate }}
+    </div>
   </div>
 </div>
