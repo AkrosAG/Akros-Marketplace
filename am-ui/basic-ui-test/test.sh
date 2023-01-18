@@ -23,7 +23,7 @@ function wait_for_ui_server {
         echo -n "."
         sleep 2
     done
-    echo "ui did not start"
+    echo "[ERROR]: ui did not start"
     return 1
 }
 
@@ -35,7 +35,7 @@ function run_basic_test {
         return 0
     fi
 
-    echo "test failed: ui did not load correctly"
+    echo "[ERROR] test failed: ui did not load correctly"
     return 1
 }
 
