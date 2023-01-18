@@ -39,7 +39,7 @@ jobs:
         run: npm run build
       - name: Lint UI
         run: npm run lint
-      - name: Test UI
+      - name: Unittest ui
         run: npm run test
 
       - name: Lint Webcomponents
@@ -48,6 +48,29 @@ jobs:
       - name: Test Webcomponents
         working-directory: ./am-ui/webcomponents
         run: npm run test
+  test-ui:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+    defaults:
+      run:
+        working-directory: ./am-ui
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: am-ui/package-lock.json
+      - name: Install UI
+        run: npm ci
+      - name: run test
+        run: ./basic-ui-test/test.sh
+ 
   deploy:
     needs: build
     if: github.ref == 'refs/heads/main'
