@@ -18,7 +18,6 @@ export class ProfileComponent implements OnInit {
   public welcome!: String;
   public formGroup!: FormGroup;
   private userId!: string;
-  private username!: string;
   public showModal = false;
   public deleteModalId = 'deleteProfileModal';
 
@@ -58,8 +57,6 @@ export class ProfileComponent implements OnInit {
       email: this.formGroup.get('email')?.value,
       phone_number: this.formGroup.get('phoneNumber')?.value,
     };
-
-    console.log(userDto);
 
     this.userService.updateUser(this.userId, userDto).subscribe(
       data => {
