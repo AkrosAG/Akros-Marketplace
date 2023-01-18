@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import javax.validation.ConstraintViolation;
@@ -19,12 +21,17 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class UserControllerUnitTest {
 
     private UserService userService;
     private UserController userController;
     private Validator validator;
+    private MockMvc mockMvc;
+
+    private static final String ENDPOINT_USERS = "/users";
 
     @BeforeEach
     void setUp() {
@@ -64,6 +71,45 @@ public class UserControllerUnitTest {
             ResponseEntity result = userController.handleException(ex);
             assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         }
+    }
+
+    @Test
+    void testDeleteUser_shouldReturnBadRequest() throws Exception {
+        UserController spyUserController = spy(userController);
+        mockMvc = MockMvcBuilders.standaloneSetup(spyUserController).build();
+
+        String userId = "12";
+
+        mockMvc.perform(delete(ENDPOINT_USERS + "/" + userId))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testDeleteUser_shouldReturnBadRequest_Keycloak() throws Exception {
+        UserController spyUserController = spy(userController);
+        mockMvc = MockMvcBuilders.standaloneSetup(spyUserController).build();
+        UUID userId = UUID.randomUUID();
+
+        doReturn(true).when(spyUserController).isCurrentUserAuthorized(userId);
+        doThrow(new WebClientResponseException(400, "", null, null, null)).when(userService).deleteUser(userId);
+
+        mockMvc.perform(delete(ENDPOINT_USERS + "/" + userId))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testDeleteUser_shouldReturnNoContent() throws Exception {
+        UserController spyUserController = spy(userController);
+        mockMvc = MockMvcBuilders.standaloneSetup(spyUserController).build();
+
+        UUID userId = UUID.randomUUID();
+        doReturn(true).when(spyUserController).isCurrentUserAuthorized(userId);
+        doNothing().when(userService).deleteUser(userId);
+
+        mockMvc.perform(delete(ENDPOINT_USERS + "/" + userId))
+                .andExpect(status().isNoContent());
+
+        verify(userService, times(1)).deleteUser(userId);
     }
 
     @Test
