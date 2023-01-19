@@ -18,7 +18,8 @@
   "plugins": ["react"],
   "rules": {
     "require-jsdoc": 0,
-    "react-in-jsx-scope": 0
+    "react-in-jsx-scope": 0,
+    "prettier/prettier": "warn"
   },
   "settings": {
     "react": {
