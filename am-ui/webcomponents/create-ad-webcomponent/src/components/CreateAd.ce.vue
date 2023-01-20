@@ -162,6 +162,11 @@ function submit(data, images, thumbnail) {
       previewAd.value = false;
       confirmAd.value = true;
       sendLoadingEvent(false);
+
+      setTimeout(() => {
+        location.assign("/");
+      }, 2500);
+
     },
     (err) => {
       createAddSuccess = false;
