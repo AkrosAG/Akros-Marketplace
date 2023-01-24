@@ -29,10 +29,10 @@ public class UserConverter {
         return keycloakUser;
     }
 
-    public UserResponseDTO convertUserDtoToUserResponseDto(UserDTO userDto, UUID uuuid) {
+    public UserResponseDTO convertUserDtoToUserResponseDto(UserDTO userDto, UUID uuid) {
         UserResponseDTO userResponseDTO = new UserResponseDTO();
 
-        userResponseDTO.setId(uuuid);
+        userResponseDTO.setId(uuid);
         userResponseDTO.setFirstName(userDto.getFirstName());
         userResponseDTO.setLastName(userDto.getLastName());
         userResponseDTO.setEmail(userDto.getEmail());
