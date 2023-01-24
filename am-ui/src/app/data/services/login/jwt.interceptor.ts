@@ -1,4 +1,3 @@
-import {environment} from 'src/environments/environment';
 import {AuthStore} from 'src/app/data/services/login/auth.service';
 import {Injectable} from '@angular/core';
 import {
@@ -8,12 +7,14 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {AppRuntimeConfig} from '../../../configs/app-runtime-configuration.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
   constructor(
     private authenticationService: AuthStore,
-    private auth: AuthStore
+    private auth: AuthStore,
+    private runtimeConfig: AppRuntimeConfig
   ) {}
 
   intercept(
@@ -23,7 +24,7 @@ export class JwtInterceptor implements HttpInterceptor {
     // add auth header with jwt if user is logged in and request is to api url
     const user = this.authenticationService.userValue;
     const isLoggedIn = !!user && this.auth.accessToken;
-    const isApiUrl = request.url.startsWith(environment.apiUrl);
+    const isApiUrl = request.url.startsWith(this.runtimeConfig.apiUrl);
 
     if (isLoggedIn && isApiUrl) {
       const token = 'Bearer ' + this.auth.idToken.replace(/"/g, '');

@@ -1,6 +1,8 @@
 dist/
 
-./setup-test.ts
+setup-test.ts
+
+jest-global-mocks.ts
 
 coverage/
 

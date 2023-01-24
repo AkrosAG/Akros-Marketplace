@@ -14,7 +14,10 @@ import {
   TranslateModule,
   TranslateLoader,
 } from '@ngx-translate/core';
-import {FormBuilder} from '@angular/forms';
+
+import {OAuthUserInfo} from '../../shared/types/oauthuserinfo.type';
+import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import {ModalComponent} from '../shared/modal/modal.component';
 
 class MockUserService {
   public user: unknown = {
@@ -82,7 +85,7 @@ describe('ProfileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ProfileComponent],
+      declarations: [ProfileComponent, ModalComponent],
       imports: [
         TranslateModule.forRoot({
           loader: {
@@ -90,6 +93,7 @@ describe('ProfileComponent', () => {
             useClass: TranslateFakeLoader,
           },
         }),
+        ReactiveFormsModule,
       ],
       providers: [
         TranslatePipe,
