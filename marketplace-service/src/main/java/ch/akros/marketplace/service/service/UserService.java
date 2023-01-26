@@ -1,9 +1,13 @@
 package ch.akros.marketplace.service.service;
 
-import org.webjars.NotFoundException;
+import ch.akros.marketplace.api.model.UserDTO;
+import ch.akros.marketplace.api.model.UserResponseDTO;
+
+import java.util.UUID;
 
 public interface UserService {
 
-    void deleteUser(String userId) throws NotFoundException;
+    void deleteUser(UUID userId);
 
+    UserResponseDTO updateUser(UUID userId, UserDTO user);
 }

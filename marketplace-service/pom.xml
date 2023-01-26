@@ -9,7 +9,6 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 	
-	<groupId>ch.akros.am</groupId>
 	<artifactId>marketplace-service</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	
@@ -80,6 +79,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.keycloak</groupId>

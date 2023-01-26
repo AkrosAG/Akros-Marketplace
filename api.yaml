@@ -65,6 +65,7 @@ paths:
             "application/problem+json":
               schema:
                 $ref: "#/components/schemas/Problem"
+
     delete:
       tags:
         - Topics
@@ -151,16 +152,66 @@ paths:
       responses:
         204:
           description: Successfully deleted user
-        404:
-          description: User not found
         400:
           description: invalid UUID
+        401:
+          description: User auth token is invalid
+        403:
+          description: User is not authorized to delete the user with the given id
+        404:
+          description: User not found
+        503:
+          description: Authentication server unavailable
         default:
           description: Unexpected error
           content:
             "application/problem+json":
               schema:
                 $ref: "#/components/schemas/Problem"
+    put:
+      tags:
+        - Users
+      summary: Update a user
+      description: Update a user by id
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The user uuid.
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: User object to be updated
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDTO"
+        required: true
+      responses:
+        200:
+          description: Successfully updated the user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponseDTO"
+        400:
+          description: UUID or user body are not in valid format
+        401:
+          description: User auth token is invalid
+        403:
+          description: User is not authorized to update the user with the given id
+        404:
+          description: User not found
+        503:
+          description: Authentication server unavailable
+        default:
+          description: Unexpected error
+          content:
+            "application/problem+json":
+              schema:
+                $ref: "#/components/schemas/Problem"
+
 
 components:
   securitySchemes:
@@ -488,6 +539,50 @@ components:
         value:
           type: string
 
+    UserDTO:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - email
+      properties:
+        first_name:
+          type: string
+          nullable: false
+          minLength: 1
+          pattern: ^(?!\s*$).+
+        last_name:
+          type: string
+          nullable: false
+          minLength: 1
+          pattern: ^(?!\s*$).+
+        email:
+          type: string
+          format: email
+          nullable: false
+        phone_number:
+          type: string
+
+    UserResponseDTO:
+      type: object
+      required:
+        - id
+        - first_name
+        - last_name
+        - email
+      properties:
+        id:
+          type: string
+          format: uuid
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone_number:
+          type: string
 
     Problem:
       type: object
@@ -518,7 +613,7 @@ components:
           minimum: 100
           maximum: 600
           exclusiveMaximum: true
-          example: 503
+          example: 500
         detail:
           type: string
           description: >
