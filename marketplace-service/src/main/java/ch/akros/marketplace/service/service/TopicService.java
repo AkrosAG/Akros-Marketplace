@@ -173,10 +173,14 @@ public class TopicService {
         String region = topicValues.stream().filter(topicValue -> topicValue.getField().getKey().equals("region")).findFirst().orElseThrow().getValue();
 
         LatLon[] latLon = getLonLatValues(address, postalCode, region);
-        if (latLon.length != 0) {
-            topicValues.stream().filter(topicValue -> topicValue.getField().getKey().equals("lon")).findFirst().orElseThrow().setValue(latLon[0].getLon());
-            topicValues.stream().filter(topicValue -> topicValue.getField().getKey().equals("lat")).findFirst().orElseThrow().setValue(latLon[0].getLat());
+
+        if (latLon.length == 0) {
+            latLon = getDefaultLonLatValues();
         }
+
+        topicValues.stream().filter(topicValue -> topicValue.getField().getKey().equals("lon")).findFirst().orElseThrow().setValue(latLon[0].getLon());
+        topicValues.stream().filter(topicValue -> topicValue.getField().getKey().equals("lat")).findFirst().orElseThrow().setValue(latLon[0].getLat());
+
         return topicValues;
     }
 
@@ -209,7 +213,7 @@ public class TopicService {
     }
 
     private LatLon[] getDefaultLonLatValues() {
-        LatLon latLon = new LatLon("0", "0");
+        LatLon latLon = new LatLon("0.0", "0.0");
         return new LatLon[]{latLon};
     }
 
