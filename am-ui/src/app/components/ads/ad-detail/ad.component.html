@@ -1,72 +1,105 @@
 <div class="container">
-    <ul>
-        <li key={ad.topic_id}>
-            <a class="ad-link" (click)="navigateTeDetailView()" [title]="getValueByKey('title')">
-                <div class="sr-ad-thumb-block">
-                    <img [src]="getThumbnailFromProps()" class="sr-ad-thumb" alt="2 ½ rooms apartment" />
-                    <p class="sr-ad-info">
-                        <span class="sr-ad-type">
-                            {{ getValueByKey('title')}}
-                        </span>
-                        <span class="sr-ad-price">
-                            {{ getValueByKey('price') }}
-                        </span>
-                        <span class="sr-ad-price">
-                            {{ getValueByKey('toPrice') }}
-                        </span>
-                        <span class="sr-ad-currency"> CHF</span>&nbsp;/&nbsp;
-                        <span class="sr-ad-per-time" *ngIf="getValueByKey('priceUnit') === 'month'">
-                            {{ 'search-results-detail.price-unit-month' | translate }}
-                        </span>
-                        <span class="sr-ad-per-time" *ngIf="getValueByKey('priceUnit') === 'day'">
-                            {{ 'search-results-detail.price-unit-day' | translate }}
-                        </span>
-                        <span class="sr-ad-per-time" *ngIf="getValueByKey('priceUnit') === 'week'">
-                            {{ 'search-results-detail.price-unit-week' | translate }}
-                        </span>
-                    </p>
-                </div>
-                <div>
-                    <p class="sr-ad-rooms">
-                        {{ 'ad.' + ad.subcategory_id | translate }}
-                    </p>
-                    <p class="sr-ad-address">
-                        <span class="sr-ad-post-code">
-                            {{ getValueByKey('postalCode') }}
-                        </span>
-                        <span class="sr-ad-city">
-                            {{ getValueByKey('region') }}
-                        </span>
-                    </p>
-                </div>
-            </a>
-            <div class="button-container">
-                <button class="update-button">
-                    {{ 'ad.update' | translate }}
-                </button>
-                <button type="button" class="delete-button" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + ad.topic_id">
-                    {{ 'ad.delete' | translate }}
-                </button>
-            </div>
-        </li>
-    </ul>
+  <ul>
+    <li key="{ad.topic_id}">
+      <a
+        class="cursor-pointer-class"
+        (click)="navigateTeDetailView()"
+        [title]="getValueByKey('title')"
+      >
+        <div class="sr-ad-thumb-block">
+          <img
+            [src]="getThumbnailFromProps()"
+            class="sr-ad-thumb"
+            alt="2 ½ rooms apartment"
+          />
+          <p class="sr-ad-info">
+            <span class="sr-ad-type">
+              {{ getValueByKey('title') }}
+            </span>
+            <span class="sr-ad-price">
+              {{ getValueByKey('price') }}
+            </span>
+            <span class="sr-ad-price">
+              {{ getValueByKey('toPrice') }}
+            </span>
+            <span class="sr-ad-currency"> CHF</span>&nbsp;/&nbsp;
+            <span
+              class="sr-ad-per-time"
+              *ngIf="getValueByKey('priceUnit') === 'month'"
+            >
+              {{ 'search-results-detail.price-unit-month' | translate }}
+            </span>
+            <span
+              class="sr-ad-per-time"
+              *ngIf="getValueByKey('priceUnit') === 'day'"
+            >
+              {{ 'search-results-detail.price-unit-day' | translate }}
+            </span>
+            <span
+              class="sr-ad-per-time"
+              *ngIf="getValueByKey('priceUnit') === 'week'"
+            >
+              {{ 'search-results-detail.price-unit-week' | translate }}
+            </span>
+          </p>
+        </div>
+        <div>
+          <p class="sr-ad-rooms">
+            {{ 'ad.' + ad.subcategory_id | translate }}
+          </p>
+          <p class="sr-ad-address">
+            <span class="sr-ad-post-code">
+              {{ getValueByKey('postalCode') }}
+            </span>
+            <span class="sr-ad-city">
+              {{ getValueByKey('region') }}
+            </span>
+          </p>
+        </div>
+      </a>
+      <div class="button-container">
+        <button class="update-button">
+          {{ 'ad.update' | translate }}
+        </button>
+        <button
+          type="button"
+          class="delete-button"
+          data-bs-toggle="modal"
+          [attr.data-bs-target]="'#modal' + ad.topic_id"
+        >
+          {{ 'ad.delete' | translate }}
+        </button>
+      </div>
+    </li>
+  </ul>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modal{{ad.topic_id}}" tabindex="-1" aria-labelledby="deleteAdModelLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="modal{{ ad.topic_id }}"
+  tabindex="-1"
+  aria-labelledby="deleteAdModelLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteAdModelLabel">{{ "ad.modal-title" | translate}}</h5>
+        <h5 class="modal-title" id="deleteAdModelLabel">
+          {{ 'ad.modal-title' | translate }}
+        </h5>
       </div>
       <div class="modal-body">
-        {{ "ad.modal-description" | translate }}
+        {{ 'ad.modal-description' | translate }}
       </div>
       <div class="modal-footer button-container">
-        <button type="button" class="delete-button" (click)="deleteTopic()">{{ "ad.delete" | translate }}</button>
-        <button type="button" class="update-button" data-bs-dismiss="modal">{{ "ad.close-modal" | translate }}</button>
+        <button type="button" class="delete-button" (click)="deleteTopic()">
+          {{ 'ad.delete' | translate }}
+        </button>
+        <button type="button" class="update-button" data-bs-dismiss="modal">
+          {{ 'ad.close-modal' | translate }}
+        </button>
       </div>
     </div>
   </div>
 </div>
-

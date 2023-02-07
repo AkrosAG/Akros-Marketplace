@@ -5,6 +5,7 @@ import {Topic} from '../../data/models/Topic';
 import {AuthStore} from '../../data/services/login/auth.service';
 import {AdsService} from './ads.service';
 
+const ALPHABETIC_SORT_LOCATON = 'byLocationAlphabetic';
 @Component({
   selector: 'mp-ads',
   templateUrl: './ads.component.html',
@@ -18,6 +19,7 @@ export class AdsComponent implements OnDestroy {
 
   public sortTypes = [
     {value: '', label: ''},
+    {value: ALPHABETIC_SORT_LOCATON, label: 'ad.location'},
     {value: 'byPriceLowToHigh', label: 'ad.byPriceLowToHigh'},
     {value: 'byPriceHighToLow', label: 'ad.byPriceHighToLow'},
     {value: 'byDateNewToOld', label: 'ad.byDateNewToOld'},
@@ -41,6 +43,15 @@ export class AdsComponent implements OnDestroy {
   onChangeSortOrder(event: Event) {
     const result = (event.target as HTMLInputElement).value;
     switch (result) {
+      case ALPHABETIC_SORT_LOCATON:
+        this.sortedAds.sort((a: any, b: any) =>
+          a.topic_values
+            .find(x => x.field_description === 'region')
+            .value.localeCompare(
+              b.topic_values.find(x => x.field_description === 'region').value
+            )
+        );
+        break;
       case 'byPriceLowToHigh':
         this.sortedAds.sort(
           (a: any, b: any) =>
