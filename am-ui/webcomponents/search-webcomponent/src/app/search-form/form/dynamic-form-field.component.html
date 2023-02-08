@@ -89,19 +89,7 @@
     </select>
     <!-- Dates -->
     <input
-      type="date"
-      [readonly]="true"
-      *mpSwitchCases="[12]"
-      mpDateClick
-      [formControlName]="formField.key"
-      [id]="formField.key"
-      [ngClass]="{error: !form.controls[formField.key].valid}"
-      class="cursor-pointer w-full"
-      dateValidator
-      placeholder="mm/dd/uuu"
-    />
-    <!-- <input
-      type="date"
+      type="text"
       *mpSwitchCases="[12, 13]"
       mpDateClick
       [formControlName]="formField.key"
@@ -112,6 +100,6 @@
         'searchForm.categories.' + currentCategoryKey + '.' + formField.key
           | translate
       }}"
-    /> -->
+    />
   </div>
 </div>
