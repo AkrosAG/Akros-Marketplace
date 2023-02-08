@@ -24,6 +24,7 @@ import {ApiModule} from './api/api.module';
 import {DateClickDirective} from './utils/directives/date-click.directive';
 import {SwitchCasesDirective} from './utils/directives/switch-cases.directive';
 import {MpSearchService} from './mp-search.service';
+import { DateValidatorDirective } from './search-form/form/date-validator.directive';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {MpSearchService} from './mp-search.service';
     DynamicFormFieldComponent,
     SwitchCasesDirective,
     DateClickDirective,
+    DateValidatorDirective,
   ],
   imports: [
     BrowserModule,
