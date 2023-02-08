@@ -11,7 +11,6 @@ const userId = '1';
 const deleteMethod = 'DELETE';
 const getMethod = 'GET';
 
-
 const fakeTopicsResponse: Topic[] = [
   {
     topic_id: 123,
@@ -53,7 +52,6 @@ describe('AdsService', () => {
     const testReq = controller.expectOne(expectedUrl);
     testReq.flush(fakeTopicsResponse);
     expect(testReq.request.method).toEqual(getMethod);
-
   });
 
   it('should throw error user not found', () => {
@@ -80,6 +78,5 @@ describe('AdsService', () => {
     const testReq = controller.expectOne(expectedUrl);
     testReq.flush(null, {status: reqStatus, statusText: 'OK'});
     expect(testReq.request.method).toBe(deleteMethod);
-
   });
 });

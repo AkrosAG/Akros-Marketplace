@@ -39,7 +39,9 @@ describe('SearchResultServiceTest', () => {
     service.getById(fakeTopicResponse.topic_id).subscribe(data => {
       actualTopic = data;
     });
-    const testReq = httpMockController.expectOne(`/topics/${fakeTopicResponse.topic_id}`);
+    const testReq = httpMockController.expectOne(
+      `/topics/${fakeTopicResponse.topic_id}`
+    );
     testReq.flush(fakeTopicResponse);
     expect(testReq.request.method).toEqual(getMethod);
     expect(actualTopic).toEqual(fakeTopicResponse);
