@@ -3,6 +3,7 @@ package ch.akros.marketplace.controller;
 import ch.akros.marketplace.api.model.UserDTO;
 import ch.akros.marketplace.api.model.UserResponseDTO;
 import ch.akros.marketplace.service.controller.UserController;
+import ch.akros.marketplace.service.exceptions.UnauthorizedException;
 import ch.akros.marketplace.service.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,7 +47,8 @@ public class UserControllerUnitTest {
         UserController spyUserController = spy(userController);
         String userId = UUID.randomUUID().toString();
 
-        doReturn(true).when(spyUserController).isCurrentUserAuthorized(UUID.fromString(userId));
+        doNothing().when(userService).deleteUser(UUID.fromString(userId));
+
         ResponseEntity<Void> result = spyUserController.deleteUser(userId);
         assertEquals(HttpStatus.NO_CONTENT, result.getStatusCode());
     }
@@ -56,9 +58,14 @@ public class UserControllerUnitTest {
         UserController spyUserController = spy(userController);
         String userId = UUID.randomUUID().toString();
 
-        doReturn(false).when(spyUserController).isCurrentUserAuthorized(UUID.fromString(userId));
-        ResponseEntity<Void> result = spyUserController.deleteUser(userId);
-        assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
+        doThrow(new UnauthorizedException()).when(userService).deleteUser(UUID.fromString(userId));
+
+        try {
+            spyUserController.deleteUser(userId);
+        } catch (Exception ex) {
+            ResponseEntity result = userController.handleException(ex);
+            assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
+        }
     }
 
     @Test
@@ -90,7 +97,6 @@ public class UserControllerUnitTest {
         mockMvc = MockMvcBuilders.standaloneSetup(spyUserController).build();
         UUID userId = UUID.randomUUID();
 
-        doReturn(true).when(spyUserController).isCurrentUserAuthorized(userId);
         doThrow(new WebClientResponseException(400, "", null, null, null)).when(userService).deleteUser(userId);
 
         mockMvc.perform(delete(ENDPOINT_USERS + "/" + userId))
@@ -101,9 +107,8 @@ public class UserControllerUnitTest {
     void testDeleteUser_shouldReturnNoContent() throws Exception {
         UserController spyUserController = spy(userController);
         mockMvc = MockMvcBuilders.standaloneSetup(spyUserController).build();
-
         UUID userId = UUID.randomUUID();
-        doReturn(true).when(spyUserController).isCurrentUserAuthorized(userId);
+
         doNothing().when(userService).deleteUser(userId);
 
         mockMvc.perform(delete(ENDPOINT_USERS + "/" + userId))
@@ -116,10 +121,13 @@ public class UserControllerUnitTest {
     void testUpdateUser_whenUserIsAuthorized_keycloakErrorForbidden() {
         UserController spyUserController = spy(userController);
         String userId = UUID.randomUUID().toString();
+        UserDTO userDTO = new UserDTO();
 
-        doReturn(true).when(spyUserController).isCurrentUserAuthorized(UUID.fromString(userId));
+        when(userService.updateUser(UUID.fromString(userId), userDTO))
+                .thenThrow(new WebClientResponseException(403, "", null, null, null));
+
         try {
-            spyUserController.deleteUser(userId);
+            spyUserController.updateUser(userId, userDTO);
         } catch (WebClientResponseException ex) {
             ResponseEntity result = userController.handleException(ex);
             assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
@@ -192,7 +200,7 @@ public class UserControllerUnitTest {
     }
 
     @Test
-    void updateDeleteUser_whenUserIsNotAuthorized_shouldReturnForbidden() {
+    void updateUser_whenUserIsNotAuthorized_shouldReturnForbidden() {
         UserController spyUserController = spy(userController);
         String userId = UUID.randomUUID().toString();
         UserDTO user = new UserDTO();
@@ -200,9 +208,14 @@ public class UserControllerUnitTest {
         user.setLastName("test");
         user.setEmail("test@test.ch");
 
-        doReturn(false).when(spyUserController).isCurrentUserAuthorized(UUID.fromString(userId));
-        ResponseEntity<UserResponseDTO> result = spyUserController.updateUser(userId, user);
-        assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
+        doThrow(new UnauthorizedException()).when(userService).updateUser(UUID.fromString(userId), new UserDTO());
+
+        try {
+            spyUserController.updateUser(userId, user);
+        } catch (Exception ex) {
+            ResponseEntity result = userController.handleException(ex);
+            assertEquals(HttpStatus.FORBIDDEN, result.getStatusCode());
+        }
     }
 
     @Test
@@ -225,7 +238,6 @@ public class UserControllerUnitTest {
         userResponseDTO.setLastName(userLastName);
         userResponseDTO.setEmail(userEmail);
 
-        doReturn(true).when(spyUserController).isCurrentUserAuthorized(UUID.fromString(userId));
         when(userService.updateUser(UUID.fromString(userId), user)).thenReturn(userResponseDTO);
         ResponseEntity<UserResponseDTO> result = spyUserController.updateUser(userId, user);
         assertEquals(HttpStatus.OK, result.getStatusCode());
@@ -251,8 +263,6 @@ public class UserControllerUnitTest {
         user.setLastName(userLastName);
         user.setEmail(userEmail);
 
-        doReturn(true).when(spyUserController).isCurrentUserAuthorized(UUID.fromString(userId));
-
         when(userService.updateUser(UUID.fromString(userId), user))
                 .thenThrow(new WebClientResponseException(503, "", null, null, null));
         try {
@@ -276,8 +286,6 @@ public class UserControllerUnitTest {
         user.setFirstName(userFirstName);
         user.setLastName(userLastName);
         user.setEmail(userEmail);
-
-        doReturn(true).when(spyUserController).isCurrentUserAuthorized(UUID.fromString(userId));
 
         when(userService.updateUser(UUID.fromString(userId), user))
                 .thenThrow(new WebClientResponseException(401, "", null, null, null));
@@ -303,8 +311,6 @@ public class UserControllerUnitTest {
         user.setLastName(userLastName);
         user.setEmail(userEmail);
 
-        doReturn(true).when(spyUserController).isCurrentUserAuthorized(UUID.fromString(userId));
-
         when(userService.updateUser(UUID.fromString(userId), user))
                 .thenThrow(new WebClientResponseException(404, "", null, null, null));
         try {
@@ -328,8 +334,6 @@ public class UserControllerUnitTest {
         user.setFirstName(userFirstName);
         user.setLastName(userLastName);
         user.setEmail(userEmail);
-
-        doReturn(true).when(spyUserController).isCurrentUserAuthorized(UUID.fromString(userId));
 
         when(userService.updateUser(UUID.fromString(userId), user))
                 .thenThrow(new WebClientResponseException(400, "", null, null, null));

@@ -1,21 +1,23 @@
 <div [formGroup]="form">
-  <div [ngSwitch]="formField.type" >
+  <div [ngSwitch]="formField.type">
     <!-- Number fields for fromSize and toPrice field.-->
-     <div *ngIf="formField.id===24 || formField.id===25 ">
-       <input
-         *mpSwitchCases="[2, 3]"
-         [formControlName]="formField.key"
-         [id]="formField.key"
-         type="number"
-         [ngClass]="{error: !form.controls[formField.key].valid}"
-         class="w-full"
-         placeholder="{{
-        'searchForm.categories.' + currentCategoryKey + '.' + formField.key
-          | translate
-      }}"
-       />
-     </div>
-    <div *ngIf="formField.id!==24 && formField.id!==25 ">
+    <div *ngIf="formField.id === 24 || formField.id === 25">
+      <input
+        *mpSwitchCases="[2, 3]"
+        [formControlName]="formField.key"
+        [id]="formField.key"
+        min="0"
+        oninput="validity.valid||(value='');"
+        type="number"
+        [ngClass]="{error: !form.controls[formField.key].valid}"
+        class="w-full"
+        placeholder="{{
+          'searchForm.categories.' + currentCategoryKey + '.' + formField.key
+            | translate
+        }}"
+      />
+    </div>
+    <div *ngIf="formField.id !== 24 && formField.id !== 25">
       <!-- Textfields -->
       <input
         *mpSwitchCases="[1, 2, 3]"
@@ -25,9 +27,9 @@
         [ngClass]="{error: !form.controls[formField.key].valid}"
         class="w-full"
         placeholder="{{
-        'searchForm.categories.' + currentCategoryKey + '.' + formField.key
-          | translate
-      }}"
+          'searchForm.categories.' + currentCategoryKey + '.' + formField.key
+            | translate
+        }}"
       />
     </div>
     <!-- Type -->
@@ -87,7 +89,19 @@
     </select>
     <!-- Dates -->
     <input
-      type="text"
+      type="date"
+      [readonly]="true"
+      *mpSwitchCases="[12]"
+      mpDateClick
+      [formControlName]="formField.key"
+      [id]="formField.key"
+      [ngClass]="{error: !form.controls[formField.key].valid}"
+      class="cursor-pointer w-full"
+      dateValidator
+      placeholder="mm/dd/uuu"
+    />
+    <!-- <input
+      type="date"
       *mpSwitchCases="[12, 13]"
       mpDateClick
       [formControlName]="formField.key"
@@ -98,6 +112,6 @@
         'searchForm.categories.' + currentCategoryKey + '.' + formField.key
           | translate
       }}"
-    />
+    /> -->
   </div>
 </div>

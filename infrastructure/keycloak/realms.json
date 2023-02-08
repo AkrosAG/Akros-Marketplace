@@ -4399,7 +4399,20 @@
       "xXSSProtection": "1; mode=block",
       "strictTransportSecurity": "max-age=31536000; includeSubDomains"
     },
-    "smtpServer": {},
+    "smtpServer": {
+      "replyToDisplayName": "",
+      "starttls": "false",
+      "auth": "true",
+      "envelopeFrom": "",
+      "ssl": "true",
+      "password": "**********",
+      "port": "465",
+      "replyTo": "",
+      "host": "smtp.gmail.com",
+      "from": "marketplace.akros@gmail.com",
+      "fromDisplayName": "",
+      "user": "marketplace.akros@gmail.com"
+    },
     "loginTheme": "base",
     "accountTheme": "base",
     "adminTheme": "base",

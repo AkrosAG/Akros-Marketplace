@@ -2,19 +2,26 @@ package ch.akros.marketplace.service.service.impl;
 
 import ch.akros.marketplace.api.model.UserDTO;
 import ch.akros.marketplace.api.model.UserResponseDTO;
+import ch.akros.marketplace.service.constants.BaseConstants;
 import ch.akros.marketplace.service.converters.UserConverter;
+import ch.akros.marketplace.service.exceptions.UnauthorizedException;
 import ch.akros.marketplace.service.service.TopicService;
 import ch.akros.marketplace.service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONObject;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.security.Principal;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -52,6 +59,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(UUID userId) {
         log.debug("UserServiceImpl.deleteUser() called");
+        boolean isUserAuthorized = isCurrentUserAuthorized(userId);
+        if (!isUserAuthorized) {
+            throw new UnauthorizedException();
+        }
 
         String requestUrl = KEYCLOAK_USERS_URL + "/" + userId;
         String authHeader = HTTP_BEARER_AUTHENTICATION_HEADER + " " + getAccessToken().orElse("");
@@ -70,6 +81,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO updateUser(UUID userId, UserDTO userDto) {
         log.debug("UserServiceImpl.updateUser() called " + userDto.toString());
+        boolean isUserAuthorized = isCurrentUserAuthorized(userId);
+        if (!isUserAuthorized) {
+            throw new UnauthorizedException();
+        }
 
         String requestUrl = KEYCLOAK_USERS_URL + "/" + userId;
         String authHeader = HTTP_BEARER_AUTHENTICATION_HEADER + " " + getAccessToken().orElse("");
@@ -103,10 +118,36 @@ public class UserServiceImpl implements UserService {
                     .bodyToMono(JSONObject.class)
                     .block();
 
+            assert jsonResponse != null;
             return Optional.of(jsonResponse.get(HTTP_ACCESS_TOKEN).toString());
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
         return Optional.empty();
+    }
+
+    private boolean isCurrentUserAuthorized(UUID userIdToBeUpdated) {
+        KeycloakAuthenticationToken authentication = (KeycloakAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        Principal principal = (Principal) authentication.getPrincipal();
+
+        if (principal instanceof KeycloakPrincipal) {
+            KeycloakPrincipal<KeycloakSecurityContext> kPrincipal = (KeycloakPrincipal<KeycloakSecurityContext>) principal;
+            String userIdByToken = kPrincipal.getKeycloakSecurityContext().getToken().getSubject();
+
+            if (userIdByToken.equals(userIdToBeUpdated.toString())) {
+                log.debug("UserController.isCurrentUserAuthorized() user with id: " + userIdByToken + " updating own profile");
+                return true;
+            }
+            log.debug("UserController.isCurrentUserAuthorized() user with id: " + userIdByToken + " want to change " +
+                    "user with id: " + userIdToBeUpdated);
+        }
+
+        boolean isAdmin = authentication.getAuthorities().stream().anyMatch(grantedAuthority -> {
+            String authorityName = grantedAuthority.getAuthority();
+            return authorityName.equals(BaseConstants.USER_ROLE_ADMIN);
+        });
+        log.debug("UserController.isCurrentUserAuthorized() user with id is admin: " + isAdmin);
+
+        return isAdmin;
     }
 }
