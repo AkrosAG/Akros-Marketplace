@@ -7,7 +7,9 @@ services:
       context: ../..
       dockerfile: ./infrastructure/keycloak/Dockerfile.local
     ports:
-      - '9090:9090'
+      - 9090:9090
+      - 8080:8080
+      - 9443:8443
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
@@ -135,7 +137,7 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
-      - '9091:9090'
+      - 9091:9090
     profiles: ["monitoring"]
 
   grafana:
