@@ -5,9 +5,10 @@
   "home": {
     "information": "Erstellen Sie ein kostenloses Inserat",
     "find": "Finde was Du suchst",
-    "about": "Über Akros Marketplace",
+    "aboutMarketplaceTitle": "Über Akros Marketplace",
     "create": "Eine Anzeige erstellen",
-    "login": "Sie müssen angemeldet sein, um eine Anzeige zu erstellen"
+    "login": "Sie müssen angemeldet sein, um eine Anzeige zu erstellen",
+    "aboutMarketplaceText": "Mit dem AKROS Marketplace haben Sie Zugang zu attraktiven und exklusiven Mietangeboten und Mietanfragen von Wohnungen, Häusern und Parkplätzen der AKROS Mitarbeitenden in der Schweiz. <br> Folglich ist der AKROS Marketplace die schlaue Wahl rund ums Mieten. Er bietet einen Marktplatz, der die AKROS Mitarbeitenden verbindet und eine digitalen Plattform, die den Mietprozess für die Akrosianer bequemer und effizienter macht – für Wohnungssuchende und auch Mieterinnen."
   },
   "navbar": {
     "signin": "anmelden",
