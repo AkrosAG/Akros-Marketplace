@@ -5,9 +5,10 @@
   "home": {
     "information": "Post Your Advertisement for Free",
     "find": "Find what You are looking for",
-    "about": "About Akros Marketplace",
+    "aboutMarketplaceTitle": "About Akros Marketplace",
     "create": "Create an Add",
-    "login": "You must be logged in to create an ad"
+    "login": "You must be logged in to create an ad",
+    "aboutMarketplaceText": "With AKROS Marketplace you have access to attractive and exclusive rental offers and rental requests of apartments, houses and parking spaces of AKROS employees in Switzerland. <br> Consequently, the AKROS Marketplace is the smart choice around renting. It provides a marketplace that connects AKROS employees and a digital platform that makes the rental process more convenient and efficient for Akrosians - both apartment seekers and tenants."
   },
   "navbar": {
     "signin": "sign in",

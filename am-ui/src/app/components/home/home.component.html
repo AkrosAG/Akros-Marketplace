@@ -33,24 +33,8 @@
 <div class="container-fluid simple">
   <div class="container content-block">
     <div class="text-block">
-      <h2>{{ 'home.about' | translate }}</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-        pellentesque eu arcu at gravida. Donec eget lacinia libero. Curabitur
-        semper nisi eget nisi tempus, ac imperdiet enim viverra.
-        <a href="https://google.com">Sample link</a> nisi leo, lacinia non
-        semper tempus, scelerisque non libero. In faucibus fringilla purus non
-        placerat. Nulla aliquet sodales ex, ac maximus justo laoreet sed.
-        Pellentesque est augue, finibus sed hendrerit vitae, iaculis eget sem.
-      </p>
-      <p>
-        Nulla facilisi. Nulla in orci leo. Maecenas hendrerit eget urna nec
-        accumsan. Pellentesque eros ex, congue quis orci ac, varius sodales
-        tellus. Vivamus tristique vitae enim vitae ornare. Nam id quam vel nunc
-        egestas convallis sed ac nunc. Vestibulum iaculis nisi quis arcu
-        egestas, vitae interdum ligula elementum sodales. Phasellus ac ornare
-        risus, sit amet mattis tellus.
-      </p>
+      <h2>{{ 'home.aboutMarketplaceTitle' | translate }}</h2>
+      <p style="text-align: justify;" [innerHtml]="'home.aboutMarketplaceText' | translate "></p>
     </div>
   </div>
   <!-- /.container -->
